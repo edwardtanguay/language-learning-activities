@@ -60,22 +60,29 @@ Follow the project design philosophy defined in `AGENTS.md`:
   The header stamp badge (`.stamp-badge`) displaying `[Language] [Level]` (e.g. `Español B1`) uses `border: 3px solid var(--lang-color); color: var(--lang-color); font-size: 18px; font-weight: 800; transform: rotate(-2deg);` to look like a prominent colored ink stamp.
 - **Paper on Desk Aesthetic**:
   - The main container (`.handout-sheet`) has a soft blurred drop-shadow (`box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04)`) and a delicate warm border (`1px solid #e8e2d5`), giving the look of a sheet of paper on a desk.
-- **No Harsh Black Outlines**:
-  - Do not use dark or black solid borders (which evoke death notices in certain cultures). Use warm parchment rules (`--ink-rule: #d5cebf`) and light background shifts instead.
-- **Typography**:
+- **No Harsh Black Outlines & Borderless Cards**:
+  - Do not use dark or black solid borders (which evoke death notices in certain cultures).
+  - Glossary boxes, question cards, and clickable option choices must have no borders (`border: none;`), relying on soft parchment background fills (`--paper-bg`), subtle shadows, and tinted feedback states.
+- **Typography & Mobile Optimization**:
   - Monospace / Typewriter font stack: `"Courier New", Courier, "Courier Prime", monospace` for headers, instructions, numbers, and buttons.
   - Clean readable serif/sans for long reading passages: `Georgia, "Times New Roman", serif` or clean typewriter.
-- **Minimalist Title Area**:
+  - On mobile (`max-width: 680px`), use tight line-heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for title, `15px` for section titles) so multi-line titles read cohesively and headings fit on one line more often.
+- **Title Area & Content Overview**:
   - Unboxed title header (`border: none;`).
-  - Contains only the activity title (`<h1>`) and the prominent tilted stamp badge.
+  - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin-top: 10px; line-height: 1.5;`) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
 - **Plain Large Numbers (No Dark Inverted Boxes)**:
   - Section numbers and quiz question numbers must be rendered as plain large numbers in the text color (`--ink-main`), never white text inside black/dark boxes.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
+- **Dual Navigation & Discrete Reset**:
+  - Include the back link (`← Índice de Actividades`) both at the top utility bar and in a bottom actions bar.
+  - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar.
+- **Standardized Footer**:
+  - At the very bottom of the worksheet: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
 - **Responsive Layout**:
   - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout (reading passage + vocabulary margin, followed by quiz).
-  - Mobile (Portrait): Single-column stack with comfortable padding and touch-friendly buttons.
+  - Mobile (Portrait): Single-column stack with comfortable padding, tight line spacing, and touch-friendly buttons.
 
 ---
 
@@ -87,30 +94,33 @@ Each activity file should include the following sections:
    - Link back to main activities catalog (`<a href="../../index.html" class="back-link">...</a>`) with a thick arrow (SVG or bold glyph) and clean label without "(Home)".
    - Do NOT include a print button.
 2. **Worksheet Header**:
-   - Title and enlarged, tilted stamp badge (`[Language] [Level]`).
+   - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language.
 3. **Introduction / Context**:
-   - 1–2 sentences explaining the goal of the handout and cultural context in the target language.
+   - Instructions callout box explaining the activity workflow in the target language.
 4. **Reading Passage**:
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
    - Divided into logical paragraphs or subsections with clear subtitles. (No word count label).
 5. **Vocabulary & Cultural Notes (Glossary)**:
-   - Key terms, idiomatic phrases, and cultural explanations with definitions in the target language.
+   - Key terms, idiomatic phrases, and cultural explanations with definitions in the target language, rendered in borderless cards with subtle parchment background.
 6. **Interactive Multiple-Choice Comprehension Quiz**:
    - 4–6 questions testing reading comprehension, grammar in context, and vocabulary.
    - Large plain question numbers (no background boxes).
-   - Each question has 3–4 plausible options.
+   - Borderless question cards and options with subtle background fills and hover states.
    - Interactive feedback:
      - Selecting an option immediately shows whether it is correct or incorrect.
      - Explanatory note appears explaining *why* the answer is correct in simple terms.
-     - Live score tracker (e.g., "Score: 4 / 5").
-   - **Progress Persistence**:
-     - User selections and scores are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
-     - Include a visible **Reset Button** in the target language (e.g., "Reiniciar hoja de trabajo") so learners can repeat the exercise.
+   - **Progress Persistence & Discrete Reset**:
+     - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
 7. **Tandem / Preply Tutor Discussion Section**:
    - 4–5 open-ended conversation questions in the target language designed for:
      - Practice with an online tutor (e.g., Preply, iTalki).
      - Language exchange tandem partners.
      - Speaking or writing self-reflection.
+8. **Bottom Actions & Navigation Bar**:
+   - Matching back link to catalog (`← Índice de Actividades`).
+   - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear `localStorage` answer state.
+9. **Standardized Footer**:
+   - `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
 
 ---
 

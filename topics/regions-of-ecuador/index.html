@@ -115,10 +115,19 @@
     .handout-title-group h1 {
       font-size: 26px;
       letter-spacing: -0.5px;
+      line-height: 1.25;
       text-transform: uppercase;
       font-family: var(--font-typewriter);
       color: var(--ink-main);
       margin-bottom: 0;
+    }
+
+    .handout-subtitle {
+      margin-top: 10px;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--ink-muted);
+      line-height: 1.5;
     }
 
     .stamp-badge {
@@ -202,9 +211,9 @@
 
     .glossary-item {
       background: var(--paper-bg);
-      border: 1px solid var(--ink-rule);
-      padding: 10px 14px;
-      border-radius: 2px;
+      border: none;
+      padding: 12px 14px;
+      border-radius: 3px;
     }
 
     .glossary-term {
@@ -225,11 +234,11 @@
     }
 
     .question-card {
-      border: 1px solid var(--ink-rule);
+      border: none;
       padding: 22px;
       margin-bottom: 22px;
       background: #fff;
-      border-radius: 2px;
+      border-radius: 3px;
       box-shadow: 0 2px 5px rgba(45, 40, 35, 0.03);
     }
 
@@ -266,15 +275,16 @@
       align-items: center;
       gap: 10px;
       padding: 10px 14px;
-      border: 1px solid var(--ink-rule);
+      border: none;
+      background-color: var(--paper-sheet);
       cursor: pointer;
       font-size: 16px;
-      transition: background 0.15s, border-color 0.15s;
+      border-radius: 3px;
+      transition: background 0.15s;
     }
 
     .option-item:hover {
       background-color: var(--paper-bg);
-      border-color: #baa795;
     }
 
     .option-item input[type="radio"] {
@@ -286,12 +296,12 @@
 
     /* Feedback states */
     .question-card.answered.correct {
-      border-color: var(--correct-green);
+      border: none;
       background-color: var(--correct-bg);
     }
 
     .question-card.answered.incorrect {
-      border-color: var(--wrong-red);
+      border: none;
       background-color: var(--wrong-bg);
     }
 
@@ -316,49 +326,45 @@
       color: var(--wrong-red);
     }
 
-    /* Score Bar & Reset */
-    .quiz-footer {
+    /* Bottom Actions Bar & Discrete Reset */
+    .bottom-actions-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 24px;
-      padding: 16px 20px;
-      background-color: var(--paper-bg);
-      border: 1px solid var(--ink-rule);
-      border-radius: 2px;
-      font-family: var(--font-typewriter);
-    }
-
-    .score-display {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .score-display span {
-      color: var(--stamp-blue);
-    }
-
-    .reset-btn {
-      background-color: var(--paper-sheet);
-      border: 1px solid var(--ink-rule);
-      padding: 8px 16px;
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px solid var(--ink-rule);
       font-family: var(--font-typewriter);
       font-size: 14px;
-      font-weight: 700;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .reset-answers-btn {
+      background: none;
+      border: none;
+      color: var(--ink-muted);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(45, 40, 35, 0.08);
-      border-radius: 2px;
-      transition: transform 0.1s, background-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 3px;
+      transition: color 0.15s, background-color 0.15s;
     }
 
-    .reset-btn:hover {
-      background-color: var(--highlight);
+    .reset-answers-btn:hover {
+      color: var(--ink-main);
+      background-color: var(--paper-bg);
     }
 
-    .reset-btn:active {
-      transform: translateY(1px);
+    .reset-icon {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2.2;
+      stroke: currentColor;
     }
 
     /* Tandem & Tutor Discussion Box */
@@ -392,12 +398,21 @@
 
     .handout-footer {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 32px;
       padding-top: 16px;
       border-top: 1px solid var(--ink-rule);
       font-family: var(--font-typewriter);
       font-size: 13px;
       color: var(--ink-muted);
+    }
+
+    .handout-footer a {
+      color: var(--ink-main);
+      text-decoration: underline;
+    }
+
+    .handout-footer a:hover {
+      color: var(--stamp-blue);
     }
 
     /* =========================================================
@@ -410,15 +425,45 @@
       .handout-sheet {
         padding: 20px 16px;
       }
-      .student-fields {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
       .header-top {
         flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .handout-title-group h1 {
+        font-size: 21px;
+        line-height: 1.2;
+        letter-spacing: -0.2px;
+      }
+      .handout-subtitle {
+        font-size: 15px;
+        line-height: 1.35;
+        margin-top: 6px;
+      }
+      .section-title {
+        font-size: 15px;
+        letter-spacing: 0;
+        line-height: 1.25;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .section-title .section-num {
+        font-size: 22px;
+        margin-right: 6px;
+      }
+      .tandem-header {
+        font-size: 15px;
+        line-height: 1.25;
+        letter-spacing: 0;
+        flex-wrap: wrap;
       }
       .glossary-grid {
         grid-template-columns: 1fr;
+      }
+      .bottom-actions-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
       }
     }
 
@@ -428,7 +473,7 @@
         padding: 0;
         background-image: none;
       }
-      .utility-bar, .reset-btn {
+      .utility-bar, .bottom-actions-bar, .reset-answers-btn {
         display: none !important;
       }
       .handout-sheet {
@@ -466,6 +511,9 @@
           Español B1
         </div>
       </div>
+      <p class="handout-subtitle">
+        Una exploración de la geografía, biodiversidad y riqueza cultural de la Costa, la Sierra, el Oriente y las Islas Galápagos.
+      </p>
     </header>
 
     <!-- Section 1: Introduction -->
@@ -692,16 +740,6 @@
 
     </div>
 
-    <!-- Quiz Footer: Score & Reset -->
-    <div class="quiz-footer">
-      <div class="score-display">
-        Puntuación: <span id="score-counter">0</span> / 5
-      </div>
-      <button class="reset-btn" id="reset-btn" onclick="resetWorksheet()">
-        &#8634; Reiniciar hoja de trabajo
-      </button>
-    </div>
-
     <!-- Section 5: Tandem & Preply Tutor Discussion Section -->
     <section class="tandem-box">
       <div class="tandem-header">
@@ -729,9 +767,21 @@
       </ol>
     </section>
 
+    <!-- Bottom Actions / Navigation -->
+    <div class="bottom-actions-bar">
+      <a href="../../index.html" class="back-link">
+        <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Índice de Actividades
+      </a>
+      <button class="reset-answers-btn" id="reset-btn" onclick="resetWorksheet()" title="Reiniciar respuestas de esta actividad">
+        <svg class="reset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+        Reiniciar respuestas
+      </button>
+    </div>
+
     <!-- Footer -->
     <footer class="handout-footer">
-      Language Learning Activities • Recurso educativo abierto bajo diseño de hoja pedagógica tradicional • Formato 100% autónomo
+      Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>
     </footer>
 
   </main>
@@ -826,7 +876,10 @@
           score++;
         }
       });
-      document.getElementById('score-counter').textContent = score;
+      const scoreCounter = document.getElementById('score-counter');
+      if (scoreCounter) {
+        scoreCounter.textContent = score;
+      }
     }
 
     function saveState() {
