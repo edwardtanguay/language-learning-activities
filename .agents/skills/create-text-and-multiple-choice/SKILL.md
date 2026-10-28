@@ -57,7 +57,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Greek (`el`): `#0d9488`
   - Icelandic (`is`): `#06b6d4`
   - Danish (`da`): `#ff1493`
-  The header stamp badge (`.stamp-badge`) displaying `[Language] [Level]` (e.g. `Español B1`) uses `border: 3px solid var(--lang-color); color: var(--lang-color); font-size: 18px; font-weight: 800; transform: rotate(-2deg);` to look like a prominent colored ink stamp. On mobile (`max-width: 680px`), the stamp badge is centered horizontally in the middle (`margin: 4px auto 0 auto; align-self: center;`) while the title remains left-aligned.
+  The header stamp badge (`.stamp-badge`) displaying `[Language] [Level]` (e.g. `Español B1`) uses `border: 3px solid var(--lang-color); color: var(--lang-color); font-size: 18px; font-weight: 800; transform: rotate(-2deg);` to look like a prominent colored ink stamp. On mobile (`max-width: 680px`), the stamp badge is centered horizontally in the middle (`margin: 4px auto 0 auto; align-self: center;`), and the main title (`.handout-title-group h1`), subtitle (`.handout-subtitle`), and instructions heading (`.instructions-heading`) are also centered.
 - **Paper on Desk Aesthetic**:
   - The main container (`.handout-sheet`) has a soft blurred drop-shadow (`box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04)`) and a delicate warm border (`1px solid #e8e2d5`), giving the look of a sheet of paper on a desk.
 - **No Harsh Black Outlines & Borderless Cards**:
@@ -88,14 +88,15 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Never apply `user-select: none;` to text elements.
   - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons. Single-click dismissals are debounced (~250ms) so that double-clicking to select a word does not dismiss the card.
   - Text selection on quiz option labels must never toggle radio buttons.
-- **Dual Navigation & Discrete Reset**:
+- **Dual Navigation & Embedded In-Place Reset Confirmation**:
   - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar.
   - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar to clear both multiple-choice and vocabulary states in `localStorage`.
+  - **Embedded In-Place Reset Confirmation UX**: Never use a native browser `confirm()` popup. Clicking "Reiniciar respuestas" replaces the button in-place with an inline confirmation UI (`¿Confirmar reinicio? [Sí, reiniciar] [Cancelar]`) that auto-reverts after 8 seconds or upon clicking Cancel.
   - Both desktop and mobile: set equal upper and lower padding on the bottom actions bar (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the navigation texts are equally distant from the dividing lines above and below.
   - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`).
 - **Standardized Footer**:
   - At the very bottom of the worksheet: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
-  - On mobile screens, stack and horizontally center the brand and author links with the bullet dot hidden (`display: none;`).
+  - On mobile screens (`max-width: 680px`), remove "Language Learning Activities" and the bullet dot, leaving only "See more projects by Edward" centered.
 - **Responsive Layout**:
   - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout.
   - Mobile (Portrait): Single-column stack with comfortable padding, tight line spacing, and touch-friendly controls.
@@ -170,15 +171,17 @@ Each activity file should include the following sections:
    - Borderless and transparent container (no dashed or solid outline boxes).
    - Do NOT include boilerplate introductory instructions.
    - 4–5 open-ended conversation questions in the target language designed for practice with tutors, exchange partners, or self-reflection.
-   - Next to each discussion question, include a subtle magnifying glass lookup icon link inline at the end of the text that opens Google search in a new tab: `answer this question in three sentences in <Language>, assume you are from <Country/Persona (default Germany)>: "<question>"`.
+   - Next to each discussion question, include a warm amber lightbulb SVG icon (`#d97706` stroke, `#fef3c7` fill) linking to Google search in a new tab: `answer this question in three sentences in <Language>, assume you are from <Country/Persona (default Germany)>: "<question>"`.
+   - **Non-Breaking Icon Attachment**: The lightbulb icon must NEVER dangle alone on its own line. Always wrap the preceding word, a non-breaking space (`&nbsp;`), and the icon link inside `<span class="question-hint-wrap">word?&nbsp;<a ...>...</a></span>` with `white-space: nowrap;` so that if line-breaking occurs, the word and lightbulb wrap together to the new line.
 8. **Bottom Actions & Navigation Bar**:
    - Matching back link to catalog (`← Índice de Actividades`).
-   - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear both multiple-choice answers and completed vocabulary from `localStorage`.
+   - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI (`¿Confirmar reinicio? [Sí, reiniciar] [Cancelar]`) that auto-reverts after 8 seconds or on cancel.
+   - Clears both multiple-choice answers and completed vocabulary from `localStorage`.
    - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so controls are equally distant from dividing lines above and below on both desktop and mobile.
    - On mobile screens, both controls are centered horizontally and vertically.
 9. **Standardized Footer**:
    - `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
-   - On mobile, brand and author links are stacked and centered with the bullet dot hidden.
+   - On mobile screens (`max-width: 680px`), remove "Language Learning Activities" and the bullet dot, leaving only "See more projects by Edward" centered.
 
 ---
 
@@ -187,10 +190,11 @@ Each activity file should include the following sections:
 After creating `topics/<topic-slug>/index.html`:
 1. Read the root `index.html`.
 2. Add the new activity to the catalog list with:
-   - Language and level combined into a single badge: `<span class="badge-lang lang-<code">Language Level</span>` (e.g., `<span class="badge-lang lang-es">Español B1</span>`)
-   - `data-lang="<code> <language>"` attribute on `<article class="activity-card">`
-   - `data-level="<level>"` attribute on `<article class="activity-card">`
-   - Topic Title
-   - Brief 1-2 sentence description in the target language
-   - Direct link to `topics/<topic-slug>/index.html` with clean "Abrir actividad &rarr;" action link
+   - `<article class="activity-card" data-lang="<code> <language>" data-level="<level>" data-topic="..." onclick="openCard('topics/<topic-slug>/index.html', event)">`
+   - Language and level combined into a single badge: `<span class="badge-lang lang-<code>">Language Level</span>` (e.g., `<span class="badge-lang lang-es">Español B1</span>`)
+   - Card has `cursor: pointer;` and intense hover shadow without border outline changes.
+   - The "Abrir actividad →" button is omitted from the card.
+   - On mobile (`max-width: 680px`), the badge transforms into an unbordered red supertitle above the title, card padding is reduced, and description font is slightly smaller.
+   - Catalog dropdown filter controls use standard body serif font (`"Lora", Georgia, serif`).
+   - Catalog footer "Guía para creadores" link features a thick arrow (`stroke-width: 3`).
 3. Maintain tidy chronological or categorical sorting.

@@ -23,8 +23,9 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - **Antes de la clase / Before Class**: No bullet dot in front of the label. The label is capitalized (`Antes de la clase:`) followed by an all-lowercase description (e.g., `estudiante y profesor se familiarizan con el texto lo que deseen`, without trailing period).
     - **En clase / In Class**: No bullet dot in front of the label. The label is capitalized (`En clase:`) followed by an all-lowercase comma-separated list: `(1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos`.
     - Keep phrasing concise, inline, and readable in seconds.
-- **Header Stamp Badge on Mobile**:
-  - On mobile (`max-width: 680px`), the stamp badge (`.stamp-badge`) is centered horizontally in the middle (`margin: 4px auto 0 auto; align-self: center;`) while the main title and subtitle remain left-aligned.
+- **Header & Title on Mobile**:
+  - On mobile (`max-width: 680px`), the stamp badge (`.stamp-badge`) is centered horizontally in the middle (`margin: 4px auto 0 auto; align-self: center;`), and the main title (`.handout-title-group h1`) and subtitle (`.handout-subtitle`) are centered.
+  - The instructions callout heading (`.instructions-heading`, e.g. **INSTRUCCIONES**) is also centered on mobile.
 - **Section Numbering & Right-Side Action Hints**:
   - Main sections across the worksheet are designated with clean numbers (1, 2, 3, 4) without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> Preguntas abiertas`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
@@ -82,13 +83,16 @@ Each activity lives in `topics/<topic-slug>/index.html`:
   - Heading standardized to "Open Questions" in the target language (e.g., `<span class="section-num">4</span> Preguntas abiertas` in Spanish, `Offene Fragen` in German, `Questions ouvertes` in French), paired with right-aligned action hint "answer and discuss" in the target language (e.g., `responder y debatir`).
   - Borderless and transparent container (remove dashed or solid outline boxes).
   - No boilerplate introductory instructions.
-  - Next to each question, include a subtle magnifying glass lookup icon link inline at the end of the text that opens Google search in a new tab: `answer this question in three sentences in <Language>, assume you are from <Country/Persona (default Germany)>: "<question>"`.
-- **Bottom Actions Bar & Balanced Spacing**:
+  - Next to each question, include a warm amber lightbulb SVG icon (`#d97706` stroke, `#fef3c7` fill) linking to Google search in a new tab: `answer this question in three sentences in <Language>, assume you are from <Country/Persona (default Germany)>: "<question>"`.
+  - **Non-Breaking Icon Attachment**: The lightbulb icon must NEVER dangle alone on its own line. Always wrap the preceding word, a non-breaking space (`&nbsp;`), and the icon link inside `<span class="question-hint-wrap">word?&nbsp;<a ...>...</a></span>` with `white-space: nowrap;` so that if line-breaking occurs, the word and lightbulb wrap together to the new line.
+- **Bottom Actions Bar & Embedded In-Place Reset Confirmation**:
   - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the back link and reset button are equally distant from the horizontal rule lines above and below them on both desktop and mobile.
-  - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear all `localStorage` state (both multiple-choice and vocabulary).
+  - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI (`¿Confirmar reinicio? [Sí, reiniciar] [Cancelar]`) that auto-reverts after 8 seconds or on cancel.
+  - Clears all `localStorage` state (both multiple-choice answers and completed vocabulary).
 - **Standardized Footer & Mobile Centering**:
   - Footer displays: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
-  - On mobile (`max-width: 680px`), stack and horizontally center "Language Learning Activities" and "See more projects by Edward" with the bullet dot hidden (`display: none;`).
+  - On mobile (`max-width: 680px`), remove "Language Learning Activities" and the bullet dot, centering only "See more projects by Edward".
+  - On root `index.html` catalog footer, the "Guía para creadores" link features a thick arrow (`stroke-width: 3`).
 
 ## Standardized Languages & Palette
 
@@ -109,8 +113,13 @@ Use the following standardized languages, 2-letter ISO codes, and hex colors eve
 ### Language UI Rules
 
 - **Ordering**: The above order must always be used whenever languages are listed together (e.g., catalog filters, documentation, legends).
-- **Catalog Cards (`index.html`)**: Activity cards display a `.badge-lang` combining the language and level (e.g. `Español B1`) styled with the target language's color for its border, text, and subtle tint. The card is styled with the desk drop-shadow without harsh black outlines, and the entire catalog interface is presented in the target language.
-- **Catalog Dropdown Filter (`index.html`)**: The language filter dropdown includes all 11 standardized languages in the canonical order.
+- **Catalog Cards (`index.html`)**:
+  - Activity cards display a `.badge-lang` combining the language and level (e.g. `Español B1`) styled with the target language's color.
+  - Entire card is clickable (`cursor: pointer;`) to open the activity, with hover showing an intense soft shadow (`0 10px 28px rgba(45, 40, 35, 0.12)`) without border outline changes.
+  - The "Abrir actividad →" button is omitted from the card.
+  - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font, and the language/level badge is displayed as an unbordered red supertitle above the activity title.
+- **Catalog Header (`index.html`)**: On mobile, the main header title ("Language Learning Activities") and subtitle ("Hojas pedagógicas para autoestudio, tándems y profesores") are centered.
+- **Catalog Dropdown Filter (`index.html`)**: Form controls (select dropdowns, search input, labels) use the clean standard body serif font (`"Lora", Georgia, serif`), matching the rest of the page. The dropdown includes all 11 standardized languages in the canonical order.
 - **Activity Pages (`topics/<slug>/index.html`)**: The header stamp badge (`.stamp-badge`) and language metadata tags use the designated language color (e.g., `#be185d` for Spanish) to resemble an authentic colored ink stamp, while preserving the calm mimeograph ink aesthetic for the rest of the worksheet.
 
 ## Pedagogical Guidelines

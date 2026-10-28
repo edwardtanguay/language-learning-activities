@@ -114,7 +114,7 @@
       padding: 12px 18px;
       margin-bottom: 24px;
       border-radius: 3px;
-      font-family: var(--font-typewriter);
+      font-family: var(--font-body);
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
@@ -126,13 +126,14 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 14px;
+      font-size: 15px;
+      font-family: var(--font-body);
     }
 
     .filter-select, .search-input {
-      font-family: var(--font-typewriter);
+      font-family: var(--font-body);
       font-size: 14px;
-      padding: 4px 8px;
+      padding: 5px 8px;
       border: 1px solid var(--ink-rule);
       border-radius: 2px;
       background-color: #fff;
@@ -156,14 +157,15 @@
       padding: 22px 24px;
       border-radius: 3px;
       box-shadow: 0 2px 5px rgba(45, 40, 35, 0.03);
-      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      transition: background 0.15s, box-shadow 0.15s;
       position: relative;
+      cursor: pointer;
     }
 
     .activity-card:hover {
       background-color: #fffefb;
-      border-color: var(--stamp-blue);
-      box-shadow: 0 4px 12px rgba(45, 40, 35, 0.06);
+      border-color: #e8e2d5;
+      box-shadow: 0 10px 28px rgba(45, 40, 35, 0.12);
     }
 
     .activity-card-header {
@@ -222,29 +224,8 @@
     .activity-desc {
       font-size: 15px;
       color: var(--ink-muted);
-      margin-bottom: 14px;
+      margin-bottom: 0;
       line-height: 1.55;
-    }
-
-    .activity-action-row {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      font-family: var(--font-typewriter);
-      font-size: 13px;
-    }
-
-    .open-activity-btn {
-      color: var(--stamp-blue);
-      font-weight: 700;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .open-activity-btn:hover {
-      text-decoration: underline;
     }
 
     /* Footer */
@@ -301,24 +282,56 @@
       }
       .header-top {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
+      }
+      .catalog-title-group {
+        text-align: center;
+        width: 100%;
       }
       .catalog-title-group h1 {
         font-size: 21px;
         line-height: 1.2;
+        text-align: center;
       }
       .catalog-subtitle {
         font-size: 15px;
         line-height: 1.35;
+        text-align: center;
       }
       .filter-bar {
         flex-direction: column;
         align-items: stretch;
       }
+      .activity-card {
+        padding: 14px 16px;
+      }
       .activity-card-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 6px;
+        gap: 2px;
+        margin-bottom: 8px;
+      }
+      .activity-badges {
+        order: -1;
+        margin-bottom: 2px;
+      }
+      .activity-badges .badge-lang {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        font-size: 12px !important;
+        letter-spacing: 0.8px;
+      }
+      .activity-badges .badge-lang.lang-es {
+        color: var(--lang-es) !important;
+      }
+      .activity-title {
+        font-size: 18px;
+      }
+      .activity-desc {
+        font-size: 14px;
+        line-height: 1.5;
       }
       .site-footer {
         gap: 6px;
@@ -386,7 +399,7 @@
     <section class="activities-list" id="activities-list">
 
       <!-- Topic 1: Regions of Ecuador -->
-      <article class="activity-card" data-lang="es spanish español" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos">
+      <article class="activity-card" data-lang="es spanish español" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos" onclick="openCard('topics/regions-of-ecuador/index.html', event)">
         <div class="activity-card-header">
           <h2 class="activity-title">
             <a href="topics/regions-of-ecuador/index.html">Las Cuatro Regiones de Ecuador</a>
@@ -399,10 +412,6 @@
         <p class="activity-desc">
           Explora la asombrosa diversidad geográfica y cultural de Ecuador a través de sus cuatro regiones naturales: la Costa tropical, los volcanes de la Sierra andina, la selva del Oriente amazónico y la fauna endémica de las Islas Galápagos.
         </p>
-
-        <div class="activity-action-row">
-          <a href="topics/regions-of-ecuador/index.html" class="open-activity-btn">Abrir actividad &rarr;</a>
-        </div>
       </article>
 
     </section>
@@ -419,13 +428,19 @@
         <span class="footer-author">See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
       </div>
       <div class="footer-creator-link">
-        <a href="creators/index.html">Guía para creadores &rarr;</a>
+        <a href="creators/index.html">Guía para creadores <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 13px; height: 13px; vertical-align: -1px; display: inline-block; margin-left: 2px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
     </footer>
 
   </main>
 
   <script>
+    function openCard(url, event) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (event && event.target && event.target.closest('a')) return;
+      window.location.href = url;
+    }
+
     function filterActivities() {
       const lang = document.getElementById('lang-filter').value.toLowerCase();
       const level = document.getElementById('level-filter').value.toLowerCase();

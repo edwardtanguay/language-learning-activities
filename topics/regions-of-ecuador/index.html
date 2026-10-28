@@ -757,6 +757,11 @@
       gap: 12px;
     }
 
+    .reset-container {
+      display: inline-flex;
+      align-items: center;
+    }
+
     .reset-answers-btn {
       background: none;
       border: none;
@@ -782,6 +787,61 @@
       height: 14px;
       stroke-width: 2.2;
       stroke: currentColor;
+    }
+
+    .reset-confirm-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      background-color: var(--paper-bg);
+      border: 1px solid var(--ink-rule);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+
+    .reset-confirm-text {
+      color: var(--wrong-red);
+      font-weight: 700;
+    }
+
+    .reset-confirm-btn {
+      background: var(--wrong-red);
+      color: #fff;
+      border: 1px solid var(--wrong-red);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      padding: 3px 8px;
+      cursor: pointer;
+      border-radius: 2px;
+      font-weight: 700;
+      transition: opacity 0.15s;
+    }
+
+    .reset-confirm-btn:hover {
+      opacity: 0.88;
+    }
+
+    .reset-cancel-btn {
+      background: var(--paper-sheet);
+      color: var(--ink-muted);
+      border: 1px solid var(--ink-border);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      padding: 3px 8px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .reset-cancel-btn:hover {
+      color: var(--ink-main);
+      background-color: #fff;
+    }
+
+    .question-hint-wrap {
+      white-space: nowrap;
     }
 
     .handout-footer {
@@ -826,23 +886,32 @@
       }
       .header-top {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 12px;
       }
       .stamp-badge {
         margin: 4px auto 0 auto;
         align-self: center;
       }
+      .handout-title-group {
+        text-align: center;
+        width: 100%;
+      }
       .handout-title-group h1 {
         font-size: 21px;
         line-height: 1.2;
         letter-spacing: -0.2px;
+        text-align: center;
       }
       .handout-subtitle {
         font-size: 15px;
         line-height: 1.35;
         margin-top: 14px;
         margin-bottom: 14px;
+        text-align: center;
+      }
+      .instructions-heading {
+        text-align: center;
       }
       .section-title {
         font-size: 15px;
@@ -901,7 +970,7 @@
         padding-bottom: 20px;
       }
       .bottom-actions-bar .back-link,
-      .bottom-actions-bar .reset-answers-btn {
+      .bottom-actions-bar .reset-container {
         justify-content: center;
         text-align: center;
       }
@@ -911,7 +980,10 @@
         gap: 4px;
         text-align: center;
       }
-      .footer-dot {
+      .handout-footer .footer-brand {
+        display: none;
+      }
+      .handout-footer .footer-dot {
         display: none;
       }
     }
@@ -1254,34 +1326,19 @@
     <section class="discussion-container">
       <ol class="discussion-questions">
         <li>
-          Si pudieras viajar a Ecuador mañana, ¿cuál de las cuatro regiones te gustaría visitar primero y qué actividades te interesaría hacer allí?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Si+pudieras+viajar+a+Ecuador+ma%C3%B1ana%2C+%C2%BFcu%C3%A1l+de+las+cuatro+regiones+te+gustar%C3%ADa+visitar+primero+y+qu%C3%A9+actividades+te+interesar%C3%ADa+hacer+all%C3%AD%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
-            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </a>
+          Si pudieras viajar a Ecuador mañana, ¿cuál de las cuatro regiones te gustaría visitar primero y qué actividades te interesaría hacer <span class="question-hint-wrap">allí?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Si+pudieras+viajar+a+Ecuador+ma%C3%B1ana%2C+%C2%BFcu%C3%A1l+de+las+cuatro+regiones+te+gustar%C3%ADa+visitar+primero+y+qu%C3%A9+actividades+te+interesar%C3%ADa+hacer+all%C3%AD%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
         </li>
         <li>
-          Compara el clima y la geografía de tu país de origen con la variedad que ofrece Ecuador. ¿En qué se parecen y en qué se diferencian?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Compara+el+clima+y+la+geograf%C3%ADa+de+tu+pa%C3%ADs+de+origen+con+la+variedad+que+ofrece+Ecuador.+%C2%BFEn+qu%C3%A9+se+parecen+y+en+qu%C3%A9+se+diferencian%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
-            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </a>
+          Compara el clima y la geografía de tu país de origen con la variedad que ofrece Ecuador. ¿En qué se parecen y en qué se <span class="question-hint-wrap">diferencian?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Compara+el+clima+y+la+geograf%C3%ADa+de+tu+pa%C3%ADs+de+origen+con+la+variedad+que+ofrece+Ecuador.+%C2%BFEn+qu%C3%A9+se+parecen+y+en+qu%C3%A9+se+diferencian%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
         </li>
         <li>
-          ¿Has probado alguna vez plátano verde o mariscos preparados al estilo latinoamericano? ¿Qué plato tradicional de tu cultura recomendarías a alguien que visita tu ciudad?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFHas+probado+alguna+vez+pl%C3%A1tano+verde+o+mariscos+preparados+al+estilo+latinoamericano%3F+%C2%BFQu%C3%A9+plato+tradicional+de+tu+cultura+recomendar%C3%ADas+a+alguien+que+visita+tu+ciudad%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
-            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </a>
+          ¿Has probado alguna vez plátano verde o mariscos preparados al estilo latinoamericano? ¿Qué plato tradicional de tu cultura recomendarías a alguien que visita tu <span class="question-hint-wrap">ciudad?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFHas+probado+alguna+vez+pl%C3%A1tano+verde+o+mariscos+preparados+al+estilo+latinoamericano%3F+%C2%BFQu%C3%A9+plato+tradicional+de+tu+cultura+recomendar%C3%ADas+a+alguien+que+visita+tu+ciudad%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
         </li>
         <li>
-          Las Islas Galápagos son famosas por su protección ecológica estricta. ¿Cómo equilibrarías tú el turismo internacional con la conservación de especies frágiles?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Las+Islas+Gal%C3%A1pagos+son+famosas+por+su+protecci%C3%B3n+ecol%C3%B3gica+estricta.+%C2%BFC%C3%B3mo+equilibrar%C3%ADas+t%C3%BA+el+turismo+internacional+con+la+conservaci%C3%B3n+de+especies+fr%C3%A1giles%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
-            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </a>
+          Las Islas Galápagos son famosas por su protección ecológica estricta. ¿Cómo equilibrarías tú el turismo internacional con la conservación de especies <span class="question-hint-wrap">frágiles?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Las+Islas+Gal%C3%A1pagos+son+famosas+por+su+protecci%C3%B3n+ecol%C3%B3gica+estricta.+%C2%BFC%C3%B3mo+equilibrar%C3%ADas+t%C3%BA+el+turismo+internacional+con+la+conservaci%C3%B3n+de+especies+fr%C3%A1giles%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
         </li>
         <li>
-          ¿Qué ciudad histórica o centro colonial conoces en tu país o en tus viajes que tenga un valor cultural similar al de Quito?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFQu%C3%A9+ciudad+hist%C3%B3rica+o+centro+colonial+conoces+en+tu+pa%C3%ADs+o+en+tus+viajes+que+tenga+un+valor+cultural+similar+al+de+Quito%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
-            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </a>
+          ¿Qué ciudad histórica o centro colonial conoces en tu país o en tus viajes que tenga un valor cultural similar al de <span class="question-hint-wrap">Quito?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFQu%C3%A9+ciudad+hist%C3%B3rica+o+centro+colonial+conoces+en+tu+pa%C3%ADs+o+en+tus+viajes+que+tenga+un+valor+cultural+similar+al+de+Quito%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
         </li>
       </ol>
     </section>
@@ -1292,10 +1349,17 @@
         <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Índice de Actividades
       </a>
-      <button class="reset-answers-btn" id="reset-btn" onclick="resetWorksheet()" title="Reiniciar respuestas de esta actividad">
-        <svg class="reset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-        Reiniciar respuestas
-      </button>
+      <div class="reset-container" id="reset-container">
+        <button class="reset-answers-btn" id="reset-btn" onclick="requestReset()" title="Reiniciar respuestas de esta actividad">
+          <svg class="reset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          Reiniciar respuestas
+        </button>
+        <div class="reset-confirm-box" id="reset-confirm-box" style="display: none;">
+          <span class="reset-confirm-text">¿Confirmar reinicio?</span>
+          <button class="reset-confirm-btn" onclick="confirmReset()">Sí, reiniciar</button>
+          <button class="reset-cancel-btn" onclick="cancelReset()">Cancelar</button>
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
@@ -1973,33 +2037,62 @@
     // =========================================================
     // RESET WORKSHEET
     // =========================================================
-    function resetWorksheet() {
-      if (confirm("¿Deseas reiniciar la hoja de trabajo y borrar tus respuestas guardadas?")) {
-        userAnswers = {};
-        completedVocab = [];
-        activeModalCard = null;
+    let resetTimer = null;
 
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-        } catch (e) {}
+    function requestReset() {
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (!btn || !box) return;
+      btn.style.display = 'none';
+      box.style.display = 'inline-flex';
 
-        const optionItems = document.querySelectorAll('.option-item');
-        optionItems.forEach(item => item.classList.remove('selected'));
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        cancelReset();
+      }, 8000);
+    }
 
-        const cards = document.querySelectorAll('.question-card');
-        cards.forEach(c => {
-          c.classList.remove('answered', 'correct', 'incorrect');
-        });
-
-        const feedbacks = document.querySelectorAll('.feedback-box');
-        feedbacks.forEach(f => {
-          f.textContent = '';
-          f.className = 'feedback-box';
-        });
-
-        hideModal();
-        renderVocabulary();
+    function cancelReset() {
+      if (resetTimer) {
+        clearTimeout(resetTimer);
+        resetTimer = null;
       }
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (btn) btn.style.display = 'inline-flex';
+      if (box) box.style.display = 'none';
+    }
+
+    function confirmReset() {
+      cancelReset();
+      executeReset();
+    }
+
+    function executeReset() {
+      userAnswers = {};
+      completedVocab = [];
+      activeModalCard = null;
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      const optionItems = document.querySelectorAll('.option-item');
+      optionItems.forEach(item => item.classList.remove('selected'));
+
+      const cards = document.querySelectorAll('.question-card');
+      cards.forEach(c => {
+        c.classList.remove('answered', 'correct', 'incorrect');
+      });
+
+      const feedbacks = document.querySelectorAll('.feedback-box');
+      feedbacks.forEach(f => {
+        f.textContent = '';
+        f.className = 'feedback-box';
+      });
+
+      hideModal();
+      renderVocabulary();
     }
 
     // Initialize on page load
