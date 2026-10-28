@@ -76,16 +76,18 @@ Follow the project design philosophy defined in `AGENTS.md`:
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:
-  - When an icon, radio button, or checkbox on the left is paired with text on the right that may wrap into multiple lines, always top-align both (`align-items: flex-start;`). Never center vertically (`align-items: center;`), keeping the control cleanly aligned with the first line of text.
+  - When an icon, radio button, or checkbox on the left is paired with text on the right that may wrap into multiple lines, always top-align both (`align-items: flex-start;`). Never center vertically (`align-items: center;`), ensuring the control or icon stays cleanly aligned with the first line of text.
 - **Dual Navigation & Discrete Reset**:
-  - Include the back link (`← Índice de Actividades`) both at the top utility bar and in a bottom actions bar.
-  - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar.
+  - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar.
+  - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar to clear both multiple-choice and vocabulary states in `localStorage`.
+  - Both desktop and mobile: set equal upper and lower padding on the bottom actions bar (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the navigation texts are equally distant from the dividing lines above and below.
   - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`).
 - **Standardized Footer**:
   - At the very bottom of the worksheet: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
+  - On mobile screens, stack and horizontally center the brand and author links with the bullet dot hidden (`display: none;`).
 - **Responsive Layout**:
-  - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout (reading passage + vocabulary margin, followed by quiz).
-  - Mobile (Portrait): Single-column stack with comfortable padding, tight line spacing, and touch-friendly buttons.
+  - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout.
+  - Mobile (Portrait): Single-column stack with comfortable padding, tight line spacing, and touch-friendly controls.
 
 ---
 
@@ -98,37 +100,60 @@ Each activity file should include the following sections:
    - Do NOT include a print button.
 2. **Worksheet Header**:
    - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
-3. **Introduction / Context**:
-   - Instructions callout box explaining the activity workflow in the target language referencing sections B, C, and D.
+3. **Structured Instructions Callout Box**:
+   - Outlines the lesson plan in the target language with bold headings:
+     - **Before Class / Antes de la clase**: Both student and teacher read through the text and exercises as much as possible; student looks up unknown words necessary to understand the text and questions; teacher familiarizes with the topic and prepares additional context.
+     - **In Class / En clase**:
+       1. Student reads through the text aloud while teacher corrects pronunciation errors immediately as they occur.
+       2. Student and teacher work through exercises together.
+       3. Student and teacher answer discussion questions, with the teacher always going first on each question; conversations should remain open-ended.
 4. **Section A: Reading Passage**:
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
-   - Divided into logical paragraphs or subsections with clear subtitles. (No word count label).
-5. **Section B: Vocabulary & Cultural Notes (Glossary)**:
-   - Key terms, idiomatic phrases, and cultural explanations with definitions in the target language, rendered in borderless cards with subtle parchment background.
+   - Text length must always be approximately 400 words (do NOT display the word count anywhere).
+   - Divided into logical paragraphs or subsections with clear subtitles.
+5. **Section B: Key Vocabulary (Vocabulario Clave) Drag & Drop Exercise**:
+   - Positioned immediately following Section A (the reading text).
+   - Title standardized to "Key Vocabulary" translated into the target language (e.g., "Vocabulario Clave" in Spanish).
+   - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
+   - Top area: flex pool of waiting draggable/clickable word chips (`.vocab-pool`).
+   - Middle area: active target definition cards in shuffled order (`.vocab-targets`).
+   - Supports mouse drag-and-drop, touch drag, and tap-to-select (tap a word chip, then tap a definition) for smooth mobile support.
+   - Wrong drop: sticks to the card, shows a red X SVG icon and a contextual hint in the target language explaining the word's true meaning. The entire page is dimmed/disabled via an overlay until the user clicks anywhere on the box, which returns the word chip to the waiting pool.
+   - Correct drop: creates a complete boxed dictionary entry for that word (word, part of speech, definition, and quote from the text highlighting the word). Dims/disables the page until the user clicks anywhere on the box, which removes the definition card and moves the word to the completed words section.
+   - Completed words section: no title; displays completed words in a flex row of pills, each with a green check SVG icon to its left.
+   - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills until clicked again to close.
+   - Persists completed vocabulary in `localStorage` and resets on "Reiniciar respuestas".
 6. **Section C: Interactive Multiple-Choice Comprehension Quiz**:
    - 4–6 questions (numbered 1, 2, 3...) testing reading comprehension, grammar in context, and vocabulary.
    - Large plain question numbers (no background boxes).
-   - Borderless question cards and options with subtle background fills and hover states.
-   - **No Full Card Tinting**: Do NOT tint the full question card green or red. Keep the card background clean and neutral.
-   - **Contextual Inline Feedback Under Selected Option**:
+   - Borderless question cards.
+   - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
+   - Options have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
+   - Radio button circle remains alongside the option letter, vertically centered with the first line of text across all browsers.
+   - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period.
+   - Contextual Inline Feedback:
      - Selecting an option immediately displays its feedback box directly beneath that selected option (inside the option wrapper), rather than at the bottom of the question card.
      - Only show feedback beneath the actively selected option (switching to another option moves the feedback).
      - Display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
-     - Do not prefix the explanation with redundant letters (e.g. no "(A):") or uppercase status headers.
+     - Do NOT include status text words like "¡Correcto!" or "Incorrecto.", and do NOT prefix explanations with option letters.
      - Provide a distinct explanation text for each answer choice (both right and wrong), explaining specifically why that option is correct or incorrect.
      - Allow the user to keep selecting other options even after answering, so they can explore all options and learn why alternatives were incorrect.
-   - **Progress Persistence & Discrete Reset**:
+     - Keep question cards clean and neutral; do NOT color the entire question card green or red.
+   - Progress Persistence:
      - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
 7. **Section D: Discussion Questions Section**:
    - Section heading lettered as Section D and standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French), avoiding platform-specific brand names like Preply or Tandem.
-   - Do NOT include boilerplate introductory instructions (e.g. remove "Utiliza estas preguntas para practicar la expresión oral con tu tutor...").
+   - Borderless and transparent container (no dashed or solid outline boxes).
+   - Do NOT include boilerplate introductory instructions.
    - 4–5 open-ended conversation questions in the target language designed for practice with tutors, exchange partners, or self-reflection.
 8. **Bottom Actions & Navigation Bar**:
    - Matching back link to catalog (`← Índice de Actividades`).
-   - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear `localStorage` answer state.
+   - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear both multiple-choice answers and completed vocabulary from `localStorage`.
+   - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so controls are equally distant from dividing lines above and below on both desktop and mobile.
    - On mobile screens, both controls are centered horizontally and vertically.
 9. **Standardized Footer**:
    - `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
+   - On mobile, brand and author links are stacked and centered with the bullet dot hidden.
 
 ---
 

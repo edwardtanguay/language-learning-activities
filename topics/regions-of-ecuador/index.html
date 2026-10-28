@@ -174,10 +174,38 @@
     .instructions-box {
       background-color: var(--highlight);
       border-left: 4px solid var(--ink-rule);
-      padding: 12px 16px;
+      padding: 14px 18px;
       font-family: var(--font-typewriter);
       font-size: 14px;
       margin-bottom: 24px;
+      line-height: 1.55;
+    }
+
+    .instructions-heading {
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .instructions-block {
+      margin-bottom: 8px;
+    }
+
+    .instructions-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .instructions-label {
+      font-weight: 700;
+    }
+
+    .instructions-list {
+      margin-top: 4px;
+      padding-left: 20px;
+    }
+
+    .instructions-list li {
+      margin-bottom: 4px;
     }
 
     /* Reading Passage */
@@ -201,35 +229,270 @@
       text-transform: uppercase;
     }
 
-    /* Glossary Section */
-    .glossary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 12px;
-      margin-bottom: 24px;
-      font-size: 15px;
+    /* =========================================================
+       SECTION B: VOCABULARIO CLAVE (DRAG / DROP EXERCISE)
+       ========================================================= */
+    .vocab-container {
+      margin-top: 14px;
+      margin-bottom: 28px;
+      position: relative;
     }
 
-    .glossary-item {
+    .vocab-pool-label {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .vocab-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      min-height: 44px;
+      padding: 10px 12px;
       background: var(--paper-bg);
-      border: none;
-      padding: 12px 14px;
       border-radius: 3px;
     }
 
-    .glossary-term {
+    .vocab-chip {
       font-family: var(--font-typewriter);
+      font-size: 15px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--stamp-blue);
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      padding: 6px 12px;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vocab-chip:active {
+      cursor: grabbing;
+    }
+
+    .vocab-chip.selected {
+      border-color: var(--stamp-blue);
+      background-color: var(--highlight);
+      box-shadow: 0 0 0 2px var(--stamp-blue);
+    }
+
+    .vocab-chip.dragging {
+      opacity: 0.35;
+    }
+
+    .vocab-targets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .vocab-target-card {
+      background: var(--paper-bg);
+      border: 1px dashed var(--ink-rule);
+      border-radius: 3px;
+      padding: 14px 16px;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .vocab-target-card.drag-over {
+      border-color: var(--stamp-blue);
+      background-color: #f0f4f9;
+      box-shadow: 0 0 0 2px rgba(29, 67, 115, 0.2);
+    }
+
+    .vocab-target-def {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink-main);
+    }
+
+    .vocab-target-prompt {
+      display: inline-block;
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-top: 6px;
+    }
+
+    /* Wrong Drop State */
+    .vocab-target-card.state-wrong {
+      background: var(--wrong-bg) !important;
+      border: 1px solid var(--wrong-red) !important;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(143, 42, 36, 0.25);
+    }
+
+    .wrong-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(143, 42, 36, 0.35);
+      color: var(--wrong-red);
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .wrong-banner .wrong-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 3.2;
+      stroke: var(--wrong-red);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wrong-banner .hint-text {
+      color: var(--ink-main);
+      flex: 1;
+    }
+
+    .click-dismiss-prompt {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-family: var(--font-typewriter);
+      text-align: right;
+      font-style: italic;
+    }
+
+    /* Correct Drop / Complete Dictionary Entry Card */
+    .vocab-target-card.state-correct,
+    .vocab-dict-card {
+      background: var(--paper-sheet) !important;
+      border: 1px solid var(--ink-border) !important;
+      box-shadow: 0 10px 32px rgba(45, 40, 35, 0.16);
+      z-index: 50;
+      padding: 18px 20px;
+    }
+
+    .dict-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--ink-rule);
+      padding-bottom: 6px;
+    }
+
+    .dict-word {
+      font-family: var(--font-typewriter);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+    }
+
+    .dict-pos {
+      font-style: italic;
+      color: var(--ink-muted);
+      font-size: 14px;
+      font-family: var(--font-body);
+    }
+
+    .dict-def {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      color: var(--ink-main);
+    }
+
+    .dict-sentence {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--ink-muted);
+      border-left: 3px solid var(--stamp-blue);
+      padding-left: 12px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .dict-sentence mark {
+      background: var(--highlight);
+      color: var(--ink-main);
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+
+    /* Completed Words Section */
+    .vocab-completed-section {
+      margin-top: 16px;
+    }
+
+    .vocab-completed-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .vocab-completed-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 16px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
       font-weight: 700;
       color: var(--ink-main);
-      display: inline-block;
-      margin-right: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s, border-color 0.15s;
     }
 
-    .glossary-def {
-      color: var(--ink-muted);
+    .vocab-completed-pill:hover {
+      background: var(--paper-bg);
+      border-color: var(--correct-green);
     }
 
-    /* Questions / Quiz Form */
+    .vocab-completed-pill .check-icon {
+      width: 14px;
+      height: 14px;
+      stroke-width: 3.2;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+    }
+
+    .vocab-completed-detail-area {
+      margin-bottom: 14px;
+    }
+
+    /* Page Dimming Overlay */
+    .vocab-dim-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(34, 32, 30, 0.45);
+      z-index: 40;
+      backdrop-filter: blur(1px);
+    }
+
+    .vocab-dim-overlay.active {
+      display: block;
+    }
+
+    /* =========================================================
+       SECTION C: COMPREHENSION QUIZ (MULTIPLE CHOICE)
+       ========================================================= */
     .quiz-container {
       margin-top: 20px;
     }
@@ -246,7 +509,7 @@
     .question-prompt {
       font-weight: 700;
       font-size: 17px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       display: flex;
       gap: 10px;
       align-items: baseline;
@@ -268,7 +531,7 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 2px; /* Close vertical spacing */
     }
 
     .option-wrapper {
@@ -279,33 +542,47 @@
     .option-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 10px 14px;
+      gap: 8px;
+      padding: 3px 0;
       border: none;
-      background-color: var(--paper-sheet);
+      background: transparent; /* No background */
       cursor: pointer;
       font-size: 16px;
       line-height: 1.45;
-      border-radius: 3px;
-      transition: background 0.15s;
+      border-radius: 0;
+      transition: none;
     }
 
     .option-item:hover {
-      background-color: var(--paper-bg);
+      background: transparent; /* No hover background */
     }
 
-    .option-item input[type="radio"],
-    .option-item input[type="checkbox"] {
+    .option-item input[type="radio"] {
       cursor: pointer;
       width: 17px;
       height: 17px;
-      margin-top: 3px;
+      margin: 0;
+      margin-top: 3px; /* Centered with first line across browsers */
       flex-shrink: 0;
       accent-color: var(--stamp-blue);
     }
 
-    .option-item label {
+    .option-label {
       cursor: pointer;
+      flex: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      line-height: 1.45;
+    }
+
+    .opt-letter {
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .opt-text {
       flex: 1;
     }
 
@@ -318,9 +595,10 @@
 
     .feedback-box {
       display: none;
-      margin-top: 6px;
-      margin-left: 27px;
-      padding: 10px 14px;
+      margin-top: 4px;
+      margin-bottom: 6px;
+      margin-left: 25px;
+      padding: 8px 12px;
       font-family: var(--font-typewriter);
       font-size: 14px;
       border: none;
@@ -358,14 +636,42 @@
       color: var(--ink-main);
     }
 
-    /* Bottom Actions Bar & Discrete Reset */
+    /* =========================================================
+       SECTION D: PREGUNTAS DE DISCUSIÓN
+       ========================================================= */
+    .discussion-container {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin-top: 18px;
+    }
+
+    .discussion-questions {
+      list-style-type: decimal;
+      padding-left: 22px;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .discussion-questions li {
+      padding-left: 4px;
+      line-height: 1.55;
+    }
+
+    /* =========================================================
+       BOTTOM ACTIONS BAR & STANDARDIZED FOOTER
+       ========================================================= */
     .bottom-actions-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-top: 36px;
-      padding-top: 18px;
+      padding-top: 20px;
+      padding-bottom: 20px;
       border-top: 1px solid var(--ink-rule);
+      border-bottom: 1px solid var(--ink-rule);
       font-family: var(--font-typewriter);
       font-size: 14px;
       flex-wrap: wrap;
@@ -399,43 +705,22 @@
       stroke: currentColor;
     }
 
-    /* Tandem & Tutor Discussion Box */
-    .tandem-box {
-      background-color: var(--paper-sheet);
-      border: 2px dashed var(--stamp-blue);
-      padding: 24px;
-      margin-top: 36px;
-    }
-
-    .tandem-header {
-      font-family: var(--font-typewriter);
-      color: var(--stamp-blue);
-      font-size: 17px;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 10px;
+    .handout-footer {
       display: flex;
+      justify-content: center;
       align-items: center;
       gap: 8px;
-    }
-
-    .tandem-questions {
-      list-style-type: decimal;
-      padding-left: 20px;
-      font-size: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .handout-footer {
-      text-align: center;
-      margin-top: 32px;
-      padding-top: 16px;
-      border-top: 1px solid var(--ink-rule);
+      margin-top: 0;
+      padding-top: 20px;
+      border-top: none;
       font-family: var(--font-typewriter);
       font-size: 13px;
       color: var(--ink-muted);
+      flex-wrap: wrap;
+    }
+
+    .footer-dot {
+      display: inline;
     }
 
     .handout-footer a {
@@ -448,7 +733,7 @@
     }
 
     /* =========================================================
-       RESPONSIVE & PRINT LAYOUTS
+       RESPONSIVE LAYOUTS
        ========================================================= */
     @media (max-width: 680px) {
       body {
@@ -487,13 +772,7 @@
         font-size: 22px;
         margin-right: 6px;
       }
-      .tandem-header {
-        font-size: 15px;
-        line-height: 1.25;
-        letter-spacing: 0;
-        flex-wrap: wrap;
-      }
-      .glossary-grid {
+      .vocab-targets {
         grid-template-columns: 1fr;
       }
       .bottom-actions-bar {
@@ -501,11 +780,22 @@
         align-items: center;
         justify-content: center;
         gap: 16px;
+        padding-top: 20px;
+        padding-bottom: 20px;
       }
       .bottom-actions-bar .back-link,
       .bottom-actions-bar .reset-answers-btn {
         justify-content: center;
         text-align: center;
+      }
+      .handout-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        text-align: center;
+      }
+      .footer-dot {
+        display: none;
       }
     }
 
@@ -515,7 +805,7 @@
         padding: 0;
         background-image: none;
       }
-      .utility-bar, .bottom-actions-bar, .reset-answers-btn {
+      .utility-bar, .bottom-actions-bar, .reset-answers-btn, .vocab-dim-overlay {
         display: none !important;
       }
       .handout-sheet {
@@ -524,13 +814,16 @@
         padding: 15mm 10mm;
         max-width: 100%;
       }
-      .question-card {
+      .question-card, .vocab-target-card {
         page-break-inside: avoid;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- Fullscreen Dimming Overlay -->
+  <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick()"></div>
 
   <!-- Utility Nav -->
   <div class="utility-bar">
@@ -560,7 +853,18 @@
 
     <!-- Instructions -->
     <div class="instructions-box">
-      <strong>INSTRUCCIONES:</strong> Lee atentamente el texto a continuación. Si encuentras palabras desconocidas, consulta el vocabulario en la sección B. Después responde a las 5 preguntas de comprensión en la sección C y conversa o reflexiona sobre las preguntas de discusión en la sección D.
+      <div class="instructions-heading">INSTRUCCIONES</div>
+      <div class="instructions-block">
+        <span class="instructions-label">Antes de la clase:</span> Tanto el estudiante como el profesor leen el texto y los ejercicios lo más posible. El estudiante debe buscar todas las palabras necesarias para comprender bien el texto y las preguntas. El profesor puede familiarizarse con el tema y preparar información adicional.
+      </div>
+      <div class="instructions-block">
+        <span class="instructions-label">En clase:</span>
+        <ol class="instructions-list">
+          <li>El estudiante lee el texto en voz alta mientras el profesor corrige cada error de pronunciación al instante.</li>
+          <li>El estudiante y el profesor resuelven los ejercicios juntos.</li>
+          <li>El estudiante y el profesor responden a las preguntas de discusión, con el profesor respondiendo primero a cada pregunta; las conversaciones deben ser abiertas y espontáneas.</li>
+        </ol>
+      </div>
     </div>
 
     <!-- Section A: Reading Text -->
@@ -602,46 +906,36 @@
       </div>
     </article>
 
-    <!-- Section B: Vocabulary Glossary -->
+    <!-- Section B: Vocabulary (Vocabulario Clave) Drag & Drop -->
     <h2 class="section-title">
-      <span><span class="section-num">B</span> Glosario y Vocabulario Clave</span>
+      <span><span class="section-num">B</span> Vocabulario Clave</span>
     </h2>
 
-    <div class="glossary-grid">
-      <div class="glossary-item">
-        <span class="glossary-term">Biodiversidad:</span>
-        <span class="glossary-def">Variedad de formas de vida vegetal y animal en un ecosistema.</span>
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool-label">Palabras para arrastrar o tocar:</div>
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
       </div>
-      <div class="glossary-item">
-        <span class="glossary-term">Patrimonio de la Humanidad:</span>
-        <span class="glossary-def">Lugar de valor universal excepcional protegido por la UNESCO.</span>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
       </div>
-      <div class="glossary-item">
-        <span class="glossary-term">Endémico / Endémica:</span>
-        <span class="glossary-def">Especie biológica que solo vive en un área geográfica determinada y restringida.</span>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
       </div>
-      <div class="glossary-item">
-        <span class="glossary-term">Archipiélago:</span>
-        <span class="glossary-def">Conjunto de islas agrupadas en una superficie más o menos extensa de mar.</span>
-      </div>
-      <div class="glossary-item">
-        <span class="glossary-term">Encebollado:</span>
-        <span class="glossary-def">Sopa de pescado emblemática de la Costa ecuatoriana elaborada con yuca y cebolla morada.</span>
-      </div>
-      <div class="glossary-item">
-        <span class="glossary-term">Plátano verde:</span>
-        <span class="glossary-def">Variedad de plátano que se consume cocinado o frito, base esencial de la dieta costeña.</span>
-      </div>
-    </div>
+    </section>
 
     <!-- Section C: Interactive Multiple-Choice Quiz -->
     <h2 class="section-title">
       <span><span class="section-num">C</span> Ejercicios de Comprensión (Opción Múltiple)</span>
     </h2>
-
-    <p style="font-size: 15px; margin-bottom: 16px; color: var(--ink-muted); font-family: var(--font-typewriter);">
-      Elige la respuesta correcta para cada pregunta. Tus respuestas se guardan automáticamente.
-    </p>
 
     <div class="quiz-container" id="quiz-container">
 
@@ -655,28 +949,40 @@
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'A')">
               <input type="radio" name="q1" id="q1-A" value="A">
-              <label for="q1-A">A) La Sierra (Región Interandina)</label>
+              <label class="option-label" for="q1-A">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">La Sierra (Región Interandina)</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-1-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'B')">
               <input type="radio" name="q1" id="q1-B" value="B">
-              <label for="q1-B">B) El Oriente (Región Amazónica)</label>
+              <label class="option-label" for="q1-B">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">El Oriente (Región Amazónica)</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-1-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'C')">
               <input type="radio" name="q1" id="q1-C" value="C">
-              <label for="q1-C">C) La Costa (Región Litoral)</label>
+              <label class="option-label" for="q1-C">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">La Costa (Región Litoral)</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-1-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'D')">
               <input type="radio" name="q1" id="q1-D" value="D">
-              <label for="q1-D">D) Las Islas Galápagos</label>
+              <label class="option-label" for="q1-D">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">Las Islas Galápagos</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-1-D"></div>
           </li>
@@ -693,28 +999,40 @@
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'A')">
               <input type="radio" name="q2" id="q2-A" value="A">
-              <label for="q2-A">A) Porque es el único volcán activo de América del Sur.</label>
+              <label class="option-label" for="q2-A">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">Porque es el único volcán activo de América del Sur.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-2-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'B')">
               <input type="radio" name="q2" id="q2-B" value="B">
-              <label for="q2-B">B) Porque fue el lugar donde desembarcó Charles Darwin en 1835.</label>
+              <label class="option-label" for="q2-B">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">Porque fue el lugar donde desembarcó Charles Darwin en 1835.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-2-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'C')">
               <input type="radio" name="q2" id="q2-C" value="C">
-              <label for="q2-C">C) Porque su cumbre es el punto más cercano al sol desde el centro de la Tierra.</label>
+              <label class="option-label" for="q2-C">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">Porque su cumbre es el punto más cercano al sol desde el centro de la Tierra.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-2-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'D')">
               <input type="radio" name="q2" id="q2-D" value="D">
-              <label for="q2-D">D) Porque allí se originó el plato típico bolón de verde.</label>
+              <label class="option-label" for="q2-D">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">Porque allí se originó el plato típico bolón de verde.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-2-D"></div>
           </li>
@@ -731,28 +1049,40 @@
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'A')">
               <input type="radio" name="q3" id="q3-A" value="A">
-              <label for="q3-A">A) El plátano verde (macho)</label>
+              <label class="option-label" for="q3-A">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">El plátano verde (macho)</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-3-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'B')">
               <input type="radio" name="q3" id="q3-B" value="B">
-              <label for="q3-B">B) La papa andina</label>
+              <label class="option-label" for="q3-B">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">La papa andina</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-3-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'C')">
               <input type="radio" name="q3" id="q3-C" value="C">
-              <label for="q3-C">C) El maíz tostado</label>
+              <label class="option-label" for="q3-C">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">El maíz tostado</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-3-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'D')">
               <input type="radio" name="q3" id="q3-D" value="D">
-              <label for="q3-D">D) El trigo de montaña</label>
+              <label class="option-label" for="q3-D">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">El trigo de montaña</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-3-D"></div>
           </li>
@@ -769,28 +1099,40 @@
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'A')">
               <input type="radio" name="q4" id="q4-A" value="A">
-              <label for="q4-A">A) Que emigra a otros continentes cada invierno.</label>
+              <label class="option-label" for="q4-A">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">Que emigra a otros continentes cada invierno.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-4-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'B')">
               <input type="radio" name="q4" id="q4-B" value="B">
-              <label for="q4-B">B) Que fue introducida por el ser humano en épocas coloniales.</label>
+              <label class="option-label" for="q4-B">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">Que fue introducida por el ser humano en épocas coloniales.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-4-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'C')">
               <input type="radio" name="q4" id="q4-C" value="C">
-              <label for="q4-C">C) Que está domesticada y convive pacíficamente en pueblos pesqueros.</label>
+              <label class="option-label" for="q4-C">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">Que está domesticada y convive pacíficamente en pueblos pesqueros.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-4-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'D')">
               <input type="radio" name="q4" id="q4-D" value="D">
-              <label for="q4-D">D) Que vive de manera natural únicamente en esa región geográfica específica.</label>
+              <label class="option-label" for="q4-D">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">Que vive de manera natural únicamente en esa región geográfica específica.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-4-D"></div>
           </li>
@@ -807,28 +1149,40 @@
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'A')">
               <input type="radio" name="q5" id="q5-A" value="A">
-              <label for="q5-A">A) Ser nombrada sede permanente de la Reserva de Galápagos.</label>
+              <label class="option-label" for="q5-A">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">Ser nombrada sede permanente de la Reserva de Galápagos.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-5-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'B')">
               <input type="radio" name="q5" id="q5-B" value="B">
-              <label for="q5-B">B) Ser declarada el primer Patrimonio de la Humanidad por la UNESCO.</label>
+              <label class="option-label" for="q5-B">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">Ser declarada el primer Patrimonio de la Humanidad por la UNESCO.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-5-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'C')">
               <input type="radio" name="q5" id="q5-C" value="C">
-              <label for="q5-C">C) Convertirse en el puerto marítimo más transitado del Pacífico Sur.</label>
+              <label class="option-label" for="q5-C">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">Convertirse en el puerto marítimo más transitado del Pacífico Sur.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-5-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'D')">
               <input type="radio" name="q5" id="q5-D" value="D">
-              <label for="q5-D">D) Abrir el primer centro de investigación de la evolución darwiniana.</label>
+              <label class="option-label" for="q5-D">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">Abrir el primer centro de investigación de la evolución darwiniana.</span>
+              </label>
             </div>
             <div class="feedback-box" id="feedback-5-D"></div>
           </li>
@@ -842,8 +1196,8 @@
       <span><span class="section-num">D</span> Preguntas de Discusión</span>
     </h2>
 
-    <section class="tandem-box" style="margin-top: 18px;">
-      <ol class="tandem-questions">
+    <section class="discussion-container">
+      <ol class="discussion-questions">
         <li>
           Si pudieras viajar a Ecuador mañana, ¿cuál de las cuatro regiones te gustaría visitar primero y qué actividades te interesaría hacer allí?
         </li>
@@ -876,71 +1230,509 @@
 
     <!-- Footer -->
     <footer class="handout-footer">
-      Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>
+      <span class="footer-brand">Language Learning Activities</span>
+      <span class="footer-dot">•</span>
+      <span class="footer-author">See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a></span>
     </footer>
 
   </main>
 
   <script>
     // =========================================================
-    // INTERACTIVE QUIZ LOGIC & LOCALSTORAGE PERSISTENCE
+    // VOCABULARY DATA (10 KEY WORDS)
     // =========================================================
-    const STORAGE_KEY = 'activity_regions-of-ecuador';
+    const vocabData = {
+      calido: {
+        key: "calido",
+        word: "cálido",
+        pos: "adj.",
+        def: "Que tiene una temperatura agradable o moderadamente caliente.",
+        sentence: "«...la Costa se caracteriza por su clima cálido y tropical.»",
+        hint: "«cálido» se refiere a una temperatura agradable o moderadamente caliente."
+      },
+      machacado: {
+        key: "machacado",
+        word: "machacado",
+        pos: "adj. / part.",
+        def: "Aplastado, desmenuzado o golpeado reiteradamente hasta formar una masa.",
+        sentence: "«...el verde (plátano verde machacado) y platos típicos como el bolón de verde...»",
+        hint: "«machacado» describe algo aplastado o triturado físicamente."
+      },
+      faldas: {
+        key: "faldas",
+        word: "faldas",
+        pos: "f. pl.",
+        def: "Parte baja o pendientes inferiores de una montaña o cordillera.",
+        sentence: "«Ubicada entre el océano Pacífico y las faldas occidentales de los Andes...»",
+        hint: "«faldas» se refiere a la parte baja o base inclinada de una elevación montañosa."
+      },
+      imponente: {
+        key: "imponente",
+        word: "imponente",
+        pos: "adj.",
+        def: "Que causa gran impresión, respeto o asombro por su majestuosidad o tamaño.",
+        sentence: "«...dominada por la imponente Cordillera de los Andes.»",
+        hint: "«imponente» expresa una cualidad majestuosa o que impresiona fuertemente."
+      },
+      nevados: {
+        key: "nevados",
+        word: "nevados",
+        pos: "m. pl.",
+        def: "Montañas o volcanes de gran altura con cumbres cubiertas perpetuamente de nieve o glaciares.",
+        sentence: "«...que incluye gigantes nevados como el Cotopaxi y el Chimborazo...»",
+        hint: "«nevados» alude a montañas muy elevadas cubiertas de nieve perpetua."
+      },
+      calurosa: {
+        key: "calurosa",
+        word: "calurosa",
+        pos: "adj.",
+        def: "Que tiene mucho calor, lo experimenta o lo produce.",
+        sentence: "«Es una región densa, calurosa y húmeda, regada por caudalosos ríos...»",
+        hint: "«calurosa» se relaciona directamente con una sensación o clima de intenso calor."
+      },
+      caudalosos: {
+        key: "caudalosos",
+        word: "caudalosos",
+        pos: "adj. pl.",
+        def: "Dicho de un río o corriente: que lleva gran abundancia o volumen de agua.",
+        sentence: "«...regada por caudalosos ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas.»",
+        hint: "«caudalosos» describe ríos o corrientes con gran volumen o flujo de agua."
+      },
+      selva: {
+        key: "selva",
+        word: "selva",
+        pos: "f.",
+        def: "Terreno silvestre muy extenso, boscoso y poblado de vegetación espesa y tupida propia de zonas cálidas.",
+        sentence: "«Hacia el este de los Andes se extiende la selva amazónica ecuatoriana.»",
+        hint: "«selva» se refiere a un bosque tropical extenso con vegetación espesa y tupida."
+      },
+      decenas: {
+        key: "decenas",
+        word: "decenas",
+        pos: "f. pl.",
+        def: "Conjuntos formados por diez unidades cada uno, o cantidades aproximadas de varios grupos de diez.",
+        sentence: "«...consta de 13 islas volcánicas principales y decenas de islotes.»",
+        hint: "«decenas» expresa una cantidad numérica formada por grupos de diez unidades."
+      },
+      islotes: {
+        key: "islotes",
+        word: "islotes",
+        pos: "m. pl.",
+        def: "Islas muy pequeñas, rocosas o despobladas.",
+        sentence: "«...consta de 13 islas volcánicas principales y decenas de islotes.»",
+        hint: "«islotes» son pequeñas islas despobladas o formaciones rocosas menores."
+      }
+    };
+
+    // Shuffled initial definition order
+    const vocabOrder = ["calurosa", "faldas", "machacado", "islotes", "calido", "nevados", "selva", "imponente", "decenas", "caudalosos"];
+
+    let completedVocab = [];
+    let selectedWordKey = null;
+    let draggedWordKey = null;
+    let activeModalCard = null;
+
+    // =========================================================
+    // MULTIPLE CHOICE EXPLANATIONS (NO "¡CORRECTO!" / "INCORRECTO.")
+    // =========================================================
     const explanations = {
       1: {
-        A: "Incorrecto. Aunque la Sierra alberga una población considerable y ciudades importantes como Quito, no ocupa casi la mitad del territorio nacional.",
-        B: "¡Correcto! El Oriente o Amazonía abarca casi el 50% de la superficie territorial ecuatoriana, pero concentra una población muy baja debido a la densa selva tropical y áreas protegidas.",
-        C: "Incorrecto. La Costa no abarca casi la mitad del país y, de hecho, alberga a Guayaquil, la ciudad más poblada del país.",
-        D: "Incorrecto. El archipiélago de Galápagos es un conjunto de islas situadas a 1.000 km del continente y representa una porción territorial reducida."
+        A: "Aunque la Sierra alberga una población considerable y ciudades importantes como Quito, no ocupa casi la mitad del territorio nacional.",
+        B: "El Oriente o Amazonía abarca casi el 50% de la superficie territorial ecuatoriana, pero concentra una población muy baja debido a la densa selva tropical y áreas protegidas.",
+        C: "La Costa no abarca casi la mitad del país y, de hecho, alberga a Guayaquil, la ciudad más poblada del país.",
+        D: "El archipiélago de Galápagos es un conjunto de islas situadas a 1.000 km del continente y representa una porción territorial reducida."
       },
       2: {
-        A: "Incorrecto. El Chimborazo es un estratovolcán potencialmente activo, pero no es el único volcán activo de América del Sur (Ecuador y la cordillera andina cuentan con volcanes muy activos como el Cotopaxi o Sangay).",
-        B: "Incorrecto. Charles Darwin desembarcó e investigó en las Islas Galápagos en 1835, no en el volcán Chimborazo en los Andes.",
-        C: "¡Correcto! Debido al abultamiento ecuatorial de la Tierra, la cumbre del Chimborazo es el punto más alejado del centro del planeta y el más cercano al sol.",
-        D: "Incorrecto. El bolón de verde es un plato típico emblemático de la región Costa, no del Chimborazo ni de la Sierra."
+        A: "El Chimborazo es un estratovolcán potencialmente activo, pero no es el único volcán activo de América del Sur (Ecuador y la cordillera andina cuentan con volcanes muy activos como el Cotopaxi o Sangay).",
+        B: "Charles Darwin desembarcó e investigó en las Islas Galápagos en 1835, no en el volcán Chimborazo en los Andes.",
+        C: "Debido al abultamiento ecuatorial de la Tierra, la cumbre del Chimborazo es el punto más alejado del centro del planeta y el más cercano al sol.",
+        D: "El bolón de verde es un plato típico emblemático de la región Costa, no del Chimborazo ni de la Sierra."
       },
       3: {
-        A: "¡Correcto! El plátano verde (llamado popularmente «verde») es el pilar gastronómico de la Costa, utilizado machacado, cocido o frito para elaborar bolones de verde y patacones.",
-        B: "Incorrecto. La papa es un tubérculo fundamental en la gastronomía de la Sierra andina, no la base típica del bolón costeño.",
-        C: "Incorrecto. El maíz tostado (tostado) se consume habitualmente en la Sierra andina como guarnición o aperitivo, pero no es la base del bolón.",
-        D: "Incorrecto. El trigo no es el ingrediente base de la cocina tradicional costeña ni del bolón."
+        A: "El plátano verde (llamado popularmente «verde») es el pilar gastronómico de la Costa, utilizado machacado, cocido o frito para elaborar bolones de verde y patacones.",
+        B: "La papa es un tubérculo fundamental en la gastronomía de la Sierra andina, no la base típica del bolón costeño.",
+        C: "El maíz tostado (tostado) se consume habitualmente en la Sierra andina como guarnición o aperitivo, pero no es la base del bolón.",
+        D: "El trigo no es el ingrediente base de la cocina tradicional costeña ni del bolón."
       },
       4: {
-        A: "Incorrecto. Esa definición corresponde a una especie migratoria, no a una especie endémica.",
-        B: "Incorrecto. Las especies introducidas por los humanos se clasifican como especies exóticas o introducidas, lo contrario de especies endémicas.",
-        C: "Incorrecto. «Endémico» es un término biogeográfico sobre la distribución natural de una especie y no tiene relación con su grado de domesticación.",
-        D: "¡Correcto! En biología, una especie endémica es aquella que vive exclusivamente de forma natural en una zona geográfica concreta y delimitada, sin existir en ningún otro lugar."
+        A: "Esa definición corresponde a una especie migratoria, no a una especie endémica.",
+        B: "Las especies introducidas por los humanos se clasifican como especies exóticas o introducidas, lo contrario de especies endémicas.",
+        C: "«Endémico» es un término biogeográfico sobre la distribución natural de una especie y no tiene relación con su grado de domesticación.",
+        D: "En biología, una especie endémica es aquella que vive exclusivamente de forma natural en una zona geográfica concreta y delimitada, sin existir en ningún otro lugar."
       },
       5: {
-        A: "Incorrecto. La Reserva Marina y Terrestre de Galápagos es un área protegida insular independiente y no tiene su sede en Quito.",
-        B: "¡Correcto! En 1978, la UNESCO inauguró su lista de sitios de Patrimonio Mundial reconociendo al centro histórico colonial de Quito como el primer Patrimonio Cultural de la Humanidad.",
-        C: "Incorrecto. El puerto marítimo y comercial más importante y transitado del país es Guayaquil en la Costa, no Quito.",
-        D: "Incorrecto. Darwin formuló sus teorías tras su paso por Galápagos en 1835, y la Estación Científica Charles Darwin fue fundada en la isla Santa Cruz en Galápagos."
+        A: "La Reserva Marina y Terrestre de Galápagos es un área protegida insular independiente y no tiene su sede en Quito.",
+        B: "En 1978, la UNESCO inauguró su lista de sitios de Patrimonio Mundial reconociendo al centro histórico colonial de Quito como el primer Patrimonio Cultural de la Humanidad.",
+        C: "El puerto marítimo y comercial más importante y transitado del país es Guayaquil en la Costa, no Quito.",
+        D: "Darwin formuló sus teorías tras su paso por Galápagos en 1835, y la Estación Científica Charles Darwin fue fundada en la isla Santa Cruz en Galápagos."
       }
     };
 
     let userAnswers = {};
+    const STORAGE_KEY = 'activity_regions-of-ecuador';
 
+    // =========================================================
+    // STATE MANAGEMENT (PERSISTENCE)
+    // =========================================================
     function loadSavedState() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
-          userAnswers = JSON.parse(saved);
-          Object.keys(userAnswers).forEach(qNum => {
-            const val = userAnswers[qNum];
-            const radio = document.querySelector(`input[name="q${qNum}"][value="${val}"]`);
-            if (radio) {
-              radio.checked = true;
-              applyQuestionFeedback(qNum, val);
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed === 'object') {
+            if (parsed.mc || parsed.vocab) {
+              userAnswers = parsed.mc || {};
+              completedVocab = Array.isArray(parsed.vocab) ? parsed.vocab : [];
+            } else {
+              // Backward compatibility with previous plain object structure
+              userAnswers = parsed;
+              completedVocab = [];
             }
-          });
-          updateScore();
+          }
         }
       } catch (e) {
         console.warn("Could not load from localStorage:", e);
       }
+
+      // Restore Multiple Choice answers
+      Object.keys(userAnswers).forEach(qNum => {
+        const val = userAnswers[qNum];
+        const radio = document.querySelector(`input[name="q${qNum}"][value="${val}"]`);
+        if (radio) {
+          radio.checked = true;
+          applyQuestionFeedback(qNum, val);
+        }
+      });
+
+      // Render Vocabulary
+      renderVocabulary();
     }
 
+    function saveState() {
+      try {
+        const state = {
+          mc: userAnswers,
+          vocab: completedVocab
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn("Could not save to localStorage:", e);
+      }
+    }
+
+    // =========================================================
+    // VOCABULARY EXERCISE LOGIC
+    // =========================================================
+    function renderVocabulary() {
+      const pool = document.getElementById('vocab-pool');
+      const targets = document.getElementById('vocab-targets');
+      const completedPool = document.getElementById('vocab-completed-pool');
+      const detailArea = document.getElementById('vocab-completed-detail');
+
+      if (!pool || !targets || !completedPool) return;
+
+      pool.innerHTML = '';
+      targets.innerHTML = '';
+      completedPool.innerHTML = '';
+      if (detailArea) detailArea.innerHTML = '';
+
+      // All keys
+      const allKeys = Object.keys(vocabData);
+      const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
+
+      // 1. Render Waiting Words Pool
+      if (remainingKeys.length === 0) {
+        pool.innerHTML = '<span style="color: var(--ink-muted); font-size: 14px; font-style: italic;">¡Todas las palabras han sido emparejadas con éxito!</span>';
+      } else {
+        remainingKeys.forEach(k => {
+          const item = vocabData[k];
+          const chip = document.createElement('div');
+          chip.className = 'vocab-chip';
+          if (selectedWordKey === k) chip.classList.add('selected');
+          chip.setAttribute('draggable', 'true');
+          chip.setAttribute('data-key', k);
+          chip.textContent = item.word;
+
+          // Drag events
+          chip.addEventListener('dragstart', handleDragStart);
+          chip.addEventListener('dragend', handleDragEnd);
+
+          // Tap / Click events (desktop & mobile)
+          chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleChipClick(k);
+          });
+
+          // Touch drag support
+          setupTouchDrag(chip, k);
+
+          pool.appendChild(chip);
+        });
+      }
+
+      // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
+      vocabOrder.forEach(targetKey => {
+        if (completedVocab.includes(targetKey)) return; // Exclude dismissed/completed words
+
+        const item = vocabData[targetKey];
+        const card = document.createElement('div');
+        card.className = 'vocab-target-card';
+        card.setAttribute('data-target-key', targetKey);
+        card.innerHTML = `
+          <div class="vocab-target-def">${item.def}</div>
+          <div class="vocab-target-prompt">Toca o arrastra aquí la palabra correspondiente</div>
+        `;
+
+        // Drop listeners
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('dragleave', handleDragLeave);
+        card.addEventListener('drop', handleDrop);
+
+        // Tap-to-select click
+        card.addEventListener('click', (e) => {
+          handleTargetCardClick(card, targetKey);
+        });
+
+        targets.appendChild(card);
+      });
+
+      // 3. Render Completed Section Pills (no title, just pills with green check)
+      completedVocab.forEach(k => {
+        const item = vocabData[k];
+        if (!item) return;
+        const pill = document.createElement('div');
+        pill.className = 'vocab-completed-pill';
+        pill.setAttribute('data-key', k);
+        pill.innerHTML = `
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>${item.word}</span>
+        `;
+        pill.addEventListener('click', () => {
+          toggleCompletedDetail(k);
+        });
+        completedPool.appendChild(pill);
+      });
+    }
+
+    function handleChipClick(key) {
+      if (activeModalCard) return; // Locked during focused state
+      if (selectedWordKey === key) {
+        selectedWordKey = null; // deselect
+      } else {
+        selectedWordKey = key;
+      }
+      renderVocabulary();
+    }
+
+    function handleTargetCardClick(card, targetKey) {
+      if (card.classList.contains('state-wrong')) {
+        // User clicks anywhere on the wrong box: dismiss error, return word, re-enable page
+        dismissWrongState(card);
+        return;
+      }
+
+      if (card.classList.contains('state-correct')) {
+        // User clicks anywhere on the correct dictionary box: move to completed section, remove definition
+        dismissCorrectState(targetKey);
+        return;
+      }
+
+      // If user tapped a word chip previously, treat card click as a drop
+      if (selectedWordKey) {
+        processWordPlacement(selectedWordKey, targetKey, card);
+      }
+    }
+
+    function handleDragStart(e) {
+      if (activeModalCard) {
+        e.preventDefault();
+        return;
+      }
+      draggedWordKey = this.getAttribute('data-key');
+      this.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', draggedWordKey);
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd() {
+      this.classList.remove('dragging');
+      draggedWordKey = null;
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      this.classList.add('drag-over');
+    }
+
+    function handleDragLeave() {
+      this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      const wordKey = e.dataTransfer.getData('text/plain') || draggedWordKey;
+      const targetKey = this.getAttribute('data-target-key');
+      if (wordKey && targetKey) {
+        processWordPlacement(wordKey, targetKey, this);
+      }
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();
+    }
+
+    // Process a word placed on a target card
+    function processWordPlacement(wordKey, targetKey, card) {
+      selectedWordKey = null;
+
+      if (wordKey === targetKey) {
+        // === CORRECT MATCH ===
+        const item = vocabData[targetKey];
+        card.classList.remove('state-wrong');
+        card.classList.add('state-correct');
+        activeModalCard = card;
+
+        card.innerHTML = `
+          <div class="dict-header">
+            <span class="dict-word">${item.word}</span>
+            <span class="dict-pos">${item.pos}</span>
+          </div>
+          <div class="dict-def">${item.def}</div>
+          <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
+          <div class="click-dismiss-prompt">Toca en cualquier parte de este recuadro para continuar</div>
+        `;
+
+        showOverlay();
+      } else {
+        // === WRONG MATCH ===
+        const placedWord = vocabData[wordKey];
+        const targetItem = vocabData[targetKey];
+        card.classList.remove('state-correct');
+        card.classList.add('state-wrong');
+        card.setAttribute('data-wrong-word-key', wordKey);
+        activeModalCard = card;
+
+        card.innerHTML = `
+          <div class="vocab-target-def">${targetItem.def}</div>
+          <div class="wrong-banner">
+            <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="hint-text">
+              <strong>${placedWord.word}</strong>: ${placedWord.hint}
+            </div>
+          </div>
+          <div class="click-dismiss-prompt">Toca en cualquier parte de este recuadro para reintentar</div>
+        `;
+
+        showOverlay();
+      }
+    }
+
+    function dismissWrongState(card) {
+      hideOverlay();
+      activeModalCard = null;
+      renderVocabulary();
+    }
+
+    function dismissCorrectState(wordKey) {
+      hideOverlay();
+      activeModalCard = null;
+      if (!completedVocab.includes(wordKey)) {
+        completedVocab.push(wordKey);
+        saveState();
+      }
+      renderVocabulary();
+    }
+
+    function showOverlay() {
+      const overlay = document.getElementById('vocab-overlay');
+      if (overlay) overlay.classList.add('active');
+    }
+
+    function hideOverlay() {
+      const overlay = document.getElementById('vocab-overlay');
+      if (overlay) overlay.classList.remove('active');
+    }
+
+    function handleOverlayClick() {
+      if (activeModalCard) {
+        if (activeModalCard.classList.contains('state-wrong')) {
+          dismissWrongState(activeModalCard);
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          dismissCorrectState(targetKey);
+        }
+      }
+    }
+
+    // Toggle completed word detail preview
+    function toggleCompletedDetail(wordKey) {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (!detailArea) return;
+
+      if (detailArea.getAttribute('data-active-word') === wordKey) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return;
+      }
+
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      detailArea.setAttribute('data-active-word', wordKey);
+      detailArea.innerHTML = `
+        <div class="vocab-dict-card" onclick="toggleCompletedDetail('${wordKey}')" style="cursor: pointer;">
+          <div class="dict-header">
+            <span class="dict-word">${item.word}</span>
+            <span class="dict-pos">${item.pos}</span>
+          </div>
+          <div class="dict-def">${item.def}</div>
+          <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
+          <div class="click-dismiss-prompt">Toca aquí para cerrar la definición</div>
+        </div>
+      `;
+    }
+
+    // Touch event helper for mobile drag & drop
+    function setupTouchDrag(chip, key) {
+      let touchMoved = false;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (activeModalCard) return;
+        touchMoved = false;
+        chip.classList.add('dragging');
+        draggedWordKey = key;
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        touchMoved = true;
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        chip.classList.remove('dragging');
+        if (!touchMoved) {
+          // It was a tap, handled by click listener
+          return;
+        }
+        const touch = e.changedTouches[0];
+        const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (targetElement) {
+          const targetCard = targetElement.closest('.vocab-target-card');
+          if (targetCard) {
+            const targetKey = targetCard.getAttribute('data-target-key');
+            if (targetKey) {
+              processWordPlacement(key, targetKey, targetCard);
+            }
+          }
+        }
+        draggedWordKey = null;
+      });
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE QUIZ LOGIC
+    // =========================================================
     function selectOption(qNum, value) {
       const radio = document.querySelector(`input[name="q${qNum}"][value="${value}"]`);
       if (radio) {
@@ -948,7 +1740,6 @@
       }
       userAnswers[qNum] = value;
       applyQuestionFeedback(qNum, value);
-      updateScore();
       saveState();
     }
 
@@ -990,33 +1781,16 @@
       }
     }
 
-    function updateScore() {
-      let score = 0;
-      const cards = document.querySelectorAll('.question-card');
-      cards.forEach(card => {
-        const qNum = card.getAttribute('data-q');
-        const correctVal = card.getAttribute('data-correct');
-        if (userAnswers[qNum] === correctVal) {
-          score++;
-        }
-      });
-      const scoreCounter = document.getElementById('score-counter');
-      if (scoreCounter) {
-        scoreCounter.textContent = score;
-      }
-    }
-
-    function saveState() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers));
-      } catch (e) {
-        console.warn("Could not save to localStorage:", e);
-      }
-    }
-
+    // =========================================================
+    // RESET WORKSHEET
+    // =========================================================
     function resetWorksheet() {
       if (confirm("¿Deseas reiniciar la hoja de trabajo y borrar tus respuestas guardadas?")) {
         userAnswers = {};
+        completedVocab = [];
+        selectedWordKey = null;
+        activeModalCard = null;
+
         try {
           localStorage.removeItem(STORAGE_KEY);
         } catch (e) {}
@@ -1035,7 +1809,8 @@
           f.className = 'feedback-box';
         });
 
-        updateScore();
+        hideOverlay();
+        renderVocabulary();
       }
     }
 

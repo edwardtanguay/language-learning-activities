@@ -15,52 +15,54 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Directory Naming**: Use SEO-friendly, descriptive kebab-case names under `topics/` (e.g., `topics/regions-of-ecuador/`).
 - **Self-Contained File**: All HTML, CSS (`<style>`), and JavaScript (`<script>`) must reside within the single `index.html` file so it can be emailed, shared, or opened offline.
 - **No Local Asset Dependencies**: Do not use relative links to local external files (CSS, JS, or images). If media is needed, link to absolute web URLs hosted on the published website.
-- **Local State & Reset**: Interactive features (e.g., quiz answers, score tracking) may use `localStorage` for persistence, but MUST include a visible reset button.
+- **Local State & Reset**: Interactive features (e.g., quiz answers, vocabulary completion state) must use `localStorage` for persistence, and MUST include a visible reset button that restores the worksheet to its initial state.
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
-- **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, and navigation links) must be exclusively in the target language.
-- **Section Lettering & Question Numbering**: Main sections across the worksheet are designated with clean large capital letters (A, B, C, D...) — e.g., Section A: Reading Text, Section B: Vocabulary / Glossary, Section C: Comprehension Exercises, Section D: Discussion Questions — so that questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
-- **Multiple-Choice Contextual Feedback**:
-  - For each answer choice (right or wrong), provide an explanation text why it is right or wrong.
-  - Allow the user to keep selecting options even after an answer has been chosen, so they can explore explanations for other choices.
-  - Display the feedback box directly beneath the currently selected answer option (in context), rather than at the bottom of the question card.
-  - Only show feedback beneath the active selected option (switching to another option moves the feedback under the new selection).
-  - Inside the feedback box, display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
-  - Do NOT prefix the explanation with redundant option letters (e.g., remove "(A):") or uppercase status prefixes, keeping the feedback clean and contextual.
-- **Multiple-Choice Neutral Card Styling**: Do NOT color the entire question card or option area green or red, as these colors are reserved for language identity badges (e.g., Spanish/Italian). Keep the question card background clean and neutral.
-- **Discussion Questions Section**: The conversation section heading is standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French) and lettered as Section D. Do not include platform-specific service names (such as "Preply" or "Tandem") in the section title, and do NOT include boilerplate intro instructions (e.g., remove "Utiliza estas preguntas para practicar la expresión oral con tu tutor online o compañero de intercambio").
-
-## Design System: 1970s School Handout
-
-- **Aesthetic**: Authentic 1970s school handout / mimeograph worksheet. Clean, calm, and distraction-free. Avoid flashy modern animations or neon styling.
-- **Paper on Desk Aesthetic**:
-  - The handout sheet (`.handout-sheet`) sits atop the background with a realistic, soft blurred shadow (`box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04)`) and a delicate warm border (`1px solid #e8e2d5`), giving the tactile look of a physical piece of paper resting on a desk.
-- **No Harsh Black Outlines & Borderless Cards**:
-  - Do not use dark or solid black outlines anywhere on the worksheet (such as harsh borders around cards, boxes, or headers).
-  - Glossary / vocabulary boxes and comprehension question cards / options must NOT have outline borders (`border: none;`). Instead, use light background shifts (`--paper-bg`), soft drop shadows, and subtle background tints for answered/feedback states and hover effects.
-- **Title Area & Content Overview**:
-  - The title header has NO enclosing box or outline border (`border: none`).
-  - Contains the activity title (`<h1>`), a prominent slightly tilted stamp badge (e.g., `Español B1`), and directly beneath them a concise 1–2 sentence description of the content in the target language (styled in elegant italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above, slightly more than the default title gap) before the instructions box.
-  - Do not include generic subtitle taglines (e.g., "Hoja de trabajo pedagógica..."), student name/date fill blanks, or cluttering metadata tag pills.
-  - Stamp badge is large and clear (`font-size: 18px`, `border: 3px solid var(--lang-color)`), slightly tilted (e.g. `-2deg`), and uses the standardized language color.
-- **Dual Navigation (Top and Bottom)**:
-  - Both at the top utility navigation and at the bottom action bar, provide a clear back link to the index (e.g., `← Índice de Actividades`) with a thick arrow (SVG or bold glyph).
-  - Do not include "(Home)" in the link label.
-  - Do not include "Imprimir / Guardar PDF" buttons in the navigation bar.
-- **Discrete Reset & No Score Bars**:
-  - Do not include bulky score counters or prominent banners (e.g., remove "Puntuación: X / Y").
-  - Provide a discrete, small reset button at the bottom of the worksheet alongside the bottom back link with an icon and label in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) to reset `localStorage` answer state.
-- **Standardized Footer**:
-  - At the very bottom of the activity, display: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>` (with the link opening `https://tanguay.info` in a new tab).
-- **Plain Large Letters and Numbers (No Inverted Dark Boxes)**:
-  - In section titles (A, B, C, D...) and quiz question prompts (1, 2, 3...), characters are rendered as clean, large text in the text color (`--ink-main`) without dark box backgrounds, white-on-black fills, or heavy border boxes.
-- **No Word Count Mentions**:
-  - Do not include word counts (such as `~400 palabras`) anywhere in section titles or headers.
-- **Top-Alignment for Checkboxes, Radios, and Icons**:
-  - Whenever a checkbox, radio button, or icon on the left is paired with text on the right that breaks or wraps into multiple lines, always top-align both (`align-items: flex-start;`). Never vertically center them (`align-items: center;`), ensuring the control or icon stays cleanly aligned with the first line of text.
-- **Layout & Mobile Typography**:
-  - **Desktop & Tablet (Landscape)**: Balanced margins, comfortable reading widths, and structured side-by-side or worksheet sections.
-  - **Mobile (Portrait, max-width: 680px)**: Single-column vertical flow with tight line heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for `h1`, `15px` for section titles and discussion headers) so multi-line titles read cohesively as one title and headings fit on a single line more often.
-  - **Mobile Centering for Navigation and Reset**: On mobile screens, center navigation and action controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`), stacking the bottom back link and reset button centered.
+- **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, wrong-drop hints, and navigation links) must be exclusively in the target language.
+- **Structured Instructions Callout**:
+  - The instructions box outlines the workflow for both self-study and tandem/tutoring sessions, structured with clear bold headings:
+    - **Before Class / Antes de la clase**: Student and teacher read the text and exercises as much as possible; student looks up unknown words necessary to understand the text and questions; teacher familiarizes with the topic and prepares additional context.
+    - **In Class / En clase**:
+      1. Student reads through the text aloud while teacher corrects pronunciation errors immediately as they occur.
+      2. Student and teacher work through exercises together.
+      3. Student and teacher answer discussion questions, with the teacher always going first on each question; conversations should remain open-ended.
+- **Reading Passage (~400 Words, No Word Counts)**:
+  - The reading text in Section A should always be approximately 400 words in length, divided into logical paragraphs or subsections.
+  - Do NOT include word count indicators (such as `~400 palabras`) anywhere in section titles, subtitles, or headers.
+- **Section Lettering & Question Numbering**: Main sections across the worksheet are designated with clean large capital letters (A, B, C, D...) — e.g., Section A: Reading Text, Section B: Key Vocabulary, Section C: Comprehension Exercises, Section D: Discussion Questions — so that questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
+- **Section B: Key Vocabulary (Vocabulario Clave) Drag & Drop Exercise**:
+  - Positioned immediately following Section A (the reading text).
+  - Titled "Key Vocabulary" translated into the target language (e.g., "Vocabulario Clave" in Spanish).
+  - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
+  - Layout & Interaction:
+    - Top: waiting word chips in a flexible layout (`.vocab-pool`).
+    - Below: active target definition cards in shuffled order (`.vocab-targets`).
+    - Fully responsive: supports mouse drag, touch drag, and tap-to-select (tap a word chip to highlight it, then tap the target definition) for seamless mobile usability.
+    - Wrong drop: the word sticks on the definition box, displays a red X SVG icon, and presents a hint in the target language explaining what that word actually means. The entire rest of the page is dimmed/disabled via an overlay until the user clicks anywhere on the box, which returns the word chip to the waiting pool.
+    - Correct drop: creates a complete boxed dictionary entry for that word (word, part of speech, definition, and quote from the text highlighting the word). The page is dimmed/disabled until the user clicks anywhere on the box.
+    - Dismissing a solved word removes that definition card from the active list and moves the word chip to the completed words section.
+    - Completed words section: no section title; displays completed words in a flex row of pills, each with a green check SVG icon to its left.
+    - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills until clicked again to close.
+    - Completed vocabulary progress is persisted in `localStorage` and reset with the "Reiniciar respuestas" button.
+- **Section C: Comprehension Questions & Neutral Option Styling**:
+  - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
+  - Options must have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
+  - Radio button circle remains alongside the option letter, vertically centered with the first line of text across all browsers.
+  - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period.
+  - Contextual Inline Feedback:
+    - Display the feedback box directly beneath the actively selected option, keeping its subtle background tint (`--paper-bg`).
+    - Inside the feedback box, display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
+    - Do NOT include status text words like "¡Correcto!" or "Incorrecto.", and do NOT prefix explanations with option letters.
+    - Keep question cards clean and neutral; do NOT color the entire question card green or red.
+- **Section D: Discussion Questions Section**:
+  - Heading standardized to "Discussion Questions" in the target language (e.g., "Preguntas de discusión" in Spanish), lettered as Section D.
+  - Borderless and transparent container (remove dashed or solid outline boxes).
+  - No boilerplate introductory instructions.
+- **Bottom Actions Bar & Balanced Spacing**:
+  - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the back link and reset button are equally distant from the horizontal rule lines above and below them on both desktop and mobile.
+  - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear all `localStorage` state (both multiple-choice and vocabulary).
+- **Standardized Footer & Mobile Centering**:
+  - Footer displays: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
+  - On mobile (`max-width: 680px`), stack and horizontally center "Language Learning Activities" and "See more projects by Edward" with the bullet dot hidden (`display: none;`).
 
 ## Standardized Languages & Palette
 
