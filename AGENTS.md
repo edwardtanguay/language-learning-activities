@@ -19,28 +19,28 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, wrong-drop hints, and navigation links) must be exclusively in the target language.
 - **Structured Instructions Callout**:
-  - The instructions box outlines the workflow for both self-study and tandem/tutoring sessions, structured with clear bold headings:
-    - **Before Class / Antes de la clase**: Student and teacher read the text and exercises as much as possible; student looks up unknown words necessary to understand the text and questions; teacher familiarizes with the topic and prepares additional context.
-    - **In Class / En clase**:
-      1. Student reads through the text aloud while teacher corrects pronunciation errors immediately as they occur.
-      2. Student and teacher work through exercises together.
-      3. Student and teacher answer discussion questions, with the teacher always going first on each question; conversations should remain open-ended.
+  - The instructions box outlines the workflow for both self-study and tandem/tutoring sessions concisely in the target language under the heading **INSTRUCCIONES**:
+    - **• Before Class / Antes de la clase**: Student and teacher familiarize themselves with the text as much as they want.
+    - **• In Class / En clase**: (1) Reading aloud with correction • (2) Exercises together • (3) Discussion questions (teacher answers first).
+    - Keep phrasing concise, bulleted, and inline rather than multi-sentence lists so it can be read in seconds.
 - **Reading Passage (~400 Words, No Word Counts)**:
   - The reading text in Section A should always be approximately 400 words in length, divided into logical paragraphs or subsections.
   - Do NOT include word count indicators (such as `~400 palabras`) anywhere in section titles, subtitles, or headers.
-- **Section Lettering & Question Numbering**: Main sections across the worksheet are designated with clean large capital letters (A, B, C, D...) — e.g., Section A: Reading Text, Section B: Key Vocabulary, Section C: Comprehension Exercises, Section D: Discussion Questions — so that questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
+- **Section Lettering & Question Numbering**: Main sections across the worksheet are designated with clean large capital letters followed by a period inside the section number span (`A.`, `B.`, `C.`, `D.`) — e.g., `<span class="section-num">A.</span> Texto de Lectura`, `<span class="section-num">B.</span> Vocabulario Clave`, `<span class="section-num">C.</span> Ejercicios de Comprensión`, `<span class="section-num">D.</span> Preguntas de Discusión`. Questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
 - **Section B: Key Vocabulary (Vocabulario Clave) Drag & Drop Exercise**:
   - Positioned immediately following Section A (the reading text).
   - Titled "Key Vocabulary" translated into the target language (e.g., "Vocabulario Clave" in Spanish).
   - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
   - Layout & Interaction:
-    - Top: waiting word chips in a flexible layout (`.vocab-pool`).
-    - Below: active target definition cards in shuffled order (`.vocab-targets`).
+    - Top: waiting word chips in a flexible layout (`.vocab-pool`) with transparent background and no container label (do NOT include "Palabras para arrastrar o tocar:").
+    - Below: active target definition cards in shuffled order (`.vocab-targets`). Cards contain only the definition text, with NO placeholder prompt like "Toca o arrastra aquí...".
+    - Pill & Card Styling: All pills (waiting word chips `.vocab-chip` and completed word pills `.vocab-completed-pill`) and target cards must be square-cornered (`border-radius: 0;`) with narrower padding.
+    - Compact Mobile Layout: Ultra-compact styling (tight gap, ~6px 10px card padding, 13.5px definition font) ensuring all 10 definitions are visible and accessible without cumbersome scrolling.
     - Fully responsive: supports mouse drag, touch drag, and tap-to-select (tap a word chip to highlight it, then tap the target definition) for seamless mobile usability.
     - Wrong drop: the word sticks on the definition box, displays a red X SVG icon, and presents a hint in the target language explaining what that word actually means. The entire rest of the page is dimmed/disabled via an overlay until the user clicks anywhere on the box, which returns the word chip to the waiting pool.
     - Correct drop: creates a complete boxed dictionary entry for that word (word, part of speech, definition, and quote from the text highlighting the word). The page is dimmed/disabled until the user clicks anywhere on the box.
     - Dismissing a solved word removes that definition card from the active list and moves the word chip to the completed words section.
-    - Completed words section: no section title; displays completed words in a flex row of pills, each with a green check SVG icon to its left.
+    - Completed words section: no section title; displays completed words in a flex row of square-cornered pills, each with a green check SVG icon to its left.
     - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills until clicked again to close.
     - Completed vocabulary progress is persisted in `localStorage` and reset with the "Reiniciar respuestas" button.
 - **Section C: Comprehension Questions & Neutral Option Styling**:

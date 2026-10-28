@@ -174,21 +174,21 @@
     .instructions-box {
       background-color: var(--highlight);
       border-left: 4px solid var(--ink-rule);
-      padding: 14px 18px;
+      padding: 12px 16px;
       font-family: var(--font-typewriter);
       font-size: 14px;
       margin-bottom: 24px;
-      line-height: 1.55;
+      line-height: 1.45;
     }
 
     .instructions-heading {
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       letter-spacing: 0.5px;
     }
 
     .instructions-block {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
     .instructions-block:last-child {
@@ -197,15 +197,6 @@
 
     .instructions-label {
       font-weight: 700;
-    }
-
-    .instructions-list {
-      margin-top: 4px;
-      padding-left: 20px;
-    }
-
-    .instructions-list li {
-      margin-bottom: 4px;
     }
 
     /* Reading Passage */
@@ -239,34 +230,29 @@
     }
 
     .vocab-pool-label {
-      font-family: var(--font-typewriter);
-      font-size: 13px;
-      color: var(--ink-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
+      display: none;
     }
 
     .vocab-pool {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
-      min-height: 44px;
-      padding: 10px 12px;
-      background: var(--paper-bg);
-      border-radius: 3px;
+      gap: 6px;
+      margin-bottom: 12px;
+      min-height: 32px;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
     }
 
     .vocab-chip {
       font-family: var(--font-typewriter);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       background: var(--paper-sheet);
       color: var(--stamp-blue);
       border: 1px solid var(--ink-rule);
-      border-radius: 3px;
-      padding: 6px 12px;
+      border-radius: 0;
+      padding: 4px 8px;
       cursor: grab;
       user-select: none;
       transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
@@ -292,15 +278,15 @@
     .vocab-targets {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 16px;
     }
 
     .vocab-target-card {
       background: var(--paper-bg);
       border: 1px dashed var(--ink-rule);
-      border-radius: 3px;
-      padding: 14px 16px;
+      border-radius: 0;
+      padding: 8px 12px;
       transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
       cursor: pointer;
       position: relative;
@@ -313,17 +299,13 @@
     }
 
     .vocab-target-def {
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.35;
       color: var(--ink-main);
     }
 
     .vocab-target-prompt {
-      display: inline-block;
-      font-family: var(--font-typewriter);
-      font-size: 12px;
-      color: var(--ink-muted);
-      margin-top: 6px;
+      display: none;
     }
 
     /* Wrong Drop State */
@@ -442,13 +424,13 @@
     .vocab-completed-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
+      gap: 5px;
+      padding: 3px 8px;
       background: var(--paper-sheet);
       border: 1px solid var(--ink-rule);
-      border-radius: 16px;
+      border-radius: 0;
       font-family: var(--font-typewriter);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--ink-main);
       cursor: pointer;
@@ -772,8 +754,31 @@
         font-size: 22px;
         margin-right: 6px;
       }
+      .vocab-pool {
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      .vocab-chip {
+        font-size: 13px;
+        padding: 3px 6px;
+      }
       .vocab-targets {
         grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .vocab-target-card {
+        padding: 6px 10px;
+      }
+      .vocab-target-def {
+        font-size: 13.5px;
+        line-height: 1.35;
+      }
+      .vocab-completed-pool {
+        gap: 5px;
+      }
+      .vocab-completed-pill {
+        font-size: 12px;
+        padding: 2px 6px;
       }
       .bottom-actions-bar {
         flex-direction: column;
@@ -855,21 +860,16 @@
     <div class="instructions-box">
       <div class="instructions-heading">INSTRUCCIONES</div>
       <div class="instructions-block">
-        <span class="instructions-label">Antes de la clase:</span> Tanto el estudiante como el profesor leen el texto y los ejercicios lo más posible. El estudiante debe buscar todas las palabras necesarias para comprender bien el texto y las preguntas. El profesor puede familiarizarse con el tema y preparar información adicional.
+        <span class="instructions-label">• Antes de la clase:</span> Estudiante y profesor se familiarizan con el texto lo que deseen.
       </div>
       <div class="instructions-block">
-        <span class="instructions-label">En clase:</span>
-        <ol class="instructions-list">
-          <li>El estudiante lee el texto en voz alta mientras el profesor corrige cada error de pronunciación al instante.</li>
-          <li>El estudiante y el profesor resuelven los ejercicios juntos.</li>
-          <li>El estudiante y el profesor responden a las preguntas de discusión, con el profesor respondiendo primero a cada pregunta; las conversaciones deben ser abiertas y espontáneas.</li>
-        </ol>
+        <span class="instructions-label">• En clase:</span> (1) Lectura en voz alta con corrección • (2) Ejercicios juntos • (3) Preguntas de discusión (el profesor responde primero)
       </div>
     </div>
 
     <!-- Section A: Reading Text -->
     <h2 class="section-title">
-      <span><span class="section-num">A</span> Texto de Lectura</span>
+      <span><span class="section-num">A.</span> Texto de Lectura</span>
     </h2>
 
     <article class="reading-content">
@@ -908,11 +908,10 @@
 
     <!-- Section B: Vocabulary (Vocabulario Clave) Drag & Drop -->
     <h2 class="section-title">
-      <span><span class="section-num">B</span> Vocabulario Clave</span>
+      <span><span class="section-num">B.</span> Vocabulario Clave</span>
     </h2>
 
     <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool-label">Palabras para arrastrar o tocar:</div>
       <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
         <!-- Waiting words populated dynamically -->
       </div>
@@ -934,7 +933,7 @@
 
     <!-- Section C: Interactive Multiple-Choice Quiz -->
     <h2 class="section-title">
-      <span><span class="section-num">C</span> Ejercicios de Comprensión (Opción Múltiple)</span>
+      <span><span class="section-num">C.</span> Ejercicios de Comprensión (Opción Múltiple)</span>
     </h2>
 
     <div class="quiz-container" id="quiz-container">
@@ -1193,7 +1192,7 @@
 
     <!-- Section D: Discussion Questions Section -->
     <h2 class="section-title">
-      <span><span class="section-num">D</span> Preguntas de Discusión</span>
+      <span><span class="section-num">D.</span> Preguntas de Discusión</span>
     </h2>
 
     <section class="discussion-container">
@@ -1480,7 +1479,6 @@
         card.setAttribute('data-target-key', targetKey);
         card.innerHTML = `
           <div class="vocab-target-def">${item.def}</div>
-          <div class="vocab-target-prompt">Toca o arrastra aquí la palabra correspondiente</div>
         `;
 
         // Drop listeners

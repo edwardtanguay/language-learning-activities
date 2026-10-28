@@ -72,7 +72,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
 - **Plain Large Section Letters and Numbers (No Dark Inverted Boxes)**:
-  - Section letters (A, B, C, D...) and quiz question numbers (1, 2, 3...) must be rendered as plain large text in the text color (`--ink-main`), never white text inside black/dark boxes.
+  - Section letters followed by a period inside the section number span (`<span class="section-num">A.</span>`, `B.`, `C.`, `D.`) and quiz question numbers (1, 2, 3...) must be rendered as plain large text in the text color (`--ink-main`), never white text inside black/dark boxes.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:
@@ -101,26 +101,26 @@ Each activity file should include the following sections:
 2. **Worksheet Header**:
    - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
 3. **Structured Instructions Callout Box**:
-   - Outlines the lesson plan in the target language with bold headings:
-     - **Before Class / Antes de la clase**: Both student and teacher read through the text and exercises as much as possible; student looks up unknown words necessary to understand the text and questions; teacher familiarizes with the topic and prepares additional context.
-     - **In Class / En clase**:
-       1. Student reads through the text aloud while teacher corrects pronunciation errors immediately as they occur.
-       2. Student and teacher work through exercises together.
-       3. Student and teacher answer discussion questions, with the teacher always going first on each question; conversations should remain open-ended.
+   - Outlines the lesson plan concisely in the target language under the heading **INSTRUCCIONES**:
+     - **• Before Class / Antes de la clase**: Student and teacher familiarize themselves with the text as much as they want.
+     - **• In Class / En clase**: (1) Reading aloud with correction • (2) Exercises together • (3) Discussion questions (teacher answers first).
+     - Keep phrasing concise, bulleted, and inline rather than multi-sentence lists so it can be read in seconds.
 4. **Section A: Reading Passage**:
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
    - Text length must always be approximately 400 words (do NOT display the word count anywhere).
    - Divided into logical paragraphs or subsections with clear subtitles.
 5. **Section B: Key Vocabulary (Vocabulario Clave) Drag & Drop Exercise**:
    - Positioned immediately following Section A (the reading text).
-   - Title standardized to "Key Vocabulary" translated into the target language (e.g., "Vocabulario Clave" in Spanish).
+   - Title standardized to "Key Vocabulary" translated into the target language with period (e.g., `<span class="section-num">B.</span> Vocabulario Clave`).
    - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
-   - Top area: flex pool of waiting draggable/clickable word chips (`.vocab-pool`).
-   - Middle area: active target definition cards in shuffled order (`.vocab-targets`).
+   - Top area: flex pool of waiting draggable/clickable word chips (`.vocab-pool`) with transparent background and no label (do NOT include "Palabras para arrastrar o tocar:").
+   - Middle area: active target definition cards in shuffled order (`.vocab-targets`). Cards show definition only with NO placeholder prompt ("Toca o arrastra aquí...").
+   - Square Corners & Narrow Padding: All pills (waiting chips `.vocab-chip` and completed pills `.vocab-completed-pill`) and definition cards have square corners (`border-radius: 0;`) with narrower padding.
+   - Compact Mobile View: Ultra-compact single column layout on mobile screens (~6px 10px padding, 13.5px font size, 6px gap) so all 10 definitions fit on screen without extensive scrolling.
    - Supports mouse drag-and-drop, touch drag, and tap-to-select (tap a word chip, then tap a definition) for smooth mobile support.
    - Wrong drop: sticks to the card, shows a red X SVG icon and a contextual hint in the target language explaining the word's true meaning. The entire page is dimmed/disabled via an overlay until the user clicks anywhere on the box, which returns the word chip to the waiting pool.
    - Correct drop: creates a complete boxed dictionary entry for that word (word, part of speech, definition, and quote from the text highlighting the word). Dims/disables the page until the user clicks anywhere on the box, which removes the definition card and moves the word to the completed words section.
-   - Completed words section: no title; displays completed words in a flex row of pills, each with a green check SVG icon to its left.
+   - Completed words section: no title; displays completed words in a flex row of square-cornered pills, each with a green check SVG icon to its left.
    - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills until clicked again to close.
    - Persists completed vocabulary in `localStorage` and resets on "Reiniciar respuestas".
 6. **Section C: Interactive Multiple-Choice Comprehension Quiz**:
