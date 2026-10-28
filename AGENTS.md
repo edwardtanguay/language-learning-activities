@@ -25,6 +25,20 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Layout & Responsiveness**:
   - **Desktop & Tablet (Landscape)**: Balanced margins, comfortable reading widths, and structured side-by-side or worksheet sections.
   - **Mobile (Portrait)**: Single-column vertical flow with touch-friendly controls.
+- **Languages**
+    - Use the following colors and language codes for the languages everywhere in the application so that everything is consistent:
+      - English (`en`): `#9333ea` (purple)
+      - German (`de`): `#7e4402` (brown)
+      - French (`fr`): `#333388` (dark blue)
+      - Spanish (`es`): `#be185d` (magenta / pink-red)
+      - Italian (`it`): `#194d19` (dark green / forest green)
+      - Dutch (`nl`): `#d97706` (mustard-orange)
+      - Polish (`pl`): `#b8b8b8` (light grey)
+      - Russian (`ru`): `#3f3f46` (dark grey)
+      - Greek (`el`): `#0d9488` (teal / emerald)
+      - Icelandic (`is`): `#06b6d4` (cyan / light blue)
+      - Danish (`da`): `#ff1493` (hot pink)
+    - The above order should also be used where languages are listed together
 
 ## Pedagogical Guidelines
 
