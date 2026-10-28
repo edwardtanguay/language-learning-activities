@@ -159,17 +159,30 @@
       margin: 36px 0 18px 0;
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
+    }
+
+    .section-title > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .section-title .section-num {
-      background: none;
+      background: #e6e0d2;
       color: var(--ink-main);
       padding: 0;
-      font-size: 26px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
       font-weight: 700;
-      margin-right: 3px;
       line-height: 1;
+      margin-right: 0;
+      flex-shrink: 0;
     }
 
     /* Instructions callout */
@@ -210,8 +223,8 @@
 
     .region-card {
       margin-bottom: 22px;
-      padding-left: 16px;
-      border-left: 2px solid var(--ink-rule);
+      padding-left: 0;
+      border-left: none;
     }
 
     .region-card h3 {
@@ -223,7 +236,7 @@
     }
 
     /* =========================================================
-       SECTION B: VOCABULARIO CLAVE (DRAG / DROP EXERCISE)
+       SECTION B: VOCABULARIO (DRAG / DROP & HINT EXERCISE)
        ========================================================= */
     .vocab-container {
       margin-top: 14px;
@@ -238,8 +251,10 @@
     .vocab-pool {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
+      max-width: 580px;
+      margin: 0 auto 16px auto;
       gap: 6px;
-      margin-bottom: 12px;
       min-height: 32px;
       padding: 0;
       background: transparent;
@@ -254,7 +269,7 @@
       color: var(--stamp-blue);
       border: 1px solid var(--ink-rule);
       border-radius: 0;
-      padding: 4px 8px;
+      padding: 2px 9px;
       cursor: grab;
       transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
       display: inline-flex;
@@ -311,26 +326,21 @@
 
     /* Wrong Drop State */
     .vocab-target-card.state-wrong {
-      background: var(--wrong-bg) !important;
-      border: 1px solid var(--wrong-red) !important;
+      background: var(--paper-sheet) !important;
+      border: 1px solid var(--ink-border) !important;
       z-index: 50;
-      box-shadow: 0 10px 30px rgba(143, 42, 36, 0.25);
+      box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
+      cursor: pointer;
     }
 
-    .wrong-banner {
+    .wrong-def-row {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(143, 42, 36, 0.35);
-      color: var(--wrong-red);
-      font-family: var(--font-typewriter);
-      font-size: 14px;
-      line-height: 1.45;
+      margin-bottom: 10px;
     }
 
-    .wrong-banner .wrong-icon {
+    .wrong-icon {
       width: 18px;
       height: 18px;
       stroke-width: 3.2;
@@ -339,25 +349,61 @@
       margin-top: 2px;
     }
 
-    .wrong-banner .hint-text {
+    .wrong-def-text {
       color: var(--ink-main);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .hint-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .hint-hand-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .hint-text {
+      color: var(--ink-main);
+      font-size: 14px;
+      line-height: 1.4;
       flex: 1;
     }
 
-    .click-dismiss-prompt {
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--ink-muted);
-      font-family: var(--font-typewriter);
-      text-align: right;
-      font-style: italic;
-      cursor: pointer;
-      user-select: none;
-      transition: color 0.15s;
+    .lookup-btn {
+      color: var(--stamp-blue);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background-color 0.15s, color 0.15s;
     }
 
-    .click-dismiss-prompt:hover {
+    .lookup-btn:hover {
+      background-color: var(--paper-bg);
       color: var(--ink-main);
+    }
+
+    .vocab-hint-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-border);
+      box-shadow: 0 14px 40px rgba(45, 40, 35, 0.25);
+      padding: 18px 22px;
+      z-index: 100;
+      width: 90%;
+      max-width: 480px;
+      cursor: pointer;
     }
 
     /* Correct Drop / Complete Dictionary Entry Card */
@@ -551,45 +597,32 @@
 
     .option-item {
       display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 3px 0;
+      align-items: baseline;
+      gap: 6px;
+      padding: 4px 0;
       border: none;
-      background: transparent; /* No background */
+      background: transparent;
       cursor: pointer;
       font-size: 16px;
       line-height: 1.45;
       border-radius: 0;
-      transition: none;
+      transition: color 0.15s;
     }
 
     .option-item:hover {
-      background: transparent; /* No hover background */
+      background: transparent;
     }
 
-    .option-item input[type="radio"] {
-      cursor: pointer;
-      width: 17px;
-      height: 17px;
-      margin: 0;
-      margin-top: 3px; /* Centered with first line across browsers */
-      flex-shrink: 0;
-      accent-color: var(--stamp-blue);
-    }
-
-    .option-label {
-      cursor: pointer;
-      flex: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 5px;
-      line-height: 1.45;
+    .option-item.selected .opt-letter {
+      color: var(--stamp-blue);
+      font-weight: 800;
     }
 
     .opt-letter {
       font-family: var(--font-typewriter);
       font-weight: 700;
       flex-shrink: 0;
+      transition: color 0.15s;
     }
 
     .opt-text {
@@ -607,7 +640,7 @@
       display: none;
       margin-top: 4px;
       margin-bottom: 6px;
-      margin-left: 25px;
+      margin-left: 20px;
       padding: 8px 12px;
       font-family: var(--font-typewriter);
       font-size: 14px;
@@ -779,8 +812,10 @@
         gap: 6px;
       }
       .section-title .section-num {
-        font-size: 22px;
-        margin-right: 2px;
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+        margin-right: 0;
       }
       .vocab-pool {
         gap: 5px;
@@ -888,16 +923,16 @@
     <div class="instructions-box">
       <div class="instructions-heading">INSTRUCCIONES</div>
       <div class="instructions-block">
-        <span class="instructions-label">• Antes de la clase:</span> Estudiante y profesor se familiarizan con el texto lo que deseen.
+        <span class="instructions-label">• Antes de la clase:</span> Estudiante y profesor se familiarizan con el texto lo que deseen
       </div>
       <div class="instructions-block">
-        <span class="instructions-label">• En clase:</span> (1) Lectura en voz alta con corrección • (2) Ejercicios juntos • (3) Preguntas de discusión (el profesor responde primero)
+        <span class="instructions-label">• En clase:</span> (1) Lectura en voz alta con corrección, (2) Ejercicios juntos, (3) Preguntas de discusión juntos
       </div>
     </div>
 
     <!-- Section A: Reading Text -->
     <h2 class="section-title">
-      <span><span class="section-num">A.</span> Texto de Lectura</span>
+      <span><span class="section-num">A</span> Texto de Lectura</span>
     </h2>
 
     <article class="reading-content">
@@ -934,9 +969,9 @@
       </div>
     </article>
 
-    <!-- Section B: Vocabulary (Vocabulario Clave) Drag & Drop -->
+    <!-- Section B: Vocabulary Drag & Drop -->
     <h2 class="section-title">
-      <span><span class="section-num">B.</span> Vocabulario Clave</span>
+      <span><span class="section-num">B</span> Vocabulario</span>
     </h2>
 
     <section class="vocab-container" id="vocab-container">
@@ -959,9 +994,9 @@
       </div>
     </section>
 
-    <!-- Section C: Interactive Multiple-Choice Quiz -->
+    <!-- Section C: Interactive Comprehension Questions -->
     <h2 class="section-title">
-      <span><span class="section-num">C.</span> Ejercicios de Comprensión (Opción Múltiple)</span>
+      <span><span class="section-num">C</span> Comprensión</span>
     </h2>
 
     <div class="quiz-container" id="quiz-container">
@@ -975,41 +1010,29 @@
         <ul class="options-list">
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'A')">
-              <input type="radio" name="q1" id="q1-A" value="A">
-              <label class="option-label" for="q1-A">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">La Sierra (Región Interandina)</span>
-              </label>
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">La Sierra (Región Interandina)</span>
             </div>
             <div class="feedback-box" id="feedback-1-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'B')">
-              <input type="radio" name="q1" id="q1-B" value="B">
-              <label class="option-label" for="q1-B">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">El Oriente (Región Amazónica)</span>
-              </label>
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">El Oriente (Región Amazónica)</span>
             </div>
             <div class="feedback-box" id="feedback-1-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'C')">
-              <input type="radio" name="q1" id="q1-C" value="C">
-              <label class="option-label" for="q1-C">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">La Costa (Región Litoral)</span>
-              </label>
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">La Costa (Región Litoral)</span>
             </div>
             <div class="feedback-box" id="feedback-1-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(1, 'D')">
-              <input type="radio" name="q1" id="q1-D" value="D">
-              <label class="option-label" for="q1-D">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Las Islas Galápagos</span>
-              </label>
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Las Islas Galápagos</span>
             </div>
             <div class="feedback-box" id="feedback-1-D"></div>
           </li>
@@ -1025,41 +1048,29 @@
         <ul class="options-list">
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'A')">
-              <input type="radio" name="q2" id="q2-A" value="A">
-              <label class="option-label" for="q2-A">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Porque es el único volcán activo de América del Sur.</span>
-              </label>
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Porque es el único volcán activo de América del Sur.</span>
             </div>
             <div class="feedback-box" id="feedback-2-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'B')">
-              <input type="radio" name="q2" id="q2-B" value="B">
-              <label class="option-label" for="q2-B">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Porque fue el lugar donde desembarcó Charles Darwin en 1835.</span>
-              </label>
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Porque fue el lugar donde desembarcó Charles Darwin en 1835.</span>
             </div>
             <div class="feedback-box" id="feedback-2-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'C')">
-              <input type="radio" name="q2" id="q2-C" value="C">
-              <label class="option-label" for="q2-C">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Porque su cumbre es el punto más cercano al sol desde el centro de la Tierra.</span>
-              </label>
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Porque su cumbre es el punto más cercano al sol desde el centro de la Tierra.</span>
             </div>
             <div class="feedback-box" id="feedback-2-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(2, 'D')">
-              <input type="radio" name="q2" id="q2-D" value="D">
-              <label class="option-label" for="q2-D">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Porque allí se originó el plato típico bolón de verde.</span>
-              </label>
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Porque allí se originó el plato típico bolón de verde.</span>
             </div>
             <div class="feedback-box" id="feedback-2-D"></div>
           </li>
@@ -1075,41 +1086,29 @@
         <ul class="options-list">
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'A')">
-              <input type="radio" name="q3" id="q3-A" value="A">
-              <label class="option-label" for="q3-A">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">El plátano verde (macho)</span>
-              </label>
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">El plátano verde (macho)</span>
             </div>
             <div class="feedback-box" id="feedback-3-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'B')">
-              <input type="radio" name="q3" id="q3-B" value="B">
-              <label class="option-label" for="q3-B">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">La papa andina</span>
-              </label>
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">La papa andina</span>
             </div>
             <div class="feedback-box" id="feedback-3-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'C')">
-              <input type="radio" name="q3" id="q3-C" value="C">
-              <label class="option-label" for="q3-C">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">El maíz tostado</span>
-              </label>
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">El maíz tostado</span>
             </div>
             <div class="feedback-box" id="feedback-3-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(3, 'D')">
-              <input type="radio" name="q3" id="q3-D" value="D">
-              <label class="option-label" for="q3-D">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">El trigo de montaña</span>
-              </label>
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">El trigo de montaña</span>
             </div>
             <div class="feedback-box" id="feedback-3-D"></div>
           </li>
@@ -1125,41 +1124,29 @@
         <ul class="options-list">
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'A')">
-              <input type="radio" name="q4" id="q4-A" value="A">
-              <label class="option-label" for="q4-A">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Que emigra a otros continentes cada invierno.</span>
-              </label>
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Que emigra a otros continentes cada invierno.</span>
             </div>
             <div class="feedback-box" id="feedback-4-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'B')">
-              <input type="radio" name="q4" id="q4-B" value="B">
-              <label class="option-label" for="q4-B">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Que fue introducida por el ser humano en épocas coloniales.</span>
-              </label>
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Que fue introducida por el ser humano en épocas coloniales.</span>
             </div>
             <div class="feedback-box" id="feedback-4-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'C')">
-              <input type="radio" name="q4" id="q4-C" value="C">
-              <label class="option-label" for="q4-C">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Que está domesticada y convive pacíficamente en pueblos pesqueros.</span>
-              </label>
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Que está domesticada y convive pacíficamente en pueblos pesqueros.</span>
             </div>
             <div class="feedback-box" id="feedback-4-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(4, 'D')">
-              <input type="radio" name="q4" id="q4-D" value="D">
-              <label class="option-label" for="q4-D">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Que vive de manera natural únicamente en esa región geográfica específica.</span>
-              </label>
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Que vive de manera natural únicamente en esa región geográfica específica.</span>
             </div>
             <div class="feedback-box" id="feedback-4-D"></div>
           </li>
@@ -1175,41 +1162,29 @@
         <ul class="options-list">
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'A')">
-              <input type="radio" name="q5" id="q5-A" value="A">
-              <label class="option-label" for="q5-A">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Ser nombrada sede permanente de la Reserva de Galápagos.</span>
-              </label>
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Ser nombrada sede permanente de la Reserva de Galápagos.</span>
             </div>
             <div class="feedback-box" id="feedback-5-A"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'B')">
-              <input type="radio" name="q5" id="q5-B" value="B">
-              <label class="option-label" for="q5-B">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Ser declarada el primer Patrimonio de la Humanidad por la UNESCO.</span>
-              </label>
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Ser declarada el primer Patrimonio de la Humanidad por la UNESCO.</span>
             </div>
             <div class="feedback-box" id="feedback-5-B"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'C')">
-              <input type="radio" name="q5" id="q5-C" value="C">
-              <label class="option-label" for="q5-C">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Convertirse en el puerto marítimo más transitado del Pacífico Sur.</span>
-              </label>
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Convertirse en el puerto marítimo más transitado del Pacífico Sur.</span>
             </div>
             <div class="feedback-box" id="feedback-5-C"></div>
           </li>
           <li class="option-wrapper">
             <div class="option-item" onclick="selectOption(5, 'D')">
-              <input type="radio" name="q5" id="q5-D" value="D">
-              <label class="option-label" for="q5-D">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Abrir el primer centro de investigación de la evolución darwiniana.</span>
-              </label>
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Abrir el primer centro de investigación de la evolución darwiniana.</span>
             </div>
             <div class="feedback-box" id="feedback-5-D"></div>
           </li>
@@ -1220,7 +1195,7 @@
 
     <!-- Section D: Discussion Questions Section -->
     <h2 class="section-title">
-      <span><span class="section-num">D.</span> Preguntas de Discusión</span>
+      <span><span class="section-num">D</span> Discusión</span>
     </h2>
 
     <section class="discussion-container">
@@ -1275,7 +1250,7 @@
         pos: "adj.",
         def: "Que tiene una temperatura agradable o moderadamente caliente.",
         sentence: "«...la Costa se caracteriza por su clima cálido y tropical.»",
-        hint: "«cálido» se refiere a una temperatura agradable o moderadamente caliente."
+        hint: "se refiere a una temperatura agradable o moderadamente caliente"
       },
       machacado: {
         key: "machacado",
@@ -1283,7 +1258,7 @@
         pos: "adj. / part.",
         def: "Aplastado, desmenuzado o golpeado reiteradamente hasta formar una masa.",
         sentence: "«...el verde (plátano verde machacado) y platos típicos como el bolón de verde...»",
-        hint: "«machacado» describe algo aplastado o triturado físicamente."
+        hint: "describe algo aplastado o triturado físicamente"
       },
       faldas: {
         key: "faldas",
@@ -1291,7 +1266,7 @@
         pos: "f. pl.",
         def: "Parte baja o pendientes inferiores de una montaña o cordillera.",
         sentence: "«Ubicada entre el océano Pacífico y las faldas occidentales de los Andes...»",
-        hint: "«faldas» se refiere a la parte baja o base inclinada de una elevación montañosa."
+        hint: "se refiere a la parte baja o base inclinada de una elevación montañosa"
       },
       imponente: {
         key: "imponente",
@@ -1299,7 +1274,7 @@
         pos: "adj.",
         def: "Que causa gran impresión, respeto o asombro por su majestuosidad o tamaño.",
         sentence: "«...dominada por la imponente Cordillera de los Andes.»",
-        hint: "«imponente» expresa una cualidad majestuosa o que impresiona fuertemente."
+        hint: "expresa una cualidad majestuosa o que impresiona fuertemente"
       },
       nevados: {
         key: "nevados",
@@ -1307,7 +1282,7 @@
         pos: "m. pl.",
         def: "Montañas o volcanes de gran altura con cumbres cubiertas perpetuamente de nieve o glaciares.",
         sentence: "«...que incluye gigantes nevados como el Cotopaxi y el Chimborazo...»",
-        hint: "«nevados» alude a montañas muy elevadas cubiertas de nieve perpetua."
+        hint: "alude a montañas muy elevadas cubiertas de nieve perpetua"
       },
       calurosa: {
         key: "calurosa",
@@ -1315,7 +1290,7 @@
         pos: "adj.",
         def: "Que tiene mucho calor, lo experimenta o lo produce.",
         sentence: "«Es una región densa, calurosa y húmeda, regada por caudalosos ríos...»",
-        hint: "«calurosa» se relaciona directamente con una sensación o clima de intenso calor."
+        hint: "se relaciona directamente con una sensación o clima de intenso calor"
       },
       caudalosos: {
         key: "caudalosos",
@@ -1323,7 +1298,7 @@
         pos: "adj. pl.",
         def: "Dicho de un río o corriente: que lleva gran abundancia o volumen de agua.",
         sentence: "«...regada por caudalosos ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas.»",
-        hint: "«caudalosos» describe ríos o corrientes con gran volumen o flujo de agua."
+        hint: "describe ríos o corrientes con gran volumen o flujo de agua"
       },
       selva: {
         key: "selva",
@@ -1331,7 +1306,7 @@
         pos: "f.",
         def: "Terreno silvestre muy extenso, boscoso y poblado de vegetación espesa y tupida propia de zonas cálidas.",
         sentence: "«Hacia el este de los Andes se extiende la selva amazónica ecuatoriana.»",
-        hint: "«selva» se refiere a un bosque tropical extenso con vegetación espesa y tupida."
+        hint: "se refiere a un bosque tropical extenso con vegetación espesa y tupida"
       },
       decenas: {
         key: "decenas",
@@ -1339,7 +1314,7 @@
         pos: "f. pl.",
         def: "Conjuntos formados por diez unidades cada uno, o cantidades aproximadas de varios grupos de diez.",
         sentence: "«...consta de 13 islas volcánicas principales y decenas de islotes.»",
-        hint: "«decenas» expresa una cantidad numérica formada por grupos de diez unidades."
+        hint: "expresa una cantidad numérica formada por grupos de diez unidades"
       },
       islotes: {
         key: "islotes",
@@ -1347,7 +1322,7 @@
         pos: "m. pl.",
         def: "Islas muy pequeñas, rocosas o despobladas.",
         sentence: "«...consta de 13 islas volcánicas principales y decenas de islotes.»",
-        hint: "«islotes» son pequeñas islas despobladas o formaciones rocosas menores."
+        hint: "son pequeñas islas despobladas o formaciones rocosas menores"
       }
     };
 
@@ -1355,9 +1330,20 @@
     const vocabOrder = ["calurosa", "faldas", "machacado", "islotes", "calido", "nevados", "selva", "imponente", "decenas", "caudalosos"];
 
     let completedVocab = [];
-    let selectedWordKey = null;
     let draggedWordKey = null;
     let activeModalCard = null;
+
+    function getGoogleSearchUrl(word) {
+      const query = `give me the definition of the word "${word}" in Spanish, and the translation of the word in English, and then three example sentences with that word, for each example, once in Spanish and once in English`;
+      return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    }
+
+    function formatWrongDef(def) {
+      if (!def) return '';
+      let text = def.trim();
+      text = text.charAt(0).toLowerCase() + text.slice(1);
+      return text.replace(/[.,;:]+$/, '');
+    }
 
     // =========================================================
     // MULTIPLE CHOICE EXPLANATIONS (NO "¡CORRECTO!" / "INCORRECTO.")
@@ -1411,7 +1397,6 @@
               userAnswers = parsed.mc || {};
               completedVocab = Array.isArray(parsed.vocab) ? parsed.vocab : [];
             } else {
-              // Backward compatibility with previous plain object structure
               userAnswers = parsed;
               completedVocab = [];
             }
@@ -1424,11 +1409,7 @@
       // Restore Multiple Choice answers
       Object.keys(userAnswers).forEach(qNum => {
         const val = userAnswers[qNum];
-        const radio = document.querySelector(`input[name="q${qNum}"][value="${val}"]`);
-        if (radio) {
-          radio.checked = true;
-          applyQuestionFeedback(qNum, val);
-        }
+        applyQuestionFeedback(qNum, val);
       });
 
       // Render Vocabulary
@@ -1467,7 +1448,7 @@
       const allKeys = Object.keys(vocabData);
       const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
 
-      // 1. Render Waiting Words Pool
+      // 1. Render Waiting Words Pool (horizontally centered, 5-and-5 balance)
       if (remainingKeys.length === 0) {
         pool.innerHTML = '<span style="color: var(--ink-muted); font-size: 14px; font-style: italic;">¡Todas las palabras han sido emparejadas con éxito!</span>';
       } else {
@@ -1475,7 +1456,6 @@
           const item = vocabData[k];
           const chip = document.createElement('div');
           chip.className = 'vocab-chip';
-          if (selectedWordKey === k) chip.classList.add('selected');
           chip.setAttribute('draggable', 'true');
           chip.setAttribute('data-key', k);
           chip.textContent = item.word;
@@ -1484,10 +1464,11 @@
           chip.addEventListener('dragstart', handleDragStart);
           chip.addEventListener('dragend', handleDragEnd);
 
-          // Tap / Click events (desktop & mobile)
+          // Click opens hint popup
           chip.addEventListener('click', (e) => {
             e.stopPropagation();
-            handleChipClick(k);
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            showWordHintModal(k);
           });
 
           // Touch drag support
@@ -1499,7 +1480,7 @@
 
       // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
       vocabOrder.forEach(targetKey => {
-        if (completedVocab.includes(targetKey)) return; // Exclude dismissed/completed words
+        if (completedVocab.includes(targetKey)) return;
 
         const item = vocabData[targetKey];
         const card = document.createElement('div');
@@ -1514,7 +1495,7 @@
         card.addEventListener('dragleave', handleDragLeave);
         card.addEventListener('drop', handleDrop);
 
-        // Tap-to-select click
+        // Click dismiss or inspect
         card.addEventListener('click', (e) => {
           handleTargetCardClick(card, targetKey, e);
         });
@@ -1541,38 +1522,62 @@
       });
     }
 
-    function handleChipClick(key) {
-      if (activeModalCard) return; // Locked during focused state
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      if (selectedWordKey === key) {
-        selectedWordKey = null; // deselect
-      } else {
-        selectedWordKey = key;
-      }
-      renderVocabulary();
+    function showWordHintModal(wordKey) {
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      hideModal();
+
+      const modal = document.createElement('div');
+      modal.className = 'vocab-hint-modal';
+      modal.id = 'active-hint-modal';
+      modal.innerHTML = `
+        <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${item.word}</span>
+            <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+              <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hint-row">
+          <svg class="hint-hand-icon" viewBox="0 0 24 24" fill="#235c34" aria-hidden="true">
+            <path d="M22.5 12c0-.55-.45-1-1-1h-9.5v-1.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v1.5H7.5c-.83 0-1.5.67-1.5 1.5v3c0 .83.67 1.5 1.5 1.5h1V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-1h8.5c.55 0 1-.45 1-1s-.45-1-1-1h-1v-2h2.5c.55 0 1-.45 1-1zM4 10.5C2.9 10.5 2 11.4 2 12.5v3c0 1.1.9 2 2 2h1.5v-7H4z"/>
+          </svg>
+          <div class="hint-text">${item.hint}</div>
+        </div>
+      `;
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('.lookup-btn')) return;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        hideModal();
+      });
+
+      document.body.appendChild(modal);
+      activeModalCard = modal;
+      showOverlay();
+    }
+
+    function hideModal() {
+      const existing = document.getElementById('active-hint-modal');
+      if (existing) existing.remove();
+      hideOverlay();
+      activeModalCard = null;
     }
 
     function handleTargetCardClick(card, targetKey, e) {
-      // If user highlighted or selected text to copy, do not dismiss!
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (e && e.target && e.target.closest('.lookup-btn')) return;
 
       if (card.classList.contains('state-wrong')) {
-        // If clicking inside selectable text, do not dismiss
-        if (e && e.target && e.target.closest('.wrong-banner, .hint-text, .vocab-target-def')) return;
         dismissWrongState(card);
         return;
       }
 
       if (card.classList.contains('state-correct')) {
-        // If clicking inside selectable text, do not dismiss
-        if (e && e.target && e.target.closest('.dict-word, .dict-pos, .dict-def, .dict-sentence')) return;
         dismissCorrectState(targetKey);
         return;
-      }
-
-      // If user tapped a word chip previously, treat card click as a drop
-      if (selectedWordKey) {
-        processWordPlacement(selectedWordKey, targetKey, card);
       }
     }
 
@@ -1618,7 +1623,7 @@
 
     // Process a word placed on a target card
     function processWordPlacement(wordKey, targetKey, card) {
-      selectedWordKey = null;
+      hideModal();
 
       if (wordKey === targetKey) {
         // === CORRECT MATCH ===
@@ -1628,10 +1633,14 @@
         activeModalCard = card;
 
         card.innerHTML = `
-          <div class="dict-header">
-            <span class="dict-word">${item.word}</span>
-            <span class="dict-pos">${item.pos}</span>
-            <button class="dict-close-btn" onclick="event.stopPropagation(); dismissCorrectState('${targetKey}')" title="Cerrar" aria-label="Cerrar">✕</button>
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word">${item.word}</span>
+              <span class="dict-pos">${item.pos}</span>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
           </div>
           <div class="dict-def">${item.def}</div>
           <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
@@ -1648,16 +1657,23 @@
         activeModalCard = card;
 
         card.innerHTML = `
-          <div class="dict-header" style="border-bottom: none; margin-bottom: 0;">
-            <span style="font-weight: 700; color: var(--wrong-red);">${placedWord.word}</span>
-            <button class="dict-close-btn" onclick="event.stopPropagation(); dismissWrongState(activeModalCard)" title="Cerrar" aria-label="Cerrar">✕</button>
-          </div>
-          <div class="vocab-target-def">${targetItem.def}</div>
-          <div class="wrong-banner">
-            <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            <div class="hint-text">
-              <strong>${placedWord.word}</strong>: ${placedWord.hint}
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${placedWord.word}</span>
+              <a href="${getGoogleSearchUrl(placedWord.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
             </div>
+          </div>
+          <div class="wrong-def-row">
+            <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="var(--wrong-red)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="wrong-def-text">${formatWrongDef(targetItem.def)}</div>
+          </div>
+          <div class="hint-row">
+            <svg class="hint-hand-icon" viewBox="0 0 24 24" fill="#235c34" aria-hidden="true">
+              <path d="M22.5 12c0-.55-.45-1-1-1h-9.5v-1.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v1.5H7.5c-.83 0-1.5.67-1.5 1.5v3c0 .83.67 1.5 1.5 1.5h1V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-1h8.5c.55 0 1-.45 1-1s-.45-1-1-1h-1v-2h2.5c.55 0 1-.45 1-1zM4 10.5C2.9 10.5 2 11.4 2 12.5v3c0 1.1.9 2 2 2h1.5v-7H4z"/>
+            </svg>
+            <div class="hint-text">${placedWord.hint}</div>
           </div>
         `;
 
@@ -1692,12 +1708,17 @@
     }
 
     function handleOverlayClick() {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       if (activeModalCard) {
-        if (activeModalCard.classList.contains('state-wrong')) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+        } else if (activeModalCard.classList.contains('state-wrong')) {
           dismissWrongState(activeModalCard);
         } else if (activeModalCard.classList.contains('state-correct')) {
           const targetKey = activeModalCard.getAttribute('data-target-key');
           dismissCorrectState(targetKey);
+        } else {
+          hideModal();
         }
       }
     }
@@ -1719,9 +1740,14 @@
       detailArea.setAttribute('data-active-word', wordKey);
       detailArea.innerHTML = `
         <div class="vocab-dict-card">
-          <div class="dict-header">
-            <span class="dict-word">${item.word}</span>
-            <span class="dict-pos">${item.pos}</span>
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word">${item.word}</span>
+              <span class="dict-pos">${item.pos}</span>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
             <button class="dict-close-btn" onclick="toggleCompletedDetail('${wordKey}')" title="Cerrar definición" aria-label="Cerrar">✕</button>
           </div>
           <div class="dict-def">${item.def}</div>
@@ -1748,7 +1774,7 @@
       chip.addEventListener('touchend', (e) => {
         chip.classList.remove('dragging');
         if (!touchMoved) {
-          // It was a tap, handled by click listener
+          // Tap handled by click listener
           return;
         }
         const touch = e.changedTouches[0];
@@ -1767,14 +1793,10 @@
     }
 
     // =========================================================
-    // MULTIPLE CHOICE QUIZ LOGIC
+    // MULTIPLE CHOICE QUIZ LOGIC (RADIO-FREE)
     // =========================================================
     function selectOption(qNum, value) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      const radio = document.querySelector(`input[name="q${qNum}"][value="${value}"]`);
-      if (radio) {
-        radio.checked = true;
-      }
       userAnswers[qNum] = value;
       applyQuestionFeedback(qNum, value);
       saveState();
@@ -1784,6 +1806,12 @@
       const card = document.querySelector(`.question-card[data-q="${qNum}"]`);
       if (!card) return;
       const correctVal = card.getAttribute('data-correct');
+
+      // Update active option styling
+      const allOptionItems = card.querySelectorAll('.option-item');
+      allOptionItems.forEach(item => item.classList.remove('selected'));
+      const activeOption = card.querySelector(`.option-item[onclick*="'${value}'"]`);
+      if (activeOption) activeOption.classList.add('selected');
 
       // Hide all feedback boxes for this question first
       const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
@@ -1825,15 +1853,14 @@
       if (confirm("¿Deseas reiniciar la hoja de trabajo y borrar tus respuestas guardadas?")) {
         userAnswers = {};
         completedVocab = [];
-        selectedWordKey = null;
         activeModalCard = null;
 
         try {
           localStorage.removeItem(STORAGE_KEY);
         } catch (e) {}
 
-        const radios = document.querySelectorAll('input[type="radio"]');
-        radios.forEach(r => r.checked = false);
+        const optionItems = document.querySelectorAll('.option-item');
+        optionItems.forEach(item => item.classList.remove('selected'));
 
         const cards = document.querySelectorAll('.question-card');
         cards.forEach(c => {
@@ -1846,7 +1873,7 @@
           f.className = 'feedback-box';
         });
 
-        hideOverlay();
+        hideModal();
         renderVocabulary();
       }
     }

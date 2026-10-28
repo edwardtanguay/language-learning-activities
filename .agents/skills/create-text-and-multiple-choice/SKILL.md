@@ -71,8 +71,8 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Unboxed title header (`border: none;`).
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
-- **Plain Large Section Letters and Numbers (No Dark Inverted Boxes)**:
-  - Section letters followed by a period inside the section number span (`<span class="section-num">A.</span>`, `B.`, `C.`, `D.`) and quiz question numbers (1, 2, 3...) must be rendered as plain large text in the text color (`--ink-main`), never white text inside black/dark boxes. Set tight right spacing on `.section-num` (`margin-right: 3px` desktop, `2px` mobile) so the section title text sits closely and naturally next to the period.
+- **Circular Section Letters and Clean Numbers**:
+  - Main sections across the worksheet are designated with clean capital letters without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">A</span>`, `B`, `C`, `D`) — e.g., `<span class="section-num">A</span> Texto de Lectura`, `<span class="section-num">B</span> Vocabulario`, `<span class="section-num">C</span> Comprensión`, `<span class="section-num">D</span> Discusión`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal letter centered). Questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:
@@ -107,35 +107,44 @@ Each activity file should include the following sections:
    - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
 3. **Structured Instructions Callout Box**:
    - Outlines the lesson plan concisely in the target language under the heading **INSTRUCCIONES**:
-     - **• Before Class / Antes de la clase**: Student and teacher familiarize themselves with the text as much as they want.
-     - **• In Class / En clase**: (1) Reading aloud with correction • (2) Exercises together • (3) Discussion questions (teacher answers first).
+     - **• Before Class / Antes de la clase**: Student and teacher familiarize themselves with the text as much as they want (no trailing period, e.g., `Estudiante y profesor se familiarizan con el texto lo que deseen`).
+     - **• In Class / En clase**: comma-separated list: `(1) Lectura en voz alta con corrección, (2) Ejercicios juntos, (3) Preguntas de discusión juntos`.
      - Keep phrasing concise, bulleted, and inline rather than multi-sentence lists so it can be read in seconds.
 4. **Section A: Reading Passage**:
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
    - Text length must always be approximately 400 words (do NOT display the word count anywhere).
+   - Paragraphs and subsection cards must NOT have vertical lines on the left (clean unbordered text).
    - Divided into logical paragraphs or subsections with clear subtitles.
-5. **Section B: Key Vocabulary (Vocabulario Clave) Drag & Drop Exercise**:
+5. **Section B: Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:
    - Positioned immediately following Section A (the reading text).
-   - Title standardized to "Key Vocabulary" translated into the target language with period (e.g., `<span class="section-num">B.</span> Vocabulario Clave`).
+   - Title standardized to "Vocabulary" translated into the target language without period (e.g., `<span class="section-num">B</span> Vocabulario`).
    - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
-   - Top area: flex pool of waiting draggable/clickable word chips (`.vocab-pool`) with transparent background and no label (do NOT include "Palabras para arrastrar o tocar:").
+   - Top area: flex pool of waiting word chips (`.vocab-pool`) horizontally centered (`justify-content: center;`), balanced across rows (e.g. 5 and 5 when wrapped into two rows). Reduced upper and lower padding on chips (`padding: 2px 9px;`).
    - Middle area: active target definition cards in shuffled order (`.vocab-targets`). Cards show definition only with NO placeholder prompt ("Toca o arrastra aquí...").
    - Square Corners & Narrow Padding: All pills (waiting chips `.vocab-chip` and completed pills `.vocab-completed-pill`) and definition cards have square corners (`border-radius: 0;`) with narrower padding.
    - Compact Mobile View: Ultra-compact single column layout on mobile screens (~6px 10px padding, 13.5px font size, 6px gap) so all 10 definitions fit on screen without extensive scrolling.
-   - Supports mouse drag-and-drop, touch drag, and tap-to-select (tap a word chip, then tap a definition) for smooth mobile support.
-   - Wrong drop: sticks to the card, shows a red X SVG icon and a contextual hint in the target language explaining the word's true meaning. The entire page is dimmed/disabled via an overlay until the user clicks anywhere on the box, which returns the word chip to the waiting pool.
-   - Correct drop: creates a complete boxed dictionary entry for that word (word, part of speech, definition, and quote from the text highlighting the word). Dims/disables the page until the user clicks anywhere on the box, which removes the definition card and moves the word to the completed words section.
+   - Supports mouse drag-and-drop, touch drag, and tap-to-select for smooth mobile support.
+   - Word chip click on top: clicking a waiting chip opens a hint popup displaying the word title with a lookup icon next to it, followed by a green hand pointing right SVG icon and the hint text in the target language (hint helps without making the answer obvious, no trailing punctuation, no repeating word prefix).
+   - Lookup icon: next to the word at the top, a magnifying glass lookup button opens a new tab and searches Google: `give me the definition of the word "<word>" in <language>, and the translation of the word in English, and then three example sentences with that word, for each example, once in <language> and once in English`.
+   - Wrong drop panel:
+     - Neutral background (no red fill or red border; the ONLY red element on the panel is the red X icon).
+     - Red X SVG icon placed next to the wrong definition (starts with lowercase and ends with no punctuation).
+     - Below that: a green vector hand pointing right SVG icon next to the hint text (no trailing punctuation, without repeating the word twice).
+     - To the right of the word title at the top, a lookup icon.
+     - No X close button in the upper right. Text is fully selectable to copy, but clicking the box anywhere (without text selected) closes it and returns the chip to the waiting pool.
+   - Correct drop: creates a complete boxed dictionary entry for that word (word, part of speech, lookup icon, definition, and quote from the text highlighting the word). Dims/disables the page until the user clicks anywhere on the box, which removes that definition card and moves the word chip to completed words.
    - Completed words section: no title; displays completed words in a flex row of square-cornered pills, each with a green check SVG icon to its left.
-   - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills until clicked again to close.
+   - Clicking any completed word pill pops open its complete dictionary definition card (including lookup icon) in a designated view area above the pills until clicked again to close.
    - Persists completed vocabulary in `localStorage` and resets on "Reiniciar respuestas".
-6. **Section C: Interactive Multiple-Choice Comprehension Quiz**:
+6. **Section C: Interactive Comprehension Questions**:
+   - Heading standardized to "Comprehension" in the target language without period (e.g., `<span class="section-num">C</span> Comprensión`).
    - 4–6 questions (numbered 1, 2, 3...) testing reading comprehension, grammar in context, and vocabulary.
    - Large plain question numbers (no background boxes).
    - Borderless question cards.
    - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
+   - NO radio buttons (`<input type="radio">` removed completely).
    - Options have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
-   - Radio button circle remains alongside the option letter, vertically centered with the first line of text across all browsers.
-   - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period.
+   - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`).
    - Contextual Inline Feedback:
      - Selecting an option immediately displays its feedback box directly beneath that selected option (inside the option wrapper), rather than at the bottom of the question card.
      - Only show feedback beneath the actively selected option (switching to another option moves the feedback).
@@ -146,8 +155,8 @@ Each activity file should include the following sections:
      - Keep question cards clean and neutral; do NOT color the entire question card green or red.
    - Progress Persistence:
      - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
-7. **Section D: Discussion Questions Section**:
-   - Section heading lettered as Section D and standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French), avoiding platform-specific brand names like Preply or Tandem.
+7. **Section D: Discussion Section**:
+   - Section heading lettered as Section D and standardized to "Discussion" translated into the target language without period (e.g., `<span class="section-num">D</span> Discusión` in Spanish, `Diskussion` in German, `Discussion` in French), avoiding platform-specific brand names like Preply or Tandem.
    - Borderless and transparent container (no dashed or solid outline boxes).
    - Do NOT include boilerplate introductory instructions.
    - 4–5 open-ended conversation questions in the target language designed for practice with tutors, exchange partners, or self-reflection.
