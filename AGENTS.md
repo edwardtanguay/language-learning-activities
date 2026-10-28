@@ -1,61 +1,42 @@
-# Language Learning Activities 
+# Language Learning Activities
 
-This is a site where users can create language learning actitivites for themselves, for tandems or for online tutor platforms such as https://preply.com
+A platform for generating self-contained language learning activities and worksheets for self-study, language exchange tandems, and online tutoring platforms (e.g., Preply, iTalki).
 
-## Overview
+## Repository Structure
 
-## Site style and design 
+- `index.html`: Root landing page and catalog listing all available activities.
+- `topics/<topic-slug>/index.html`: Individual self-contained activity pages.
+- `creators/`: Resources and tools for activity creators.
+- `.agents/skills/`: Agent skills defining specific creation workflows (e.g., `/create-text-and-multiple-choice`).
 
-- the style for this website is kept simple and clean
-- it should not look flashy at all, but more like a "1970s school handout"
-- the focus is on language and learning, not impressing the user with fancy design
-- it is important that the site work swell in both desktop view and mobile view
-	- desktop view should work on tables as well
-	- the different is desktop/table = landscape (wider) view, mobile = portrait view
-	- 
+## Activity Architecture & Technical Rules
 
-## Landing Page
+Each activity lives in `topics/<topic-slug>/index.html`:
+- **Directory Naming**: Use SEO-friendly, descriptive kebab-case names under `topics/` (e.g., `topics/regions-of-ecuador/`).
+- **Self-Contained File**: All HTML, CSS (`<style>`), and JavaScript (`<script>`) must reside within the single `index.html` file so it can be emailed, shared, or opened offline.
+- **No Local Asset Dependencies**: Do not use relative links to local external files (CSS, JS, or images). If media is needed, link to absolute web URLs hosted on the published website.
+- **Local State & Reset**: Interactive features (e.g., quiz answers, score tracking) may use `localStorage` for persistence, but MUST include a visible reset button.
+- **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
+- the language on the page of the activity is always exclusively in the target language of the activity, even links and buttons
 
-- in the root directory there is an index.html
-- this file explains the site and gives a list of all activities
+## Design System: 1970s School Handout
 
-## When creating an activity
+- **Aesthetic**: Authentic 1970s school handout / mimeograph worksheet. Clean, calm, and distraction-free. Avoid flashy modern animations or neon styling.
+- **Layout & Responsiveness**:
+  - **Desktop & Tablet (Landscape)**: Balanced margins, comfortable reading widths, and structured side-by-side or worksheet sections.
+  - **Mobile (Portrait)**: Single-column vertical flow with touch-friendly controls.
 
-- for each activity, create a folder in "topics" 
-	- give folder a descriptive name, e.g. "regions-of-ecuador"
-	- the folder name will be used in the URL, so make it SEO friendly 
-- inside the folder, create an index.html file
-	- this file will be the main page for the activity 
-	- the index.html should contain all the HTML, CSS, and JavaScript for the activity 
-	- the index.html should be self-contained 
-		- if it references external files, they are on the main website, not local files
-		- this enables the activity to be sent to others and opened locally
-- so the URL of an activity will look like ...language-learning-activities/topics/regions-of-ecuador
-- each language activity is a simply ".html" file with HTML/CSS/JavaScript
-- one file per activity
-- users create activities via AI skills e.g. /create-text-and-multiple-choice
-	- the user can give extra information after the skill, e.g. if an activity should use a certain regional language style, e.g. Latin American Spanish, etc.
-	- skills can require certain information so that if the information is not provided, the skill asks for it e.g. target language, skill level (B1, B2), topic 
-- each activity is a self-contained .html file that can be sent via messaging/mail etc.
-	- if the language activities use media such as images or audio files, then these are links that reference online files on the published website, not local files
-	- this enables the activities to be sent to others and opened locally
-	- these exercises are static, but they can use localstorage to record progress if desired
-		- if localstorage is used, then an option to reset the data is included on the activity 
-- each activity is created in a directory called "topics" 
+## Pedagogical Guidelines
 
-## Skills
+- **Proficiency & Regional Style**: Tailor vocabulary, grammar, and cultural context to the learner's specified CEFR level (A1–C2) and target dialect (e.g., Latin American Spanish).
+- **Comprehension Checks**: Test reading comprehension and grammar in context with immediate feedback and concise explanations.
+- **Discussion & Tutor Prompts**:
+  - Use open-ended "how" and "why" prompts that encourage deep language production.
+  - Avoid simple yes/no or one-word answers.
+  - Prompt learners to explain reasons, give examples, and describe scenarios in detail.
 
-- make sure you write in every skill that it does NOT have to check its work by opening up a browser
-	- this takes too long
-	- the users can test it themselves
+## Agent Execution Rules
 
-
-## Activities
-
-- for questions created in the activities 
-	- they should be how/why questions which lead to deeper language use
-	- they should not be simple questions that can be answered with one or two words
-	- they should encourage critical thinking and creativity
-	- they should be open-ended and allow for multiple responses
-	- they should be appropriate for the target language and skill level
-	- also encourage learners to give reasons, examples, and to describe things in detail
+- **No Browser Testing**: Do not launch browser subagents or open browser tabs to verify activities. Users test them manually.
+- **Clarify Missing Information**: If target language, proficiency level, or topic is missing, prompt the user before creating the activity.
+- **Follow Skill Definitions**: Follow the relevant skill file in `.agents/skills/` for layout, structure, and metadata standards.
