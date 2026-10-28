@@ -42,3 +42,9 @@ This is a site where users can create language learning actitivites for themselv
 	- these exercises are static, but they can use localstorage to record progress if desired
 		- if localstorage is used, then an option to reset the data is included on the activity 
 - each activity is created in a directory called "topics" 
+
+## Skills
+
+- make sure you write in every skill that it does NOT have to check its work by opening up a browser
+	- this takes too long
+	- the users can test it themselves

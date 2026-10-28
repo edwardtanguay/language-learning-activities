@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language Learning Activities | Worksheets for Self-Study, Tandems & Tutors</title>
+  <meta name="description" content="Clean, distraction-free language learning worksheets and activities designed in a classic 1970s school handout style for learners, tandem partners, and online tutors.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       1970s SCHOOL HANDOUT DESIGN SYSTEM - MAIN CATALOG
+       ========================================================= */
+    :root {
+      --paper-bg: #f9f6ef;
+      --paper-sheet: #fffdf9;
+      --ink-main: #22201e;
+      --ink-muted: #5e5953;
+      --ink-border: #3c3732;
+      --ink-rule: #d5cebf;
+      --stamp-blue: #1d4373;
+      --stamp-red: #8f2a24;
+      --highlight: #f2e9cb;
+      --font-typewriter: "Courier Prime", "Courier New", Courier, monospace;
+      --font-body: "Lora", Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      color: var(--ink-main);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.65;
+      padding: 24px 16px;
+      background-image: radial-gradient(var(--ink-rule) 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+
+    .utility-bar {
+      max-width: 920px;
+      margin: 0 auto 16px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+    }
+
+    .creator-nav-link {
+      background-color: var(--paper-sheet);
+      color: var(--stamp-blue);
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid var(--ink-border);
+      padding: 5px 12px;
+      box-shadow: 2px 2px 0 var(--ink-border);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.1s, transform 0.1s;
+    }
+
+    .creator-nav-link:hover {
+      background-color: var(--highlight);
+      text-decoration: none;
+    }
+
+    .creator-nav-link:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--ink-border);
+    }
+
+    /* Handout container */
+    .handout-sheet {
+      max-width: 920px;
+      margin: 0 auto;
+      background-color: var(--paper-sheet);
+      border: 2px solid var(--ink-border);
+      box-shadow: 4px 4px 0px rgba(45, 40, 35, 0.15);
+      padding: 36px 44px;
+    }
+
+    /* Worksheet Header */
+    .catalog-header {
+      border: 2px solid var(--ink-border);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      background-color: var(--paper-sheet);
+      font-family: var(--font-typewriter);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px dashed var(--ink-border);
+      padding-bottom: 14px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .catalog-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+      font-family: var(--font-typewriter);
+      color: var(--ink-main);
+      margin-bottom: 4px;
+    }
+
+    .catalog-subtitle {
+      font-size: 15px;
+      color: var(--ink-muted);
+      font-style: italic;
+    }
+
+    .stamp-badge {
+      border: 2px solid var(--stamp-blue);
+      color: var(--stamp-blue);
+      padding: 5px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-1.5deg);
+      display: inline-block;
+    }
+
+    .catalog-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .catalog-meta strong {
+      color: var(--ink-main);
+    }
+
+    /* Purpose Explanation Box */
+    .overview-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-border);
+      padding: 16px 20px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .overview-box h2 {
+      font-size: 15px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--ink-main);
+    }
+
+    .overview-box p {
+      margin-bottom: 8px;
+    }
+
+    .overview-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Filter & Search Bar */
+    .filter-bar {
+      border: 1px solid var(--ink-border);
+      background-color: var(--paper-bg);
+      padding: 12px 18px;
+      margin-bottom: 24px;
+      font-family: var(--font-typewriter);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .filter-select, .search-input {
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      padding: 4px 8px;
+      border: 1px solid var(--ink-border);
+      background-color: #fff;
+      color: var(--ink-main);
+    }
+
+    .search-input {
+      min-width: 200px;
+    }
+
+    /* Activity Cards */
+    .activities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .activity-card {
+      border: 1px solid var(--ink-border);
+      background: #fff;
+      padding: 20px 24px;
+      transition: background 0.15s, border-color 0.15s;
+      position: relative;
+    }
+
+    .activity-card:hover {
+      background-color: #fffefb;
+      border-color: var(--stamp-blue);
+    }
+
+    .activity-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .activity-title {
+      font-size: 20px;
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+    }
+
+    .activity-title a {
+      color: var(--ink-main);
+      text-decoration: none;
+    }
+
+    .activity-title a:hover {
+      color: var(--stamp-blue);
+      text-decoration: underline;
+    }
+
+    .activity-badges {
+      display: flex;
+      gap: 8px;
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-lang {
+      background-color: var(--highlight);
+      border: 1px solid var(--ink-border);
+      padding: 2px 7px;
+    }
+
+    .badge-level {
+      border: 1px solid var(--stamp-blue);
+      color: var(--stamp-blue);
+      padding: 2px 7px;
+    }
+
+    .activity-desc {
+      font-size: 15px;
+      color: var(--ink-muted);
+      margin-bottom: 12px;
+    }
+
+    .activity-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dotted var(--ink-rule);
+      padding-top: 10px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .activity-meta-text {
+      color: var(--ink-muted);
+    }
+
+    .open-activity-btn {
+      color: var(--stamp-blue);
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .open-activity-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Creators Callout Box */
+    .creators-banner {
+      margin-top: 36px;
+      border: 2px dashed var(--stamp-blue);
+      background-color: var(--paper-bg);
+      padding: 20px 24px;
+      font-family: var(--font-typewriter);
+    }
+
+    .creators-banner h3 {
+      font-size: 16px;
+      color: var(--stamp-blue);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .creators-banner p {
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-family: var(--font-body);
+    }
+
+    .creators-btn {
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--stamp-blue);
+      color: var(--stamp-blue);
+      padding: 6px 14px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 2px 2px 0 var(--stamp-blue);
+    }
+
+    .creators-btn:hover {
+      background-color: var(--highlight);
+    }
+
+    .site-footer {
+      text-align: center;
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 680px) {
+      body {
+        padding: 12px 8px;
+      }
+      .handout-sheet {
+        padding: 20px 16px;
+      }
+      .header-top {
+        flex-direction: column;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Utility -->
+  <div class="utility-bar">
+    <span>CLASSROOM &amp; TANDEM HANDOUT REPOSITORY</span>
+    <a href="creators/index.html" class="creator-nav-link">&#9998; Creator's Guide &amp; AI Setup &rarr;</a>
+  </div>
+
+  <main class="handout-sheet">
+
+    <!-- Catalog Header -->
+    <header class="catalog-header">
+      <div class="header-top">
+        <div class="catalog-title-group">
+          <h1>Language Learning Activities</h1>
+          <div class="catalog-subtitle">Distraction-free pedagogical handouts for self-study, tandems, and tutors</div>
+        </div>
+        <div class="stamp-badge">
+          OPEN SOURCE • 1970s STYLE
+        </div>
+      </div>
+
+      <div class="catalog-meta">
+        <span><strong>Design Style:</strong> 1970s School Handout</span>
+        <span><strong>Format:</strong> 100% Self-Contained HTML</span>
+        <span><strong>Ideal For:</strong> Tandems &amp; Online Tutors (<a href="https://preply.com" target="_blank" style="color:var(--stamp-blue);">Preply</a>)</span>
+      </div>
+    </header>
+
+    <!-- Overview Box -->
+    <section class="overview-box">
+      <h2>&#128221; About This Collection</h2>
+      <p>
+        Welcome! This site provides focused language learning exercises inspired by the timeless look and feel of a 1970s classroom handout.
+      </p>
+      <p>
+        Every single activity is <strong>100% self-contained</strong> in a single HTML file with reading text, vocabulary notes, interactive multiple-choice exercises with progress saving, and discussion questions. You can practice directly in your browser, print the sheet to paper, or download and email the file to a student or tandem partner without requiring an internet connection.
+      </p>
+    </section>
+
+    <!-- Filter & Search Bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="lang-filter">Language:</label>
+        <select id="lang-filter" class="filter-select" onchange="filterActivities()">
+          <option value="all">All Languages</option>
+          <option value="Spanish">Spanish (Español)</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="level-filter">Level:</label>
+        <select id="level-filter" class="filter-select" onchange="filterActivities()">
+          <option value="all">All Levels</option>
+          <option value="B1">Intermediate (B1)</option>
+          <option value="A2">Elementary (A2)</option>
+          <option value="B2">Upper Intermediate (B2)</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <input type="text" id="search-input" class="search-input" placeholder="Search topic..." oninput="filterActivities()">
+      </div>
+    </div>
+
+    <!-- Activities Catalog List -->
+    <section class="activities-list" id="activities-list">
+
+      <!-- Topic 1: Regions of Ecuador -->
+      <article class="activity-card" data-lang="Spanish" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos">
+        <div class="activity-card-header">
+          <h2 class="activity-title">
+            <a href="topics/regions-of-ecuador/index.html">Las Cuatro Regiones de Ecuador</a>
+          </h2>
+          <div class="activity-badges">
+            <span class="badge-lang">Spanish (Español)</span>
+            <span class="badge-level">Intermediate (B1)</span>
+          </div>
+        </div>
+
+        <p class="activity-desc">
+          Explora la asombrosa diversidad geográfica y cultural de Ecuador a través de sus cuatro regiones naturales: la Costa tropical, los volcanes de la Sierra andina, la selva del Oriente amazónico y la fauna endémica de las Islas Galápagos.
+        </p>
+
+        <div class="activity-footer">
+          <span class="activity-meta-text">Reading (~400 words) • 5 Comprehension Questions • Tandem Discussion</span>
+          <a href="topics/regions-of-ecuador/index.html" class="open-activity-btn">Open Activity &rarr;</a>
+        </div>
+      </article>
+
+    </section>
+
+    <div id="no-results" style="display:none; text-align:center; padding: 24px; font-family:var(--font-typewriter); color:var(--ink-muted);">
+      No activities matched your search filter.
+    </div>
+
+    <!-- Creators Guide Callout -->
+    <section class="creators-banner">
+      <h3>&#9881; Want to create your own activities?</h3>
+      <p>
+        You can easily fork or clone this repository, run the built-in AI skill <code>/create-text-and-multiple-choice</code> to generate custom activities in any language, and publish your own version to Vercel for free under your own project name.
+      </p>
+      <a href="creators/index.html" class="creators-btn">Read the Creator's Guide &rarr;</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      Language Learning Activities • Crafted for learners, tandems, and tutors • Open source on <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" style="color:var(--stamp-blue);">GitHub</a>
+    </footer>
+
+  </main>
+
+  <script>
+    function filterActivities() {
+      const lang = document.getElementById('lang-filter').value.toLowerCase();
+      const level = document.getElementById('level-filter').value.toLowerCase();
+      const search = document.getElementById('search-input').value.toLowerCase().trim();
+
+      const cards = document.querySelectorAll('.activity-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cardLang = card.getAttribute('data-lang').toLowerCase();
+        const cardLevel = card.getAttribute('data-level').toLowerCase();
+        const cardTopic = card.getAttribute('data-topic').toLowerCase();
+        const cardText = card.textContent.toLowerCase();
+
+        const matchesLang = (lang === 'all' || cardLang.includes(lang));
+        const matchesLevel = (level === 'all' || cardLevel.includes(level));
+        const matchesSearch = (!search || cardTopic.includes(search) || cardText.includes(search));
+
+        if (matchesLang && matchesLevel && matchesSearch) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      document.getElementById('no-results').style.display = (visibleCount === 0) ? 'block' : 'none';
+    }
+  </script>
+
+</body>
+</html>
