@@ -48,3 +48,14 @@ This is a site where users can create language learning actitivites for themselv
 - make sure you write in every skill that it does NOT have to check its work by opening up a browser
 	- this takes too long
 	- the users can test it themselves
+
+
+## Activities
+
+- for questions created in the activities 
+	- they should be how/why questions which lead to deeper language use
+	- they should not be simple questions that can be answered with one or two words
+	- they should encourage critical thinking and creativity
+	- they should be open-ended and allow for multiple responses
+	- they should be appropriate for the target language and skill level
+	- also encourage learners to give reasons, examples, and to describe things in detail
