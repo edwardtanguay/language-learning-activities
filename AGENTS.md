@@ -18,9 +18,16 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Local State & Reset**: Interactive features (e.g., quiz answers, score tracking) may use `localStorage` for persistence, but MUST include a visible reset button.
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, and navigation links) must be exclusively in the target language.
-- When you create multiple choice questions, for each answer right or wrong, display an explanation text why it is right or wrong, and create separate text for each answer. Allow the user to keep selecting even after they have already selected a right or wrong answer, so they can e.g. read all the texts and learn why other answers were not correct.
-- **Multiple-Choice Visual Feedback**: Do NOT color the entire question card or option area green or red, as these colors are reserved for language identity badges (e.g., Spanish/Italian). Keep the question card background clean and neutral. Inside the feedback box, display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
-- **Discussion Questions Section**: The conversation section heading is standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French). Do not include platform-specific service names (such as "Preply" or "Tandem") in the section title.
+- **Section Lettering & Question Numbering**: Main sections across the worksheet are designated with clean large capital letters (A, B, C, D...) — e.g., Section A: Reading Text, Section B: Vocabulary / Glossary, Section C: Comprehension Exercises, Section D: Discussion Questions — so that questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
+- **Multiple-Choice Contextual Feedback**:
+  - For each answer choice (right or wrong), provide an explanation text why it is right or wrong.
+  - Allow the user to keep selecting options even after an answer has been chosen, so they can explore explanations for other choices.
+  - Display the feedback box directly beneath the currently selected answer option (in context), rather than at the bottom of the question card.
+  - Only show feedback beneath the active selected option (switching to another option moves the feedback under the new selection).
+  - Inside the feedback box, display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
+  - Do NOT prefix the explanation with redundant option letters (e.g., remove "(A):") or uppercase status prefixes, keeping the feedback clean and contextual.
+- **Multiple-Choice Neutral Card Styling**: Do NOT color the entire question card or option area green or red, as these colors are reserved for language identity badges (e.g., Spanish/Italian). Keep the question card background clean and neutral.
+- **Discussion Questions Section**: The conversation section heading is standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French) and lettered as Section D. Do not include platform-specific service names (such as "Preply" or "Tandem") in the section title, and do NOT include boilerplate intro instructions (e.g., remove "Utiliza estas preguntas para practicar la expresión oral con tu tutor online o compañero de intercambio").
 
 ## Design System: 1970s School Handout
 
@@ -44,8 +51,8 @@ Each activity lives in `topics/<topic-slug>/index.html`:
   - Provide a discrete, small reset button at the bottom of the worksheet alongside the bottom back link with an icon and label in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) to reset `localStorage` answer state.
 - **Standardized Footer**:
   - At the very bottom of the activity, display: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>` (with the link opening `https://tanguay.info` in a new tab).
-- **Plain Large Numbers (No Inverted Dark Boxes)**:
-  - In section titles (1, 2, 3...) and quiz question prompts, numbers are rendered as clean, large numbers in the text color (`--ink-main`) without dark box backgrounds, white-on-black fills, or heavy border boxes.
+- **Plain Large Letters and Numbers (No Inverted Dark Boxes)**:
+  - In section titles (A, B, C, D...) and quiz question prompts (1, 2, 3...), characters are rendered as clean, large text in the text color (`--ink-main`) without dark box backgrounds, white-on-black fills, or heavy border boxes.
 - **No Word Count Mentions**:
   - Do not include word counts (such as `~400 palabras`) anywhere in section titles or headers.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:

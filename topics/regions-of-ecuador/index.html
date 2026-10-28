@@ -268,7 +268,12 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
+    }
+
+    .option-wrapper {
+      display: flex;
+      flex-direction: column;
     }
 
     .option-item {
@@ -313,40 +318,44 @@
 
     .feedback-box {
       display: none;
-      margin-top: 14px;
-      padding: 12px 14px;
+      margin-top: 6px;
+      margin-left: 27px;
+      padding: 10px 14px;
       font-family: var(--font-typewriter);
       font-size: 14px;
-      border-top: 1px dashed var(--ink-rule);
+      border: none;
       border-radius: 3px;
-      background-color: var(--paper-sheet);
+      background-color: var(--paper-bg);
     }
 
-    .question-card.answered .feedback-box {
+    .feedback-box.show {
       display: flex;
       align-items: flex-start;
       gap: 10px;
     }
 
     .feedback-icon {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       flex-shrink: 0;
       stroke-width: 3.2;
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
-    .feedback-box.correct-text {
+    .feedback-box.correct-text .feedback-icon {
+      stroke: var(--correct-green);
       color: var(--correct-green);
     }
 
-    .feedback-box.wrong-text {
+    .feedback-box.wrong-text .feedback-icon {
+      stroke: var(--wrong-red);
       color: var(--wrong-red);
     }
 
     .feedback-content {
       flex: 1;
       line-height: 1.5;
+      color: var(--ink-main);
     }
 
     /* Bottom Actions Bar & Discrete Reset */
@@ -549,14 +558,14 @@
       </p>
     </header>
 
-    <!-- Section 1: Introduction -->
+    <!-- Instructions -->
     <div class="instructions-box">
-      <strong>INSTRUCCIONES:</strong> Lee atentamente el texto a continuación. Si encuentras palabras desconocidas, consulta el vocabulario en la sección 2. Después responde a las 5 preguntas de comprensión y conversa con tu tutor o compañero de intercambio utilizando las preguntas de discusión finales.
+      <strong>INSTRUCCIONES:</strong> Lee atentamente el texto a continuación. Si encuentras palabras desconocidas, consulta el vocabulario en la sección B. Después responde a las 5 preguntas de comprensión en la sección C y conversa o reflexiona sobre las preguntas de discusión en la sección D.
     </div>
 
-    <!-- Section 2: Reading Text -->
+    <!-- Section A: Reading Text -->
     <h2 class="section-title">
-      <span><span class="section-num">1</span> Texto de Lectura</span>
+      <span><span class="section-num">A</span> Texto de Lectura</span>
     </h2>
 
     <article class="reading-content">
@@ -593,9 +602,9 @@
       </div>
     </article>
 
-    <!-- Section 3: Vocabulary Glossary -->
+    <!-- Section B: Vocabulary Glossary -->
     <h2 class="section-title">
-      <span><span class="section-num">2</span> Glosario y Vocabulario Clave</span>
+      <span><span class="section-num">B</span> Glosario y Vocabulario Clave</span>
     </h2>
 
     <div class="glossary-grid">
@@ -625,9 +634,9 @@
       </div>
     </div>
 
-    <!-- Section 4: Interactive Multiple-Choice Quiz -->
+    <!-- Section C: Interactive Multiple-Choice Quiz -->
     <h2 class="section-title">
-      <span><span class="section-num">3</span> Ejercicios de Comprensión (Opción Múltiple)</span>
+      <span><span class="section-num">C</span> Ejercicios de Comprensión (Opción Múltiple)</span>
     </h2>
 
     <p style="font-size: 15px; margin-bottom: 16px; color: var(--ink-muted); font-family: var(--font-typewriter);">
@@ -643,24 +652,35 @@
           <span>¿Cuál de las cuatro regiones ocupa casi la mitad del territorio nacional pero alberga la menor densidad de población?</span>
         </div>
         <ul class="options-list">
-          <li class="option-item" onclick="selectOption(1, 'A')">
-            <input type="radio" name="q1" id="q1-A" value="A">
-            <label for="q1-A">A) La Sierra (Región Interandina)</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'A')">
+              <input type="radio" name="q1" id="q1-A" value="A">
+              <label for="q1-A">A) La Sierra (Región Interandina)</label>
+            </div>
+            <div class="feedback-box" id="feedback-1-A"></div>
           </li>
-          <li class="option-item" onclick="selectOption(1, 'B')">
-            <input type="radio" name="q1" id="q1-B" value="B">
-            <label for="q1-B">B) El Oriente (Región Amazónica)</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'B')">
+              <input type="radio" name="q1" id="q1-B" value="B">
+              <label for="q1-B">B) El Oriente (Región Amazónica)</label>
+            </div>
+            <div class="feedback-box" id="feedback-1-B"></div>
           </li>
-          <li class="option-item" onclick="selectOption(1, 'C')">
-            <input type="radio" name="q1" id="q1-C" value="C">
-            <label for="q1-C">C) La Costa (Región Litoral)</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'C')">
+              <input type="radio" name="q1" id="q1-C" value="C">
+              <label for="q1-C">C) La Costa (Región Litoral)</label>
+            </div>
+            <div class="feedback-box" id="feedback-1-C"></div>
           </li>
-          <li class="option-item" onclick="selectOption(1, 'D')">
-            <input type="radio" name="q1" id="q1-D" value="D">
-            <label for="q1-D">D) Las Islas Galápagos</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'D')">
+              <input type="radio" name="q1" id="q1-D" value="D">
+              <label for="q1-D">D) Las Islas Galápagos</label>
+            </div>
+            <div class="feedback-box" id="feedback-1-D"></div>
           </li>
         </ul>
-        <div class="feedback-box" id="feedback-1"></div>
       </div>
 
       <!-- Question 2 -->
@@ -670,24 +690,35 @@
           <span>¿Por qué es especialmente célebre el volcán Chimborazo en la Sierra ecuatoriana?</span>
         </div>
         <ul class="options-list">
-          <li class="option-item" onclick="selectOption(2, 'A')">
-            <input type="radio" name="q2" id="q2-A" value="A">
-            <label for="q2-A">A) Porque es el único volcán activo de América del Sur.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'A')">
+              <input type="radio" name="q2" id="q2-A" value="A">
+              <label for="q2-A">A) Porque es el único volcán activo de América del Sur.</label>
+            </div>
+            <div class="feedback-box" id="feedback-2-A"></div>
           </li>
-          <li class="option-item" onclick="selectOption(2, 'B')">
-            <input type="radio" name="q2" id="q2-B" value="B">
-            <label for="q2-B">B) Porque fue el lugar donde desembarcó Charles Darwin en 1835.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'B')">
+              <input type="radio" name="q2" id="q2-B" value="B">
+              <label for="q2-B">B) Porque fue el lugar donde desembarcó Charles Darwin en 1835.</label>
+            </div>
+            <div class="feedback-box" id="feedback-2-B"></div>
           </li>
-          <li class="option-item" onclick="selectOption(2, 'C')">
-            <input type="radio" name="q2" id="q2-C" value="C">
-            <label for="q2-C">C) Porque su cumbre es el punto más cercano al sol desde el centro de la Tierra.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'C')">
+              <input type="radio" name="q2" id="q2-C" value="C">
+              <label for="q2-C">C) Porque su cumbre es el punto más cercano al sol desde el centro de la Tierra.</label>
+            </div>
+            <div class="feedback-box" id="feedback-2-C"></div>
           </li>
-          <li class="option-item" onclick="selectOption(2, 'D')">
-            <input type="radio" name="q2" id="q2-D" value="D">
-            <label for="q2-D">D) Porque allí se originó el plato típico bolón de verde.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'D')">
+              <input type="radio" name="q2" id="q2-D" value="D">
+              <label for="q2-D">D) Porque allí se originó el plato típico bolón de verde.</label>
+            </div>
+            <div class="feedback-box" id="feedback-2-D"></div>
           </li>
         </ul>
-        <div class="feedback-box" id="feedback-2"></div>
       </div>
 
       <!-- Question 3 -->
@@ -697,24 +728,35 @@
           <span>¿Qué ingrediente tradicional sirve como base imprescindible para platos típicos de la Costa como el bolón?</span>
         </div>
         <ul class="options-list">
-          <li class="option-item" onclick="selectOption(3, 'A')">
-            <input type="radio" name="q3" id="q3-A" value="A">
-            <label for="q3-A">A) El plátano verde (macho)</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'A')">
+              <input type="radio" name="q3" id="q3-A" value="A">
+              <label for="q3-A">A) El plátano verde (macho)</label>
+            </div>
+            <div class="feedback-box" id="feedback-3-A"></div>
           </li>
-          <li class="option-item" onclick="selectOption(3, 'B')">
-            <input type="radio" name="q3" id="q3-B" value="B">
-            <label for="q3-B">B) La papa andina</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'B')">
+              <input type="radio" name="q3" id="q3-B" value="B">
+              <label for="q3-B">B) La papa andina</label>
+            </div>
+            <div class="feedback-box" id="feedback-3-B"></div>
           </li>
-          <li class="option-item" onclick="selectOption(3, 'C')">
-            <input type="radio" name="q3" id="q3-C" value="C">
-            <label for="q3-C">C) El maíz tostado</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'C')">
+              <input type="radio" name="q3" id="q3-C" value="C">
+              <label for="q3-C">C) El maíz tostado</label>
+            </div>
+            <div class="feedback-box" id="feedback-3-C"></div>
           </li>
-          <li class="option-item" onclick="selectOption(3, 'D')">
-            <input type="radio" name="q3" id="q3-D" value="D">
-            <label for="q3-D">D) El trigo de montaña</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'D')">
+              <input type="radio" name="q3" id="q3-D" value="D">
+              <label for="q3-D">D) El trigo de montaña</label>
+            </div>
+            <div class="feedback-box" id="feedback-3-D"></div>
           </li>
         </ul>
-        <div class="feedback-box" id="feedback-3"></div>
       </div>
 
       <!-- Question 4 -->
@@ -724,24 +766,35 @@
           <span>¿Qué significa que una especie animal en las Islas Galápagos sea «endémica»?</span>
         </div>
         <ul class="options-list">
-          <li class="option-item" onclick="selectOption(4, 'A')">
-            <input type="radio" name="q4" id="q4-A" value="A">
-            <label for="q4-A">A) Que emigra a otros continentes cada invierno.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'A')">
+              <input type="radio" name="q4" id="q4-A" value="A">
+              <label for="q4-A">A) Que emigra a otros continentes cada invierno.</label>
+            </div>
+            <div class="feedback-box" id="feedback-4-A"></div>
           </li>
-          <li class="option-item" onclick="selectOption(4, 'B')">
-            <input type="radio" name="q4" id="q4-B" value="B">
-            <label for="q4-B">B) Que fue introducida por el ser humano en épocas coloniales.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'B')">
+              <input type="radio" name="q4" id="q4-B" value="B">
+              <label for="q4-B">B) Que fue introducida por el ser humano en épocas coloniales.</label>
+            </div>
+            <div class="feedback-box" id="feedback-4-B"></div>
           </li>
-          <li class="option-item" onclick="selectOption(4, 'C')">
-            <input type="radio" name="q4" id="q4-C" value="C">
-            <label for="q4-C">C) Que está domesticada y convive pacíficamente en pueblos pesqueros.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'C')">
+              <input type="radio" name="q4" id="q4-C" value="C">
+              <label for="q4-C">C) Que está domesticada y convive pacíficamente en pueblos pesqueros.</label>
+            </div>
+            <div class="feedback-box" id="feedback-4-C"></div>
           </li>
-          <li class="option-item" onclick="selectOption(4, 'D')">
-            <input type="radio" name="q4" id="q4-D" value="D">
-            <label for="q4-D">D) Que vive de manera natural únicamente en esa región geográfica específica.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'D')">
+              <input type="radio" name="q4" id="q4-D" value="D">
+              <label for="q4-D">D) Que vive de manera natural únicamente en esa región geográfica específica.</label>
+            </div>
+            <div class="feedback-box" id="feedback-4-D"></div>
           </li>
         </ul>
-        <div class="feedback-box" id="feedback-4"></div>
       </div>
 
       <!-- Question 5 -->
@@ -751,36 +804,45 @@
           <span>¿Cuál fue la distinción histórica otorgada a la ciudad de Quito en el año 1978?</span>
         </div>
         <ul class="options-list">
-          <li class="option-item" onclick="selectOption(5, 'A')">
-            <input type="radio" name="q5" id="q5-A" value="A">
-            <label for="q5-A">A) Ser nombrada sede permanente de la Reserva de Galápagos.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'A')">
+              <input type="radio" name="q5" id="q5-A" value="A">
+              <label for="q5-A">A) Ser nombrada sede permanente de la Reserva de Galápagos.</label>
+            </div>
+            <div class="feedback-box" id="feedback-5-A"></div>
           </li>
-          <li class="option-item" onclick="selectOption(5, 'B')">
-            <input type="radio" name="q5" id="q5-B" value="B">
-            <label for="q5-B">B) Ser declarada el primer Patrimonio de la Humanidad por la UNESCO.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'B')">
+              <input type="radio" name="q5" id="q5-B" value="B">
+              <label for="q5-B">B) Ser declarada el primer Patrimonio de la Humanidad por la UNESCO.</label>
+            </div>
+            <div class="feedback-box" id="feedback-5-B"></div>
           </li>
-          <li class="option-item" onclick="selectOption(5, 'C')">
-            <input type="radio" name="q5" id="q5-C" value="C">
-            <label for="q5-C">C) Convertirse en el puerto marítimo más transitado del Pacífico Sur.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'C')">
+              <input type="radio" name="q5" id="q5-C" value="C">
+              <label for="q5-C">C) Convertirse en el puerto marítimo más transitado del Pacífico Sur.</label>
+            </div>
+            <div class="feedback-box" id="feedback-5-C"></div>
           </li>
-          <li class="option-item" onclick="selectOption(5, 'D')">
-            <input type="radio" name="q5" id="q5-D" value="D">
-            <label for="q5-D">D) Abrir el primer centro de investigación de la evolución darwiniana.</label>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'D')">
+              <input type="radio" name="q5" id="q5-D" value="D">
+              <label for="q5-D">D) Abrir el primer centro de investigación de la evolución darwiniana.</label>
+            </div>
+            <div class="feedback-box" id="feedback-5-D"></div>
           </li>
         </ul>
-        <div class="feedback-box" id="feedback-5"></div>
       </div>
 
     </div>
 
-    <!-- Section 5: Discussion Questions Section -->
-    <section class="tandem-box">
-      <div class="tandem-header">
-        <span>&#9998; Preguntas de discusión</span>
-      </div>
-      <p style="font-size: 15px; margin-bottom: 14px; font-style: italic; color: var(--ink-muted);">
-        Utiliza estas preguntas para practicar la expresión oral con tu tutor online o compañero de intercambio:
-      </p>
+    <!-- Section D: Discussion Questions Section -->
+    <h2 class="section-title">
+      <span><span class="section-num">D</span> Preguntas de Discusión</span>
+    </h2>
+
+    <section class="tandem-box" style="margin-top: 18px;">
       <ol class="tandem-questions">
         <li>
           Si pudieras viajar a Ecuador mañana, ¿cuál de las cuatro regiones te gustaría visitar primero y qué actividades te interesaría hacer allí?
@@ -892,8 +954,19 @@
 
     function applyQuestionFeedback(qNum, value) {
       const card = document.querySelector(`.question-card[data-q="${qNum}"]`);
+      if (!card) return;
       const correctVal = card.getAttribute('data-correct');
-      const feedbackBox = document.getElementById(`feedback-${qNum}`);
+
+      // Hide all feedback boxes for this question first
+      const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
+      allFeedbackBoxes.forEach(fb => {
+        fb.className = 'feedback-box';
+        fb.innerHTML = '';
+      });
+
+      const feedbackBox = document.getElementById(`feedback-${qNum}-${value}`);
+      if (!feedbackBox) return;
+
       const qExplanations = explanations[qNum] || {};
       const explanation = qExplanations[value] || '';
 
@@ -901,18 +974,18 @@
       if (value === correctVal) {
         card.classList.remove('incorrect');
         card.classList.add('correct');
-        feedbackBox.className = 'feedback-box correct-text';
+        feedbackBox.className = 'feedback-box show correct-text';
         feedbackBox.innerHTML = `
           <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          <div class="feedback-content"><strong>CORRECTO (${value}):</strong> ${explanation}</div>
+          <div class="feedback-content">${explanation}</div>
         `;
       } else {
         card.classList.remove('correct');
         card.classList.add('incorrect');
-        feedbackBox.className = 'feedback-box wrong-text';
+        feedbackBox.className = 'feedback-box show wrong-text';
         feedbackBox.innerHTML = `
           <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-          <div class="feedback-content"><strong>INCORRECTO (${value}):</strong> ${explanation}</div>
+          <div class="feedback-content">${explanation}</div>
         `;
       }
     }

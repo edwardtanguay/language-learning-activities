@@ -71,8 +71,8 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Unboxed title header (`border: none;`).
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
-- **Plain Large Numbers (No Dark Inverted Boxes)**:
-  - Section numbers and quiz question numbers must be rendered as plain large numbers in the text color (`--ink-main`), never white text inside black/dark boxes.
+- **Plain Large Section Letters and Numbers (No Dark Inverted Boxes)**:
+  - Section letters (A, B, C, D...) and quiz question numbers (1, 2, 3...) must be rendered as plain large text in the text color (`--ink-main`), never white text inside black/dark boxes.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:
@@ -99,25 +99,29 @@ Each activity file should include the following sections:
 2. **Worksheet Header**:
    - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
 3. **Introduction / Context**:
-   - Instructions callout box explaining the activity workflow in the target language.
-4. **Reading Passage**:
+   - Instructions callout box explaining the activity workflow in the target language referencing sections B, C, and D.
+4. **Section A: Reading Passage**:
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
    - Divided into logical paragraphs or subsections with clear subtitles. (No word count label).
-5. **Vocabulary & Cultural Notes (Glossary)**:
+5. **Section B: Vocabulary & Cultural Notes (Glossary)**:
    - Key terms, idiomatic phrases, and cultural explanations with definitions in the target language, rendered in borderless cards with subtle parchment background.
-6. **Interactive Multiple-Choice Comprehension Quiz**:
-   - 4–6 questions testing reading comprehension, grammar in context, and vocabulary.
+6. **Section C: Interactive Multiple-Choice Comprehension Quiz**:
+   - 4–6 questions (numbered 1, 2, 3...) testing reading comprehension, grammar in context, and vocabulary.
    - Large plain question numbers (no background boxes).
    - Borderless question cards and options with subtle background fills and hover states.
    - **No Full Card Tinting**: Do NOT tint the full question card green or red. Keep the card background clean and neutral.
-   - Interactive feedback:
-     - Selecting an option immediately displays a feedback box with a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation.
+   - **Contextual Inline Feedback Under Selected Option**:
+     - Selecting an option immediately displays its feedback box directly beneath that selected option (inside the option wrapper), rather than at the bottom of the question card.
+     - Only show feedback beneath the actively selected option (switching to another option moves the feedback).
+     - Display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
+     - Do not prefix the explanation with redundant letters (e.g. no "(A):") or uppercase status headers.
      - Provide a distinct explanation text for each answer choice (both right and wrong), explaining specifically why that option is correct or incorrect.
      - Allow the user to keep selecting other options even after answering, so they can explore all options and learn why alternatives were incorrect.
    - **Progress Persistence & Discrete Reset**:
      - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
-7. **Discussion Questions Section**:
-   - Section heading standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French), avoiding platform-specific brand names like Preply or Tandem.
+7. **Section D: Discussion Questions Section**:
+   - Section heading lettered as Section D and standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French), avoiding platform-specific brand names like Preply or Tandem.
+   - Do NOT include boilerplate introductory instructions (e.g. remove "Utiliza estas preguntas para practicar la expresión oral con tu tutor...").
    - 4–5 open-ended conversation questions in the target language designed for practice with tutors, exchange partners, or self-reflection.
 8. **Bottom Actions & Navigation Bar**:
    - Matching back link to catalog (`← Índice de Actividades`).
