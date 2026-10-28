@@ -162,10 +162,20 @@
       align-items: center;
     }
 
-    .section-title > span {
+    .section-title > span:first-child {
       display: inline-flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .section-action-hint {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--ink-muted);
+      opacity: 0.65;
     }
 
     .section-title .section-num {
@@ -613,6 +623,7 @@
       display: flex;
       flex-direction: column;
       gap: 2px; /* Close vertical spacing */
+      padding-left: 28px; /* Indent to align with question text */
     }
 
     .option-wrapper {
@@ -846,6 +857,12 @@
         font-size: 16px;
         margin-right: 0;
       }
+      .section-action-hint {
+        font-size: 12px;
+      }
+      .options-list {
+        padding-left: 24px;
+      }
       .vocab-pool {
         gap: 5px;
         margin-bottom: 10px;
@@ -965,6 +982,7 @@
     <!-- Section 1: Reading Text -->
     <h2 class="section-title">
       <span><span class="section-num">1</span> Lectura</span>
+      <span class="section-action-hint">leer en voz alta</span>
     </h2>
 
     <article class="reading-content">
@@ -1004,6 +1022,7 @@
     <!-- Section 2: Vocabulary Drag & Drop -->
     <h2 class="section-title">
       <span><span class="section-num">2</span> Vocabulario</span>
+      <span class="section-action-hint">arrastrar y soltar</span>
     </h2>
 
     <section class="vocab-container" id="vocab-container">
@@ -1029,6 +1048,7 @@
     <!-- Section 3: Interactive Comprehension Questions -->
     <h2 class="section-title">
       <span><span class="section-num">3</span> Comprensión</span>
+      <span class="section-action-hint">opción múltiple</span>
     </h2>
 
     <div class="quiz-container" id="quiz-container">
@@ -1227,38 +1247,39 @@
 
     <!-- Section 4: Discussion Questions Section -->
     <h2 class="section-title">
-      <span><span class="section-num">4</span> Discusión</span>
+      <span><span class="section-num">4</span> Preguntas abiertas</span>
+      <span class="section-action-hint">responder y debatir</span>
     </h2>
 
     <section class="discussion-container">
       <ol class="discussion-questions">
         <li>
           Si pudieras viajar a Ecuador mañana, ¿cuál de las cuatro regiones te gustaría visitar primero y qué actividades te interesaría hacer allí?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22Si+pudieras+viajar+a+Ecuador+ma%C3%B1ana%2C+%C2%BFcu%C3%A1l+de+las+cuatro+regiones+te+gustar%C3%ADa+visitar+primero+y+qu%C3%A9+actividades+te+interesar%C3%ADa+hacer+all%C3%AD%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Si+pudieras+viajar+a+Ecuador+ma%C3%B1ana%2C+%C2%BFcu%C3%A1l+de+las+cuatro+regiones+te+gustar%C3%ADa+visitar+primero+y+qu%C3%A9+actividades+te+interesar%C3%ADa+hacer+all%C3%AD%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
             <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </a>
         </li>
         <li>
           Compara el clima y la geografía de tu país de origen con la variedad que ofrece Ecuador. ¿En qué se parecen y en qué se diferencian?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22Compara+el+clima+y+la+geograf%C3%ADa+de+tu+pa%C3%ADs+de+origen+con+la+variedad+que+ofrece+Ecuador.+%C2%BFEn+qu%C3%A9+se+parecen+y+en+qu%C3%A9+se+diferencian%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Compara+el+clima+y+la+geograf%C3%ADa+de+tu+pa%C3%ADs+de+origen+con+la+variedad+que+ofrece+Ecuador.+%C2%BFEn+qu%C3%A9+se+parecen+y+en+qu%C3%A9+se+diferencian%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
             <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </a>
         </li>
         <li>
           ¿Has probado alguna vez plátano verde o mariscos preparados al estilo latinoamericano? ¿Qué plato tradicional de tu cultura recomendarías a alguien que visita tu ciudad?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22%C2%BFHas+probado+alguna+vez+pl%C3%A1tano+verde+o+mariscos+preparados+al+estilo+latinoamericano%3F+%C2%BFQu%C3%A9+plato+tradicional+de+tu+cultura+recomendar%C3%ADas+a+alguien+que+visita+tu+ciudad%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFHas+probado+alguna+vez+pl%C3%A1tano+verde+o+mariscos+preparados+al+estilo+latinoamericano%3F+%C2%BFQu%C3%A9+plato+tradicional+de+tu+cultura+recomendar%C3%ADas+a+alguien+que+visita+tu+ciudad%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
             <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </a>
         </li>
         <li>
           Las Islas Galápagos son famosas por su protección ecológica estricta. ¿Cómo equilibrarías tú el turismo internacional con la conservación de especies frágiles?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22Las+Islas+Gal%C3%A1pagos+son+famosas+por+su+protecci%C3%B3n+ecol%C3%B3gica+estricta.+%C2%BFC%C3%B3mo+equilibrar%C3%ADas+t%C3%BA+el+turismo+internacional+con+la+conservaci%C3%B3n+de+especies+fr%C3%A1giles%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Las+Islas+Gal%C3%A1pagos+son+famosas+por+su+protecci%C3%B3n+ecol%C3%B3gica+estricta.+%C2%BFC%C3%B3mo+equilibrar%C3%ADas+t%C3%BA+el+turismo+internacional+con+la+conservaci%C3%B3n+de+especies+fr%C3%A1giles%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
             <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </a>
         </li>
         <li>
           ¿Qué ciudad histórica o centro colonial conoces en tu país o en tus viajes que tenga un valor cultural similar al de Quito?
-          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22%C2%BFQu%C3%A9+ciudad+hist%C3%B3rica+o+centro+colonial+conoces+en+tu+pa%C3%ADs+o+en+tus+viajes+que+tenga+un+valor+cultural+similar+al+de+Quito%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFQu%C3%A9+ciudad+hist%C3%B3rica+o+centro+colonial+conoces+en+tu+pa%C3%ADs+o+en+tus+viajes+que+tenga+un+valor+cultural+similar+al+de+Quito%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
             <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </a>
         </li>
@@ -1281,7 +1302,7 @@
     <footer class="handout-footer">
       <span class="footer-brand">Language Learning Activities</span>
       <span class="footer-dot">•</span>
-      <span class="footer-author">See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a></span>
+      <span class="footer-author">See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
     </footer>
 
   </main>
@@ -1839,7 +1860,6 @@
                 <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               </a>
             </div>
-            <button class="dict-close-btn" onclick="toggleCompletedDetail('${wordKey}')" title="Cerrar definición" aria-label="Cerrar">✕</button>
           </div>
           <div class="dict-def-row">
             <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="var(--correct-green)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -1848,6 +1868,16 @@
           <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
         </div>
       `;
+
+      const dictCard = detailArea.querySelector('.vocab-dict-card');
+      if (dictCard) {
+        dictCard.addEventListener('click', (e) => {
+          safeDismiss(() => {
+            detailArea.innerHTML = '';
+            detailArea.removeAttribute('data-active-word');
+          }, e);
+        });
+      }
     }
 
     // Touch event helper for mobile drag & drop

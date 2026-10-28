@@ -72,8 +72,13 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Unboxed title header (`border: none;`).
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
-- **Circular Section Numbers**:
-  - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> Discusión`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
+- **Circular Section Numbers & Right-Side Action Hints**:
+  - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> Preguntas abiertas`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
+  - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
+    - Section 1: "read aloud" (in Spanish: `leer en voz alta`)
+    - Section 2: "drag and drop" (in Spanish: `arrastrar y soltar`)
+    - Section 3: "multiple choice" (in Spanish: `opción múltiple`)
+    - Section 4: "answer and discuss" (in Spanish: `responder y debatir`)
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:
@@ -89,7 +94,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Both desktop and mobile: set equal upper and lower padding on the bottom actions bar (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the navigation texts are equally distant from the dividing lines above and below.
   - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`).
 - **Standardized Footer**:
-  - At the very bottom of the worksheet: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
+  - At the very bottom of the worksheet: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
   - On mobile screens, stack and horizontally center the brand and author links with the bullet dot hidden (`display: none;`).
 - **Responsive Layout**:
   - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout.
@@ -112,14 +117,14 @@ Each activity file should include the following sections:
      - **En clase / In Class**: No bullet dot in front of the label. Capitalized label (`En clase:`) followed by an all-lowercase comma-separated list: `(1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos`.
      - Keep phrasing concise, inline, and readable in seconds.
 4. **Section 1: Reading Passage (Lectura)**:
-   - Titled "Lectura" in the target language without period (e.g., `<span class="section-num">1</span> Lectura`).
+   - Titled "Lectura" in the target language without period (e.g., `<span class="section-num">1</span> Lectura`), with right-aligned action hint "read aloud" in the target language.
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
    - Text length must always be approximately 400 words (do NOT display the word count anywhere).
    - Paragraphs and subsection cards must NOT have vertical lines on the left (clean unbordered text).
    - Divided into logical paragraphs or subsections. Subsection titles use the serif body font with standard capitalization (`text-transform: none; font-weight: 700;`) without numbers (e.g., `<h3>La Costa (Región Litoral)</h3>`).
 5. **Section 2: Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:
    - Positioned immediately following Section 1 (the reading text).
-   - Title standardized to "Vocabulary" translated into the target language without period (e.g., `<span class="section-num">2</span> Vocabulario`).
+   - Title standardized to "Vocabulary" translated into the target language without period (e.g., `<span class="section-num">2</span> Vocabulario`), with right-aligned action hint "drag and drop" in the target language.
    - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
    - Top area: flex pool of waiting word chips (`.vocab-pool`). Styled identical to completed word pills below (same typewriter font, 13px font size, ink-main color, parchment sheet background, 3px 8px padding, square corners, without green checkmark).
    - Waiting Pool Dynamic Restructuring: When words are placed and removed, dynamically restructure remaining chips. When 6 or more words remain, divide evenly across two centered rows (`Math.ceil(N/2)` and `Math.floor(N/2)`). When 5 or fewer words remain, place on a single centered row.
@@ -135,18 +140,19 @@ Each activity file should include the following sections:
      - Below that: a warm amber lightbulb SVG icon (`#d97706`) next to the hint text (no trailing punctuation, without repeating the word twice).
      - To the right of the word title at the top, a lookup icon.
      - No X close button in the upper right. Text is fully selectable to copy, but clicking the box anywhere (without text selected) closes it and returns the chip to the waiting pool.
-   - Correct drop: creates a complete boxed dictionary entry with a very light green background (`#f4faf4` with border `#cce8ce`), green checkmark SVG next to the definition, word, part of speech, lookup icon, and full complete sentence from the reading text without ellipsis (`...`). Dims/disables the page until the user clicks anywhere on the box, which removes that definition card and moves the word chip to completed words.
+   - Correct drop: creates a complete boxed dictionary entry with a very light green background (`#f4faf4` with border `#cce8ce`), green checkmark SVG next to the definition, word, part of speech, lookup icon, and full complete sentence from the reading text without ellipsis (`...`). Elevated in-place on the definition card with page dimmed. Clicking anywhere on the card or outside dismisses it (no X button), removing the card and moving the chip to completed words.
    - Completed words section: no title; displays completed words in a flex row of square-cornered pills, each with a green check SVG icon to its left.
-   - Clicking any completed word pill pops open its complete dictionary definition card (matching the light green background with green checkmark next to definition and full sentence) in a designated view area above the pills until clicked again to close.
+   - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills. Clicking the card again or clicking outside closes it (no X button).
    - Double-click word selection: on pop-up and modal cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
    - Persists completed vocabulary in `localStorage` and resets on "Reiniciar respuestas".
 6. **Section 3: Interactive Comprehension Questions**:
-   - Heading standardized to "Comprehension" in the target language without period (e.g., `<span class="section-num">3</span> Comprensión`).
+   - Heading standardized to "Comprehension" in the target language without period (e.g., `<span class="section-num">3</span> Comprensión`), with right-aligned action hint "multiple choice" in the target language.
    - 4–6 questions (numbered 1, 2, 3...) testing reading comprehension, grammar in context, and vocabulary.
    - Large plain question numbers (no background boxes).
    - Borderless question cards.
    - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
    - NO radio buttons (`<input type="radio">` removed completely).
+   - Indented Option Alignment: The options list (`.options-list`) is indented (`padding-left: 28px;`, on mobile: `24px;`) so that option letters (`A.`, `B.`, `C.`, `D.`) and feedback align directly under the start of the question prompt text above.
    - Options have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
    - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`).
    - Contextual Inline Feedback:
@@ -159,19 +165,19 @@ Each activity file should include the following sections:
      - Keep question cards clean and neutral; do NOT color the entire question card green or red.
    - Progress Persistence:
      - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
-7. **Section 4: Discussion Section**:
-   - Section heading standardized to "Discussion" translated into the target language without period (e.g., `<span class="section-num">4</span> Discusión` in Spanish, `Diskussion` in German, `Discussion` in French), avoiding platform-specific brand names like Preply or Tandem.
+7. **Section 4: Open Questions Section (Preguntas abiertas)**:
+   - Section heading standardized to "Open Questions" translated into the target language without period (e.g., `<span class="section-num">4</span> Preguntas abiertas` in Spanish, `Offene Fragen` in German, `Questions ouvertes` in French), with right-aligned action hint "answer and discuss" in the target language (e.g. `responder y debatir`).
    - Borderless and transparent container (no dashed or solid outline boxes).
    - Do NOT include boilerplate introductory instructions.
    - 4–5 open-ended conversation questions in the target language designed for practice with tutors, exchange partners, or self-reflection.
-   - Next to each discussion question, include a subtle magnifying glass lookup icon link inline at the end of the text that opens Google search in a new tab: `answer this question in three sentences in <Language>: "<question>"`.
+   - Next to each discussion question, include a subtle magnifying glass lookup icon link inline at the end of the text that opens Google search in a new tab: `answer this question in three sentences in <Language>, assume you are from <Country/Persona (default Germany)>: "<question>"`.
 8. **Bottom Actions & Navigation Bar**:
    - Matching back link to catalog (`← Índice de Actividades`).
    - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear both multiple-choice answers and completed vocabulary from `localStorage`.
    - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so controls are equally distant from dividing lines above and below on both desktop and mobile.
    - On mobile screens, both controls are centered horizontally and vertically.
 9. **Standardized Footer**:
-   - `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
+   - `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
    - On mobile, brand and author links are stacked and centered with the bullet dot hidden.
 
 ---
@@ -181,10 +187,10 @@ Each activity file should include the following sections:
 After creating `topics/<topic-slug>/index.html`:
 1. Read the root `index.html`.
 2. Add the new activity to the catalog list with:
-   - Target Language badge using `<span class="badge-lang lang-<code">Language Name</span>`
+   - Language and level combined into a single badge: `<span class="badge-lang lang-<code">Language Level</span>` (e.g., `<span class="badge-lang lang-es">Español B1</span>`)
    - `data-lang="<code> <language>"` attribute on `<article class="activity-card">`
+   - `data-level="<level>"` attribute on `<article class="activity-card">`
    - Topic Title
-   - Level badge (e.g., `<span class="badge-level">Intermediate (B1)</span>`)
-   - Brief 1-sentence description
-   - Direct link to `topics/<topic-slug>/index.html`
+   - Brief 1-2 sentence description in the target language
+   - Direct link to `topics/<topic-slug>/index.html` with clean "Abrir actividad &rarr;" action link
 3. Maintain tidy chronological or categorical sorting.
