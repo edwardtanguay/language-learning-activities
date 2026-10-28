@@ -228,15 +228,16 @@
     }
 
     .region-card h3 {
-      font-family: var(--font-typewriter);
-      font-size: 17px;
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 700;
       color: var(--stamp-blue);
       margin-bottom: 8px;
-      text-transform: uppercase;
+      text-transform: none;
     }
 
     /* =========================================================
-       SECTION B: VOCABULARIO (DRAG / DROP & HINT EXERCISE)
+       SECTION 2: VOCABULARIO (DRAG / DROP & HINT EXERCISE)
        ========================================================= */
     .vocab-container {
       margin-top: 14px;
@@ -250,8 +251,8 @@
 
     .vocab-pool {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       max-width: 580px;
       margin: 0 auto 16px auto;
       gap: 6px;
@@ -261,20 +262,28 @@
       border-radius: 0;
     }
 
+    .vocab-pool-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+    }
+
     .vocab-chip {
       font-family: var(--font-typewriter);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       background: var(--paper-sheet);
-      color: var(--stamp-blue);
+      color: var(--ink-main);
       border: 1px solid var(--ink-rule);
       border-radius: 0;
-      padding: 2px 9px;
+      padding: 3px 8px;
       cursor: grab;
       transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .vocab-chip:active {
@@ -326,8 +335,8 @@
 
     /* Wrong Drop State */
     .vocab-target-card.state-wrong {
-      background: var(--paper-sheet) !important;
-      border: 1px solid var(--ink-border) !important;
+      background: #fdf6f6 !important;
+      border: 1px solid #f5cfcf !important;
       z-index: 50;
       box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
       cursor: pointer;
@@ -361,7 +370,7 @@
       gap: 10px;
     }
 
-    .hint-hand-icon {
+    .hint-lightbulb-icon {
       width: 20px;
       height: 20px;
       flex-shrink: 0;
@@ -409,12 +418,28 @@
     /* Correct Drop / Complete Dictionary Entry Card */
     .vocab-target-card.state-correct,
     .vocab-dict-card {
-      background: var(--paper-sheet) !important;
-      border: 1px solid var(--ink-border) !important;
+      background: #f4faf4 !important;
+      border: 1px solid #cce8ce !important;
       box-shadow: 0 10px 32px rgba(45, 40, 35, 0.16);
       z-index: 50;
       padding: 18px 20px;
       cursor: default;
+    }
+
+    .dict-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .dict-check-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 3.2;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+      margin-top: 3px;
     }
 
     .dict-header {
@@ -793,6 +818,10 @@
         align-items: flex-start;
         gap: 12px;
       }
+      .stamp-badge {
+        margin: 4px auto 0 auto;
+        align-self: center;
+      }
       .handout-title-group h1 {
         font-size: 21px;
         line-height: 1.2;
@@ -821,9 +850,12 @@
         gap: 5px;
         margin-bottom: 10px;
       }
+      .vocab-pool-row {
+        gap: 5px;
+      }
       .vocab-chip {
-        font-size: 13px;
-        padding: 3px 6px;
+        font-size: 12px;
+        padding: 2px 6px;
       }
       .vocab-targets {
         grid-template-columns: 1fr;
@@ -923,16 +955,16 @@
     <div class="instructions-box">
       <div class="instructions-heading">INSTRUCCIONES</div>
       <div class="instructions-block">
-        <span class="instructions-label">• Antes de la clase:</span> Estudiante y profesor se familiarizan con el texto lo que deseen
+        <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
       </div>
       <div class="instructions-block">
-        <span class="instructions-label">• En clase:</span> (1) Lectura en voz alta con corrección, (2) Ejercicios juntos, (3) Preguntas de discusión juntos
+        <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
       </div>
     </div>
 
-    <!-- Section A: Reading Text -->
+    <!-- Section 1: Reading Text -->
     <h2 class="section-title">
-      <span><span class="section-num">A</span> Texto de Lectura</span>
+      <span><span class="section-num">1</span> Lectura</span>
     </h2>
 
     <article class="reading-content">
@@ -941,37 +973,37 @@
       </p>
 
       <div class="region-card">
-        <h3>1. La Costa (Región Litoral)</h3>
+        <h3>La Costa (Región Litoral)</h3>
         <p>
           Ubicada entre el océano Pacífico y las faldas occidentales de los Andes, la Costa se caracteriza por su clima cálido y tropical. En esta región se encuentra Guayaquil, la ciudad más poblada del país y su principal puerto comercial. La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los mariscos frescos, el verde (plátano verde machacado) y platos típicos como el <em>bolón de verde</em> y el <em>encebollado</em>.
         </p>
       </div>
 
       <div class="region-card">
-        <h3>2. La Sierra (Región Interandina)</h3>
+        <h3>La Sierra (Región Interandina)</h3>
         <p>
           La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la imponente Cordillera de los Andes. Aquí se sitúa Quito, la capital histórica del país a 2.850 metros sobre el nivel del mar, cuyo centro colonial fue declarado el primer Patrimonio de la Humanidad por la UNESCO en 1978. La región está rodeada por la famosa «Avenida de los Volcanes», que incluye gigantes nevados como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra). El clima es fresco o templado, y las comunidades indígenas conservan ricas tradiciones textiles y ferias vibrantes como el mercado de Otavalo.
         </p>
       </div>
 
       <div class="region-card">
-        <h3>3. El Oriente (Región Amazónica)</h3>
+        <h3>El Oriente (Región Amazónica)</h3>
         <p>
           Hacia el este de los Andes se extiende la selva amazónica ecuatoriana. Es una región densa, calurosa y húmeda, regada por caudalosos ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas. El Oriente representa casi la mitad del territorio nacional, pero concentra un porcentaje muy reducido de la población. Aquí habitan nacionalidades indígenas como los Kichwa, Shuar y Waorani, quienes protegen un ecosistema único lleno de miles de especies de aves, insectos, anfibios y plantas medicinales.
         </p>
       </div>
 
       <div class="region-card">
-        <h3>4. Las Islas Galápagos (Región Insular)</h3>
+        <h3>Las Islas Galápagos (Región Insular)</h3>
         <p>
           Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y decenas de islotes. Este rincón del mundo inspiró al naturalista británico Charles Darwin a formular su teoría de la evolución por selección natural en 1835. Gran parte de su flora y fauna es endémica, lo que significa que no existe de manera natural en ningún otro lugar: tortugas gigantes terrestres, iguanas marinas capaces de nadar, y los curiosos piqueros de patas azules.
         </p>
       </div>
     </article>
 
-    <!-- Section B: Vocabulary Drag & Drop -->
+    <!-- Section 2: Vocabulary Drag & Drop -->
     <h2 class="section-title">
-      <span><span class="section-num">B</span> Vocabulario</span>
+      <span><span class="section-num">2</span> Vocabulario</span>
     </h2>
 
     <section class="vocab-container" id="vocab-container">
@@ -994,9 +1026,9 @@
       </div>
     </section>
 
-    <!-- Section C: Interactive Comprehension Questions -->
+    <!-- Section 3: Interactive Comprehension Questions -->
     <h2 class="section-title">
-      <span><span class="section-num">C</span> Comprensión</span>
+      <span><span class="section-num">3</span> Comprensión</span>
     </h2>
 
     <div class="quiz-container" id="quiz-container">
@@ -1193,27 +1225,42 @@
 
     </div>
 
-    <!-- Section D: Discussion Questions Section -->
+    <!-- Section 4: Discussion Questions Section -->
     <h2 class="section-title">
-      <span><span class="section-num">D</span> Discusión</span>
+      <span><span class="section-num">4</span> Discusión</span>
     </h2>
 
     <section class="discussion-container">
       <ol class="discussion-questions">
         <li>
           Si pudieras viajar a Ecuador mañana, ¿cuál de las cuatro regiones te gustaría visitar primero y qué actividades te interesaría hacer allí?
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22Si+pudieras+viajar+a+Ecuador+ma%C3%B1ana%2C+%C2%BFcu%C3%A1l+de+las+cuatro+regiones+te+gustar%C3%ADa+visitar+primero+y+qu%C3%A9+actividades+te+interesar%C3%ADa+hacer+all%C3%AD%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </a>
         </li>
         <li>
           Compara el clima y la geografía de tu país de origen con la variedad que ofrece Ecuador. ¿En qué se parecen y en qué se diferencian?
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22Compara+el+clima+y+la+geograf%C3%ADa+de+tu+pa%C3%ADs+de+origen+con+la+variedad+que+ofrece+Ecuador.+%C2%BFEn+qu%C3%A9+se+parecen+y+en+qu%C3%A9+se+diferencian%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </a>
         </li>
         <li>
           ¿Has probado alguna vez plátano verde o mariscos preparados al estilo latinoamericano? ¿Qué plato tradicional de tu cultura recomendarías a alguien que visita tu ciudad?
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22%C2%BFHas+probado+alguna+vez+pl%C3%A1tano+verde+o+mariscos+preparados+al+estilo+latinoamericano%3F+%C2%BFQu%C3%A9+plato+tradicional+de+tu+cultura+recomendar%C3%ADas+a+alguien+que+visita+tu+ciudad%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </a>
         </li>
         <li>
           Las Islas Galápagos son famosas por su protección ecológica estricta. ¿Cómo equilibrarías tú el turismo internacional con la conservación de especies frágiles?
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22Las+Islas+Gal%C3%A1pagos+son+famosas+por+su+protecci%C3%B3n+ecol%C3%B3gica+estricta.+%C2%BFC%C3%B3mo+equilibrar%C3%ADas+t%C3%BA+el+turismo+internacional+con+la+conservaci%C3%B3n+de+especies+fr%C3%A1giles%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </a>
         </li>
         <li>
           ¿Qué ciudad histórica o centro colonial conoces en tu país o en tus viajes que tenga un valor cultural similar al de Quito?
+          <a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%3A+%22%C2%BFQu%C3%A9+ciudad+hist%C3%B3rica+o+centro+colonial+conoces+en+tu+pa%C3%ADs+o+en+tus+viajes+que+tenga+un+valor+cultural+similar+al+de+Quito%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar respuesta en Google">
+            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 15px; height: 15px; margin-left: 6px; vertical-align: middle;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </a>
         </li>
       </ol>
     </section>
@@ -1249,7 +1296,7 @@
         word: "cálido",
         pos: "adj.",
         def: "Que tiene una temperatura agradable o moderadamente caliente.",
-        sentence: "«...la Costa se caracteriza por su clima cálido y tropical.»",
+        sentence: "«Ubicada entre el océano Pacífico y las faldas occidentales de los Andes, la Costa se caracteriza por su clima cálido y tropical.»",
         hint: "se refiere a una temperatura agradable o moderadamente caliente"
       },
       machacado: {
@@ -1257,7 +1304,7 @@
         word: "machacado",
         pos: "adj. / part.",
         def: "Aplastado, desmenuzado o golpeado reiteradamente hasta formar una masa.",
-        sentence: "«...el verde (plátano verde machacado) y platos típicos como el bolón de verde...»",
+        sentence: "«La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los mariscos frescos, el verde (plátano verde machacado) y platos típicos como el bolón de verde y el encebollado.»",
         hint: "describe algo aplastado o triturado físicamente"
       },
       faldas: {
@@ -1265,7 +1312,7 @@
         word: "faldas",
         pos: "f. pl.",
         def: "Parte baja o pendientes inferiores de una montaña o cordillera.",
-        sentence: "«Ubicada entre el océano Pacífico y las faldas occidentales de los Andes...»",
+        sentence: "«Ubicada entre el océano Pacífico y las faldas occidentales de los Andes, la Costa se caracteriza por su clima cálido y tropical.»",
         hint: "se refiere a la parte baja o base inclinada de una elevación montañosa"
       },
       imponente: {
@@ -1273,7 +1320,7 @@
         word: "imponente",
         pos: "adj.",
         def: "Que causa gran impresión, respeto o asombro por su majestuosidad o tamaño.",
-        sentence: "«...dominada por la imponente Cordillera de los Andes.»",
+        sentence: "«La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la imponente Cordillera de los Andes.»",
         hint: "expresa una cualidad majestuosa o que impresiona fuertemente"
       },
       nevados: {
@@ -1281,7 +1328,7 @@
         word: "nevados",
         pos: "m. pl.",
         def: "Montañas o volcanes de gran altura con cumbres cubiertas perpetuamente de nieve o glaciares.",
-        sentence: "«...que incluye gigantes nevados como el Cotopaxi y el Chimborazo...»",
+        sentence: "«La región está rodeada por la famosa «Avenida de los Volcanes», que incluye gigantes nevados como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra).»",
         hint: "alude a montañas muy elevadas cubiertas de nieve perpetua"
       },
       calurosa: {
@@ -1289,7 +1336,7 @@
         word: "calurosa",
         pos: "adj.",
         def: "Que tiene mucho calor, lo experimenta o lo produce.",
-        sentence: "«Es una región densa, calurosa y húmeda, regada por caudalosos ríos...»",
+        sentence: "«Es una región densa, calurosa y húmeda, regada por caudalosos ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas.»",
         hint: "se relaciona directamente con una sensación o clima de intenso calor"
       },
       caudalosos: {
@@ -1297,7 +1344,7 @@
         word: "caudalosos",
         pos: "adj. pl.",
         def: "Dicho de un río o corriente: que lleva gran abundancia o volumen de agua.",
-        sentence: "«...regada por caudalosos ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas.»",
+        sentence: "«Es una región densa, calurosa y húmeda, regada por caudalosos ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas.»",
         hint: "describe ríos o corrientes con gran volumen o flujo de agua"
       },
       selva: {
@@ -1313,7 +1360,7 @@
         word: "decenas",
         pos: "f. pl.",
         def: "Conjuntos formados por diez unidades cada uno, o cantidades aproximadas de varios grupos de diez.",
-        sentence: "«...consta de 13 islas volcánicas principales y decenas de islotes.»",
+        sentence: "«Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y decenas de islotes.»",
         hint: "expresa una cantidad numérica formada por grupos de diez unidades"
       },
       islotes: {
@@ -1321,7 +1368,7 @@
         word: "islotes",
         pos: "m. pl.",
         def: "Islas muy pequeñas, rocosas o despobladas.",
-        sentence: "«...consta de 13 islas volcánicas principales y decenas de islotes.»",
+        sentence: "«Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y decenas de islotes.»",
         hint: "son pequeñas islas despobladas o formaciones rocosas menores"
       }
     };
@@ -1431,6 +1478,29 @@
     // =========================================================
     // VOCABULARY EXERCISE LOGIC
     // =========================================================
+    let dismissClickTimer = null;
+
+    function safeDismiss(callback, e) {
+      if (e && e.target && e.target.closest('.lookup-btn')) return;
+      if (e && e.target && e.target.closest('.dict-close-btn')) {
+        callback();
+        return;
+      }
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+
+      if (dismissClickTimer) {
+        clearTimeout(dismissClickTimer);
+        dismissClickTimer = null;
+        return; // double-click to select word detected, cancel dismissal
+      }
+
+      dismissClickTimer = setTimeout(() => {
+        dismissClickTimer = null;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        callback();
+      }, 250);
+    }
+
     function renderVocabulary() {
       const pool = document.getElementById('vocab-pool');
       const targets = document.getElementById('vocab-targets');
@@ -1448,11 +1518,11 @@
       const allKeys = Object.keys(vocabData);
       const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
 
-      // 1. Render Waiting Words Pool (horizontally centered, 5-and-5 balance)
+      // 1. Render Waiting Words Pool (horizontally centered, balanced across two rows when > 5 words)
       if (remainingKeys.length === 0) {
         pool.innerHTML = '<span style="color: var(--ink-muted); font-size: 14px; font-style: italic;">¡Todas las palabras han sido emparejadas con éxito!</span>';
       } else {
-        remainingKeys.forEach(k => {
+        const createChip = (k) => {
           const item = vocabData[k];
           const chip = document.createElement('div');
           chip.className = 'vocab-chip';
@@ -1473,9 +1543,27 @@
 
           // Touch drag support
           setupTouchDrag(chip, k);
+          return chip;
+        };
 
-          pool.appendChild(chip);
-        });
+        if (remainingKeys.length <= 5) {
+          const row = document.createElement('div');
+          row.className = 'vocab-pool-row';
+          remainingKeys.forEach(k => row.appendChild(createChip(k)));
+          pool.appendChild(row);
+        } else {
+          const half = Math.ceil(remainingKeys.length / 2);
+          const row1 = document.createElement('div');
+          row1.className = 'vocab-pool-row';
+          const row2 = document.createElement('div');
+          row2.className = 'vocab-pool-row';
+
+          remainingKeys.slice(0, half).forEach(k => row1.appendChild(createChip(k)));
+          remainingKeys.slice(half).forEach(k => row2.appendChild(createChip(k)));
+
+          pool.appendChild(row1);
+          pool.appendChild(row2);
+        }
       }
 
       // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
@@ -1541,17 +1629,17 @@
           </div>
         </div>
         <div class="hint-row">
-          <svg class="hint-hand-icon" viewBox="0 0 24 24" fill="#235c34" aria-hidden="true">
-            <path d="M22.5 12c0-.55-.45-1-1-1h-9.5v-1.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v1.5H7.5c-.83 0-1.5.67-1.5 1.5v3c0 .83.67 1.5 1.5 1.5h1V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-1h8.5c.55 0 1-.45 1-1s-.45-1-1-1h-1v-2h2.5c.55 0 1-.45 1-1zM4 10.5C2.9 10.5 2 11.4 2 12.5v3c0 1.1.9 2 2 2h1.5v-7H4z"/>
+          <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
           </svg>
           <div class="hint-text">${item.hint}</div>
         </div>
       `;
 
       modal.addEventListener('click', (e) => {
-        if (e.target.closest('.lookup-btn')) return;
-        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-        hideModal();
+        safeDismiss(() => hideModal(), e);
       });
 
       document.body.appendChild(modal);
@@ -1567,16 +1655,13 @@
     }
 
     function handleTargetCardClick(card, targetKey, e) {
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      if (e && e.target && e.target.closest('.lookup-btn')) return;
-
       if (card.classList.contains('state-wrong')) {
-        dismissWrongState(card);
+        safeDismiss(() => dismissWrongState(card), e);
         return;
       }
 
       if (card.classList.contains('state-correct')) {
-        dismissCorrectState(targetKey);
+        safeDismiss(() => dismissCorrectState(targetKey), e);
         return;
       }
     }
@@ -1642,7 +1727,10 @@
               </a>
             </div>
           </div>
-          <div class="dict-def">${item.def}</div>
+          <div class="dict-def-row">
+            <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="var(--correct-green)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="dict-def" style="margin-bottom: 0;">${item.def}</div>
+          </div>
           <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
         `;
 
@@ -1670,8 +1758,10 @@
             <div class="wrong-def-text">${formatWrongDef(targetItem.def)}</div>
           </div>
           <div class="hint-row">
-            <svg class="hint-hand-icon" viewBox="0 0 24 24" fill="#235c34" aria-hidden="true">
-              <path d="M22.5 12c0-.55-.45-1-1-1h-9.5v-1.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v1.5H7.5c-.83 0-1.5.67-1.5 1.5v3c0 .83.67 1.5 1.5 1.5h1V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-1h8.5c.55 0 1-.45 1-1s-.45-1-1-1h-1v-2h2.5c.55 0 1-.45 1-1zM4 10.5C2.9 10.5 2 11.4 2 12.5v3c0 1.1.9 2 2 2h1.5v-7H4z"/>
+            <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+              <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
             </svg>
             <div class="hint-text">${placedWord.hint}</div>
           </div>
@@ -1707,20 +1797,21 @@
       if (overlay) overlay.classList.remove('active');
     }
 
-    function handleOverlayClick() {
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      if (activeModalCard) {
-        if (activeModalCard.id === 'active-hint-modal') {
-          hideModal();
-        } else if (activeModalCard.classList.contains('state-wrong')) {
-          dismissWrongState(activeModalCard);
-        } else if (activeModalCard.classList.contains('state-correct')) {
-          const targetKey = activeModalCard.getAttribute('data-target-key');
-          dismissCorrectState(targetKey);
-        } else {
-          hideModal();
+    function handleOverlayClick(e) {
+      safeDismiss(() => {
+        if (activeModalCard) {
+          if (activeModalCard.id === 'active-hint-modal') {
+            hideModal();
+          } else if (activeModalCard.classList.contains('state-wrong')) {
+            dismissWrongState(activeModalCard);
+          } else if (activeModalCard.classList.contains('state-correct')) {
+            const targetKey = activeModalCard.getAttribute('data-target-key');
+            dismissCorrectState(targetKey);
+          } else {
+            hideModal();
+          }
         }
-      }
+      }, e);
     }
 
     // Toggle completed word detail preview
@@ -1750,7 +1841,10 @@
             </div>
             <button class="dict-close-btn" onclick="toggleCompletedDetail('${wordKey}')" title="Cerrar definición" aria-label="Cerrar">✕</button>
           </div>
-          <div class="dict-def">${item.def}</div>
+          <div class="dict-def-row">
+            <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="var(--correct-green)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="dict-def" style="margin-bottom: 0;">${item.def}</div>
+          </div>
           <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
         </div>
       `;
