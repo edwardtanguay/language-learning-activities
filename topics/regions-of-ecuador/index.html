@@ -18,7 +18,7 @@
       --paper-sheet: #fffdf9;
       --ink-main: #22201e;
       --ink-muted: #5e5953;
-      --ink-border: #3c3732;
+      --ink-border: #d5cebf;
       --ink-rule: #d5cebf;
       --stamp-blue: #1d4373;
       --lang-color: #be185d; /* Standard Spanish (es) */
@@ -53,7 +53,7 @@
       max-width: 860px;
       margin: 0 auto 16px auto;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       font-family: var(--font-typewriter);
       font-size: 14px;
@@ -65,125 +65,75 @@
       font-weight: 700;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .back-link:hover {
       text-decoration: underline;
     }
 
-    .print-btn {
-      background: none;
-      border: 1px dashed var(--ink-border);
-      padding: 4px 12px;
-      font-family: var(--font-typewriter);
-      font-size: 13px;
-      cursor: pointer;
-      color: var(--ink-main);
-      border-radius: 2px;
+    .back-arrow {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.8;
+      stroke: currentColor;
+      flex-shrink: 0;
     }
 
-    .print-btn:hover {
-      background-color: var(--highlight);
-    }
-
-    /* Main Handout Container */
+    /* Main Handout Container - Paper sheet with realistic desk drop-shadow */
     .handout-sheet {
       max-width: 860px;
       margin: 0 auto;
       background-color: var(--paper-sheet);
-      border: 2px solid var(--ink-border);
-      box-shadow: 4px 4px 0px rgba(45, 40, 35, 0.15);
-      padding: 36px 44px;
+      border: 1px solid #e8e2d5;
+      box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04);
+      border-radius: 3px;
+      padding: 38px 46px;
       position: relative;
     }
 
-    /* Worksheet Header Box */
+    /* Worksheet Header */
     .worksheet-header {
-      border: 2px solid var(--ink-border);
-      padding: 16px 20px;
-      margin-bottom: 28px;
-      background-color: var(--paper-sheet);
+      border: none;
+      padding: 0 0 20px 0;
+      margin-bottom: 24px;
+      background: transparent;
       font-family: var(--font-typewriter);
     }
 
     .header-top {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 1px dashed var(--ink-border);
-      padding-bottom: 12px;
-      margin-bottom: 12px;
+      align-items: center;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
     }
 
     .handout-title-group h1 {
-      font-size: 24px;
+      font-size: 26px;
       letter-spacing: -0.5px;
       text-transform: uppercase;
       font-family: var(--font-typewriter);
       color: var(--ink-main);
-      margin-bottom: 4px;
-    }
-
-    .handout-subtitle {
-      font-size: 14px;
-      color: var(--ink-muted);
-      font-style: italic;
+      margin-bottom: 0;
     }
 
     .stamp-badge {
-      border: 2px solid var(--lang-color);
+      border: 3px solid var(--lang-color);
       color: var(--lang-color);
-      padding: 4px 10px;
-      font-size: 13px;
-      font-weight: 700;
+      padding: 6px 14px;
+      font-size: 18px;
+      font-weight: 800;
       text-align: center;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transform: rotate(-1.5deg);
+      letter-spacing: 0.8px;
+      transform: rotate(-2deg);
       display: inline-block;
-    }
-
-    .student-fields {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 16px;
-      font-size: 14px;
-    }
-
-    .field-line {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-    }
-
-    .field-label {
-      font-weight: 700;
+      border-radius: 2px;
       white-space: nowrap;
-    }
-
-    .field-dots {
-      flex: 1;
-      border-bottom: 1px dotted var(--ink-border);
-      min-height: 18px;
-    }
-
-    /* Metadata Bar */
-    .meta-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px dotted var(--ink-rule);
-      padding-top: 8px;
-    }
-
-    .meta-tag strong {
-      color: var(--ink-main);
     }
 
     /* Handout Sections */
@@ -192,30 +142,32 @@
       font-size: 18px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      border-bottom: 2px solid var(--ink-border);
-      padding-bottom: 6px;
-      margin: 32px 0 16px 0;
+      border-bottom: 2px solid var(--ink-rule);
+      padding-bottom: 8px;
+      margin: 36px 0 18px 0;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
     }
 
     .section-title .section-num {
-      background: var(--ink-border);
-      color: var(--paper-sheet);
-      padding: 1px 7px;
-      font-size: 14px;
-      margin-right: 8px;
+      background: none;
+      color: var(--ink-main);
+      padding: 0;
+      font-size: 26px;
+      font-weight: 700;
+      margin-right: 10px;
+      line-height: 1;
     }
 
     /* Instructions callout */
     .instructions-box {
       background-color: var(--highlight);
-      border-left: 4px solid var(--ink-border);
+      border-left: 4px solid var(--ink-rule);
       padding: 12px 16px;
       font-family: var(--font-typewriter);
       font-size: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     /* Reading Passage */
@@ -273,10 +225,12 @@
     }
 
     .question-card {
-      border: 1px solid var(--ink-border);
-      padding: 20px;
-      margin-bottom: 20px;
+      border: 1px solid var(--ink-rule);
+      padding: 22px;
+      margin-bottom: 22px;
       background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(45, 40, 35, 0.03);
     }
 
     .question-prompt {
@@ -284,16 +238,20 @@
       font-size: 17px;
       margin-bottom: 14px;
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: baseline;
     }
 
     .q-number {
       font-family: var(--font-typewriter);
-      background-color: var(--paper-bg);
-      border: 1px solid var(--ink-border);
-      padding: 2px 7px;
-      font-size: 14px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink-main);
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+      margin-right: 2px;
     }
 
     .options-list {
@@ -316,7 +274,7 @@
 
     .option-item:hover {
       background-color: var(--paper-bg);
-      border-color: var(--ink-border);
+      border-color: #baa795;
     }
 
     .option-item input[type="radio"] {
@@ -368,7 +326,8 @@
       margin-top: 24px;
       padding: 16px 20px;
       background-color: var(--paper-bg);
-      border: 2px solid var(--ink-border);
+      border: 1px solid var(--ink-rule);
+      border-radius: 2px;
       font-family: var(--font-typewriter);
     }
 
@@ -383,14 +342,15 @@
 
     .reset-btn {
       background-color: var(--paper-sheet);
-      border: 1px solid var(--ink-border);
+      border: 1px solid var(--ink-rule);
       padding: 8px 16px;
       font-family: var(--font-typewriter);
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 2px 2px 0 var(--ink-border);
-      transition: transform 0.1s, box-shadow 0.1s;
+      box-shadow: 0 1px 3px rgba(45, 40, 35, 0.08);
+      border-radius: 2px;
+      transition: transform 0.1s, background-color 0.15s;
     }
 
     .reset-btn:hover {
@@ -398,8 +358,7 @@
     }
 
     .reset-btn:active {
-      transform: translate(1px, 1px);
-      box-shadow: 1px 1px 0 var(--ink-border);
+      transform: translateY(1px);
     }
 
     /* Tandem & Tutor Discussion Box */
@@ -469,13 +428,13 @@
         padding: 0;
         background-image: none;
       }
-      .utility-bar, .reset-btn, .print-btn {
+      .utility-bar, .reset-btn {
         display: none !important;
       }
       .handout-sheet {
-        border: 1px solid #000;
+        border: none;
         box-shadow: none;
-        padding: 20mm 15mm;
+        padding: 15mm 10mm;
         max-width: 100%;
       }
       .question-card {
@@ -488,42 +447,24 @@
 
   <!-- Utility Nav -->
   <div class="utility-bar">
-    <a href="../../index.html" class="back-link">&larr; Índice de Actividades (Home)</a>
-    <button class="print-btn" onclick="window.print()">[ Imprimir / Guardar PDF ]</button>
+    <a href="../../index.html" class="back-link">
+      <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Índice de Actividades
+    </a>
   </div>
 
   <!-- Handout Sheet -->
   <main class="handout-sheet">
 
-    <!-- 1970s Stamped Header -->
+    <!-- Header -->
     <header class="worksheet-header">
       <div class="header-top">
         <div class="handout-title-group">
           <h1>Las Cuatro Regiones de Ecuador</h1>
-          <div class="handout-subtitle">Hoja de trabajo pedagógica para estudiantes y clases de conversación</div>
         </div>
         <div class="stamp-badge">
-          ESPAÑOL • B1 INTERMEDIO
+          Español B1
         </div>
-      </div>
-
-      <div class="student-fields">
-        <div class="field-line">
-          <span class="field-label">Estudiante / Tandem:</span>
-          <span class="field-dots"></span>
-        </div>
-        <div class="field-line">
-          <span class="field-label">Fecha:</span>
-          <span class="field-dots"></span>
-        </div>
-      </div>
-
-      <div class="meta-tags">
-        <span class="meta-tag"><strong style="color: var(--lang-color);">&#9679; Idioma:</strong> Español (es)</span>
-        <span class="meta-tag"><strong>Variante:</strong> Español Latinoamericano</span>
-        <span class="meta-tag"><strong>Nivel:</strong> B1 (Intermedio)</span>
-        <span class="meta-tag"><strong>Tema:</strong> Geografía y Cultura de América del Sur</span>
-        <span class="meta-tag"><strong>Código:</strong> ACT-ECU-01</span>
       </div>
     </header>
 
@@ -535,7 +476,6 @@
     <!-- Section 2: Reading Text -->
     <h2 class="section-title">
       <span><span class="section-num">1</span> Texto de Lectura</span>
-      <span style="font-size: 13px; font-weight: normal; color: var(--ink-muted);">~400 palabras</span>
     </h2>
 
     <article class="reading-content">
@@ -758,7 +698,7 @@
         Puntuación: <span id="score-counter">0</span> / 5
       </div>
       <button class="reset-btn" id="reset-btn" onclick="resetWorksheet()">
-        &#8634; Reiniciar Hoja de Trabajo (Clear Answers)
+        &#8634; Reiniciar hoja de trabajo
       </button>
     </div>
 

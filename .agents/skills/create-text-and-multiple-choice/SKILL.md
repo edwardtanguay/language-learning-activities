@@ -57,12 +57,22 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Greek (`el`): `#0d9488`
   - Icelandic (`is`): `#06b6d4`
   - Danish (`da`): `#ff1493`
-  The header stamp badge (`.stamp-badge`) displaying `[LANGUAGE] • [LEVEL]` uses `border: 2px solid var(--lang-color); color: var(--lang-color);` to look like an authentic colored ink stamp.
+  The header stamp badge (`.stamp-badge`) displaying `[Language] [Level]` (e.g. `Español B1`) uses `border: 3px solid var(--lang-color); color: var(--lang-color); font-size: 18px; font-weight: 800; transform: rotate(-2deg);` to look like a prominent colored ink stamp.
+- **Paper on Desk Aesthetic**:
+  - The main container (`.handout-sheet`) has a soft blurred drop-shadow (`box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04)`) and a delicate warm border (`1px solid #e8e2d5`), giving the look of a sheet of paper on a desk.
+- **No Harsh Black Outlines**:
+  - Do not use dark or black solid borders (which evoke death notices in certain cultures). Use warm parchment rules (`--ink-rule: #d5cebf`) and light background shifts instead.
 - **Typography**:
-  - Monospace / Typewriter font stack: `"Courier New", Courier, "Courier Prime", monospace` for headers, metadata tags, instructions, and buttons.
-  - Clean readable serif/sans for long reading passages: `Georgia, "Times New Roman", serif` or clean typewriter for authentic feel.
-- **Header Box**:
-  - Resembles a physical worksheet header with stamped boxes: `ACTIVITY / HOJA DE TRABAJO`, `LEVEL`, `LANGUAGE`, `STUDENT / TANDEM NAME: ___________`, `DATE: ___________`.
+  - Monospace / Typewriter font stack: `"Courier New", Courier, "Courier Prime", monospace` for headers, instructions, numbers, and buttons.
+  - Clean readable serif/sans for long reading passages: `Georgia, "Times New Roman", serif` or clean typewriter.
+- **Minimalist Title Area**:
+  - Unboxed title header (`border: none;`).
+  - Contains only the activity title (`<h1>`) and the prominent tilted stamp badge.
+  - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
+- **Plain Large Numbers (No Dark Inverted Boxes)**:
+  - Section numbers and quiz question numbers must be rendered as plain large numbers in the text color (`--ink-main`), never white text inside black/dark boxes.
+- **No Word Count Indicators**:
+  - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Responsive Layout**:
   - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout (reading passage + vocabulary margin, followed by quiz).
   - Mobile (Portrait): Single-column stack with comfortable padding and touch-friendly buttons.
@@ -74,19 +84,20 @@ Follow the project design philosophy defined in `AGENTS.md`:
 Each activity file should include the following sections:
 
 1. **Top Navigation**:
-   - Link back to main activities catalog (`<a href="../../index.html">&larr; Back to Activity Catalog</a>`).
+   - Link back to main activities catalog (`<a href="../../index.html" class="back-link">...</a>`) with a thick arrow (SVG or bold glyph) and clean label without "(Home)".
+   - Do NOT include a print button.
 2. **Worksheet Header**:
-   - Title, metadata stamp (language, level, topic, handout ID).
-   - "Name / Date" blanks for that authentic school handout feel.
+   - Title and enlarged, tilted stamp badge (`[Language] [Level]`).
 3. **Introduction / Context**:
-   - 1–2 sentences explaining the goal of the handout and cultural context.
+   - 1–2 sentences explaining the goal of the handout and cultural context in the target language.
 4. **Reading Passage**:
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
-   - Divided into logical paragraphs or subsections with clear subtitles.
+   - Divided into logical paragraphs or subsections with clear subtitles. (No word count label).
 5. **Vocabulary & Cultural Notes (Glossary)**:
-   - Key terms, idiomatic phrases, and cultural explanations with translations and contextual usage notes.
+   - Key terms, idiomatic phrases, and cultural explanations with definitions in the target language.
 6. **Interactive Multiple-Choice Comprehension Quiz**:
    - 4–6 questions testing reading comprehension, grammar in context, and vocabulary.
+   - Large plain question numbers (no background boxes).
    - Each question has 3–4 plausible options.
    - Interactive feedback:
      - Selecting an option immediately shows whether it is correct or incorrect.
@@ -94,14 +105,12 @@ Each activity file should include the following sections:
      - Live score tracker (e.g., "Score: 4 / 5").
    - **Progress Persistence**:
      - User selections and scores are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
-     - Include a visible **"Reset Worksheet"** or **"Clear Answers"** button so learners can repeat the exercise.
+     - Include a visible **Reset Button** in the target language (e.g., "Reiniciar hoja de trabajo") so learners can repeat the exercise.
 7. **Tandem / Preply Tutor Discussion Section**:
    - 4–5 open-ended conversation questions in the target language designed for:
      - Practice with an online tutor (e.g., Preply, iTalki).
      - Language exchange tandem partners.
      - Speaking or writing self-reflection.
-8. **Print Button**:
-   - A clean "Print / Save PDF" link trigger (`window.print()`) styled neatly. Include `@media print` styles that hide web buttons.
 
 ---
 

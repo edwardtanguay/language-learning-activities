@@ -22,6 +22,24 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 ## Design System: 1970s School Handout
 
 - **Aesthetic**: Authentic 1970s school handout / mimeograph worksheet. Clean, calm, and distraction-free. Avoid flashy modern animations or neon styling.
+- **Paper on Desk Aesthetic**:
+  - The handout sheet (`.handout-sheet`) sits atop the background with a realistic, soft blurred shadow (`box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04)`) and a delicate warm border (`1px solid #e8e2d5`), giving the tactile look of a physical piece of paper resting on a desk.
+- **No Harsh Black Outlines**:
+  - Do not use dark or solid black outlines anywhere on the worksheet (such as harsh borders around cards, boxes, or headers), as thick dark borders evoke death/funeral announcements in several cultures.
+  - Instead, use soft, warm parchment rules (`--ink-rule: #d5cebf`), soft cards with subtle shadows, and light background shifts.
+- **Minimalist Title Area**:
+  - The title header has NO enclosing box or outline border (`border: none`).
+  - Contains strictly the activity title and a prominent, slightly tilted stamp badge (e.g., `Español B1` or `[Idioma] [Nivel]`).
+  - Do not include generic subtitle taglines (e.g., "Hoja de trabajo pedagógica..."), student name/date fill blanks, or cluttering metadata tag pills.
+  - Stamp badge is large and clear (`font-size: 18px`, `border: 3px solid var(--lang-color)`), slightly tilted (e.g. `-2deg`), and uses the standardized language color.
+- **Clean Navigation**:
+  - Top utility navigation contains only a back link to the index (e.g., `← Índice de Actividades`) with a thick, prominent arrow (SVG or bold glyph).
+  - Do not include "(Home)" in the link label.
+  - Do not include "Imprimir / Guardar PDF" buttons in the navigation bar.
+- **Plain Large Numbers (No Inverted Dark Boxes)**:
+  - In section titles (1, 2, 3...) and quiz question prompts, numbers are rendered as clean, large numbers in the text color (`--ink-main`) without dark box backgrounds, white-on-black fills, or heavy border boxes.
+- **No Word Count Mentions**:
+  - Do not include word counts (such as `~400 palabras`) anywhere in section titles or headers.
 - **Layout & Responsiveness**:
   - **Desktop & Tablet (Landscape)**: Balanced margins, comfortable reading widths, and structured side-by-side or worksheet sections.
   - **Mobile (Portrait)**: Single-column vertical flow with touch-friendly controls.
