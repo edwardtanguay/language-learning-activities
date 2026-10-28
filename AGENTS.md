@@ -19,6 +19,8 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, and navigation links) must be exclusively in the target language.
 - When you create multiple choice questions, for each answer right or wrong, display an explanation text why it is right or wrong, and create separate text for each answer. Allow the user to keep selecting even after they have already selected a right or wrong answer, so they can e.g. read all the texts and learn why other answers were not correct.
+- **Multiple-Choice Visual Feedback**: Do NOT color the entire question card or option area green or red, as these colors are reserved for language identity badges (e.g., Spanish/Italian). Keep the question card background clean and neutral. Inside the feedback box, display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
+- **Discussion Questions Section**: The conversation section heading is standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French). Do not include platform-specific service names (such as "Preply" or "Tandem") in the section title.
 
 ## Design System: 1970s School Handout
 
@@ -30,7 +32,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
   - Glossary / vocabulary boxes and comprehension question cards / options must NOT have outline borders (`border: none;`). Instead, use light background shifts (`--paper-bg`), soft drop shadows, and subtle background tints for answered/feedback states and hover effects.
 - **Title Area & Content Overview**:
   - The title header has NO enclosing box or outline border (`border: none`).
-  - Contains the activity title (`<h1>`), a prominent slightly tilted stamp badge (e.g., `Español B1`), and directly beneath them a concise 1–2 sentence description of the content in the target language (styled in elegant italicized serif text, `font-size: 16px; color: var(--ink-muted); margin-top: 10px; line-height: 1.5;`) before the instructions box.
+  - Contains the activity title (`<h1>`), a prominent slightly tilted stamp badge (e.g., `Español B1`), and directly beneath them a concise 1–2 sentence description of the content in the target language (styled in elegant italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above, slightly more than the default title gap) before the instructions box.
   - Do not include generic subtitle taglines (e.g., "Hoja de trabajo pedagógica..."), student name/date fill blanks, or cluttering metadata tag pills.
   - Stamp badge is large and clear (`font-size: 18px`, `border: 3px solid var(--lang-color)`), slightly tilted (e.g. `-2deg`), and uses the standardized language color.
 - **Dual Navigation (Top and Bottom)**:
@@ -50,7 +52,8 @@ Each activity lives in `topics/<topic-slug>/index.html`:
   - Whenever a checkbox, radio button, or icon on the left is paired with text on the right that breaks or wraps into multiple lines, always top-align both (`align-items: flex-start;`). Never vertically center them (`align-items: center;`), ensuring the control or icon stays cleanly aligned with the first line of text.
 - **Layout & Mobile Typography**:
   - **Desktop & Tablet (Landscape)**: Balanced margins, comfortable reading widths, and structured side-by-side or worksheet sections.
-  - **Mobile (Portrait, max-width: 680px)**: Single-column vertical flow with tight line heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for `h1`, `15px` for section titles and tandem headers) so multi-line titles read cohesively as one title and headings fit on a single line more often.
+  - **Mobile (Portrait, max-width: 680px)**: Single-column vertical flow with tight line heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for `h1`, `15px` for section titles and discussion headers) so multi-line titles read cohesively as one title and headings fit on a single line more often.
+  - **Mobile Centering for Navigation and Reset**: On mobile screens, center navigation and action controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`), stacking the bottom back link and reset button centered.
 
 ## Standardized Languages & Palette
 

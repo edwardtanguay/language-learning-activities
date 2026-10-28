@@ -95,7 +95,7 @@
     /* Worksheet Header */
     .worksheet-header {
       border: none;
-      padding: 0 0 20px 0;
+      padding: 0;
       margin-bottom: 24px;
       background: transparent;
       font-family: var(--font-typewriter);
@@ -123,7 +123,8 @@
     }
 
     .handout-subtitle {
-      margin-top: 10px;
+      margin-top: 18px;
+      margin-bottom: 18px;
       font-size: 16px;
       font-style: italic;
       color: var(--ink-muted);
@@ -304,27 +305,35 @@
     }
 
     /* Feedback states */
-    .question-card.answered.correct {
-      border: none;
-      background-color: var(--correct-bg);
-    }
-
+    .question-card.answered.correct,
     .question-card.answered.incorrect {
       border: none;
-      background-color: var(--wrong-bg);
+      background-color: #fff;
     }
 
     .feedback-box {
       display: none;
       margin-top: 14px;
-      padding: 10px 14px;
+      padding: 12px 14px;
       font-family: var(--font-typewriter);
       font-size: 14px;
-      border-top: 1px dashed currentColor;
+      border-top: 1px dashed var(--ink-rule);
+      border-radius: 3px;
+      background-color: var(--paper-sheet);
     }
 
     .question-card.answered .feedback-box {
-      display: block;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .feedback-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      stroke-width: 3.2;
+      margin-top: 1px;
     }
 
     .feedback-box.correct-text {
@@ -333,6 +342,11 @@
 
     .feedback-box.wrong-text {
       color: var(--wrong-red);
+    }
+
+    .feedback-content {
+      flex: 1;
+      line-height: 1.5;
     }
 
     /* Bottom Actions Bar & Discrete Reset */
@@ -431,6 +445,9 @@
       body {
         padding: 12px 8px;
       }
+      .utility-bar {
+        justify-content: center;
+      }
       .handout-sheet {
         padding: 20px 16px;
       }
@@ -447,7 +464,8 @@
       .handout-subtitle {
         font-size: 15px;
         line-height: 1.35;
-        margin-top: 6px;
+        margin-top: 14px;
+        margin-bottom: 14px;
       }
       .section-title {
         font-size: 15px;
@@ -471,8 +489,14 @@
       }
       .bottom-actions-bar {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+      .bottom-actions-bar .back-link,
+      .bottom-actions-bar .reset-answers-btn {
+        justify-content: center;
+        text-align: center;
       }
     }
 
@@ -527,7 +551,7 @@
 
     <!-- Section 1: Introduction -->
     <div class="instructions-box">
-      <strong>INSTRUCCIONES:</strong> Lee atentamente el texto a continuación. Si encuentras palabras desconocidas, consulta el vocabulario en la sección 2. Después responde a las 5 preguntas de comprensión y conversa con tu tutor de Preply o compañero de tandem utilizando las preguntas finales.
+      <strong>INSTRUCCIONES:</strong> Lee atentamente el texto a continuación. Si encuentras palabras desconocidas, consulta el vocabulario en la sección 2. Después responde a las 5 preguntas de comprensión y conversa con tu tutor o compañero de intercambio utilizando las preguntas de discusión finales.
     </div>
 
     <!-- Section 2: Reading Text -->
@@ -749,10 +773,10 @@
 
     </div>
 
-    <!-- Section 5: Tandem & Preply Tutor Discussion Section -->
+    <!-- Section 5: Discussion Questions Section -->
     <section class="tandem-box">
       <div class="tandem-header">
-        <span>&#9998; Preguntas para Tandem / Tutor de Preply</span>
+        <span>&#9998; Preguntas de discusión</span>
       </div>
       <p style="font-size: 15px; margin-bottom: 14px; font-style: italic; color: var(--ink-muted);">
         Utiliza estas preguntas para practicar la expresión oral con tu tutor online o compañero de intercambio:
@@ -878,12 +902,18 @@
         card.classList.remove('incorrect');
         card.classList.add('correct');
         feedbackBox.className = 'feedback-box correct-text';
-        feedbackBox.innerHTML = `<strong>✓ CORRECTO (${value}):</strong> ${explanation}`;
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div class="feedback-content"><strong>CORRECTO (${value}):</strong> ${explanation}</div>
+        `;
       } else {
         card.classList.remove('correct');
         card.classList.add('incorrect');
         feedbackBox.className = 'feedback-box wrong-text';
-        feedbackBox.innerHTML = `<strong>✗ INCORRECTO (${value}):</strong> ${explanation}`;
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <div class="feedback-content"><strong>INCORRECTO (${value}):</strong> ${explanation}</div>
+        `;
       }
     }
 

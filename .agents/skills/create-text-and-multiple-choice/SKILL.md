@@ -69,7 +69,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - On mobile (`max-width: 680px`), use tight line-heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for title, `15px` for section titles) so multi-line titles read cohesively and headings fit on one line more often.
 - **Title Area & Content Overview**:
   - Unboxed title header (`border: none;`).
-  - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin-top: 10px; line-height: 1.5;`) before the instructions box.
+  - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
 - **Plain Large Numbers (No Dark Inverted Boxes)**:
   - Section numbers and quiz question numbers must be rendered as plain large numbers in the text color (`--ink-main`), never white text inside black/dark boxes.
@@ -80,6 +80,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
 - **Dual Navigation & Discrete Reset**:
   - Include the back link (`← Índice de Actividades`) both at the top utility bar and in a bottom actions bar.
   - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar.
+  - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`).
 - **Standardized Footer**:
   - At the very bottom of the worksheet: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
 - **Responsive Layout**:
@@ -96,7 +97,7 @@ Each activity file should include the following sections:
    - Link back to main activities catalog (`<a href="../../index.html" class="back-link">...</a>`) with a thick arrow (SVG or bold glyph) and clean label without "(Home)".
    - Do NOT include a print button.
 2. **Worksheet Header**:
-   - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language.
+   - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
 3. **Introduction / Context**:
    - Instructions callout box explaining the activity workflow in the target language.
 4. **Reading Passage**:
@@ -108,20 +109,20 @@ Each activity file should include the following sections:
    - 4–6 questions testing reading comprehension, grammar in context, and vocabulary.
    - Large plain question numbers (no background boxes).
    - Borderless question cards and options with subtle background fills and hover states.
+   - **No Full Card Tinting**: Do NOT tint the full question card green or red. Keep the card background clean and neutral.
    - Interactive feedback:
-     - Selecting an option immediately shows whether it is correct or incorrect.
+     - Selecting an option immediately displays a feedback box with a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation.
      - Provide a distinct explanation text for each answer choice (both right and wrong), explaining specifically why that option is correct or incorrect.
      - Allow the user to keep selecting other options even after answering, so they can explore all options and learn why alternatives were incorrect.
    - **Progress Persistence & Discrete Reset**:
      - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
-7. **Tandem / Preply Tutor Discussion Section**:
-   - 4–5 open-ended conversation questions in the target language designed for:
-     - Practice with an online tutor (e.g., Preply, iTalki).
-     - Language exchange tandem partners.
-     - Speaking or writing self-reflection.
+7. **Discussion Questions Section**:
+   - Section heading standardized to "Discussion Questions" translated into the target language (e.g., "Preguntas de discusión" in Spanish, "Diskussionsfragen" in German, "Questions de discussion" in French), avoiding platform-specific brand names like Preply or Tandem.
+   - 4–5 open-ended conversation questions in the target language designed for practice with tutors, exchange partners, or self-reflection.
 8. **Bottom Actions & Navigation Bar**:
    - Matching back link to catalog (`← Índice de Actividades`).
    - Discrete reset button with icon in the target language (e.g., "↺ Reiniciar respuestas") to clear `localStorage` answer state.
+   - On mobile screens, both controls are centered horizontally and vertically.
 9. **Standardized Footer**:
    - `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer"><em>Edward</em></a>`
 
