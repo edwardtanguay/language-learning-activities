@@ -44,6 +44,20 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Paper background: warm off-white / parchment (e.g., `#fbf8f1` or `#f7f4ea`).
   - Text & rules: deep ink charcoal / soft black (e.g., `#1f1e1d` or `#2a2825`).
   - Borders & accents: typewriter rules, mimeograph blue/sepia tones (e.g., `#2c4a6f` for mimeograph ink or `#5c4d3c` for warm ink).
+- **Standardized Language Color System**:
+  Every activity defines `--lang-color` in `:root` matching its target language:
+  - English (`en`): `#9333ea`
+  - German (`de`): `#7e4402`
+  - French (`fr`): `#333388`
+  - Spanish (`es`): `#be185d`
+  - Italian (`it`): `#194d19`
+  - Dutch (`nl`): `#d97706`
+  - Polish (`pl`): `#b8b8b8`
+  - Russian (`ru`): `#3f3f46`
+  - Greek (`el`): `#0d9488`
+  - Icelandic (`is`): `#06b6d4`
+  - Danish (`da`): `#ff1493`
+  The header stamp badge (`.stamp-badge`) displaying `[LANGUAGE] • [LEVEL]` uses `border: 2px solid var(--lang-color); color: var(--lang-color);` to look like an authentic colored ink stamp.
 - **Typography**:
   - Monospace / Typewriter font stack: `"Courier New", Courier, "Courier Prime", monospace` for headers, metadata tags, instructions, and buttons.
   - Clean readable serif/sans for long reading passages: `Georgia, "Times New Roman", serif` or clean typewriter for authentic feel.
@@ -95,10 +109,11 @@ Each activity file should include the following sections:
 
 After creating `topics/<topic-slug>/index.html`:
 1. Read the root `index.html`.
-2. Add the new activity to the catalog list/table with:
-   - Target Language & flag/icon
+2. Add the new activity to the catalog list with:
+   - Target Language badge using `<span class="badge-lang lang-<code">Language Name</span>`
+   - `data-lang="<code> <language>"` attribute on `<article class="activity-card">`
    - Topic Title
-   - Level (e.g., "Intermediate (B1)")
+   - Level badge (e.g., `<span class="badge-level">Intermediate (B1)</span>`)
    - Brief 1-sentence description
-   - Direct link to `topics/<topic-slug>/`
+   - Direct link to `topics/<topic-slug>/index.html`
 3. Maintain tidy chronological or categorical sorting.

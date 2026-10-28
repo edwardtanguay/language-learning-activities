@@ -24,6 +24,19 @@
       --highlight: #f2e9cb;
       --font-typewriter: "Courier Prime", "Courier New", Courier, monospace;
       --font-body: "Lora", Georgia, "Times New Roman", serif;
+
+      /* Standardized Language Palette */
+      --lang-en: #9333ea;
+      --lang-de: #7e4402;
+      --lang-fr: #333388;
+      --lang-es: #be185d;
+      --lang-it: #194d19;
+      --lang-nl: #d97706;
+      --lang-pl: #b8b8b8;
+      --lang-ru: #3f3f46;
+      --lang-el: #0d9488;
+      --lang-is: #06b6d4;
+      --lang-da: #ff1493;
     }
 
     * {
@@ -261,10 +274,22 @@
     }
 
     .badge-lang {
-      background-color: var(--highlight);
       border: 1px solid var(--ink-border);
       padding: 2px 7px;
+      background-color: #fff;
     }
+
+    .badge-lang.lang-en { border-color: var(--lang-en); color: var(--lang-en); background-color: rgba(147, 51, 234, 0.08); }
+    .badge-lang.lang-de { border-color: var(--lang-de); color: var(--lang-de); background-color: rgba(126, 68, 2, 0.08); }
+    .badge-lang.lang-fr { border-color: var(--lang-fr); color: var(--lang-fr); background-color: rgba(51, 51, 136, 0.08); }
+    .badge-lang.lang-es { border-color: var(--lang-es); color: var(--lang-es); background-color: rgba(190, 24, 93, 0.08); }
+    .badge-lang.lang-it { border-color: var(--lang-it); color: var(--lang-it); background-color: rgba(25, 77, 25, 0.08); }
+    .badge-lang.lang-nl { border-color: var(--lang-nl); color: var(--lang-nl); background-color: rgba(217, 119, 6, 0.08); }
+    .badge-lang.lang-pl { border-color: var(--lang-pl); color: #555555; background-color: rgba(184, 184, 184, 0.15); }
+    .badge-lang.lang-ru { border-color: var(--lang-ru); color: var(--lang-ru); background-color: rgba(63, 63, 70, 0.08); }
+    .badge-lang.lang-el { border-color: var(--lang-el); color: var(--lang-el); background-color: rgba(13, 148, 136, 0.08); }
+    .badge-lang.lang-is { border-color: var(--lang-is); color: var(--lang-is); background-color: rgba(6, 182, 212, 0.08); }
+    .badge-lang.lang-da { border-color: var(--lang-da); color: var(--lang-da); background-color: rgba(255, 20, 147, 0.08); }
 
     .badge-level {
       border: 1px solid var(--stamp-blue);
@@ -420,7 +445,17 @@
         <label for="lang-filter">Language:</label>
         <select id="lang-filter" class="filter-select" onchange="filterActivities()">
           <option value="all">All Languages</option>
-          <option value="Spanish">Spanish (Español)</option>
+          <option value="en">English (en)</option>
+          <option value="de">German (de • Deutsch)</option>
+          <option value="fr">French (fr • Français)</option>
+          <option value="es">Spanish (es • Español)</option>
+          <option value="it">Italian (it • Italiano)</option>
+          <option value="nl">Dutch (nl • Nederlands)</option>
+          <option value="pl">Polish (pl • Polski)</option>
+          <option value="ru">Russian (ru • Русский)</option>
+          <option value="el">Greek (el • Ελληνικά)</option>
+          <option value="is">Icelandic (is • Íslenska)</option>
+          <option value="da">Danish (da • Dansk)</option>
         </select>
       </div>
 
@@ -443,13 +478,13 @@
     <section class="activities-list" id="activities-list">
 
       <!-- Topic 1: Regions of Ecuador -->
-      <article class="activity-card" data-lang="Spanish" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos">
+      <article class="activity-card" data-lang="es spanish" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos">
         <div class="activity-card-header">
           <h2 class="activity-title">
             <a href="topics/regions-of-ecuador/index.html">Las Cuatro Regiones de Ecuador</a>
           </h2>
           <div class="activity-badges">
-            <span class="badge-lang">Spanish (Español)</span>
+            <span class="badge-lang lang-es">Spanish (Español)</span>
             <span class="badge-level">Intermediate (B1)</span>
           </div>
         </div>

@@ -17,7 +17,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **No Local Asset Dependencies**: Do not use relative links to local external files (CSS, JS, or images). If media is needed, link to absolute web URLs hosted on the published website.
 - **Local State & Reset**: Interactive features (e.g., quiz answers, score tracking) may use `localStorage` for persistence, but MUST include a visible reset button.
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
-- the language on the page of the activity is always exclusively in the target language of the activity, even links and buttons
+- **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, and navigation links) must be exclusively in the target language.
 
 ## Design System: 1970s School Handout
 
@@ -25,20 +25,29 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Layout & Responsiveness**:
   - **Desktop & Tablet (Landscape)**: Balanced margins, comfortable reading widths, and structured side-by-side or worksheet sections.
   - **Mobile (Portrait)**: Single-column vertical flow with touch-friendly controls.
-- **Languages**
-    - Use the following colors and language codes for the languages everywhere in the application so that everything is consistent:
-      - English (`en`): `#9333ea` (purple)
-      - German (`de`): `#7e4402` (brown)
-      - French (`fr`): `#333388` (dark blue)
-      - Spanish (`es`): `#be185d` (magenta / pink-red)
-      - Italian (`it`): `#194d19` (dark green / forest green)
-      - Dutch (`nl`): `#d97706` (mustard-orange)
-      - Polish (`pl`): `#b8b8b8` (light grey)
-      - Russian (`ru`): `#3f3f46` (dark grey)
-      - Greek (`el`): `#0d9488` (teal / emerald)
-      - Icelandic (`is`): `#06b6d4` (cyan / light blue)
-      - Danish (`da`): `#ff1493` (hot pink)
-    - The above order should also be used where languages are listed together
+
+## Standardized Languages & Palette
+
+Use the following standardized languages, 2-letter ISO codes, and hex colors everywhere across the application so that all badges, tags, and filters remain consistent:
+
+1. English (`en`): `#9333ea` (purple / `--lang-en`)
+2. German (`de`): `#7e4402` (brown / `--lang-de`)
+3. French (`fr`): `#333388` (dark blue / `--lang-fr`)
+4. Spanish (`es`): `#be185d` (magenta / pink-red / `--lang-es`)
+5. Italian (`it`): `#194d19` (dark green / forest green / `--lang-it`)
+6. Dutch (`nl`): `#d97706` (mustard-orange / `--lang-nl`)
+7. Polish (`pl`): `#b8b8b8` (light grey / `--lang-pl`)
+8. Russian (`ru`): `#3f3f46` (dark grey / `--lang-ru`)
+9. Greek (`el`): `#0d9488` (teal / emerald / `--lang-el`)
+10. Icelandic (`is`): `#06b6d4` (cyan / light blue / `--lang-is`)
+11. Danish (`da`): `#ff1493` (hot pink / `--lang-da`)
+
+### Language UI Rules
+
+- **Ordering**: The above order must always be used whenever languages are listed together (e.g., catalog filters, documentation, legends).
+- **Catalog Cards (`index.html`)**: Activity cards display a `.badge-lang` styled with the target language's color for its border, text, and subtle tint.
+- **Catalog Dropdown Filter (`index.html`)**: The language filter dropdown includes all 11 standardized languages in the canonical order.
+- **Activity Pages (`topics/<slug>/index.html`)**: The header stamp badge (`.stamp-badge`) and language metadata tags use the designated language color (e.g., `#be185d` for Spanish) to resemble an authentic colored ink stamp, while preserving the calm mimeograph ink aesthetic for the rest of the worksheet.
 
 ## Pedagogical Guidelines
 
