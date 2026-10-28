@@ -46,6 +46,8 @@ Each activity lives in `topics/<topic-slug>/index.html`:
   - In section titles (1, 2, 3...) and quiz question prompts, numbers are rendered as clean, large numbers in the text color (`--ink-main`) without dark box backgrounds, white-on-black fills, or heavy border boxes.
 - **No Word Count Mentions**:
   - Do not include word counts (such as `~400 palabras`) anywhere in section titles or headers.
+- **Top-Alignment for Checkboxes, Radios, and Icons**:
+  - Whenever a checkbox, radio button, or icon on the left is paired with text on the right that breaks or wraps into multiple lines, always top-align both (`align-items: flex-start;`). Never vertically center them (`align-items: center;`), ensuring the control or icon stays cleanly aligned with the first line of text.
 - **Layout & Mobile Typography**:
   - **Desktop & Tablet (Landscape)**: Balanced margins, comfortable reading widths, and structured side-by-side or worksheet sections.
   - **Mobile (Portrait, max-width: 680px)**: Single-column vertical flow with tight line heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for `h1`, `15px` for section titles and tandem headers) so multi-line titles read cohesively as one title and headings fit on a single line more often.

@@ -272,13 +272,14 @@
 
     .option-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 10px;
       padding: 10px 14px;
       border: none;
       background-color: var(--paper-sheet);
       cursor: pointer;
       font-size: 16px;
+      line-height: 1.45;
       border-radius: 3px;
       transition: background 0.15s;
     }
@@ -287,11 +288,19 @@
       background-color: var(--paper-bg);
     }
 
-    .option-item input[type="radio"] {
+    .option-item input[type="radio"],
+    .option-item input[type="checkbox"] {
       cursor: pointer;
       width: 17px;
       height: 17px;
+      margin-top: 3px;
+      flex-shrink: 0;
       accent-color: var(--stamp-blue);
+    }
+
+    .option-item label {
+      cursor: pointer;
+      flex: 1;
     }
 
     /* Feedback states */
@@ -793,24 +802,34 @@
     const STORAGE_KEY = 'activity_regions-of-ecuador';
     const explanations = {
       1: {
-        correct: "¡Correcto! El Oriente o Amazonía representa aproximadamente la mitad del territorio nacional, pero contiene una baja densidad de población debido a la densa selva tropical.",
-        incorrect: "Incorrecto. Revisa la sección 3 del texto: El Oriente (la Amazonía) representa casi la mitad del territorio nacional pero concentra un porcentaje muy reducido de la población."
+        A: "Incorrecto. Aunque la Sierra alberga una población considerable y ciudades importantes como Quito, no ocupa casi la mitad del territorio nacional.",
+        B: "¡Correcto! El Oriente o Amazonía abarca casi el 50% de la superficie territorial ecuatoriana, pero concentra una población muy baja debido a la densa selva tropical y áreas protegidas.",
+        C: "Incorrecto. La Costa no abarca casi la mitad del país y, de hecho, alberga a Guayaquil, la ciudad más poblada del país.",
+        D: "Incorrecto. El archipiélago de Galápagos es un conjunto de islas situadas a 1.000 km del continente y representa una porción territorial reducida."
       },
       2: {
-        correct: "¡Correcto! Por el abultamiento ecuatorial de la Tierra, la cumbre del Chimborazo es el punto más distante del centro del planeta y el más cercano al sol.",
-        incorrect: "Incorrecto. El texto resalta que el Chimborazo es célebre por ser «el punto más cercano al sol desde el centro de la Tierra»."
+        A: "Incorrecto. El Chimborazo es un estratovolcán potencialmente activo, pero no es el único volcán activo de América del Sur (Ecuador y la cordillera andina cuentan con volcanes muy activos como el Cotopaxi o Sangay).",
+        B: "Incorrecto. Charles Darwin desembarcó e investigó en las Islas Galápagos en 1835, no en el volcán Chimborazo en los Andes.",
+        C: "¡Correcto! Debido al abultamiento ecuatorial de la Tierra, la cumbre del Chimborazo es el punto más alejado del centro del planeta y el más cercano al sol.",
+        D: "Incorrecto. El bolón de verde es un plato típico emblemático de la región Costa, no del Chimborazo ni de la Sierra."
       },
       3: {
-        correct: "¡Correcto! El plátano verde («verde») machacado o frito es la base culinaria tradicional de la Costa para platos como el bolón de verde.",
-        incorrect: "Incorrecto. En la Costa, el ingrediente estrella es el plátano verde (verde), que se utiliza en platos como el bolón y los patacones."
+        A: "¡Correcto! El plátano verde (llamado popularmente «verde») es el pilar gastronómico de la Costa, utilizado machacado, cocido o frito para elaborar bolones de verde y patacones.",
+        B: "Incorrecto. La papa es un tubérculo fundamental en la gastronomía de la Sierra andina, no la base típica del bolón costeño.",
+        C: "Incorrecto. El maíz tostado (tostado) se consume habitualmente en la Sierra andina como guarnición o aperitivo, pero no es la base del bolón.",
+        D: "Incorrecto. El trigo no es el ingrediente base de la cocina tradicional costeña ni del bolón."
       },
       4: {
-        correct: "¡Correcto! «Endémico» describe a una especie que habita exclusivamente en una región determinada de manera silvestre y no se encuentra naturalmente en ninguna otra parte.",
-        incorrect: "Incorrecto. En biología, una especie endémica es aquella cuya distribución está restringida a un territorio específico, como las tortugas gigantes de Galápagos."
+        A: "Incorrecto. Esa definición corresponde a una especie migratoria, no a una especie endémica.",
+        B: "Incorrecto. Las especies introducidas por los humanos se clasifican como especies exóticas o introducidas, lo contrario de especies endémicas.",
+        C: "Incorrecto. «Endémico» es un término biogeográfico sobre la distribución natural de una especie y no tiene relación con su grado de domesticación.",
+        D: "¡Correcto! En biología, una especie endémica es aquella que vive exclusivamente de forma natural en una zona geográfica concreta y delimitada, sin existir en ningún otro lugar."
       },
       5: {
-        correct: "¡Correcto! En 1978, la UNESCO declaró el centro histórico de Quito como el primer Patrimonio Cultural de la Humanidad.",
-        incorrect: "Incorrecto. El centro histórico de Quito fue reconocido en 1978 como el primer Patrimonio de la Humanidad de la UNESCO por su magnífica preservación colonial."
+        A: "Incorrecto. La Reserva Marina y Terrestre de Galápagos es un área protegida insular independiente y no tiene su sede en Quito.",
+        B: "¡Correcto! En 1978, la UNESCO inauguró su lista de sitios de Patrimonio Mundial reconociendo al centro histórico colonial de Quito como el primer Patrimonio Cultural de la Humanidad.",
+        C: "Incorrecto. El puerto marítimo y comercial más importante y transitado del país es Guayaquil en la Costa, no Quito.",
+        D: "Incorrecto. Darwin formuló sus teorías tras su paso por Galápagos en 1835, y la Estación Científica Charles Darwin fue fundada en la isla Santa Cruz en Galápagos."
       }
     };
 
@@ -851,18 +870,20 @@
       const card = document.querySelector(`.question-card[data-q="${qNum}"]`);
       const correctVal = card.getAttribute('data-correct');
       const feedbackBox = document.getElementById(`feedback-${qNum}`);
+      const qExplanations = explanations[qNum] || {};
+      const explanation = qExplanations[value] || '';
 
       card.classList.add('answered');
       if (value === correctVal) {
         card.classList.remove('incorrect');
         card.classList.add('correct');
         feedbackBox.className = 'feedback-box correct-text';
-        feedbackBox.innerHTML = `<strong>✓ CORRECTO:</strong> ${explanations[qNum].correct}`;
+        feedbackBox.innerHTML = `<strong>✓ CORRECTO (${value}):</strong> ${explanation}`;
       } else {
         card.classList.remove('correct');
         card.classList.add('incorrect');
         feedbackBox.className = 'feedback-box wrong-text';
-        feedbackBox.innerHTML = `<strong>✗ INTÉNTALO DE NUEVO:</strong> ${explanations[qNum].incorrect}`;
+        feedbackBox.innerHTML = `<strong>✗ INCORRECTO (${value}):</strong> ${explanation}`;
       }
     }
 

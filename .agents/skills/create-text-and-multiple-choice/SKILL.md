@@ -75,6 +75,8 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Section numbers and quiz question numbers must be rendered as plain large numbers in the text color (`--ink-main`), never white text inside black/dark boxes.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
+- **Top-Alignment for Checkboxes, Radios, and Icons**:
+  - When an icon, radio button, or checkbox on the left is paired with text on the right that may wrap into multiple lines, always top-align both (`align-items: flex-start;`). Never center vertically (`align-items: center;`), keeping the control cleanly aligned with the first line of text.
 - **Dual Navigation & Discrete Reset**:
   - Include the back link (`← Índice de Actividades`) both at the top utility bar and in a bottom actions bar.
   - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar.
@@ -108,7 +110,8 @@ Each activity file should include the following sections:
    - Borderless question cards and options with subtle background fills and hover states.
    - Interactive feedback:
      - Selecting an option immediately shows whether it is correct or incorrect.
-     - Explanatory note appears explaining *why* the answer is correct in simple terms.
+     - Provide a distinct explanation text for each answer choice (both right and wrong), explaining specifically why that option is correct or incorrect.
+     - Allow the user to keep selecting other options even after answering, so they can explore all options and learn why alternatives were incorrect.
    - **Progress Persistence & Discrete Reset**:
      - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
 7. **Tandem / Preply Tutor Discussion Section**:
