@@ -26,7 +26,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Reading Passage (~400 Words, No Word Counts)**:
   - The reading text in Section A should always be approximately 400 words in length, divided into logical paragraphs or subsections.
   - Do NOT include word count indicators (such as `~400 palabras`) anywhere in section titles, subtitles, or headers.
-- **Section Lettering & Question Numbering**: Main sections across the worksheet are designated with clean large capital letters followed by a period inside the section number span (`A.`, `B.`, `C.`, `D.`) — e.g., `<span class="section-num">A.</span> Texto de Lectura`, `<span class="section-num">B.</span> Vocabulario Clave`, `<span class="section-num">C.</span> Ejercicios de Comprensión`, `<span class="section-num">D.</span> Preguntas de Discusión`. Questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
+- **Section Lettering & Question Numbering**: Main sections across the worksheet are designated with clean large capital letters followed by a period inside the section number span (`A.`, `B.`, `C.`, `D.`) — e.g., `<span class="section-num">A.</span> Texto de Lectura`, `<span class="section-num">B.</span> Vocabulario Clave`, `<span class="section-num">C.</span> Ejercicios de Comprensión`, `<span class="section-num">D.</span> Preguntas de Discusión`. Set tight right spacing on `.section-num` (`margin-right: 3px` desktop, `2px` mobile) so the title text sits close to the period. Questions nested inside Section C are clearly numbered 1, 2, 3... without ambiguity.
 - **Section B: Key Vocabulary (Vocabulario Clave) Drag & Drop Exercise**:
   - Positioned immediately following Section A (the reading text).
   - Titled "Key Vocabulary" translated into the target language (e.g., "Vocabulario Clave" in Spanish).
@@ -43,6 +43,11 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - Completed words section: no section title; displays completed words in a flex row of square-cornered pills, each with a green check SVG icon to its left.
     - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills until clicked again to close.
     - Completed vocabulary progress is persisted in `localStorage` and reset with the "Reiniciar respuestas" button.
+- **Universal Text Selection & Copy/Paste Support**:
+  - Learners must be able to select and copy text anywhere on the page without restriction (reading passage, word chips, definition cards, completed word pills, popup dictionary entries, quiz questions, options, and feedback explanations).
+  - Do not apply `user-select: none;` to text-bearing elements.
+  - On modal and popup cards (such as dictionary entries and wrong-drop feedback), clicking or selecting text inside the card must NEVER accidentally dismiss or close it. Include an explicit close button (`✕`) in the card header (do NOT include "Toca aquí..." dismiss prompts at the bottom). Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks directed at selectable text elements (`.dict-word`, `.dict-def`, `.dict-sentence`, `.hint-text`).
+  - Text selection on quiz option labels must never accidentally trigger or toggle radio button answers.
 - **Section C: Comprehension Questions & Neutral Option Styling**:
   - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
   - Options must have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.

@@ -35,6 +35,8 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-user-select: text;
+      user-select: text;
     }
 
     body {
@@ -166,7 +168,7 @@
       padding: 0;
       font-size: 26px;
       font-weight: 700;
-      margin-right: 10px;
+      margin-right: 3px;
       line-height: 1;
     }
 
@@ -254,7 +256,6 @@
       border-radius: 0;
       padding: 4px 8px;
       cursor: grab;
-      user-select: none;
       transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
       display: inline-flex;
       align-items: center;
@@ -350,6 +351,13 @@
       font-family: var(--font-typewriter);
       text-align: right;
       font-style: italic;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s;
+    }
+
+    .click-dismiss-prompt:hover {
+      color: var(--ink-main);
     }
 
     /* Correct Drop / Complete Dictionary Entry Card */
@@ -360,15 +368,36 @@
       box-shadow: 0 10px 32px rgba(45, 40, 35, 0.16);
       z-index: 50;
       padding: 18px 20px;
+      cursor: default;
     }
 
     .dict-header {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 10px;
       margin-bottom: 8px;
       border-bottom: 1px solid var(--ink-rule);
       padding-bottom: 6px;
+    }
+
+    .dict-close-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      font-family: var(--font-typewriter);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--ink-muted);
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 2px;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .dict-close-btn:hover {
+      color: var(--ink-main);
+      background-color: var(--paper-bg);
     }
 
     .dict-word {
@@ -434,7 +463,6 @@
       font-weight: 700;
       color: var(--ink-main);
       cursor: pointer;
-      user-select: none;
       transition: background 0.15s, border-color 0.15s;
     }
 
@@ -752,7 +780,7 @@
       }
       .section-title .section-num {
         font-size: 22px;
-        margin-right: 6px;
+        margin-right: 2px;
       }
       .vocab-pool {
         gap: 5px;
@@ -1488,7 +1516,7 @@
 
         // Tap-to-select click
         card.addEventListener('click', (e) => {
-          handleTargetCardClick(card, targetKey);
+          handleTargetCardClick(card, targetKey, e);
         });
 
         targets.appendChild(card);
@@ -1506,6 +1534,7 @@
           <span>${item.word}</span>
         `;
         pill.addEventListener('click', () => {
+          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
           toggleCompletedDetail(k);
         });
         completedPool.appendChild(pill);
@@ -1514,6 +1543,7 @@
 
     function handleChipClick(key) {
       if (activeModalCard) return; // Locked during focused state
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       if (selectedWordKey === key) {
         selectedWordKey = null; // deselect
       } else {
@@ -1522,15 +1552,20 @@
       renderVocabulary();
     }
 
-    function handleTargetCardClick(card, targetKey) {
+    function handleTargetCardClick(card, targetKey, e) {
+      // If user highlighted or selected text to copy, do not dismiss!
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+
       if (card.classList.contains('state-wrong')) {
-        // User clicks anywhere on the wrong box: dismiss error, return word, re-enable page
+        // If clicking inside selectable text, do not dismiss
+        if (e && e.target && e.target.closest('.wrong-banner, .hint-text, .vocab-target-def')) return;
         dismissWrongState(card);
         return;
       }
 
       if (card.classList.contains('state-correct')) {
-        // User clicks anywhere on the correct dictionary box: move to completed section, remove definition
+        // If clicking inside selectable text, do not dismiss
+        if (e && e.target && e.target.closest('.dict-word, .dict-pos, .dict-def, .dict-sentence')) return;
         dismissCorrectState(targetKey);
         return;
       }
@@ -1596,10 +1631,10 @@
           <div class="dict-header">
             <span class="dict-word">${item.word}</span>
             <span class="dict-pos">${item.pos}</span>
+            <button class="dict-close-btn" onclick="event.stopPropagation(); dismissCorrectState('${targetKey}')" title="Cerrar" aria-label="Cerrar">✕</button>
           </div>
           <div class="dict-def">${item.def}</div>
           <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
-          <div class="click-dismiss-prompt">Toca en cualquier parte de este recuadro para continuar</div>
         `;
 
         showOverlay();
@@ -1613,6 +1648,10 @@
         activeModalCard = card;
 
         card.innerHTML = `
+          <div class="dict-header" style="border-bottom: none; margin-bottom: 0;">
+            <span style="font-weight: 700; color: var(--wrong-red);">${placedWord.word}</span>
+            <button class="dict-close-btn" onclick="event.stopPropagation(); dismissWrongState(activeModalCard)" title="Cerrar" aria-label="Cerrar">✕</button>
+          </div>
           <div class="vocab-target-def">${targetItem.def}</div>
           <div class="wrong-banner">
             <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -1620,7 +1659,6 @@
               <strong>${placedWord.word}</strong>: ${placedWord.hint}
             </div>
           </div>
-          <div class="click-dismiss-prompt">Toca en cualquier parte de este recuadro para reintentar</div>
         `;
 
         showOverlay();
@@ -1680,14 +1718,14 @@
 
       detailArea.setAttribute('data-active-word', wordKey);
       detailArea.innerHTML = `
-        <div class="vocab-dict-card" onclick="toggleCompletedDetail('${wordKey}')" style="cursor: pointer;">
+        <div class="vocab-dict-card">
           <div class="dict-header">
             <span class="dict-word">${item.word}</span>
             <span class="dict-pos">${item.pos}</span>
+            <button class="dict-close-btn" onclick="toggleCompletedDetail('${wordKey}')" title="Cerrar definición" aria-label="Cerrar">✕</button>
           </div>
           <div class="dict-def">${item.def}</div>
           <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
-          <div class="click-dismiss-prompt">Toca aquí para cerrar la definición</div>
         </div>
       `;
     }
@@ -1732,6 +1770,7 @@
     // MULTIPLE CHOICE QUIZ LOGIC
     // =========================================================
     function selectOption(qNum, value) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       const radio = document.querySelector(`input[name="q${qNum}"][value="${value}"]`);
       if (radio) {
         radio.checked = true;

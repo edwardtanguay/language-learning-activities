@@ -72,11 +72,16 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
 - **Plain Large Section Letters and Numbers (No Dark Inverted Boxes)**:
-  - Section letters followed by a period inside the section number span (`<span class="section-num">A.</span>`, `B.`, `C.`, `D.`) and quiz question numbers (1, 2, 3...) must be rendered as plain large text in the text color (`--ink-main`), never white text inside black/dark boxes.
+  - Section letters followed by a period inside the section number span (`<span class="section-num">A.</span>`, `B.`, `C.`, `D.`) and quiz question numbers (1, 2, 3...) must be rendered as plain large text in the text color (`--ink-main`), never white text inside black/dark boxes. Set tight right spacing on `.section-num` (`margin-right: 3px` desktop, `2px` mobile) so the section title text sits closely and naturally next to the period.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:
   - When an icon, radio button, or checkbox on the left is paired with text on the right that may wrap into multiple lines, always top-align both (`align-items: flex-start;`). Never center vertically (`align-items: center;`), ensuring the control or icon stays cleanly aligned with the first line of text.
+- **Universal Text Selection & Copy/Paste Support**:
+  - All text across the worksheet must be freely selectable and copyable by the learner (reading passage, word chips, definition cards, completed word pills, popup dictionary entries, quiz questions, options, and feedback explanations).
+  - Never apply `user-select: none;` to text elements.
+  - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Include an explicit close button (`✕`) in the header (do NOT include "Toca aquí..." dismiss prompts at the bottom), dismiss when clicking the overlay, and ignore dismiss clicks when text is selected (`window.getSelection().toString().trim().length > 0`) or when clicking selectable text elements.
+  - Text selection on quiz option labels must never toggle radio buttons.
 - **Dual Navigation & Discrete Reset**:
   - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar.
   - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar to clear both multiple-choice and vocabulary states in `localStorage`.
