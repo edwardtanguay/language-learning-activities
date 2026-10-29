@@ -90,7 +90,6 @@ function formatImageTitle(rawName) {
   return String(rawName || '')
     .split(/[_\s-]+/)
     .filter(Boolean)
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 }
 
@@ -173,7 +172,7 @@ function loadActivities() {
       const base = imgFile.slice(0, imgFile.length - ext.length);
       const prefix = `${lang}-${folderName}-`;
       const rawSlug = base.startsWith(prefix) ? base.slice(prefix.length) : base;
-      if (existingAlt && existingAlt !== rawSlug) {
+      if (existingAlt) {
         recordedTitles[imgFile] = existingAlt;
       }
     }
@@ -260,7 +259,7 @@ function processImageParseFolder(activities) {
 
     const slug = cleanImageSlug(imageNameWithoutId);
     const recordedTitle = formatImageTitle(imageNameWithoutId);
-    const newFileName = `${matchedActivity.lang}-${matchedActivity.folderName}-${slug}${ext}`;
+    const newFileName = `${matchedActivity.lang}-${matchedActivity.folderName}-${slug}${ext}`.toLowerCase();
     const targetImagesDir = path.join(matchedActivity.folderPath, 'images');
     fs.mkdirSync(targetImagesDir, { recursive: true });
 
@@ -406,7 +405,7 @@ const SECTION_5_CSS = `
       font-family: var(--font-typewriter);
       font-size: 13px;
       font-weight: 700;
-      text-transform: uppercase;
+      text-transform: none;
       letter-spacing: 1.2px;
       color: rgba(255, 253, 249, 0.88);
       text-align: right;
@@ -756,16 +755,18 @@ function updateActivityHtmlForImages(activity) {
       if (base.startsWith(prefix)) {
         const rawSlug = base.slice(prefix.length);
         const cleanedSlug = cleanImageSlug(rawSlug);
-        if (cleanedSlug && cleanedSlug !== rawSlug) {
-          const newFile = `${prefix}${cleanedSlug}${ext.toLowerCase()}`;
+        if (cleanedSlug && (cleanedSlug !== rawSlug || file !== `${prefix}${cleanedSlug}${ext.toLowerCase()}`)) {
+          const newFile = `${prefix}${cleanedSlug}${ext}`.toLowerCase();
           const oldPath = path.join(imagesDir, file);
           const newPath = path.join(imagesDir, newFile);
-          if (!fs.existsSync(newPath)) {
+          if (oldPath.toLowerCase() === newPath.toLowerCase() || !fs.existsSync(newPath)) {
             fs.renameSync(oldPath, newPath);
           } else {
             fs.unlinkSync(oldPath);
           }
-          activity.recordedTitles[newFile] = formatImageTitle(rawSlug);
+          if (!activity.recordedTitles[newFile]) {
+            activity.recordedTitles[newFile] = formatImageTitle(rawSlug);
+          }
           imageFiles.push(newFile);
           continue;
         }
