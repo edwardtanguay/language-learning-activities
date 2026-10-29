@@ -16,6 +16,15 @@ A platform for generating self-contained language learning activities and worksh
 Each activity lives in `topics/<foldername>/index.html`:
 - **Directory Naming (No Hyphens)**: Use descriptive lowercase directory names **without hyphens** under `topics/` (e.g., `topics/regionsofecuador/`, `topics/colombia/`) so that image filenames following `<language>-<foldername>-<imagename>.<ext>` can be unambiguously parsed by hyphen delimiters.
 - **Self-Contained File & Local Activity Images**: All HTML, CSS (`<style>`), and JavaScript (`<script>`) must reside within the single `index.html` file. Activity images are stored locally inside `topics/<foldername>/images/` and referenced with relative paths (`images/<lang>-<foldername>-<imagename>.<ext>`) so they work both locally and on the live website.
+- **Trailing Slash & Relative Asset Resolution**: Because activity assets (images, back link to catalog) use relative paths (e.g., `images/<file>` and `../../index.html`), visiting an activity URL without a trailing slash (e.g. `https://.../topics/regionsofecuador`) causes the browser to resolve relative URLs against `/topics/` instead of `/topics/regionsofecuador/`, resulting in 404 image errors. To prevent this: (1) `vercel.json` in the project root must define `{ "trailingSlash": true }`, and (2) each activity's `<head>` must include an early inline redirect script:
+  ```html
+  <script>
+    if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    }
+  </script>
+  ```
+  This guarantees directory URLs without a trailing slash immediately normalize to `/topics/<foldername>/` before relative assets are parsed, both on live web hosts and local preview servers, while preserving local `file:///` browsing.
 - **Local State & Reset**: Interactive features (e.g., quiz answers, vocabulary completion state) must use `localStorage` for persistence, and MUST include a visible reset button that restores the worksheet to its initial state.
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, wrong-drop hints, and navigation links) must be exclusively in the target language.

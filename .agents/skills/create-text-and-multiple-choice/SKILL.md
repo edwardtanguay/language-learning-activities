@@ -33,6 +33,19 @@ Whenever this skill runs, **always start with a `/grill-me` style interactive in
   - No relative imports of local external CSS or JS files (so the file can be emailed or shared directly and opened offline).
   - Web fonts from Google Fonts or standard system fonts are permitted.
   - Activity images processed via `npm run pd` live in `topics/<foldername>/images/` and are referenced with local relative paths (`images/<lang>-<foldername>-<imagename>.<ext>`) so they work both locally and online.
+- **Trailing Slash & Relative Asset Resolution**:
+  - Because activity images (`images/<file>`) and navigation (`../../index.html`) use relative paths, visiting an activity URL without a trailing slash (e.g. `https://.../topics/regionsofecuador`) causes browsers to resolve relative assets against `/topics/` instead of `/topics/regionsofecuador/`, causing broken 404 images and links.
+  - To ensure robust operation across live hosts and local preview servers:
+    1. Root `vercel.json` defines `{ "trailingSlash": true }`.
+    2. Every activity `<head>` must include an early inline redirect script:
+       ```html
+       <script>
+         if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
+           window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+         }
+       </script>
+       ```
+       This immediately normalizes directory URLs without trailing slashes to `/topics/<foldername>/` before relative assets are parsed, while safely ignoring local `file:///` viewing.
 
 ---
 
