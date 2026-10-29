@@ -322,10 +322,30 @@
     /* Responsive */
     @media (max-width: 680px) {
       body {
+        overflow-x: hidden;
         padding: 12px 8px;
       }
       .handout-sheet {
         padding: 20px 16px;
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+      }
+      .page-slide-out-left {
+        transform: translateX(-100%) !important;
+        opacity: 0 !important;
+        pointer-events: none;
+      }
+      .page-slide-in-left {
+        animation: pageSlideInFromLeft 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @keyframes pageSlideInFromLeft {
+        from {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
       }
       .header-top {
         flex-direction: column;
@@ -552,8 +572,38 @@
     function openCard(url, event) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       if (event && event.target && event.target.closest('a')) return;
+      
+      if (window.innerWidth <= 680) {
+        sessionStorage.setItem('nav-direction', 'forward');
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          sheet.classList.add('page-slide-out-left');
+          setTimeout(() => {
+            window.location.href = url;
+          }, 240);
+          return;
+        }
+      }
       window.location.href = url;
     }
+
+    // Check if returning backwards from an article on mobile
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'backward') {
+        sessionStorage.removeItem('nav-direction');
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          sheet.classList.add('page-slide-in-left');
+        }
+      }
+    });
+
+    window.addEventListener('pageshow', () => {
+      const sheet = document.querySelector('.handout-sheet');
+      if (sheet) {
+        sheet.classList.remove('page-slide-out-left');
+      }
+    });
 
     function clearSearch() {
       const input = document.getElementById('search-input');

@@ -411,10 +411,45 @@
       margin-bottom: 16px;
     }
 
+    @keyframes marchingAnts {
+      0% {
+        background-position: 0 0, 0 100%, 0 0, 100% 0;
+      }
+      100% {
+        background-position: 20px 0, -20px 100%, 0 -20px, 100% 20px;
+      }
+    }
+
     .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) {
-      border: 1.5px dashed var(--stamp-blue);
-      background-color: #fafcfe;
-      box-shadow: 0 0 0 1px rgba(29, 67, 115, 0.15);
+      border-color: transparent !important;
+      background-image: 
+        linear-gradient(90deg, #7a8a9e 50%, transparent 50%),
+        linear-gradient(90deg, #7a8a9e 50%, transparent 50%),
+        linear-gradient(0deg, #7a8a9e 50%, transparent 50%),
+        linear-gradient(0deg, #7a8a9e 50%, transparent 50%);
+      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+      background-size: 10px 1.5px, 10px 1.5px, 1.5px 10px, 1.5px 10px;
+      background-position: 0 0, 0 100%, 0 0, 100% 0;
+      animation: marchingAnts 1.2s linear infinite;
+      background-color: var(--paper-bg);
+      box-shadow: none;
+    }
+
+    .vocab-drag-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1.5px solid var(--stamp-blue);
+      box-shadow: 0 6px 18px rgba(45, 40, 35, 0.22);
+      padding: 4px 10px;
+      white-space: nowrap;
+      border-radius: 0;
     }
 
     .vocab-touch-avatar {
@@ -445,9 +480,11 @@
     }
 
     .vocab-target-card.drag-over {
-      border-color: var(--stamp-blue);
-      background-color: #f0f4f9;
-      box-shadow: 0 0 0 2px rgba(29, 67, 115, 0.2);
+      border: 1.5px solid var(--stamp-blue) !important;
+      background-image: none !important;
+      animation: none !important;
+      background-color: #f0f4f9 !important;
+      box-shadow: 0 0 0 2px rgba(29, 67, 115, 0.2) !important;
     }
 
     .vocab-target-def {
@@ -1008,7 +1045,29 @@
        ========================================================= */
     @media (max-width: 680px) {
       body {
+        overflow-x: hidden;
         padding: 0 8px 12px 8px;
+      }
+      .handout-sheet, .utility-bar {
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+      }
+      .page-slide-out-right {
+        transform: translateX(100%) !important;
+        opacity: 0 !important;
+        pointer-events: none;
+      }
+      .page-slide-in-right {
+        animation: pageSlideInFromRight 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @keyframes pageSlideInFromRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
       }
       .utility-bar {
         justify-content: center;
@@ -1170,7 +1229,7 @@
 
   <!-- Utility Nav -->
   <div class="utility-bar">
-    <a href="../../index.html" class="back-link">
+    <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
       <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       <span>Índice de Actividades</span>
     </a>
@@ -1522,7 +1581,7 @@
           <button class="reset-confirm-btn" onclick="confirmReset()">Sí, reiniciar</button>
         </div>
       </div>
-      <a href="../../index.html" class="back-link">
+      <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
         <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         <span>Índice de Actividades</span>
       </a>
@@ -1761,8 +1820,6 @@
     // =========================================================
     // VOCABULARY EXERCISE LOGIC
     // =========================================================
-    let dismissClickTimer = null;
-
     function safeDismiss(callback, e) {
       if (e && e.target && e.target.closest('.lookup-btn')) return;
       if (e && e.target && e.target.closest('.dict-close-btn')) {
@@ -1770,18 +1827,7 @@
         return;
       }
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-
-      if (dismissClickTimer) {
-        clearTimeout(dismissClickTimer);
-        dismissClickTimer = null;
-        return; // double-click to select word detected, cancel dismissal
-      }
-
-      dismissClickTimer = setTimeout(() => {
-        dismissClickTimer = null;
-        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-        callback();
-      }, 250);
+      callback();
     }
 
     function appendBalancedRows(container, keys, createItemFn, rowClass) {
@@ -1981,6 +2027,23 @@
       }
     }
 
+    let mouseDragAvatar = null;
+
+    function onDocDragOver(e) {
+      if (mouseDragAvatar && e.clientX > 0 && e.clientY > 0) {
+        mouseDragAvatar.style.left = e.clientX + 'px';
+        mouseDragAvatar.style.top = e.clientY + 'px';
+      }
+    }
+
+    function cleanupMouseDragAvatar() {
+      if (mouseDragAvatar) {
+        mouseDragAvatar.remove();
+        mouseDragAvatar = null;
+      }
+      document.removeEventListener('dragover', onDocDragOver);
+    }
+
     function handleDragStart(e) {
       if (activeModalCard) {
         e.preventDefault();
@@ -1992,6 +2055,22 @@
       if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
       e.dataTransfer.setData('text/plain', draggedWordKey);
       e.dataTransfer.effectAllowed = 'move';
+
+      cleanupMouseDragAvatar();
+      mouseDragAvatar = document.createElement('div');
+      mouseDragAvatar.className = 'vocab-drag-avatar';
+      mouseDragAvatar.textContent = this.textContent.trim();
+      document.body.appendChild(mouseDragAvatar);
+      mouseDragAvatar.style.left = (e.clientX || 0) + 'px';
+      mouseDragAvatar.style.top = (e.clientY || 0) + 'px';
+
+      const emptyImg = new Image();
+      emptyImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      if (e.dataTransfer && e.dataTransfer.setDragImage) {
+        e.dataTransfer.setDragImage(emptyImg, 0, 0);
+      }
+
+      document.addEventListener('dragover', onDocDragOver);
 
       setTimeout(() => {
         if (this.classList.contains('dragging')) {
@@ -2005,6 +2084,7 @@
       this.classList.remove('dragging');
       this.style.opacity = '';
       this.style.visibility = '';
+      cleanupMouseDragAvatar();
       const targetsContainer = document.getElementById('vocab-targets');
       if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
       draggedWordKey = null;
@@ -2023,6 +2103,7 @@
     function handleDrop(e) {
       e.preventDefault();
       this.classList.remove('drag-over');
+      cleanupMouseDragAvatar();
       const wordKey = e.dataTransfer.getData('text/plain') || draggedWordKey;
       const targetKey = this.getAttribute('data-target-key');
       if (wordKey && targetKey) {
@@ -2420,8 +2501,33 @@
       renderVocabulary();
     }
 
+    function handleBackNavigation(e, url) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
+      if (window.innerWidth <= 680) {
+        if (e) e.preventDefault();
+        sessionStorage.setItem('nav-direction', 'backward');
+        const sheet = document.querySelector('.handout-sheet');
+        const util = document.querySelector('.utility-bar');
+        if (sheet) sheet.classList.add('page-slide-out-right');
+        if (util) util.classList.add('page-slide-out-right');
+        setTimeout(() => {
+          window.location.href = url || '../../index.html';
+        }, 240);
+        return false;
+      }
+      return true;
+    }
+
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
+      if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'forward') {
+        sessionStorage.removeItem('nav-direction');
+        const sheet = document.querySelector('.handout-sheet');
+        const util = document.querySelector('.utility-bar');
+        if (sheet) sheet.classList.add('page-slide-in-right');
+        if (util) util.classList.add('page-slide-in-right');
+      }
+
       loadSavedState();
 
       // Click on vocabulary words in reading text opens hint modal
@@ -2445,6 +2551,13 @@
 
     window.addEventListener('resize', () => {
       if (!activeModalCard) renderVocabulary();
+    });
+
+    window.addEventListener('pageshow', () => {
+      const sheet = document.querySelector('.handout-sheet');
+      const util = document.querySelector('.utility-bar');
+      if (sheet) sheet.classList.remove('page-slide-out-right');
+      if (util) util.classList.remove('page-slide-out-right');
     });
   </script>
 </body>

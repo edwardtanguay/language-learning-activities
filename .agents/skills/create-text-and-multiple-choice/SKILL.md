@@ -90,7 +90,12 @@ Follow the project design philosophy defined in `AGENTS.md`:
 - **Universal Text Selection & Copy/Paste Support**:
   - All text across the worksheet must be freely selectable and copyable by the learner (reading passage, word chips, definition cards, completed word pills, popup dictionary entries, quiz questions, options, and feedback explanations).
   - Never apply `user-select: none;` to text elements.
-  - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons. Single-click dismissals on dictionary cards are debounced (~250ms) so that double-clicking to select a word does not dismiss the card, whereas hint modals close immediately without delay.
+  - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons. Single-click dismissals on dictionary cards are immediate without delay (0ms debounce), matching the hint modal.
+- **Mobile Page Whoosh Transitions (`max-width: 680px`)**:
+  - When tapping an activity card in the catalog (`index.html`), the catalog sheet smoothly slides out to the left (`.page-slide-out-left`) as the activity page slides in from the right (`.page-slide-in-right`).
+  - When tapping "Índice de Actividades" (back link) on an activity page, the activity page smoothly slides out to the right (`.page-slide-out-right`) as the catalog sheet slides in from the left (`.page-slide-in-left`).
+  - Navigation state is coordinated via `sessionStorage` (`nav-direction: forward/backward`) with a gentle 0.28s cubic-bezier curve.
+  - Desktop retains standard instant navigation without sliding transitions.
 - **Dual Navigation, Mobile Vertical Centering & Embedded In-Place Reset Confirmation**:
   - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar, with `.back-link { line-height: 1; display: inline-flex; align-items: center; }`.
   - The top utility bar has comfortable top padding (desktop: `padding-top: 14px;`, mobile: `padding: 24px 0 14px 0;`).
@@ -147,7 +152,8 @@ Each activity file should include the following sections:
    - Supports mouse drag-and-drop, touch drag, and tap-to-select for smooth mobile support.
    - Word Dragging & Active Drop Targets:
      - While a word is being dragged (desktop or mobile), the word chip is visually hidden from the waiting pool (`opacity: 0; visibility: hidden;`) without collapsing the layout of other chips.
-     - Target cards acquire an active selectable appearance (`.vocab-targets.vocab-dragging-active .vocab-target-card` with subtle blue dashed border and light tint) indicating valid drop zones.
+     - On desktop mouse drag, a custom floating word avatar (`.vocab-drag-avatar`) smoothly follows the cursor so the dragged word is always visible.
+     - Target cards acquire an active selectable appearance with a subtle clockwise-moving dashed outline ("marching ants" dots sliding around the border edge) while retaining their neutral background without abrupt background color flashes, giving a clear sense that time is passing until the user drops the word.
      - **Mobile 2x Floating Avatar**: During touch drag on mobile screens, an elevated floating clone avatar (`.vocab-touch-avatar`) is displayed 2x larger than standard text, positioned above the learner's finger (`transform: translate(-50%, -100%);`) so the finger never obscures the dragged word.
    - Equal Popup Padding: In all popups and modals (hint popup modal, wrong-drop state card, and correct-drop dictionary card), padding is uniform on all four sides (top, bottom, left, and right: 18px).
    - Word chip click on top: clicking a waiting chip opens a hint popup displaying the word title with a lookup icon next to it, followed by a warm amber lightbulb SVG icon (`#d97706`) and the hint text in the target language (hint helps without making the answer obvious, no trailing punctuation, no repeating word prefix).
@@ -163,7 +169,7 @@ Each activity file should include the following sections:
    - Completed words section: no title; displays completed words in square-cornered pills, each with a green check SVG icon to its left.
    - Completed Pool Balancing & Centering: The completed words area is always centered horizontally. Completed word pills are distributed equally across balanced rows with at most 3 words per row (e.g., when 10 words are completed, they are distributed across 4 rows as 3, 3, 2, 2; when 6 words, 3 and 3; when 5 words, 3 and 2). Each row uses flexbox with no wrapping, preventing awkward orphan singletons.
    - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills. Clicking the card again or clicking outside closes it (no X button).
-   - Double-click word selection: on dictionary and wrong-drop pop-up cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
+   - **Instant Popup Dismissal**: On dictionary, correct-drop, and wrong-drop pop-up cards, single-click dismissal is immediate (0ms delay, no 250ms debounce pause), matching the hint modal. If the learner has highlighted/selected text to copy, clicking that selection does not dismiss the card.
    - Persists completed vocabulary in `localStorage` and resets on "Reiniciar respuestas".
 6. **Section 3: Interactive Comprehension Questions**:
    - Heading standardized to "Comprehension" in the target language without period (e.g., `<span class="section-num">3</span> Comprensión`), with right-aligned action hint "multiple choice" in the target language.
