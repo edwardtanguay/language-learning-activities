@@ -314,7 +314,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      scroll-margin-top: 18px;
+      scroll-margin-top: 62px;
     }
 
     .section-title-link {
@@ -895,6 +895,8 @@
       line-height: 1.45;
       border-radius: 0;
       transition: color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     .option-item:hover {
@@ -3505,7 +3507,8 @@
         if (returnBtn) {
           returnBtn.classList.add('show');
         }
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
+        window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
       };
 
       buildStickyLinks();

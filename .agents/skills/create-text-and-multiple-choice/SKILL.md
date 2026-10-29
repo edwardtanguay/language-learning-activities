@@ -187,7 +187,7 @@ Each activity file should include the following sections:
    - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
    - NO radio buttons (`<input type="radio">` removed completely).
    - Indented Option Alignment: The options list (`.options-list`) is indented (`padding-left: 28px;`, on mobile: `24px;`) so that option letters (`A.`, `B.`, `C.`, `D.`) and feedback align directly under the start of the question prompt text above.
-   - Options have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
+   - Options have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options. On mobile, options have `-webkit-tap-highlight-color: transparent;` and `touch-action: manipulation;` to prevent any blue tap flash.
    - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`). Clicking an already-selected option again deselects it and closes its feedback box.
    - Contextual Inline Feedback:
      - Selecting an option immediately displays its feedback box directly beneath that selected option (inside the option wrapper), rather than at the bottom of the question card, styled with the same rich pastel colors and subtle borders as Section 2 vocabulary modals: correct feedback uses pastel green (`background-color: #e3f5e5; border: 1px solid #a3d9a8;`) and wrong feedback uses pastel red (`background-color: #fbe4e4; border: 1px solid #eba8a8;`).

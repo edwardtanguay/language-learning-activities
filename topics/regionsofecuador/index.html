@@ -313,7 +313,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      scroll-margin-top: 18px;
+      scroll-margin-top: 62px;
     }
 
     .section-title-link {
@@ -924,6 +924,8 @@
       line-height: 1.45;
       border-radius: 0;
       transition: color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     .option-item:hover {
@@ -3488,7 +3490,7 @@
         if (!targetEl) return;
         e.preventDefault();
 
-        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 52;
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
 
         // If tapping 5 again while already at Section 5 and a return spot exists, go back!
         if (targetId === 'seccion-5' && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
