@@ -327,24 +327,21 @@
       }
       .handout-sheet {
         padding: 20px 16px;
-        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .page-slide-out-left {
-        transform: translateX(-100%) !important;
-        opacity: 0 !important;
+        transform: translateX(-105vw) !important;
         pointer-events: none;
       }
       .page-slide-in-left {
-        animation: pageSlideInFromLeft 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        animation: pageSlideInFromLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
       @keyframes pageSlideInFromLeft {
         from {
-          transform: translateX(-100%);
-          opacity: 0;
+          transform: translateX(-105vw);
         }
         to {
           transform: translateX(0);
-          opacity: 1;
         }
       }
       .header-top {
@@ -569,39 +566,116 @@
   </main>
 
   <script>
-    function openCard(url, event) {
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      if (event && event.target && event.target.closest('a')) return;
-      
-      if (window.innerWidth <= 680) {
-        sessionStorage.setItem('nav-direction', 'forward');
+    function captureOutgoingPage(direction) {
+      try {
+        document.querySelectorAll('select').forEach(sel => {
+          Array.from(sel.options).forEach(opt => {
+            if (opt.value === sel.value) opt.setAttribute('selected', 'selected');
+            else opt.removeAttribute('selected');
+          });
+        });
+        document.querySelectorAll('input').forEach(inp => {
+          inp.setAttribute('value', inp.value);
+        });
+        const styles = Array.from(document.querySelectorAll('style'))
+          .map(s => s.outerHTML)
+          .join('\n');
         const sheet = document.querySelector('.handout-sheet');
         if (sheet) {
+          sessionStorage.setItem('nav-direction', direction);
+          sessionStorage.setItem('nav-outgoing-styles', styles);
+          sessionStorage.setItem('nav-outgoing-html', sheet.outerHTML);
+          sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
+          sessionStorage.setItem('nav-outgoing-padding', '12px 8px');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function openCard(url, event) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (event && event.target && event.target.closest('a')) {
+        event.preventDefault();
+      }
+      
+      if (window.innerWidth <= 680) {
+        if (captureOutgoingPage('forward')) {
+          window.location.href = url;
+          return;
+        }
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          sheet.classList.remove('page-slide-in-left');
           sheet.classList.add('page-slide-out-left');
           setTimeout(() => {
             window.location.href = url;
-          }, 240);
+          }, 280);
           return;
         }
       }
       window.location.href = url;
     }
 
-    // Check if returning backwards from an article on mobile
-    window.addEventListener('DOMContentLoaded', () => {
-      if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'backward') {
-        sessionStorage.removeItem('nav-direction');
-        const sheet = document.querySelector('.handout-sheet');
-        if (sheet) {
-          sheet.classList.add('page-slide-in-left');
+    // Simultaneously whoosh outgoing activity page off to the right as main page whooshes in from the left
+    (function runIncomingTransition() {
+      try {
+        if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'backward') {
+          const outStyles = sessionStorage.getItem('nav-outgoing-styles') || '';
+          const outHtml = sessionStorage.getItem('nav-outgoing-html') || '';
+          const outScroll = parseFloat(sessionStorage.getItem('nav-outgoing-scroll') || '0');
+          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '0 8px 12px 8px';
+
+          sessionStorage.removeItem('nav-direction');
+          sessionStorage.removeItem('nav-outgoing-styles');
+          sessionStorage.removeItem('nav-outgoing-html');
+          sessionStorage.removeItem('nav-outgoing-scroll');
+          sessionStorage.removeItem('nav-outgoing-padding');
+
+          const sheet = document.querySelector('.handout-sheet');
+          if (sheet) {
+            sheet.classList.remove('page-slide-out-left');
+            sheet.classList.add('page-slide-in-left');
+            const cleanupIn = () => sheet.classList.remove('page-slide-in-left');
+            sheet.addEventListener('animationend', cleanupIn, { once: true });
+            setTimeout(cleanupIn, 340);
+          }
+
+          if (outHtml) {
+            const overlayHost = document.createElement('div');
+            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
+            const shadow = overlayHost.attachShadow({ mode: 'open' });
+            shadow.innerHTML = `
+              ${outStyles}
+              <style>
+                :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+                .outgoing-stage {
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: ${outPadding};
+                  transform: translate3d(0, -${outScroll}px, 0);
+                  animation: whooshOutRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                }
+                @keyframes whooshOutRight {
+                  from { transform: translate3d(0, -${outScroll}px, 0); }
+                  to { transform: translate3d(105vw, -${outScroll}px, 0); }
+                }
+              </style>
+              <div class="outgoing-stage">${outHtml}</div>
+            `;
+            document.body.appendChild(overlayHost);
+            setTimeout(() => {
+              overlayHost.remove();
+            }, 320);
+          }
         }
-      }
-    });
+      } catch (e) {}
+    })();
 
     window.addEventListener('pageshow', () => {
       const sheet = document.querySelector('.handout-sheet');
       if (sheet) {
-        sheet.classList.remove('page-slide-out-left');
+        sheet.classList.remove('page-slide-out-left', 'page-slide-in-left');
       }
     });
 

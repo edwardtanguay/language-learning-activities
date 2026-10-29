@@ -1017,24 +1017,21 @@
         padding: 0 8px 12px 8px;
       }
       .handout-sheet, .utility-bar {
-        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .page-slide-out-right {
-        transform: translateX(100%) !important;
-        opacity: 0 !important;
+        transform: translateX(105vw) !important;
         pointer-events: none;
       }
       .page-slide-in-right {
-        animation: pageSlideInFromRight 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        animation: pageSlideInFromRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
       @keyframes pageSlideInFromRight {
         from {
-          transform: translateX(100%);
-          opacity: 0;
+          transform: translateX(105vw);
         }
         to {
           transform: translateX(0);
-          opacity: 1;
         }
       }
       .utility-bar {
@@ -1641,6 +1638,7 @@
 
     let completedVocab = [];
     let draggedWordKey = null;
+    let activePlacedWordKey = null;
     let activeModalCard = null;
 
     function getGoogleSearchUrl(word) {
@@ -2036,12 +2034,15 @@
     }
 
     function handleDragEnd() {
-      this.classList.remove('dragging');
-      this.style.opacity = '';
-      this.style.visibility = '';
       cleanupMouseDragAvatar();
       const targetsContainer = document.getElementById('vocab-targets');
       if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+      const key = this.getAttribute('data-key');
+      if (!activeModalCard || activePlacedWordKey !== key) {
+        this.classList.remove('dragging');
+        this.style.opacity = '';
+        this.style.visibility = '';
+      }
       draggedWordKey = null;
     }
 
@@ -2059,6 +2060,7 @@
       e.preventDefault();
       this.classList.remove('drag-over');
       cleanupMouseDragAvatar();
+      if (activeModalCard) return;
       const wordKey = e.dataTransfer.getData('text/plain') || draggedWordKey;
       const targetKey = this.getAttribute('data-target-key');
       if (wordKey && targetKey) {
@@ -2073,6 +2075,14 @@
     // Process a word placed on a target card
     function processWordPlacement(wordKey, targetKey, card) {
       hideModal();
+      activePlacedWordKey = wordKey;
+
+      const waitingChip = document.querySelector(`#vocab-pool .vocab-chip[data-key="${wordKey}"]`);
+      if (waitingChip) {
+        waitingChip.classList.add('dragging');
+        waitingChip.style.opacity = '0';
+        waitingChip.style.visibility = 'hidden';
+      }
 
       if (wordKey === targetKey) {
         // === CORRECT MATCH ===
@@ -2138,12 +2148,14 @@
     function dismissWrongState(card) {
       hideOverlay();
       activeModalCard = null;
+      activePlacedWordKey = null;
       renderVocabulary();
     }
 
     function dismissCorrectState(wordKey) {
       hideOverlay();
       activeModalCard = null;
+      activePlacedWordKey = null;
       if (!completedVocab.includes(wordKey)) {
         completedVocab.push(wordKey);
         saveState();
@@ -2275,10 +2287,6 @@
       }, { passive: true });
 
       chip.addEventListener('touchend', (e) => {
-        chip.classList.remove('dragging');
-        chip.style.opacity = '';
-        chip.style.visibility = '';
-
         if (touchAvatar) {
           touchAvatar.remove();
           touchAvatar = null;
@@ -2293,19 +2301,21 @@
         }
 
         if (!touchMoved) {
+          draggedWordKey = null;
           return;
         }
 
         const touch = e.changedTouches[0];
-        const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
-        if (targetElement) {
-          const targetCard = targetElement.closest('.vocab-target-card');
-          if (targetCard) {
-            const targetKey = targetCard.getAttribute('data-target-key');
-            if (targetKey) {
-              processWordPlacement(key, targetKey, targetCard);
-            }
-          }
+        const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
+        const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
+        const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
+
+        if (targetCard && targetKey && !activeModalCard) {
+          processWordPlacement(key, targetKey, targetCard);
+        } else {
+          chip.classList.remove('dragging');
+          chip.style.opacity = '';
+          chip.style.visibility = '';
         }
         draggedWordKey = null;
       });
@@ -2430,6 +2440,7 @@
       userAnswers = {};
       completedVocab = [];
       activeModalCard = null;
+      activePlacedWordKey = null;
 
       try {
         localStorage.removeItem(STORAGE_KEY);
@@ -2453,33 +2464,118 @@
       renderVocabulary();
     }
 
+    function captureOutgoingActivity(direction) {
+      try {
+        const styles = Array.from(document.querySelectorAll('style'))
+          .map(s => s.outerHTML)
+          .join('\n');
+        const util = document.querySelector('.utility-bar');
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          const html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          sessionStorage.setItem('nav-direction', direction);
+          sessionStorage.setItem('nav-outgoing-styles', styles);
+          sessionStorage.setItem('nav-outgoing-html', html);
+          sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
+          sessionStorage.setItem('nav-outgoing-padding', '0 8px 12px 8px');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
     function handleBackNavigation(e, url) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
       if (window.innerWidth <= 680) {
         if (e) e.preventDefault();
-        sessionStorage.setItem('nav-direction', 'backward');
+        const targetUrl = url || '../../index.html';
+        if (captureOutgoingActivity('backward')) {
+          window.location.href = targetUrl;
+          return false;
+        }
         const sheet = document.querySelector('.handout-sheet');
         const util = document.querySelector('.utility-bar');
-        if (sheet) sheet.classList.add('page-slide-out-right');
-        if (util) util.classList.add('page-slide-out-right');
+        if (sheet) {
+          sheet.classList.remove('page-slide-in-right');
+          sheet.classList.add('page-slide-out-right');
+        }
+        if (util) {
+          util.classList.remove('page-slide-in-right');
+          util.classList.add('page-slide-out-right');
+        }
         setTimeout(() => {
-          window.location.href = url || '../../index.html';
-        }, 240);
+          window.location.href = targetUrl;
+        }, 280);
         return false;
       }
       return true;
     }
 
+    // Simultaneously whoosh outgoing main page off to the left as activity page whooshes in from the right
+    (function runIncomingTransition() {
+      try {
+        if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'forward') {
+          const outStyles = sessionStorage.getItem('nav-outgoing-styles') || '';
+          const outHtml = sessionStorage.getItem('nav-outgoing-html') || '';
+          const outScroll = parseFloat(sessionStorage.getItem('nav-outgoing-scroll') || '0');
+          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '12px 8px';
+
+          sessionStorage.removeItem('nav-direction');
+          sessionStorage.removeItem('nav-outgoing-styles');
+          sessionStorage.removeItem('nav-outgoing-html');
+          sessionStorage.removeItem('nav-outgoing-scroll');
+          sessionStorage.removeItem('nav-outgoing-padding');
+
+          const sheet = document.querySelector('.handout-sheet');
+          const util = document.querySelector('.utility-bar');
+          if (sheet) {
+            sheet.classList.remove('page-slide-out-right');
+            sheet.classList.add('page-slide-in-right');
+            const cleanupSheet = () => sheet.classList.remove('page-slide-in-right');
+            sheet.addEventListener('animationend', cleanupSheet, { once: true });
+            setTimeout(cleanupSheet, 340);
+          }
+          if (util) {
+            util.classList.remove('page-slide-out-right');
+            util.classList.add('page-slide-in-right');
+            const cleanupUtil = () => util.classList.remove('page-slide-in-right');
+            util.addEventListener('animationend', cleanupUtil, { once: true });
+            setTimeout(cleanupUtil, 340);
+          }
+
+          if (outHtml) {
+            const overlayHost = document.createElement('div');
+            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
+            const shadow = overlayHost.attachShadow({ mode: 'open' });
+            shadow.innerHTML = `
+              ${outStyles}
+              <style>
+                :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+                .outgoing-stage {
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: ${outPadding};
+                  transform: translate3d(0, -${outScroll}px, 0);
+                  animation: whooshOutLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                }
+                @keyframes whooshOutLeft {
+                  from { transform: translate3d(0, -${outScroll}px, 0); }
+                  to { transform: translate3d(-105vw, -${outScroll}px, 0); }
+                }
+              </style>
+              <div class="outgoing-stage">${outHtml}</div>
+            `;
+            document.body.appendChild(overlayHost);
+            setTimeout(() => {
+              overlayHost.remove();
+            }, 320);
+          }
+        }
+      } catch (e) {}
+    })();
+
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-      if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'forward') {
-        sessionStorage.removeItem('nav-direction');
-        const sheet = document.querySelector('.handout-sheet');
-        const util = document.querySelector('.utility-bar');
-        if (sheet) sheet.classList.add('page-slide-in-right');
-        if (util) util.classList.add('page-slide-in-right');
-      }
-
       loadSavedState();
 
       // Click on vocabulary words in reading text opens hint modal
@@ -2508,8 +2604,8 @@
     window.addEventListener('pageshow', () => {
       const sheet = document.querySelector('.handout-sheet');
       const util = document.querySelector('.utility-bar');
-      if (sheet) sheet.classList.remove('page-slide-out-right');
-      if (util) util.classList.remove('page-slide-out-right');
+      if (sheet) sheet.classList.remove('page-slide-out-right', 'page-slide-in-right');
+      if (util) util.classList.remove('page-slide-out-right', 'page-slide-in-right');
     });
   </script>
 </body>
