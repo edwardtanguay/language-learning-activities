@@ -66,6 +66,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - Completed Pool Balancing & Centering: The completed words area is always centered horizontally. Completed word pills are distributed equally across balanced rows with at most 3 words per row (e.g., when 10 words are completed, they are distributed across 4 rows as 3, 3, 2, 2; when 6 words, 3 and 3; when 5 words, 3 and 2). Each row uses flexbox with no wrapping, preventing awkward orphan singletons.
     - Clicking any completed word pill pops open its complete dictionary definition card (matching the light green card with green checkmark next to definition and full sentence) in a designated view area above the pills. Clicking the card again or clicking outside closes it (no X button).
     - Double-click word selection: on pop-up and modal cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
+    - Clean completion: when all vocabulary words have been matched, do not display any completion message (such as "¡Todas las palabras han sido emparejadas con éxito!"); the top waiting words pool area collapses cleanly (`display: none;`) without leaving awkward empty space above the completed words.
     - Completed vocabulary progress is persisted in `localStorage` and reset with the "Reiniciar respuestas" button.
 - **Universal Text Selection & Copy/Paste Support**:
   - Learners must be able to select and copy text anywhere on the page without restriction (reading passage, word chips, definition cards, completed word pills, popup dictionary entries, quiz questions, options, and feedback explanations).
@@ -118,11 +119,11 @@ Use the following standardized languages, 2-letter ISO codes, and hex colors eve
 
 - **Ordering**: The above order must always be used whenever languages are listed together (e.g., catalog filters, documentation, legends).
 - **Catalog Cards (`index.html`)**:
-  - The language/level supertitle (e.g. `Español B1`) is placed directly above the activity title with tight vertical spacing (`gap: 2px; margin-bottom: 8px;`), styled in the target language's color, forming a unified headline unit.
+  - **Desktop**: The language/level badge (e.g. `Español B1`) is displayed as a boxed stamp badge on the right side of the activity title row (`display: flex; justify-content: space-between; align-items: flex-start;`), styled with a square-cornered border in the target language's color, Courier Prime font, and subtle background tint (`rgba(..., 0.08)`).
+  - **Mobile view (`max-width: 680px`)**: The language/level badge is displayed as an unbordered supertitle placed directly above the activity title with tight vertical spacing (`gap: 1px; margin-bottom: 8px; line-height: 1.1;`), styled in the target language's color, forming a unified headline unit.
   - Entire card is clickable (`cursor: pointer;`) to open the activity, with hover showing an intense soft shadow (`0 10px 28px rgba(45, 40, 35, 0.12)`) without border outline changes.
-  - No hover effects on the title link (no underline or color change) so the user intuitively feels the entire card is clickable.
+  - Title link has `pointer-events: none;` and no hover effects (no underline or color change) so the user intuitively feels the entire card panel is clickable.
   - The "Abrir actividad →" button is omitted from the card.
-  - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font, and the language/level badge is displayed as an unbordered supertitle above the activity title.
 - **Catalog Header (`index.html`)**: On mobile, the main header title ("Language Learning Activities") and subtitle ("Hojas pedagógicas para autoestudio, tándems y profesores") are centered.
 - **Catalog Dropdown Filter (`index.html`)**:
   - Form controls (select dropdowns, search input, labels) use the clean standard body serif font (`"Lora", Georgia, serif`), matching the rest of the page. The dropdown includes all 11 standardized languages in the canonical order.

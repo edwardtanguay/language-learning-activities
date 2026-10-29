@@ -1621,8 +1621,10 @@
 
       // 1. Render Waiting Words Pool (horizontally centered, balanced across two rows when > 5 words)
       if (remainingKeys.length === 0) {
-        pool.innerHTML = '<span style="color: var(--ink-muted); font-size: 14px; font-style: italic;">¡Todas las palabras han sido emparejadas con éxito!</span>';
+        pool.innerHTML = '';
+        pool.style.display = 'none';
       } else {
+        pool.style.display = 'flex';
         const createChip = (k) => {
           const item = vocabData[k];
           const chip = document.createElement('div');

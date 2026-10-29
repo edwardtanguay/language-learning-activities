@@ -196,11 +196,12 @@ After creating `topics/<topic-slug>/index.html`:
 1. Read the root `index.html`.
 2. Add the new activity to the catalog list with:
    - `<article class="activity-card" data-lang="<code> <language>" data-level="<level>" data-topic="..." onclick="openCard('topics/<topic-slug>/index.html', event)">`
-   - Language and level displayed as a supertitle directly above the activity title with tight vertical spacing (`gap: 2px; margin-bottom: 8px;`): `<span class="badge-lang lang-<code>">Language Level</span>` (e.g., `<span class="badge-lang lang-es">Español B1</span>`).
+   - **Desktop**: Language and level displayed as a boxed stamp badge on the right side of the activity title row (`display: flex; justify-content: space-between; align-items: flex-start;`): `<span class="badge-lang lang-<code>">Language Level</span>` (e.g., `<span class="badge-lang lang-es">Español B1</span>`).
+   - **Mobile view (`max-width: 680px`)**: Language and level displayed as an unbordered supertitle directly above the activity title with tight vertical spacing (`gap: 1px; margin-bottom: 8px; line-height: 1.1;`).
    - Card has `cursor: pointer;` and intense hover shadow without border outline changes.
-   - Title link has no hover underline or color change so learners intuitively feel the entire card panel is clickable.
+   - Title link has `pointer-events: none;` and no hover underline or color change so learners intuitively feel the entire card panel is clickable.
    - The "Abrir actividad →" button is omitted from the card.
-   - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font, and the language/level badge is displayed as an unbordered supertitle above the activity title.
+   - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font.
    - Catalog dropdown filter controls use standard body serif font (`"Lora", Georgia, serif`). On mobile (`max-width: 680px`), "Idioma:" and "Nivel:" labels are removed, dropdowns sit centered together on one line (50%/50%), and the search bar extends across full width.
    - Catalog footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
 3. Maintain tidy chronological or categorical sorting.

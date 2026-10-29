@@ -177,21 +177,25 @@
 
     .activity-card-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 8px;
-      gap: 2px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .activity-title {
       font-size: 20px;
       font-family: var(--font-typewriter);
       font-weight: 700;
+      flex: 1;
+      min-width: 200px;
     }
 
     .activity-title a {
       color: var(--ink-main);
       text-decoration: none;
+      pointer-events: none;
     }
 
     .activity-title a:hover {
@@ -200,35 +204,38 @@
     }
 
     .activity-badges {
-      order: -1;
-      margin-bottom: 0;
       display: flex;
       gap: 8px;
       font-family: var(--font-typewriter);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.8px;
+      flex-shrink: 0;
     }
 
     .badge-lang {
-      border: none;
-      padding: 0;
-      background: transparent;
+      border: 1px solid var(--ink-border);
+      padding: 5px 6px 2px 6px;
+      background-color: #fff;
       border-radius: 0;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .badge-lang.lang-en { color: var(--lang-en); }
-    .badge-lang.lang-de { color: var(--lang-de); }
-    .badge-lang.lang-fr { color: var(--lang-fr); }
-    .badge-lang.lang-es { color: var(--lang-es); }
-    .badge-lang.lang-it { color: var(--lang-it); }
-    .badge-lang.lang-nl { color: var(--lang-nl); }
-    .badge-lang.lang-pl { color: #555555; }
-    .badge-lang.lang-ru { color: var(--lang-ru); }
-    .badge-lang.lang-el { color: var(--lang-el); }
-    .badge-lang.lang-is { color: var(--lang-is); }
-    .badge-lang.lang-da { color: var(--lang-da); }
+    .badge-lang.lang-en { border-color: var(--lang-en); color: var(--lang-en); background-color: rgba(147, 51, 234, 0.08); }
+    .badge-lang.lang-de { border-color: var(--lang-de); color: var(--lang-de); background-color: rgba(126, 68, 2, 0.08); }
+    .badge-lang.lang-fr { border-color: var(--lang-fr); color: var(--lang-fr); background-color: rgba(51, 51, 136, 0.08); }
+    .badge-lang.lang-es { border-color: var(--lang-es); color: var(--lang-es); background-color: rgba(190, 24, 93, 0.08); }
+    .badge-lang.lang-it { border-color: var(--lang-it); color: var(--lang-it); background-color: rgba(25, 77, 25, 0.08); }
+    .badge-lang.lang-nl { border-color: var(--lang-nl); color: var(--lang-nl); background-color: rgba(217, 119, 6, 0.08); }
+    .badge-lang.lang-pl { border-color: var(--lang-pl); color: #555555; background-color: rgba(184, 184, 184, 0.15); }
+    .badge-lang.lang-ru { border-color: var(--lang-ru); color: var(--lang-ru); background-color: rgba(63, 63, 70, 0.08); }
+    .badge-lang.lang-el { border-color: var(--lang-el); color: var(--lang-el); background-color: rgba(13, 148, 136, 0.08); }
+    .badge-lang.lang-is { border-color: var(--lang-is); color: var(--lang-is); background-color: rgba(6, 182, 212, 0.08); }
+    .badge-lang.lang-da { border-color: var(--lang-da); color: var(--lang-da); background-color: rgba(255, 20, 147, 0.08); }
 
     .activity-desc {
       font-size: 15px;
@@ -334,16 +341,18 @@
       }
       .activity-card {
         padding: 14px 16px;
+        -webkit-tap-highlight-color: transparent;
       }
       .activity-card-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 2px;
+        gap: 1px;
         margin-bottom: 8px;
       }
       .activity-badges {
         order: -1;
         margin-bottom: 0;
+        line-height: 1.1;
       }
       .activity-badges .badge-lang {
         border: none !important;
@@ -351,12 +360,22 @@
         padding: 0 !important;
         font-size: 12px !important;
         letter-spacing: 0.8px;
+        line-height: 1.1;
       }
-      .activity-badges .badge-lang.lang-es {
-        color: var(--lang-es) !important;
-      }
+      .activity-badges .badge-lang.lang-en { color: var(--lang-en) !important; }
+      .activity-badges .badge-lang.lang-de { color: var(--lang-de) !important; }
+      .activity-badges .badge-lang.lang-fr { color: var(--lang-fr) !important; }
+      .activity-badges .badge-lang.lang-es { color: var(--lang-es) !important; }
+      .activity-badges .badge-lang.lang-it { color: var(--lang-it) !important; }
+      .activity-badges .badge-lang.lang-nl { color: var(--lang-nl) !important; }
+      .activity-badges .badge-lang.lang-pl { color: #555555 !important; }
+      .activity-badges .badge-lang.lang-ru { color: var(--lang-ru) !important; }
+      .activity-badges .badge-lang.lang-el { color: var(--lang-el) !important; }
+      .activity-badges .badge-lang.lang-is { color: var(--lang-is) !important; }
+      .activity-badges .badge-lang.lang-da { color: var(--lang-da) !important; }
       .activity-title {
         font-size: 18px;
+        line-height: 1.3;
       }
       .activity-desc {
         font-size: 14px;
