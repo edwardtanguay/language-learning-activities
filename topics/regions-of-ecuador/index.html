@@ -2034,6 +2034,12 @@
     // =========================================================
     function selectOption(qNum, value) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (userAnswers[qNum] === value) {
+        delete userAnswers[qNum];
+        applyQuestionFeedback(qNum, null);
+        saveState();
+        return;
+      }
       userAnswers[qNum] = value;
       applyQuestionFeedback(qNum, value);
       saveState();
@@ -2047,8 +2053,6 @@
       // Update active option styling
       const allOptionItems = card.querySelectorAll('.option-item');
       allOptionItems.forEach(item => item.classList.remove('selected'));
-      const activeOption = card.querySelector(`.option-item[onclick*="'${value}'"]`);
-      if (activeOption) activeOption.classList.add('selected');
 
       // Hide all feedback boxes for this question first
       const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
@@ -2056,6 +2060,14 @@
         fb.className = 'feedback-box';
         fb.innerHTML = '';
       });
+
+      if (!value) {
+        card.classList.remove('answered', 'correct', 'incorrect');
+        return;
+      }
+
+      const activeOption = card.querySelector(`.option-item[onclick*="'${value}'"]`);
+      if (activeOption) activeOption.classList.add('selected');
 
       const feedbackBox = document.getElementById(`feedback-${qNum}-${value}`);
       if (!feedbackBox) return;

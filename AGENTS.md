@@ -78,7 +78,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
   - NO radio buttons (`<input type="radio">` removed completely).
   - Indented Option Alignment: The options list (`.options-list`) is indented (`padding-left: 28px;`, on mobile: `24px;`) so that the option letters (`A.`, `B.`, `C.`, `D.`) and feedback box align cleanly under the start of the question prompt text above.
   - Options must have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
-  - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`).
+  - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`). Clicking an already-selected option again deselects it and closes its feedback box.
   - Contextual Inline Feedback:
     - Display the feedback box directly beneath the actively selected option, keeping its subtle background tint (`--paper-bg`).
     - Inside the feedback box, display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.

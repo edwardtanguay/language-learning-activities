@@ -160,7 +160,7 @@ Each activity file should include the following sections:
    - NO radio buttons (`<input type="radio">` removed completely).
    - Indented Option Alignment: The options list (`.options-list`) is indented (`padding-left: 28px;`, on mobile: `24px;`) so that option letters (`A.`, `B.`, `C.`, `D.`) and feedback align directly under the start of the question prompt text above.
    - Options have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
-   - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`).
+   - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`). Clicking an already-selected option again deselects it and closes its feedback box.
    - Contextual Inline Feedback:
      - Selecting an option immediately displays its feedback box directly beneath that selected option (inside the option wrapper), rather than at the bottom of the question card.
      - Only show feedback beneath the actively selected option (switching to another option moves the feedback).
