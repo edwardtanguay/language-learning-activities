@@ -112,18 +112,23 @@
     .header-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       padding-bottom: 4px;
       margin-bottom: 0;
       border-bottom: none;
-      flex-wrap: wrap;
-      gap: 16px;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
+    .handout-title-group {
+      flex: 1;
+      min-width: 0;
     }
 
     .handout-title-group h1 {
       font-size: 26px;
       letter-spacing: -0.5px;
-      line-height: 1.25;
+      line-height: 1.1;
       text-transform: uppercase;
       font-family: var(--font-typewriter);
       color: var(--ink-main);
@@ -152,6 +157,8 @@
       display: inline-block;
       border-radius: 2px;
       white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
 
     /* Section Jump Navigation */

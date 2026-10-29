@@ -118,7 +118,7 @@ Each activity file should include the following sections:
    - Link back to main activities catalog (`<a href="../../index.html" class="back-link">...</a>`) with a thick arrow (SVG or bold glyph) and clean label without "(Home)".
    - Do NOT include a print button.
 2. **Worksheet Header**:
-   - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
+   - Title (`<h1>`) and language/level stamp badge (`[Language] [Level]`) in `.header-top`. Regardless of title length, always anchor the stamp badge on the right (`.header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 20px; }`, `.stamp-badge { flex-shrink: 0; }`). If the title is long, break the title onto multiple lines (`.handout-title-group { flex: 1; min-width: 0; }`) with tight line spacing (`line-height: 1.1;`) so it holds together cohesively as one title without ever pushing the stamp badge down. Beneath them, concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
 3. **Roll-Out / Roll-Up Instructions Callout Box**:
    - Initial state displays as a clean, full-width parchment highlight bar (`var(--highlight)`) with **INSTRUCCIONES** centered in bold typewriter uppercase (`.instructions-heading`).
    - Clicking anywhere on the bar smoothly "rolls out" the instructions downwards (`grid-template-rows: 0fr -> 1fr`, CSS transition) to reveal the workflow lines:
