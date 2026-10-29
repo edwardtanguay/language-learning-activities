@@ -886,11 +886,15 @@
     .option-item {
       display: flex;
       align-items: baseline;
+      width: 100%;
+      text-align: left;
       gap: 6px;
       padding: 4px 0;
       border: none;
       background: transparent;
       cursor: pointer;
+      font-family: inherit;
+      color: inherit;
       font-size: 16px;
       line-height: 1.45;
       border-radius: 0;
@@ -917,6 +921,7 @@
 
     .opt-text {
       flex: 1;
+      text-align: left;
     }
 
     /* Feedback states */
@@ -1580,31 +1585,31 @@
         </div>
         <ul class="options-list">
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(1, 'A')">
+            <button type="button" class="option-item" onclick="selectOption(1, 'A')">
               <span class="opt-letter">A.</span>
               <span class="opt-text">Es el único país sudamericano que no tiene montañas ni volcanes.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-1-A"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(1, 'B')">
+            <button type="button" class="option-item" onclick="selectOption(1, 'B')">
               <span class="opt-letter">B.</span>
               <span class="opt-text">Es la única nación de la región con costas tanto en el mar Caribe como en el océano Pacífico.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-1-B"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(1, 'C')">
+            <button type="button" class="option-item" onclick="selectOption(1, 'C')">
               <span class="opt-letter">C.</span>
               <span class="opt-text">Tiene el mismo clima frío en todas sus regiones durante todo el año.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-1-C"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(1, 'D')">
+            <button type="button" class="option-item" onclick="selectOption(1, 'D')">
               <span class="opt-letter">D.</span>
               <span class="opt-text">Está formado exclusivamente por islas situadas en el mar Caribe.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-1-D"></div>
           </li>
         </ul>
@@ -1618,31 +1623,31 @@
         </div>
         <ul class="options-list">
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(2, 'A')">
+            <button type="button" class="option-item" onclick="selectOption(2, 'A')">
               <span class="opt-letter">A.</span>
               <span class="opt-text">Porque se encuentra al nivel del mar junto a las playas del Caribe.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-2-A"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(2, 'B')">
+            <button type="button" class="option-item" onclick="selectOption(2, 'B')">
               <span class="opt-letter">B.</span>
               <span class="opt-text">Porque allí solo se cultivan cafés y flores durante los meses de marzo y abril.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-2-B"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(2, 'C')">
+            <button type="button" class="option-item" onclick="selectOption(2, 'C')">
               <span class="opt-letter">C.</span>
               <span class="opt-text">Por disfrutar de un agradable clima templado de manera constante durante todo el año.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-2-C"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(2, 'D')">
+            <button type="button" class="option-item" onclick="selectOption(2, 'D')">
               <span class="opt-letter">D.</span>
               <span class="opt-text">Porque fue la primera ciudad fundada en la selva amazónica colombiana.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-2-D"></div>
           </li>
         </ul>
@@ -1656,31 +1661,31 @@
         </div>
         <ul class="options-list">
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(3, 'A')">
+            <button type="button" class="option-item" onclick="selectOption(3, 'A')">
               <span class="opt-letter">A.</span>
               <span class="opt-text">Seleccionando a mano únicamente los granos rojos que están más maduros.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-3-A"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(3, 'B')">
+            <button type="button" class="option-item" onclick="selectOption(3, 'B')">
               <span class="opt-letter">B.</span>
               <span class="opt-text">Utilizando grandes máquinas industriales en las llanuras orientales.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-3-B"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(3, 'C')">
+            <button type="button" class="option-item" onclick="selectOption(3, 'C')">
               <span class="opt-letter">C.</span>
               <span class="opt-text">Cortando todas las ramas verdes y secas al mismo tiempo en invierno.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-3-C"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(3, 'D')">
+            <button type="button" class="option-item" onclick="selectOption(3, 'D')">
               <span class="opt-letter">D.</span>
               <span class="opt-text">Importando los granos desde las playas del Parque Nacional Tayrona.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-3-D"></div>
           </li>
         </ul>
@@ -1694,31 +1699,31 @@
         </div>
         <ul class="options-list">
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(4, 'A')">
+            <button type="button" class="option-item" onclick="selectOption(4, 'A')">
               <span class="opt-letter">A.</span>
               <span class="opt-text">Las cumbres nevadas de Bogotá y las minas de esmeraldas andinas.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-4-A"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(4, 'B')">
+            <button type="button" class="option-item" onclick="selectOption(4, 'B')">
               <span class="opt-letter">B.</span>
               <span class="opt-text">Las palmas de cera del Valle de Cocora y el clima frío de alta montaña.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-4-B"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(4, 'C')">
+            <button type="button" class="option-item" onclick="selectOption(4, 'C')">
               <span class="opt-letter">C.</span>
               <span class="opt-text">Las llanuras de la Orinoquía sin acceso a ningún mar ni océano.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-4-C"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(4, 'D')">
+            <button type="button" class="option-item" onclick="selectOption(4, 'D')">
               <span class="opt-letter">D.</span>
               <span class="opt-text">La arquitectura colonial de Cartagena, el Parque Tayrona y ritmos como la cumbia y el vallenato.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-4-D"></div>
           </li>
         </ul>
@@ -1732,31 +1737,31 @@
         </div>
         <ul class="options-list">
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(5, 'A')">
+            <button type="button" class="option-item" onclick="selectOption(5, 'A')">
               <span class="opt-letter">A.</span>
               <span class="opt-text">Es el único desierto de arena roja en la frontera con Panamá.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-5-A"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(5, 'B')">
+            <button type="button" class="option-item" onclick="selectOption(5, 'B')">
               <span class="opt-letter">B.</span>
               <span class="opt-text">Es el hogar de las palmas de cera más altas del mundo.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-5-B"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(5, 'C')">
+            <button type="button" class="option-item" onclick="selectOption(5, 'C')">
               <span class="opt-letter">C.</span>
               <span class="opt-text">Es el lugar donde nace el río Amazonas en la costa del Pacífico.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-5-C"></div>
           </li>
           <li class="option-wrapper">
-            <div class="option-item" onclick="selectOption(5, 'D')">
+            <button type="button" class="option-item" onclick="selectOption(5, 'D')">
               <span class="opt-letter">D.</span>
               <span class="opt-text">Es una antigua fortaleza militar rodeada de murallas junto al mar Caribe.</span>
-            </div>
+            </button>
             <div class="feedback-box" id="feedback-5-D"></div>
           </li>
         </ul>
