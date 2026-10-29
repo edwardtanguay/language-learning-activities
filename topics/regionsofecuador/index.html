@@ -227,8 +227,8 @@
     }
 
     .sticky-jump-nav .jump-num.active {
-      background-color: var(--stamp-blue);
-      color: #fff;
+      background-color: #c8beaa;
+      color: var(--ink-main);
     }
 
     .jump-return-btn {
@@ -241,14 +241,13 @@
       border-radius: 999px;
       background-color: var(--highlight);
       border: 1px solid var(--ink-rule);
-      color: var(--stamp-blue);
+      color: var(--ink-main);
       font-family: var(--font-typewriter);
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       line-height: 1;
       transition: background-color 0.15s, transform 0.15s;
-      margin-left: 2px;
     }
 
     .jump-return-btn.show {
@@ -478,31 +477,6 @@
       margin-bottom: 16px;
     }
 
-    @keyframes marchingAnts {
-      0% {
-        background-position: 0 0, 0 100%, 0 0, 100% 0;
-      }
-      100% {
-        background-position: 8px 0, -8px 100%, 0 -8px, 100% 8px;
-      }
-    }
-
-    .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) {
-      border: 1px solid transparent !important;
-      background-origin: border-box;
-      background-image: 
-        linear-gradient(90deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%),
-        linear-gradient(90deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%),
-        linear-gradient(0deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%),
-        linear-gradient(0deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%);
-      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-      background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
-      background-position: 0 0, 0 100%, 0 0, 100% 0;
-      animation: marchingAnts 3.5s linear infinite;
-      background-color: var(--paper-bg);
-      box-shadow: none;
-    }
-
     .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) * {
       pointer-events: none;
     }
@@ -554,7 +528,7 @@
 
     .vocab-targets.vocab-dragging-active .vocab-target-card.drag-over:not(.state-wrong):not(.state-correct),
     .vocab-target-card.drag-over:not(.state-wrong):not(.state-correct) {
-      background-color: #f3ebd3 !important;
+      background-color: #e4dfd5 !important;
       box-shadow: none !important;
     }
 
@@ -570,8 +544,8 @@
 
     /* Wrong Drop State */
     .vocab-target-card.state-wrong {
-      background: #fdf6f6 !important;
-      border: 1px solid #f5cfcf !important;
+      background: #fbe4e4 !important;
+      border: 1px solid #eba8a8 !important;
       z-index: 50;
       box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
       cursor: pointer;
@@ -654,8 +628,8 @@
     /* Correct Drop / Complete Dictionary Entry Card */
     .vocab-target-card.state-correct,
     .vocab-dict-card {
-      background: #f4faf4 !important;
-      border: 1px solid #cce8ce !important;
+      background: #e3f5e5 !important;
+      border: 1px solid #a3d9a8 !important;
       box-shadow: 0 10px 32px rgba(45, 40, 35, 0.16);
       z-index: 50;
       padding: 18px 18px !important;
@@ -1044,9 +1018,17 @@
       cursor: grabbing;
     }
 
-    .image-lightbox-img {
+    .image-lightbox-stage {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
       max-width: 94vw;
       max-height: 92vh;
+    }
+
+    .image-lightbox-img {
+      max-width: 94vw;
+      max-height: 86vh;
       width: auto;
       height: auto;
       object-fit: contain;
@@ -1056,6 +1038,26 @@
       will-change: transform;
       user-select: none;
       -webkit-user-drag: none;
+      display: block;
+    }
+
+    .image-lightbox-caption {
+      margin-top: 8px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255, 253, 249, 0.88);
+      text-align: right;
+      align-self: flex-end;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
+      opacity: 0;
     }
 
     /* =========================================================
@@ -1324,9 +1326,12 @@
       .image-thumb {
         height: 130px;
       }
+      .image-lightbox-stage {
+        max-width: 98vw;
+      }
       .image-lightbox-img {
         max-width: 98vw;
-        max-height: 92vh;
+        max-height: 86vh;
       }
       .bottom-actions-bar {
         flex-direction: column;
@@ -1389,7 +1394,10 @@
 
   <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
-    <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+    <div class="image-lightbox-stage" id="image-lightbox-stage">
+      <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+      <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+    </div>
   </div>
 
   <!-- Utility Nav -->
@@ -2036,7 +2044,11 @@
       }
     }
 
-    function renderVocabulary(prevChipRects) {
+    function renderVocabulary(animState) {
+      const prevChipRects = animState && animState.prevChipRects ? animState.prevChipRects : animState;
+      const prevCompletedOffsets = animState && animState.prevCompletedOffsets ? animState.prevCompletedOffsets : null;
+      const newlyCompletedKey = animState && animState.newlyCompletedKey ? animState.newlyCompletedKey : null;
+
       const pool = document.getElementById('vocab-pool');
       const targets = document.getElementById('vocab-targets');
       const completedPool = document.getElementById('vocab-completed-pool');
@@ -2173,6 +2185,68 @@
                 chip.addEventListener('transitionend', cleanup, { once: true });
                 setTimeout(cleanup, 500);
               });
+            });
+          });
+        }
+      }
+
+      // 5. FLIP Animation for Completed Words Pool: existing pills slide apart to accept the new word
+      if (newlyCompletedKey && completedVocab.length > 0) {
+        const newPoolRect = completedPool.getBoundingClientRect();
+        const pillsToSlide = [];
+        let newPillEl = null;
+
+        completedPool.querySelectorAll('.vocab-completed-pill').forEach(pill => {
+          const k = pill.getAttribute('data-key');
+          if (k === newlyCompletedKey) {
+            newPillEl = pill;
+          } else if (prevCompletedOffsets && prevCompletedOffsets[k]) {
+            const r = pill.getBoundingClientRect();
+            const curLeft = r.left - newPoolRect.left;
+            const curTop = r.top - newPoolRect.top;
+            const dx = prevCompletedOffsets[k].left - curLeft;
+            const dy = prevCompletedOffsets[k].top - curTop;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              pill.style.transition = 'none';
+              pill.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              pillsToSlide.push(pill);
+            }
+          }
+        });
+
+        if (newPillEl) {
+          newPillEl.style.transition = 'none';
+          newPillEl.style.opacity = '0';
+          newPillEl.style.transform = 'scale(0.82)';
+        }
+
+        if (pillsToSlide.length > 0 || newPillEl) {
+          void completedPool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              pillsToSlide.forEach(pill => {
+                pill.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                pill.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  pill.style.transition = '';
+                  pill.style.transform = '';
+                };
+                pill.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+
+              if (newPillEl) {
+                newPillEl.style.transition = 'opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                newPillEl.style.opacity = '1';
+                newPillEl.style.transform = 'scale(1)';
+                const cleanupNew = () => {
+                  newPillEl.style.transition = '';
+                  newPillEl.style.opacity = '';
+                  newPillEl.style.transform = '';
+                };
+                newPillEl.addEventListener('transitionend', cleanupNew, { once: true });
+                setTimeout(cleanupNew, 500);
+              }
             });
           });
         }
@@ -2419,6 +2493,22 @@
         }
       });
 
+      const prevCompletedOffsets = {};
+      const completedPoolEl = document.getElementById('vocab-completed-pool');
+      if (completedPoolEl) {
+        const poolRect = completedPoolEl.getBoundingClientRect();
+        completedPoolEl.querySelectorAll('.vocab-completed-pill').forEach(pill => {
+          const k = pill.getAttribute('data-key');
+          if (k) {
+            const r = pill.getBoundingClientRect();
+            prevCompletedOffsets[k] = {
+              left: r.left - poolRect.left,
+              top: r.top - poolRect.top
+            };
+          }
+        });
+      }
+
       hideOverlay();
       activeModalCard = null;
       activePlacedWordKey = null;
@@ -2426,7 +2516,11 @@
         completedVocab.push(wordKey);
         saveState();
       }
-      renderVocabulary(prevChipRects);
+      renderVocabulary({
+        prevChipRects,
+        prevCompletedOffsets,
+        newlyCompletedKey: wordKey
+      });
     }
 
     function showOverlay() {
@@ -2766,9 +2860,13 @@
     function openImageLightbox(src, alt) {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
       if (!overlay || !img) return;
       img.src = src;
       img.alt = alt || '';
+      if (caption) {
+        caption.textContent = alt || '';
+      }
       lbScale = 1;
       lbTranslateX = 0;
       lbTranslateY = 0;
@@ -2783,11 +2881,15 @@
     function closeImageLightbox() {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
       if (!overlay) return;
       overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
         img.src = '';
         img.style.transform = '';
+      }
+      if (caption) {
+        caption.textContent = '';
       }
       lbScale = 1;
       lbTranslateX = 0;
@@ -2976,6 +3078,15 @@
       const headerLinks = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
       const sectionIds = [];
 
+      const returnBtn = document.createElement('button');
+      returnBtn.type = 'button';
+      returnBtn.className = 'jump-return-btn';
+      returnBtn.id = 'jump-return-btn';
+      returnBtn.title = 'Volver al punto anterior';
+      returnBtn.setAttribute('aria-label', 'Volver al punto anterior');
+      returnBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
+      stickyNav.appendChild(returnBtn);
+
       headerLinks.forEach(link => {
         const href = link.getAttribute('href') || '';
         if (href.startsWith('#')) {
@@ -2984,15 +3095,6 @@
         const clone = link.cloneNode(true);
         stickyNav.appendChild(clone);
       });
-
-      const returnBtn = document.createElement('button');
-      returnBtn.type = 'button';
-      returnBtn.className = 'jump-return-btn';
-      returnBtn.id = 'jump-return-btn';
-      returnBtn.title = 'Volver al punto anterior';
-      returnBtn.setAttribute('aria-label', 'Volver al punto anterior');
-      returnBtn.textContent = '↩';
-      stickyNav.appendChild(returnBtn);
 
       function returnToPreviousSpot() {
         if (savedReturnScrollY !== null) {
@@ -3195,11 +3297,13 @@
       if (!activeModalCard) renderVocabulary();
     });
 
-    window.addEventListener('pageshow', () => {
-      const sheet = document.querySelector('.handout-sheet');
-      const util = document.querySelector('.utility-bar');
-      if (sheet) sheet.classList.remove('page-slide-out-right', 'page-slide-in-right');
-      if (util) util.classList.remove('page-slide-out-right', 'page-slide-in-right');
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const sheet = document.querySelector('.handout-sheet');
+        const util = document.querySelector('.utility-bar');
+        if (sheet) sheet.classList.remove('page-slide-out-right', 'page-slide-in-right');
+        if (util) util.classList.remove('page-slide-out-right', 'page-slide-in-right');
+      }
     });
   </script>
 </body>

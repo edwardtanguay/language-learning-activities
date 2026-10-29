@@ -447,10 +447,10 @@
       }
       @keyframes pageSlideInFromLeft {
         from {
-          transform: translateX(-105vw);
+          transform: translate3d(-105vw, 0, 0);
         }
         to {
-          transform: translateX(0);
+          transform: translate3d(0, 0, 0);
         }
       }
       .header-top {
@@ -853,7 +853,7 @@
       window.location.href = url;
     }
 
-    // Whoosh main menu in from the left over the stationary outgoing activity page, replacing it
+    // Simultaneously slide main menu in from the left as outgoing activity page slides out to the right
     (function runIncomingTransition() {
       try {
         if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'backward') {
@@ -879,7 +879,7 @@
 
           if (outHtml) {
             const overlayHost = document.createElement('div');
-            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:1;';
+            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
             const shadow = overlayHost.attachShadow({ mode: 'open' });
             shadow.innerHTML = `
               ${outStyles}
@@ -889,17 +889,17 @@
                   width: 100%;
                   height: 100%;
                   overflow: hidden;
-                  animation: coverOutgoingArticle 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
                 }
                 .outgoing-stage {
                   width: 100%;
                   box-sizing: border-box;
                   padding: ${outPadding};
                   transform: translate3d(0, -${outScroll}px, 0);
+                  animation: whooshOutRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
                 }
-                @keyframes coverOutgoingArticle {
-                  from { clip-path: inset(0 0 0 0); }
-                  to { clip-path: inset(0 0 0 105vw); }
+                @keyframes whooshOutRight {
+                  from { transform: translate3d(0, -${outScroll}px, 0); }
+                  to { transform: translate3d(105vw, -${outScroll}px, 0); }
                 }
               </style>
               <div class="outgoing-stage">${outHtml}</div>
@@ -913,10 +913,12 @@
       } catch (e) {}
     })();
 
-    window.addEventListener('pageshow', () => {
-      const sheet = document.querySelector('.handout-sheet');
-      if (sheet) {
-        sheet.classList.remove('page-slide-out-left', 'page-slide-in-left');
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          sheet.classList.remove('page-slide-out-left', 'page-slide-in-left');
+        }
       }
     });
 

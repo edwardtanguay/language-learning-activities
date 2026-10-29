@@ -86,6 +86,20 @@ function stripTags(html) {
   return String(html || '').replace(/<[^>]*>/g, '').trim();
 }
 
+function formatImageTitle(rawName) {
+  return String(rawName || '')
+    .split(/[_\s-]+/)
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
+function cleanImageSlug(rawName) {
+  return String(rawName || '')
+    .replace(/[_\s-]+/g, '')
+    .toLowerCase();
+}
+
 function ensureNoHyphenTopicDirs() {
   if (!fs.existsSync(TOPICS_DIR)) return;
   const entries = fs.readdirSync(TOPICS_DIR, { withFileTypes: true });
@@ -147,6 +161,23 @@ function loadActivities() {
     const indexStat = fs.statSync(indexPath);
     const timestamp = folderStat.birthtimeMs || folderStat.mtimeMs || indexStat.mtimeMs;
 
+    const recordedTitles = {};
+    const existingImgAltMatches = html.matchAll(/<img\s+src="images\/([^"]+)"\s+alt="([^"]+)"/g);
+    for (const m of existingImgAltMatches) {
+      const imgFile = m[1];
+      const existingAlt = m[2]
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .trim();
+      const ext = path.extname(imgFile);
+      const base = imgFile.slice(0, imgFile.length - ext.length);
+      const prefix = `${lang}-${folderName}-`;
+      const rawSlug = base.startsWith(prefix) ? base.slice(prefix.length) : base;
+      if (existingAlt && existingAlt !== rawSlug) {
+        recordedTitles[imgFile] = existingAlt;
+      }
+    }
+
     activities.push({
       folderName,
       folderPath,
@@ -156,7 +187,8 @@ function loadActivities() {
       normTitle: normalize(title),
       normFolder: normalize(folderName),
       timestamp,
-      mtimeMs: folderStat.mtimeMs
+      mtimeMs: folderStat.mtimeMs,
+      recordedTitles
     });
   }
 
@@ -226,7 +258,9 @@ function processImageParseFolder(activities) {
       continue;
     }
 
-    const newFileName = `${matchedActivity.lang}-${matchedActivity.folderName}-${imageNameWithoutId}${ext}`;
+    const slug = cleanImageSlug(imageNameWithoutId);
+    const recordedTitle = formatImageTitle(imageNameWithoutId);
+    const newFileName = `${matchedActivity.lang}-${matchedActivity.folderName}-${slug}${ext}`;
     const targetImagesDir = path.join(matchedActivity.folderPath, 'images');
     fs.mkdirSync(targetImagesDir, { recursive: true });
 
@@ -235,9 +269,10 @@ function processImageParseFolder(activities) {
 
     fs.copyFileSync(srcPath, destPath);
     fs.unlinkSync(srcPath);
+    matchedActivity.recordedTitles[newFileName] = recordedTitle;
     processedCount++;
 
-    console.log(`Parsed image: ${fileName} -> topics/${matchedActivity.folderName}/images/${newFileName}`);
+    console.log(`Parsed image: ${fileName} -> topics/${matchedActivity.folderName}/images/${newFileName} ("${recordedTitle}")`);
   }
 
   if (processedCount === 0) {
@@ -252,8 +287,11 @@ function buildSection5Html(activity, imageFiles) {
       const ext = path.extname(file);
       const base = file.slice(0, file.length - ext.length);
       const prefix = `${activity.lang}-${activity.folderName}-`;
-      const altText = base.startsWith(prefix) ? base.slice(prefix.length) : base;
-      const safeAlt = altText.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      const rawSlug = base.startsWith(prefix) ? base.slice(prefix.length) : base;
+      const recordedTitle =
+        (activity.recordedTitles && activity.recordedTitles[file]) ||
+        formatImageTitle(rawSlug);
+      const safeAlt = recordedTitle.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
       return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n        </div>`;
     })
     .join('\n');
@@ -340,9 +378,17 @@ const SECTION_5_CSS = `
       cursor: grabbing;
     }
 
-    .image-lightbox-img {
+    .image-lightbox-stage {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
       max-width: 94vw;
       max-height: 92vh;
+    }
+
+    .image-lightbox-img {
+      max-width: 94vw;
+      max-height: 86vh;
       width: auto;
       height: auto;
       object-fit: contain;
@@ -352,13 +398,36 @@ const SECTION_5_CSS = `
       will-change: transform;
       user-select: none;
       -webkit-user-drag: none;
+      display: block;
+    }
+
+    .image-lightbox-caption {
+      margin-top: 8px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255, 253, 249, 0.88);
+      text-align: right;
+      align-self: flex-end;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
+      opacity: 0;
     }
 `;
 
 const SECTION_5_LIGHTBOX_HTML = `
   <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
-    <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+    <div class="image-lightbox-stage" id="image-lightbox-stage">
+      <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+      <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+    </div>
   </div>`;
 
 const SECTION_5_JS = `
@@ -395,9 +464,13 @@ const SECTION_5_JS = `
     function openImageLightbox(src, alt) {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
       if (!overlay || !img) return;
       img.src = src;
       img.alt = alt || '';
+      if (caption) {
+        caption.textContent = alt || '';
+      }
       lbScale = 1;
       lbTranslateX = 0;
       lbTranslateY = 0;
@@ -412,11 +485,15 @@ const SECTION_5_JS = `
     function closeImageLightbox() {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
       if (!overlay) return;
       overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
         img.src = '';
         img.style.transform = '';
+      }
+      if (caption) {
+        caption.textContent = '';
       }
       lbScale = 1;
       lbTranslateX = 0;
@@ -602,6 +679,11 @@ function ensureLightboxAssets(html) {
       /(<div class="vocab-dim-overlay"[^>]*><\/div>)/,
       `$1\n${SECTION_5_LIGHTBOX_HTML}`
     );
+  } else if (!out.includes('id="image-lightbox-caption"')) {
+    out = out.replace(
+      /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?<\/div>/,
+      SECTION_5_LIGHTBOX_HTML.trim()
+    );
   }
   if (!out.includes('function openImageLightbox')) {
     out = out.replace('</script>', `${SECTION_5_JS}\n  </script>`);
@@ -613,10 +695,34 @@ function updateActivityHtmlForImages(activity) {
   const imagesDir = path.join(activity.folderPath, 'images');
   let imageFiles = [];
   if (fs.existsSync(imagesDir)) {
-    imageFiles = fs
+    const rawFiles = fs
       .readdirSync(imagesDir)
-      .filter(f => SUPPORTED_EXTS.has(path.extname(f).toLowerCase()))
-      .sort((a, b) => a.localeCompare(b));
+      .filter(f => SUPPORTED_EXTS.has(path.extname(f).toLowerCase()));
+
+    const prefix = `${activity.lang}-${activity.folderName}-`;
+    for (const file of rawFiles) {
+      const ext = path.extname(file);
+      const base = file.slice(0, file.length - ext.length);
+      if (base.startsWith(prefix)) {
+        const rawSlug = base.slice(prefix.length);
+        const cleanedSlug = cleanImageSlug(rawSlug);
+        if (cleanedSlug && cleanedSlug !== rawSlug) {
+          const newFile = `${prefix}${cleanedSlug}${ext.toLowerCase()}`;
+          const oldPath = path.join(imagesDir, file);
+          const newPath = path.join(imagesDir, newFile);
+          if (!fs.existsSync(newPath)) {
+            fs.renameSync(oldPath, newPath);
+          } else {
+            fs.unlinkSync(oldPath);
+          }
+          activity.recordedTitles[newFile] = formatImageTitle(rawSlug);
+          imageFiles.push(newFile);
+          continue;
+        }
+      }
+      imageFiles.push(file);
+    }
+    imageFiles.sort((a, b) => a.localeCompare(b));
   }
 
   const originalHtml = fs.readFileSync(activity.indexPath, 'utf8');
