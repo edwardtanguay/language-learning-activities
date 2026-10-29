@@ -18,13 +18,13 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Local State & Reset**: Interactive features (e.g., quiz answers, vocabulary completion state) must use `localStorage` for persistence, and MUST include a visible reset button that restores the worksheet to its initial state.
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, wrong-drop hints, and navigation links) must be exclusively in the target language.
-- **Collapsible Instructions Callout**:
-  - By default, displays only a subtle, clickable typewriter toggle on the left: `▸ Instrucciones` (`.instructions-toggle-btn`).
-  - Clicking it expands to reveal the full highlighted box with **INSTRUCCIONES** centered and the workflow lines:
+- **Roll-Out / Roll-Up Instructions Callout**:
+  - Initial state displays as a clean, full-width parchment highlight bar (`var(--highlight)`) with **INSTRUCCIONES** centered in bold typewriter uppercase (`.instructions-heading`).
+  - Clicking anywhere on the bar smoothly "rolls out" the instructions downwards (`grid-template-rows: 0fr -> 1fr`, CSS transition) to reveal the workflow lines:
     - **Antes de la clase / Before Class**: No bullet dot in front of the label. The label is capitalized (`Antes de la clase:`) followed by an all-lowercase description (e.g., `estudiante y profesor se familiarizan con el texto lo que deseen`, without trailing period).
     - **En clase / In Class**: No bullet dot in front of the label. The label is capitalized (`En clase:`) followed by an all-lowercase comma-separated list: `(1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos`.
     - Keep phrasing concise, inline, and readable in seconds.
-  - Clicking the expanded box or button toggles it closed back to the collapsed state.
+  - Clicking anywhere on the instructions box rolls it back up into the compact initial bar with centered **INSTRUCCIONES**. Preserves universal text selection so selecting text to copy does not collapse the box.
 - **Header, Top Utility Bar, Jump Links & Title on Mobile**:
   - The top utility bar has generous top padding (desktop: `padding-top: 14px;`, mobile: `padding: 24px 0 14px 0;`) so "Índice de Actividades" has comfortable space from the top of the page.
   - On mobile (`max-width: 680px`), `body` has `padding: 0 8px 12px 8px;` and `.utility-bar` has `justify-content: center; align-items: center; margin: 0 auto; padding: 24px 0 14px 0;` with `.back-link { line-height: 1; display: inline-flex; align-items: center; }` so "Índice de Actividades" is centered both horizontally and vertically in the space above the handout sheet.

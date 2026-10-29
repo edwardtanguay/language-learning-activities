@@ -119,13 +119,13 @@ Each activity file should include the following sections:
    - Do NOT include a print button.
 2. **Worksheet Header**:
    - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
-3. **Collapsible Instructions Callout Box**:
-   - By default, displays only a subtle, clickable typewriter toggle on the left: `▸ Instrucciones` (`.instructions-toggle-btn`).
-   - Clicking it expands to reveal the full highlighted box with **INSTRUCCIONES** centered and the workflow lines:
+3. **Roll-Out / Roll-Up Instructions Callout Box**:
+   - Initial state displays as a clean, full-width parchment highlight bar (`var(--highlight)`) with **INSTRUCCIONES** centered in bold typewriter uppercase (`.instructions-heading`).
+   - Clicking anywhere on the bar smoothly "rolls out" the instructions downwards (`grid-template-rows: 0fr -> 1fr`, CSS transition) to reveal the workflow lines:
      - **Antes de la clase / Before Class**: No bullet dot in front of the label. Capitalized label (`Antes de la clase:`) followed by an all-lowercase description (e.g., `estudiante y profesor se familiarizan con el texto lo que deseen`, without trailing period).
      - **En clase / In Class**: No bullet dot in front of the label. Capitalized label (`En clase:`) followed by an all-lowercase comma-separated list: `(1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos`.
      - Keep phrasing concise, inline, and readable in seconds.
-   - Clicking the expanded box or button toggles it closed back to the collapsed state.
+   - Clicking anywhere on the instructions box rolls it back up into the compact initial bar with centered **INSTRUCCIONES**. Preserves universal text selection so selecting text to copy does not collapse the box.
 4. **Section 1: Reading Passage (Lectura)**:
    - Titled "Lectura" in the target language without period (e.g., `<span class="section-num">1</span> Lectura`), with right-aligned action hint "read aloud" in the target language.
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.

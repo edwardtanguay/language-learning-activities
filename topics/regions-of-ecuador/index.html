@@ -242,58 +242,50 @@
       flex-shrink: 0;
     }
 
-    /* Instructions callout (Collapsible) */
-    .instructions-wrapper {
-      margin-bottom: 24px;
-    }
-
-    .instructions-toggle-btn {
-      background: none;
-      border: none;
-      font-family: var(--font-typewriter);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--ink-muted);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 0;
-      line-height: 1.2;
-      transition: color 0.15s;
-    }
-
-    .instructions-toggle-btn:hover {
-      color: var(--ink-main);
-    }
-
-    .instructions-arrow {
-      display: inline-block;
-      font-size: 12px;
-      transition: transform 0.2s ease;
-    }
-
-    .instructions-toggle-btn.expanded .instructions-arrow {
-      transform: rotate(90deg);
-    }
-
+    /* Instructions callout (Roll-out / Roll-up) */
     .instructions-box {
       background-color: var(--highlight);
       border-left: 4px solid var(--ink-rule);
-      padding: 12px 16px;
+      padding: 9px 16px;
       font-family: var(--font-typewriter);
       font-size: 14px;
-      margin-top: 8px;
-      margin-bottom: 0;
+      margin-bottom: 24px;
       line-height: 1.45;
       cursor: pointer;
+      transition: padding 0.25s ease;
+    }
+
+    .instructions-box.expanded {
+      padding: 12px 16px;
     }
 
     .instructions-heading {
       font-weight: 700;
-      margin-bottom: 6px;
       letter-spacing: 0.5px;
       text-align: center;
+      margin-bottom: 0;
+      color: var(--ink-main);
+      transition: margin-bottom 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-heading {
+      margin-bottom: 8px;
+    }
+
+    .instructions-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .instructions-inner {
+      overflow: hidden;
     }
 
     .instructions-block {
@@ -1203,19 +1195,17 @@
       </nav>
     </header>
 
-    <!-- Instructions (Collapsible) -->
-    <div class="instructions-wrapper">
-      <button class="instructions-toggle-btn" id="instructions-toggle-btn" onclick="toggleInstructions()" aria-expanded="false" title="Mostrar u ocultar instrucciones">
-        <span class="instructions-arrow" id="instructions-arrow">▸</span>
-        <span>Instrucciones</span>
-      </button>
-      <div class="instructions-box" id="instructions-box" style="display: none;" onclick="toggleInstructions()" title="Clic para cerrar">
-        <div class="instructions-heading">INSTRUCCIONES</div>
-        <div class="instructions-block">
-          <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
-        </div>
-        <div class="instructions-block">
-          <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+    <!-- Instructions (Roll-out / Roll-up) -->
+    <div class="instructions-box" id="instructions-box" onclick="toggleInstructions(event)" title="Clic para desplegar o cerrar las instrucciones" role="button" aria-expanded="false" tabindex="0">
+      <div class="instructions-heading">INSTRUCCIONES</div>
+      <div class="instructions-content">
+        <div class="instructions-inner">
+          <div class="instructions-block">
+            <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
+          </div>
+          <div class="instructions-block">
+            <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+          </div>
         </div>
       </div>
     </div>
@@ -1730,23 +1720,28 @@
     }
 
     // =========================================================
-    // INSTRUCTIONS COLLAPSE LOGIC
+    // INSTRUCTIONS ROLL-OUT / ROLL-UP LOGIC
     // =========================================================
-    function toggleInstructions() {
+    function toggleInstructions(e) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       const box = document.getElementById('instructions-box');
-      const btn = document.getElementById('instructions-toggle-btn');
-      if (!box || !btn) return;
-      const isVisible = box.style.display !== 'none';
-      if (isVisible) {
-        box.style.display = 'none';
-        btn.classList.remove('expanded');
-        btn.setAttribute('aria-expanded', 'false');
-      } else {
-        box.style.display = 'block';
-        btn.classList.add('expanded');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      if (!box) return;
+      const isExpanded = box.classList.toggle('expanded');
+      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
     }
+
+    // Keyboard support for instructions box
+    document.addEventListener('DOMContentLoaded', () => {
+      const box = document.getElementById('instructions-box');
+      if (box) {
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleInstructions(e);
+          }
+        });
+      }
+    });
 
     // =========================================================
     // VOCABULARY EXERCISE LOGIC
