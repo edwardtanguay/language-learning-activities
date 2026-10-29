@@ -94,9 +94,9 @@ function formatImageTitle(rawName) {
 }
 
 function cleanImageSlug(rawName) {
-  return String(rawName || '')
-    .replace(/[_\s-]+/g, '')
-    .toLowerCase();
+  // Remove diacritics, convert to lowercase, and strip underscores, spaces, and hyphens
+  return normalize(rawName)
+    .replace(/[_\s-]+/g, '');
 }
 
 function ensureNoHyphenTopicDirs() {
