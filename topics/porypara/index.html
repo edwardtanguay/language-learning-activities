@@ -430,6 +430,141 @@
       cursor: pointer;
     }
 
+    .prep-in-text {
+      background-color: rgba(29, 67, 115, 0.12);
+      color: var(--stamp-blue);
+      font-weight: 600;
+      padding: 1px 3px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .prep-in-text:hover {
+      background-color: rgba(29, 67, 115, 0.22);
+    }
+
+    .prep-explanation-modal {
+      width: 92%;
+      max-width: 530px;
+      border: 1px solid var(--stamp-blue);
+      cursor: default;
+    }
+
+    .prep-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--ink-rule);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .prep-modal-title-group {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .prep-modal-word {
+      font-family: var(--font-typewriter);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+    }
+
+    .prep-modal-badge {
+      font-family: var(--font-typewriter);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background-color: rgba(29, 67, 115, 0.1);
+      color: var(--stamp-blue);
+      padding: 2px 7px;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+
+    .prep-sentence-box {
+      background-color: var(--paper-bg);
+      border-left: 3px solid var(--stamp-blue);
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height: 1.45;
+      color: var(--ink-main);
+      margin-bottom: 14px;
+    }
+
+    .prep-sentence-box strong {
+      color: var(--stamp-blue);
+      text-decoration: underline;
+    }
+
+    .prep-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prep-reason {
+      padding: 10px 12px;
+      border-radius: 2px;
+    }
+
+    .prep-reason.correct-reason {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+    }
+
+    .prep-reason.contrast-reason {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+    }
+
+    .prep-reason-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .prep-reason.correct-reason .prep-reason-title {
+      color: #1b5e20;
+    }
+
+    .prep-reason.contrast-reason .prep-reason-title {
+      color: #b71c1c;
+    }
+
+    .prep-check-icon, .prep-cross-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .prep-reason-text {
+      font-size: 13.5px;
+      line-height: 1.4;
+      color: var(--ink-main);
+    }
+
+    .prep-modal-footer {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--ink-border);
+      text-align: center;
+      font-family: var(--font-typewriter);
+      font-size: 11.5px;
+      color: var(--ink-muted);
+      opacity: 0.75;
+    }
+
     .reading-word.has-bookmark {
       white-space: nowrap;
     }
@@ -1372,21 +1507,21 @@
         <div class="story-card">
           <h3>El motivo y el destino</h3>
           <p>
-            En un alegre barrio de Medellín, Mateo y Valentina compartían un reconfortante tintico en la <span class="vocab-in-text" data-key="vispera">víspera</span> del gran bazar solidario. Aquel festival había sido convocado por la junta comunal para financiar las mejoras de la biblioteca infantil del vecindario. Mientras pegaban carteles informativos por las paredes de cada esquina, Mateo confesó con humor su constante inseguridad al redactar los letreros. Valentina sonrió y decidió aclararle el panorama: empleamos «por» cuando expresamos la causa profunda, el motivo o la razón de actuar, como movilizarse con entusiasmo por amor al barrio; por el contrario, reservamos «para» para señalar el propósito futuro, la meta concreta o el beneficiario, tal como conseguir útiles escolares para los pequeños lectores. Además, Valentina añadió que «por» sirve para indicar el medio de comunicación o transporte, como difundir la invitación por redes sociales, mientras que «para» expresa una opinión personal, como cuando afirmamos que para nosotros la educación es prioritaria.
+            En un alegre barrio de Medellín, Mateo y Valentina compartían un reconfortante tintico en la <span class="vocab-in-text" data-key="vispera">víspera</span> del gran bazar solidario. Aquel festival había sido convocado <span class="prep-in-text" data-prep="1">por</span> la junta comunal <span class="prep-in-text" data-prep="2">para</span> financiar las mejoras de la biblioteca infantil del vecindario. Mientras pegaban carteles informativos <span class="prep-in-text" data-prep="3">por</span> las paredes de cada esquina, Mateo confesó con humor su constante inseguridad al redactar los letreros. Valentina sonrió y decidió aclararle el panorama: empleamos «por» cuando expresamos la causa profunda, el motivo o la razón de actuar, como movilizarse con entusiasmo <span class="prep-in-text" data-prep="4">por</span> amor al barrio; <span class="prep-in-text" data-prep="5">por</span> el contrario, reservamos «para» <span class="prep-in-text" data-prep="6">para</span> señalar el propósito futuro, la meta concreta o el beneficiario, tal como conseguir útiles escolares <span class="prep-in-text" data-prep="7">para</span> los pequeños lectores. Además, Valentina añadió que «por» sirve <span class="prep-in-text" data-prep="8">para</span> indicar el medio de comunicación o transporte, como difundir la invitación <span class="prep-in-text" data-prep="9">por</span> redes sociales, mientras que «para» expresa una opinión personal, como cuando afirmamos que <span class="prep-in-text" data-prep="10">para</span> nosotros la educación es prioritaria.
           </p>
         </div>
 
         <div class="story-card">
           <h3>El tiempo, los plazos y el recorrido</h3>
           <p>
-            Para dejar la logística completamente lista antes de la apertura, a ambos muchachos les tocó <span class="vocab-in-text" data-key="madrugar">madrugar</span> con energía el sábado por la mañana. Durante tres horas recorrieron paso a paso la <span class="vocab-in-text" data-key="cuadra">cuadra</span> central, coordinando los puestos y transportando carpas bajo un cielo despejado. «Observa bien la diferencia espacial», señaló Valentina mientras avanzaban con prisa por el parque: «nos movemos por estas calles porque son la vía por donde transitamos, pero caminamos hacia la cancha deportiva para instalar la tarima principal». Del mismo modo, el montaje demandó paciencia por el intenso calor del mediodía, aunque la hora límite para inaugurar el bazar estaba programada para las dos de la tarde.
+            <span class="prep-in-text" data-prep="11">Para</span> dejar la logística completamente lista antes de la apertura, a ambos muchachos les tocó <span class="vocab-in-text" data-key="madrugar">madrugar</span> con energía el sábado <span class="prep-in-text" data-prep="12">por</span> la mañana. Durante tres horas recorrieron paso a paso la <span class="vocab-in-text" data-key="cuadra">cuadra</span> central, coordinando los puestos y transportando carpas bajo un cielo despejado. «Observa bien la diferencia espacial», señaló Valentina mientras avanzaban con prisa <span class="prep-in-text" data-prep="13">por</span> el parque: «nos movemos <span class="prep-in-text" data-prep="14">por</span> estas calles porque son la vía <span class="prep-in-text" data-prep="15">por</span> donde transitamos, pero caminamos hacia la cancha deportiva <span class="prep-in-text" data-prep="16">para</span> instalar la tarima principal». Del mismo modo, el montaje demandó paciencia <span class="prep-in-text" data-prep="17">por</span> el intenso calor del mediodía, aunque la hora límite <span class="prep-in-text" data-prep="18">para</span> inaugurar el bazar estaba programada <span class="prep-in-text" data-prep="19">para</span> las dos de la tarde.
           </p>
         </div>
 
         <div class="story-card">
           <h3>Intercambios, tareas y puntos de vista</h3>
           <p>
-            Para sortear el embotellamiento vehicular, un vecino voluntario tomó un oportuno <span class="vocab-in-text" data-key="atajo">atajo</span> por un sendero estrecho y llegó con el equipo de sonido contratado por los organizadores. El éxito colectivo dependía de un riguroso <span class="vocab-in-text" data-key="reparto">reparto</span> de tareas distribuido para que cada quien colaborara sin agotarse. En varios toldos se fomentó el <span class="vocab-in-text" data-key="trueque">trueque</span> comunitario, cambiando libros usados por frutas frescas traídas del campo. Las monedas entregadas con generosidad por los visitantes tintineaban sin cesar en la <span class="vocab-in-text" data-key="alcancia">alcancía</span> colocada junto a la entrada. Al finalizar el animado <span class="vocab-in-text" data-key="recorrido">recorrido</span> por los puestos, los anfitriones ofrecieron un delicioso <span class="vocab-in-text" data-key="agasajo">agasajo</span> con chocolate y buñuelos recién hechos para atender a la cuadrilla. Para Mateo, la distinción lingüística ya no albergaba misterio: todo el esfuerzo brindado por el vecindario había asegurado el abundante <span class="vocab-in-text" data-key="recaudo">recaudo</span> necesario para abrir las puertas de un espacio cultural digno.
+            <span class="prep-in-text" data-prep="20">Para</span> sortear el embotellamiento vehicular, un vecino voluntario tomó un oportuno <span class="vocab-in-text" data-key="atajo">atajo</span> <span class="prep-in-text" data-prep="21">por</span> un sendero estrecho y llegó con el equipo de sonido contratado <span class="prep-in-text" data-prep="22">por</span> los organizadores. El éxito colectivo dependía de un riguroso <span class="vocab-in-text" data-key="reparto">reparto</span> de tareas distribuido <span class="prep-in-text" data-prep="23">para</span> que cada quien colaborara sin agotarse. En varios toldos se fomentó el <span class="vocab-in-text" data-key="trueque">trueque</span> comunitario, cambiando libros usados <span class="prep-in-text" data-prep="24">por</span> frutas frescas traídas del campo. Las monedas entregadas con generosidad <span class="prep-in-text" data-prep="25">por</span> los visitantes tintineaban sin cesar en la <span class="vocab-in-text" data-key="alcancia">alcancía</span> colocada junto a la entrada. Al finalizar el animado <span class="vocab-in-text" data-key="recorrido">recorrido</span> <span class="prep-in-text" data-prep="26">por</span> los puestos, los anfitriones ofrecieron un delicioso <span class="vocab-in-text" data-key="agasajo">agasajo</span> con chocolate y buñuelos recién hechos <span class="prep-in-text" data-prep="27">para</span> atender a la cuadrilla. <span class="prep-in-text" data-prep="28">Para</span> Mateo, la distinción lingüística ya no albergaba misterio: todo el esfuerzo brindado <span class="prep-in-text" data-prep="29">por</span> el vecindario había asegurado el abundante <span class="vocab-in-text" data-key="recaudo">recaudo</span> necesario <span class="prep-in-text" data-prep="30">para</span> abrir las puertas de un espacio cultural digno.
           </p>
         </div>
       </div>
@@ -1764,6 +1899,220 @@
       }
     };
 
+    // Preposition In-Text Explanations (Por & Para)
+    const prepData = {
+      "1": {
+        word: "por",
+        category: "Complemento agente (Voz pasiva)",
+        sentence: "Aquel festival había sido convocado <strong>por</strong> la junta comunal para financiar las mejoras...",
+        why: "Introduce al sujeto o entidad ejecutora que realiza activamente la acción en una construcción pasiva («convocado por la junta comunal»).",
+        whyNot: "«Para» señalaría el destinatario o propósito del festival («destinado para la junta»), pero nunca a quien convoca o realiza activamente la acción pasiva."
+      },
+      "2": {
+        word: "para",
+        category: "Finalidad o propósito",
+        sentence: "...había sido convocado por la junta comunal <strong>para</strong> financiar las mejoras de la biblioteca...",
+        why: "Introduce el objetivo, meta o propósito futuro de una acción seguido de un verbo en infinitivo («para financiar»).",
+        whyNot: "«Por» seguido de infinitivo expresaría la causa previa o motivo del pasado («por haber financiado»), perdiendo el sentido de meta planificada a futuro."
+      },
+      "3": {
+        word: "por",
+        category: "Espacio de distribución / A lo largo de",
+        sentence: "Mientras pegaban carteles informativos <strong>por</strong> las paredes de cada esquina...",
+        why: "Indica dispersión o distribución espacial a través de una superficie o área («a lo largo de las paredes»).",
+        whyNot: "«Para» denotaría dirección final hacia un destino concreto («en dirección a»), no la superficie sobre la que se distribuyen o colocan los carteles."
+      },
+      "4": {
+        word: "por",
+        category: "Causa o motivo inspirador",
+        sentence: "...como movilizarse con entusiasmo <strong>por</strong> amor al barrio...",
+        why: "Expresa el motivo interior o la razón profunda que mueve a alguien a actuar («a causa del amor / motivado por el amor»).",
+        whyNot: "«Para amor al barrio» es agramatical en español: el amor no es una meta u objetivo futuro por alcanzar, sino el impulso causal de la acción."
+      },
+      "5": {
+        word: "por",
+        category: "Locución fija de contraste",
+        sentence: "...<strong>por</strong> el contrario, reservamos «para» para señalar el propósito futuro...",
+        why: "Forma parte de la locución fija lexicalizada «por el contrario», que funciona como conector lógico de oposición.",
+        whyNot: "En español, las locuciones concesivas y adversativas se construyen idiomáticamente con «por» («por el contrario», «por tanto»); «para el contrario» no existe."
+      },
+      "6": {
+        word: "para",
+        category: "Finalidad o meta",
+        sentence: "...reservamos «para» <strong>para</strong> señalar el propósito futuro, la meta concreta o el beneficiario...",
+        why: "Expresa el fin o propósito específico que persigue la reserva de la palabra («con el fin de señalar»).",
+        whyNot: "«Por señalar» sugeriría la causa o justificación retrospectiva («por haber señalado»), no el propósito hacia el que se orienta la regla."
+      },
+      "7": {
+        word: "para",
+        category: "Destinatario o beneficiario",
+        sentence: "...tal como conseguir útiles escolares <strong>para</strong> los pequeños lectores.",
+        why: "Identifica a las personas que recibirán el provecho o destino final de los objetos («destinado a los niños»).",
+        whyNot: "«Por los pequeños lectores» significaría «en favor/defensa de ellos», «en lugar de ellos» o «por culpa de ellos», perdiendo la noción de destinatario directo de los útiles."
+      },
+      "8": {
+        word: "para",
+        category: "Función o utilidad",
+        sentence: "Además, Valentina añadió que «por» sirve <strong>para</strong> indicar el medio de comunicación o transporte...",
+        why: "El verbo «servir para» rige gramaticalmente «para» para definir la función, utilidad o cometido de algo.",
+        whyNot: "«Servir por» no se usa en español para denotar la utilidad o función de una herramienta o palabra."
+      },
+      "9": {
+        word: "por",
+        category: "Medio o canal de difusión",
+        sentence: "...como difundir la invitación <strong>por</strong> redes sociales...",
+        why: "Indica el canal, medio de comunicación o conducto a través del cual viaja un mensaje («por teléfono», «por correo», «por redes sociales»).",
+        whyNot: "«Para redes sociales» indicaría que las redes son las destinatarias o que el formato se diseñó específicamente para ellas, no el medio empleado de difusión."
+      },
+      "10": {
+        word: "para",
+        category: "Punto de vista / Opinión subjetiva",
+        sentence: "...como cuando afirmamos que <strong>para</strong> nosotros la educación es prioritaria.",
+        why: "Introduce la perspectiva, juicio u opinión personal de un sujeto («según nuestro parecer / a nuestro juicio»).",
+        whyNot: "«Por nosotros» significaría «por nuestra causa», «gracias a nosotros» o «por nuestra culpa», alterando por completo el significado de juicio personal."
+      },
+      "11": {
+        word: "Para",
+        category: "Finalidad u objetivo previsto",
+        sentence: "<strong>Para</strong> dejar la logística completamente lista antes de la apertura, a ambos muchachos les tocó madrugar...",
+        why: "Encabeza una oración de propósito u objetivo que motiva la acción principal («con el objetivo de dejar lista la logística»).",
+        whyNot: "«Por dejar» expresaría la causa previa o sanción («por haber dejado»), no una meta planificada hacia el futuro."
+      },
+      "12": {
+        word: "por",
+        category: "Tiempo aproximado / Franja del día",
+        sentence: "...a ambos muchachos les tocó madrugar con energía el sábado <strong>por</strong> la mañana.",
+        why: "Expresa una parte general o periodo indeterminado del día («por la mañana», «por la tarde», «por la noche»).",
+        whyNot: "«Para la mañana» implicaría una fecha límite o un plazo fijado («tenerlo listo para la mañana»), no el momento en el que transcurre el suceso."
+      },
+      "13": {
+        word: "por",
+        category: "Lugar de tránsito / A través de",
+        sentence: "...señaló Valentina mientras avanzaban con prisa <strong>por</strong> el parque:",
+        why: "Describe el paso, movimiento o recorrido a través de un espacio físico («caminar por el parque»).",
+        whyNot: "«Para el parque» denotaría dirección final hacia donde se encaminan («hacia el parque»), no el trayecto que realizan dentro de él."
+      },
+      "14": {
+        word: "por",
+        category: "Vía o medio de desplazamiento",
+        sentence: "«nos movemos <strong>por</strong> estas calles porque son la vía por donde transitamos...»",
+        why: "Indica el camino, calle o superficie sobre la que se efectúa el tránsito.",
+        whyNot: "«Para estas calles» marcaría el destino final hacia el que se dirigen, no el suelo que pisan al avanzar."
+      },
+      "15": {
+        word: "por",
+        category: "Trayecto relativo (por donde)",
+        sentence: "«...porque son la vía <strong>por</strong> donde transitamos...»",
+        why: "Se combina con el relativo de lugar «donde» para designar la ruta recorrida («el camino por donde vamos»).",
+        whyNot: "«Para donde» indica dirección o destino hacia donde se viaja («¿para dónde vas?»), no el trayecto que se recorre."
+      },
+      "16": {
+        word: "para",
+        category: "Propósito o meta inmediata",
+        sentence: "«...pero caminamos hacia la cancha deportiva <strong>para</strong> instalar la tarima principal».",
+        why: "Indica el objetivo directo que justifica caminar hacia la cancha («con el fin de instalar»).",
+        whyNot: "«Por instalar» daría la idea de causa o justificación retroactiva («por culpa de instalar»), perdiendo el sentido de meta deseada."
+      },
+      "17": {
+        word: "por",
+        category: "Causa o motivo",
+        sentence: "Del mismo modo, el montaje demandó paciencia <strong>por</strong> el intenso calor del mediodía...",
+        why: "Señala la circunstancia o motivo causal que obligó a tener paciencia («a causa del intenso calor»).",
+        whyNot: "«Para el intenso calor» expresaría que la paciencia servía de destino o remedio para el calor, lo cual altera la relación de causa y efecto."
+      },
+      "18": {
+        word: "para",
+        category: "Finalidad / Evento de referencia",
+        sentence: "...aunque la hora límite <strong>para</strong> inaugurar el bazar estaba programada para las dos de la tarde.",
+        why: "Indica el evento o fin específico al cual está asignada la hora estipulada («el plazo con miras a inaugurar»).",
+        whyNot: "«Por inaugurar» no se utiliza para definir el propósito de un plazo temporal o fecha establecida."
+      },
+      "19": {
+        word: "para",
+        category: "Plazo o fecha límite",
+        sentence: "...estaba programada <strong>para</strong> las dos de la tarde.",
+        why: "Indica un plazo límite o una hora exacta programada en el futuro («deadline» / fijado para las dos).",
+        whyNot: "«Por las dos de la tarde» expresaría una hora aproximada («alrededor de las dos»), perdiendo la precisión de la hora fijada."
+      },
+      "20": {
+        word: "Para",
+        category: "Propósito o meta",
+        sentence: "<strong>Para</strong> sortear el embotellamiento vehicular, un vecino voluntario tomó un oportuno atajo...",
+        why: "Expresa la finalidad deliberada con la que el vecino tomó la decisión de desviarse («a fin de evitar el tráfico»).",
+        whyNot: "«Por sortear» denotaría causa retrospectiva («a raíz de sortear»), perdiendo la intención orientada a resolver el problema."
+      },
+      "21": {
+        word: "por",
+        category: "Lugar de paso o itinerario",
+        sentence: "...un vecino voluntario tomó un oportuno atajo <strong>por</strong> un sendero estrecho...",
+        why: "Señala la vía o itinerario físico por donde se desplazó el vehículo.",
+        whyNot: "«Para un sendero» indicaría dirección hacia el sendero en vez de avanzar a través de él."
+      },
+      "22": {
+        word: "por",
+        category: "Complemento agente (Voz pasiva)",
+        sentence: "...y llegó con el equipo de sonido contratado <strong>por</strong> los organizadores.",
+        why: "Indica el agente ejecutor de la acción con participio («contratado por ellos»).",
+        whyNot: "«Para los organizadores» indicaría que el equipo era para su uso o beneficio personal, no quién lo gestionó y contrató."
+      },
+      "23": {
+        word: "para",
+        category: "Finalidad con nexo subjuntivo (para que)",
+        sentence: "...distribuido <strong>para</strong> que cada quien colaborara sin agotarse.",
+        why: "Encabeza la locución conjuntiva «para que» que rige subjuntivo para expresar una meta o intención orientada al futuro.",
+        whyNot: "«Por que» no se utiliza para formular una intención subordinada con subjuntivo en este tipo de oraciones; «porque» expresaría causa con indicativo."
+      },
+      "24": {
+        word: "por",
+        category: "Intercambio o sustitución comercial",
+        sentence: "...cambiando libros usados <strong>por</strong> frutas frescas traídas del campo.",
+        why: "Se usa con verbos de trueque o cambio («cambiar X por Y») para marcar la cosa dada o recibida en permuta.",
+        whyNot: "«Para frutas frescas» implicaría que los libros estaban destinados al consumo o provecho de las frutas, careciendo de sentido."
+      },
+      "25": {
+        word: "por",
+        category: "Complemento agente (Voz pasiva)",
+        sentence: "Las monedas entregadas con generosidad <strong>por</strong> los visitantes tintineaban sin cesar...",
+        why: "Identifica a las personas que efectuaron materialmente la entrega de las monedas («entregadas por...»).",
+        whyNot: "«Para los visitantes» significaría que las monedas debían entregarse a ellos como destinatarios, invirtiendo el sentido de la donación."
+      },
+      "26": {
+        word: "por",
+        category: "Lugar o espacio de recorrido",
+        sentence: "Al finalizar el animado recorrido <strong>por</strong> los puestos...",
+        why: "Expresa el itinerario que discurre sucesivamente entre los puestos del bazar («a lo largo de los puestos»).",
+        whyNot: "«Para los puestos» expresaría finalidad o destino, no el recorrido espacial que se efectúa entre ellos."
+      },
+      "27": {
+        word: "para",
+        category: "Finalidad o atención a destinatario",
+        sentence: "...ofrecieron un delicioso agasajo con chocolate y buñuelos recién hechos <strong>para</strong> atender a la cuadrilla.",
+        why: "Indica el propósito específico con el que se preparó y ofreció la comida («con el fin de atender»).",
+        whyNot: "«Por atender» expresaría causa o justificación retroactiva («por haber atendido»), perdiendo la intención hospitalaria."
+      },
+      "28": {
+        word: "Para",
+        category: "Punto de vista / Opinión subjetiva",
+        sentence: "<strong>Para</strong> Mateo, la distinción lingüística ya no albergaba misterio...",
+        why: "Expresa la perspectiva personal, vivencia u opinión del individuo («a ojos de Mateo / según su entendimiento»).",
+        whyNot: "«Por Mateo» significaría «por culpa de Mateo», «a causa de Mateo» o «hecho por Mateo», desvirtuando el punto de vista personal."
+      },
+      "29": {
+        word: "por",
+        category: "Complemento agente (Voz pasiva)",
+        sentence: "...todo el esfuerzo brindado <strong>por</strong> el vecindario había asegurado el abundante recaudo...",
+        why: "Introduce al sujeto colectivo que ejecutó y brindó el esfuerzo («brindado por el vecindario»).",
+        whyNot: "«Para el vecindario» señalaría a la comunidad como la destinataria del esfuerzo en lugar del colectivo activo que lo aportó."
+      },
+      "30": {
+        word: "para",
+        category: "Finalidad / Complemento de adjetivo",
+        sentence: "...el abundante recaudo necesario <strong>para</strong> abrir las puertas de un espacio cultural digno.",
+        why: "El adjetivo «necesario» exige «para + infinitivo» cuando se indica la meta o fin para el cual algo es imprescindible («necesario para lograr X»).",
+        whyNot: "«Necesario por» señalaría la causa o justificación de la necesidad («necesario por ordenanza»), no el objetivo futuro a alcanzar."
+      }
+    };
+
     // Shuffled display order for definition target cards
     const vocabOrder = [
       'madrugar',
@@ -1928,7 +2277,7 @@
             return;
           }
 
-          if (node.classList.contains('vocab-in-text')) {
+          if (node.classList.contains('vocab-in-text') || node.classList.contains('prep-in-text')) {
             const wrap = document.createElement('span');
             wrap.className = 'reading-word';
             wrap.setAttribute('data-word-idx', String(wordIndex++));
@@ -2413,6 +2762,65 @@
             <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
           </svg>
           <div class="hint-text">${item.hint}</div>
+        </div>
+      `;
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('.lookup-btn')) return;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        hideModal();
+      });
+
+      document.body.appendChild(modal);
+      activeModalCard = modal;
+      showOverlay();
+    }
+
+    function getGooglePrepUrl(word, category) {
+      const q = `diferencia entre por y para en espanol uso de "${word}" en ${category}`;
+      return `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+    }
+
+    function showPrepModal(prepId) {
+      const data = prepData[prepId];
+      if (!data) return;
+
+      hideModal();
+
+      const modal = document.createElement('div');
+      modal.className = 'vocab-hint-modal prep-explanation-modal';
+      modal.id = 'active-hint-modal';
+      modal.innerHTML = `
+        <div class="prep-modal-header">
+          <div class="prep-modal-title-group">
+            <span class="prep-modal-word">${data.word}</span>
+            <span class="prep-modal-badge">${data.category}</span>
+          </div>
+          <a href="${getGooglePrepUrl(data.word, data.category)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+            <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </a>
+        </div>
+        <div class="prep-sentence-box">
+          ${data.sentence}
+        </div>
+        <div class="prep-breakdown">
+          <div class="prep-reason correct-reason">
+            <div class="prep-reason-title">
+              <svg class="prep-check-icon" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>¿Por qué «${data.word.toLowerCase()}»?</span>
+            </div>
+            <div class="prep-reason-text">${data.why}</div>
+          </div>
+          <div class="prep-reason contrast-reason">
+            <div class="prep-reason-title">
+              <svg class="prep-cross-icon" viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              <span>¿Por qué no «${data.word.toLowerCase() === 'por' ? 'para' : 'por'}»?</span>
+            </div>
+            <div class="prep-reason-text">${data.whyNot}</div>
+          </div>
+        </div>
+        <div class="prep-modal-footer">
+          <span>Toca o haz clic fuera para cerrar</span>
         </div>
       `;
 
@@ -3219,6 +3627,18 @@
           const key = span.getAttribute('data-key') || span.textContent.trim().toLowerCase();
           if (vocabData[key]) {
             showWordHintModal(key);
+          }
+        });
+      });
+
+      document.querySelectorAll('.prep-in-text').forEach(span => {
+        span.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (e.shiftKey) return;
+          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+          const prepId = span.getAttribute('data-prep');
+          if (prepData[prepId]) {
+            showPrepModal(prepId);
           }
         });
       });
