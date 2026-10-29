@@ -26,13 +26,13 @@ Whenever this skill runs, **always start with a `/grill-me` style interactive in
 
 ## 2. Directory and File Conventions
 
-- Determine a URL-friendly, SEO-friendly kebab-case directory name under `topics/` (e.g., `topics/regions-of-ecuador/`).
+- Determine a URL-friendly, SEO-friendly lowercase directory name **without hyphens** under `topics/` (e.g., `topics/regionsofecuador/`, `topics/colombia/`).
 - Inside that directory, create a single **self-contained** `index.html`.
 - **CRITICAL**: The activity must be **100% self-contained**:
   - All HTML, CSS, and JavaScript must reside within `index.html`.
   - No relative imports of local external CSS or JS files (so the file can be emailed or shared directly and opened offline).
   - Web fonts from Google Fonts or standard system fonts are permitted.
-  - If images/audio are needed, use absolute web URLs on the live domain, never relative local files.
+  - Activity images processed via `npm run pd` live in `topics/<foldername>/images/` and are referenced with local relative paths (`images/<lang>-<foldername>-<imagename>.<ext>`) so they work both locally and online.
 
 ---
 
@@ -74,14 +74,15 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
 - **Circular Section Numbers, Jump Links & Right-Side Action Hints**:
-  - **Centered Jump Links (1, 2, 3, 4)**: Positioned directly under the subtitle and before the Instructions toggle, a centered navigation bar (`.jump-nav`) displays four round numbers `1`, `2`, `3`, `4` inside circular badges (~32px diameter, background `#e6e0d2`, dark charcoal number centered) that smoothly scroll to `#seccion-1`, `#seccion-2`, `#seccion-3`, and `#seccion-4`.
-  - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
+  - **Centered Jump Links (1, 2, 3, 4 [and 5 when images exist])**: Positioned directly under the subtitle and before the Instructions toggle, a centered navigation bar (`.jump-nav`) displays round numbers `1`, `2`, `3`, `4` (and `5` when Section 5 Images is present) inside circular badges (~32px diameter, background `#e6e0d2`, dark charcoal number centered) that smoothly scroll to `#seccion-1`, `#seccion-2`, `#seccion-3`, `#seccion-4`, and `#seccion-5`.
+  - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`, `5`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>`, `<span class="section-num">5</span> Imágenes`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page so the top utility bar and "Índice de Actividades" link remain fully visible, without adding `#top` to the URL bar (`text-decoration: none; color: inherit; cursor: pointer;`).
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
     - Section 1: "read aloud" (in Spanish: `leer en voz alta`)
     - Section 2: "drag and drop" (in Spanish: `arrastrar y soltar`)
     - Section 3: "multiple choice" (in Spanish: `opción múltiple`)
     - Section 4: "answer and discuss" (in Spanish: `responder y debatir`)
+    - Section 5 (when images exist): "click to enlarge" (in Spanish: `clic para ampliar`)
   - On mobile (`max-width: 680px`), `.section-title` uses `flex-wrap: nowrap;` and Section 4 hides the word "abiertas" (`<span class="hide-mobile"> abiertas</span>`) so it displays just "Preguntas" and keeps "responder y debatir" on the same line.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
@@ -93,7 +94,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons. Single-click dismissals on dictionary cards are immediate without delay (0ms debounce), matching the hint modal.
 - **Mobile Page Whoosh Transitions (`max-width: 680px`)**:
   - When tapping an activity card in the catalog (`index.html`), the catalog sheet smoothly whooshes out to the left (`0 -> -105vw`) **simultaneously** as the activity page whooshes in from the right (`105vw -> 0`) at 100% full opacity (never fading to `opacity: 0`), while the dotted desk background stays stationary underneath.
-  - When tapping "Índice de Actividades" (back link) on an activity page, the activity page smoothly whooshes out to the right (`0 -> 105vw`) **simultaneously** as the catalog sheet whooshes in from the left (`-105vw -> 0`) at 100% full opacity across the stationary dotted desk background.
+  - When tapping "Índice de Actividades" (back link) on an activity page, instead of whooshing the article to the right, the **main menu whooshes in from the left (`-105vw -> 0`) directly over the stationary article**, covering and replacing it at 100% full opacity.
   - Coordinated via `sessionStorage` (`nav-direction: forward/backward`, plus outgoing page snapshot rendered in a fixed Shadow DOM overlay on the destination page) with a 0.3s cubic-bezier curve, cleaning up animation classes on completion.
   - Desktop retains standard instant navigation without sliding transitions.
 - **Dual Navigation, Mobile Vertical Centering & Embedded In-Place Reset Confirmation**:
@@ -152,9 +153,9 @@ Each activity file should include the following sections:
    - Supports mouse drag-and-drop, touch drag, and tap-to-select for smooth mobile support.
    - Word Dragging & Active Drop Targets:
      - While a word is being dragged (desktop or mobile), the word chip is visually hidden from the waiting pool (`opacity: 0; visibility: hidden;`) without collapsing the layout of other chips.
-     - When a dragged word is dropped onto a definition card and the modal opens (correct or wrong), the word MUST remain hidden in its slot in the top waiting pool (`opacity: 0; visibility: hidden;`)—it must NEVER pop back into the top group upon drop. If the match was **correct**, the word never returns to the top pool (when the green modal is clicked away, the top rows re-balance without it and the word moves to the completed pool below). Only if the match was **wrong** and **after** clicking the red modal away does the word return to the top waiting pool (or immediately if dropped outside any definition card).
+     - When a dragged word is dropped onto a definition card and the modal opens (correct or wrong), the word MUST remain hidden in its slot in the top waiting pool (`opacity: 0; visibility: hidden;`)—it must NEVER pop back into the top group upon drop. If the match was **correct**, the word never returns to the top pool (when the green modal is clicked away, the remaining words at the top smoothly animate via FLIP `transform` to fill the gap left by the word just used, and the word moves to the completed pool below). Only if the match was **wrong** and **after** clicking the red modal away does the word return to the top waiting pool (or immediately if dropped outside any definition card).
      - On desktop mouse drag, a custom floating word avatar (`.vocab-drag-avatar`) smoothly follows the cursor so the dragged word is always visible.
-     - Target cards acquire an active selectable appearance with a subtle clockwise-moving dashed outline ("marching ants" dots sliding around the border edge) while retaining their neutral background without abrupt background color flashes, giving a clear sense that time is passing until the user drops the word.
+     - Target cards acquire a very subtle, small, barely noticeable clockwise-moving dashed outline ("marching ants", `6px 1px` repeat size, `rgba(175, 165, 150, 0.5)`, `2s` cycle) while retaining their neutral background without abrupt background color flashes.
      - **Mobile 2x Floating Avatar**: During touch drag on mobile screens, an elevated floating clone avatar (`.vocab-touch-avatar`) is displayed 2x larger than standard text, positioned above the learner's finger (`transform: translate(-50%, -100%);`) so the finger never obscures the dragged word.
    - Equal Popup Padding: In all popups and modals (hint popup modal, wrong-drop state card, and correct-drop dictionary card), padding is uniform on all four sides (top, bottom, left, and right: 18px).
    - Word chip click on top: clicking a waiting chip opens a hint popup displaying the word title with a lookup icon next to it, followed by a warm amber lightbulb SVG icon (`#d97706`) and the hint text in the target language (hint helps without making the answer obvious, no trailing punctuation, no repeating word prefix).

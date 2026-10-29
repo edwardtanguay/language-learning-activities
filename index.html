@@ -334,6 +334,8 @@
         pointer-events: none;
       }
       .page-slide-in-left {
+        position: relative;
+        z-index: 10000;
         animation: pageSlideInFromLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
       @keyframes pageSlideInFromLeft {
@@ -533,10 +535,10 @@
       </article>
 
       <!-- Topic 1: Regions of Ecuador -->
-      <article class="activity-card" data-lang="es spanish español" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos" onclick="openCard('topics/regions-of-ecuador/index.html', event)">
+      <article class="activity-card" data-lang="es spanish español" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos" onclick="openCard('topics/regionsofecuador/index.html', event)">
         <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/regions-of-ecuador/index.html">Las Cuatro Regiones de Ecuador</a>
+            <a href="topics/regionsofecuador/index.html">Las Cuatro Regiones de Ecuador</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -617,7 +619,7 @@
       window.location.href = url;
     }
 
-    // Simultaneously whoosh outgoing activity page off to the right as main page whooshes in from the left
+    // Whoosh main menu in from the left over the stationary outgoing activity page, replacing it
     (function runIncomingTransition() {
       try {
         if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'backward') {
@@ -643,22 +645,27 @@
 
           if (outHtml) {
             const overlayHost = document.createElement('div');
-            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
+            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:1;';
             const shadow = overlayHost.attachShadow({ mode: 'open' });
             shadow.innerHTML = `
               ${outStyles}
               <style>
-                :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+                :host {
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                  overflow: hidden;
+                  animation: coverOutgoingArticle 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                }
                 .outgoing-stage {
                   width: 100%;
                   box-sizing: border-box;
                   padding: ${outPadding};
                   transform: translate3d(0, -${outScroll}px, 0);
-                  animation: whooshOutRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
                 }
-                @keyframes whooshOutRight {
-                  from { transform: translate3d(0, -${outScroll}px, 0); }
-                  to { transform: translate3d(105vw, -${outScroll}px, 0); }
+                @keyframes coverOutgoingArticle {
+                  from { clip-path: inset(0 0 0 0); }
+                  to { clip-path: inset(0 0 0 105vw); }
                 }
               </style>
               <div class="outgoing-stage">${outHtml}</div>

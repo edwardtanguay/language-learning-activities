@@ -412,21 +412,21 @@
         background-position: 0 0, 0 100%, 0 0, 100% 0;
       }
       100% {
-        background-position: 20px 0, -20px 100%, 0 -20px, 100% 20px;
+        background-position: 12px 0, -12px 100%, 0 -12px, 100% 12px;
       }
     }
 
     .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) {
       border-color: transparent !important;
       background-image: 
-        linear-gradient(90deg, #7a8a9e 50%, transparent 50%),
-        linear-gradient(90deg, #7a8a9e 50%, transparent 50%),
-        linear-gradient(0deg, #7a8a9e 50%, transparent 50%),
-        linear-gradient(0deg, #7a8a9e 50%, transparent 50%);
+        linear-gradient(90deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%),
+        linear-gradient(90deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%),
+        linear-gradient(0deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%),
+        linear-gradient(0deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%);
       background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-      background-size: 10px 1.5px, 10px 1.5px, 1.5px 10px, 1.5px 10px;
+      background-size: 6px 1px, 6px 1px, 1px 6px, 1px 6px;
       background-position: 0 0, 0 100%, 0 0, 100% 0;
-      animation: marchingAnts 1.2s linear infinite;
+      animation: marchingAnts 2s linear infinite;
       background-color: var(--paper-bg);
       box-shadow: none;
     }
@@ -878,6 +878,80 @@
     }
 
     /* =========================================================
+       SECTION 5: IMAGES & FULLSCREEN LIGHTBOX
+       ========================================================= */
+    .images-section {
+      margin-top: 18px;
+      margin-bottom: 24px;
+    }
+
+    .images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .image-thumb-wrap {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      padding: 4px;
+      border-radius: 2px;
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.06);
+      cursor: zoom-in;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      display: inline-flex;
+    }
+
+    .image-thumb-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue);
+    }
+
+    .image-thumb {
+      height: 150px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 1px;
+    }
+
+    .image-lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(24, 22, 20, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: zoom-out;
+      touch-action: none;
+    }
+
+    .image-lightbox-overlay.active {
+      display: flex;
+    }
+
+    .image-lightbox-img {
+      max-width: 94vw;
+      max-height: 92vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      transform-origin: center center;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* =========================================================
        BOTTOM ACTIONS BAR & STANDARDIZED FOOTER
        ========================================================= */
     .bottom-actions-bar {
@@ -1136,6 +1210,13 @@
         font-size: 12px;
         padding: 2px 6px;
       }
+      .image-thumb {
+        height: 130px;
+      }
+      .image-lightbox-img {
+        max-width: 98vw;
+        max-height: 92vh;
+      }
       .bottom-actions-bar {
         flex-direction: column;
         align-items: center;
@@ -1186,6 +1267,11 @@
   <!-- Fullscreen Dimming Overlay -->
   <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
 
+  <!-- Fullscreen Image Lightbox -->
+  <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
+    <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+  </div>
+
   <!-- Utility Nav -->
   <div class="utility-bar">
     <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
@@ -1217,6 +1303,7 @@
         <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
         <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
         <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Preguntas">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Imágenes">5</a>
       </nav>
     </header>
 
@@ -1518,6 +1605,20 @@
           ¿Conoces alguna obra del escritor colombiano Gabriel García Márquez o películas inspiradas en la cultura de Colombia, como <em>Encanto</em>? ¿Qué te llama más la atención de ese universo <span class="question-hint-wrap">cultural?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFConoces+alguna+obra+del+escritor+colombiano+Gabriel+Garc%C3%ADa+M%C3%A1rquez+o+pel%C3%ADculas+inspiradas+en+la+cultura+de+Colombia%2C+como+Encanto%3F+%C2%BFQu%C3%A9+te+llama+m%C3%A1s+la+atenci%C3%B3n+de+ese+universo+cultural%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
         </li>
       </ol>
+    </section>
+
+    <!-- Section 5: Images -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Imágenes</a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="images-grid">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomap.jpg', 'topomap')">
+          <img src="images/es-colombia-topomap.jpg" alt="topomap" class="image-thumb" loading="lazy">
+        </div>
+      </div>
     </section>
 
     <!-- Bottom Actions / Navigation -->
@@ -1823,7 +1924,7 @@
       }
     }
 
-    function renderVocabulary() {
+    function renderVocabulary(prevChipRects) {
       const pool = document.getElementById('vocab-pool');
       const targets = document.getElementById('vocab-targets');
       const completedPool = document.getElementById('vocab-completed-pool');
@@ -1871,6 +1972,31 @@
         };
 
         appendBalancedRows(pool, remainingKeys, createChip, 'vocab-pool-row');
+
+        if (prevChipRects) {
+          pool.querySelectorAll('.vocab-chip').forEach(chip => {
+            const k = chip.getAttribute('data-key');
+            const oldRect = prevChipRects[k];
+            if (oldRect) {
+              const newRect = chip.getBoundingClientRect();
+              const dx = oldRect.left - newRect.left;
+              const dy = oldRect.top - newRect.top;
+              if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+                chip.style.transition = 'none';
+                chip.style.transform = `translate(${dx}px, ${dy}px)`;
+                chip.getBoundingClientRect();
+                chip.style.transition = 'transform 0.28s cubic-bezier(0.25, 1, 0.5, 1)';
+                chip.style.transform = 'translate(0, 0)';
+                const cleanup = () => {
+                  chip.style.transition = '';
+                  chip.style.transform = '';
+                };
+                chip.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 320);
+              }
+            }
+          });
+        }
       }
 
       // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
@@ -2153,6 +2279,14 @@
     }
 
     function dismissCorrectState(wordKey) {
+      const prevChipRects = {};
+      document.querySelectorAll('#vocab-pool .vocab-chip').forEach(chip => {
+        const k = chip.getAttribute('data-key');
+        if (k && k !== wordKey) {
+          prevChipRects[k] = chip.getBoundingClientRect();
+        }
+      });
+
       hideOverlay();
       activeModalCard = null;
       activePlacedWordKey = null;
@@ -2160,7 +2294,7 @@
         completedVocab.push(wordKey);
         saveState();
       }
-      renderVocabulary();
+      renderVocabulary(prevChipRects);
     }
 
     function showOverlay() {
@@ -2464,6 +2598,159 @@
       renderVocabulary();
     }
 
+    // =========================================================
+    // SECTION 5: IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // =========================================================
+    let lbScale = 1;
+    let lbTranslateX = 0;
+    let lbTranslateY = 0;
+    let lbPinchStartDist = 0;
+    let lbPinchStartScale = 1;
+    let lbPanStartX = 0;
+    let lbPanStartY = 0;
+    let lbLastTouchX = 0;
+    let lbLastTouchY = 0;
+    let lbGestureMoved = false;
+    let lbIgnoreNextClick = false;
+
+    function applyLightboxTransform() {
+      const img = document.getElementById('image-lightbox-img');
+      if (img) {
+        img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
+      }
+    }
+
+    function openImageLightbox(src, alt) {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      if (!overlay || !img) return;
+      img.src = src;
+      img.alt = alt || '';
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbGestureMoved = false;
+      lbIgnoreNextClick = false;
+      applyLightboxTransform();
+      overlay.classList.add('active');
+    }
+
+    function closeImageLightbox() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      if (!overlay) return;
+      overlay.classList.remove('active');
+      if (img) {
+        img.src = '';
+        img.style.transform = '';
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+    }
+
+    function handleLightboxClick(e) {
+      if (lbIgnoreNextClick) {
+        lbIgnoreNextClick = false;
+        return;
+      }
+      closeImageLightbox();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+        }
+      }
+    });
+
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 2) {
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbGestureMoved = false;
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+        }, { passive: true });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), 6);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
     function captureOutgoingActivity(direction) {
       try {
         const styles = Array.from(document.querySelectorAll('style'))
@@ -2489,23 +2776,8 @@
       if (window.innerWidth <= 680) {
         if (e) e.preventDefault();
         const targetUrl = url || '../../index.html';
-        if (captureOutgoingActivity('backward')) {
-          window.location.href = targetUrl;
-          return false;
-        }
-        const sheet = document.querySelector('.handout-sheet');
-        const util = document.querySelector('.utility-bar');
-        if (sheet) {
-          sheet.classList.remove('page-slide-in-right');
-          sheet.classList.add('page-slide-out-right');
-        }
-        if (util) {
-          util.classList.remove('page-slide-in-right');
-          util.classList.add('page-slide-out-right');
-        }
-        setTimeout(() => {
-          window.location.href = targetUrl;
-        }, 280);
+        captureOutgoingActivity('backward');
+        window.location.href = targetUrl;
         return false;
       }
       return true;

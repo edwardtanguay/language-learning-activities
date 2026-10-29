@@ -1,0 +1,10 @@
+{
+  "name": "language-learning-activities",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-contained language learning activities and worksheets",
+  "scripts": {
+    "pd": "node scripts/parse-data.js"
+  }
+}
+
