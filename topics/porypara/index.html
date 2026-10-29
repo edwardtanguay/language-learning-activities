@@ -1,0 +1,3243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Bazar de la Cuadra: Dominando Por y Para | Actividad de Español B2</title>
+  <meta name="description" content="Actividad interactiva de español nivel B2 intermedio-avanzado sobre los usos y contrastes de por y para en el contexto de un bazar comunitario en Colombia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       1970s SCHOOL HANDOUT DESIGN SYSTEM
+       Simple, clean, nostalgic, paper-and-ink aesthetic
+       ========================================================= */
+    :root {
+      --paper-bg: #f9f6ef;
+      --paper-sheet: #fffdf9;
+      --ink-main: #22201e;
+      --ink-muted: #5e5953;
+      --ink-border: #d5cebf;
+      --ink-rule: #d5cebf;
+      --stamp-blue: #1d4373;
+      --lang-color: #be185d; /* Standard Spanish (es) */
+      --correct-green: #235c34;
+      --correct-bg: #eef7ee;
+      --wrong-red: #8f2a24;
+      --wrong-bg: #faeef0;
+      --highlight: #f2e9cb;
+      --font-typewriter: "Courier Prime", "Courier New", Courier, monospace;
+      --font-body: "Lora", Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    html, body {
+      touch-action: manipulation;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      color: var(--ink-main);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.65;
+      padding: 24px 16px;
+      background-image: radial-gradient(var(--ink-rule) 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    /* Top utility bar */
+    .utility-bar {
+      max-width: 860px;
+      margin: 0 auto 16px auto;
+      padding-top: 14px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+    }
+
+    .back-link {
+      color: var(--stamp-blue);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.1s ease, transform 0.1s ease;
+    }
+
+    .back-link:active {
+      opacity: 0.65;
+      transform: scale(0.97);
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .back-arrow {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.8;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Main Handout Container - Paper sheet with realistic desk drop-shadow */
+    .handout-sheet {
+      max-width: 860px;
+      margin: 0 auto;
+      background-color: var(--paper-sheet);
+      border: 1px solid #e8e2d5;
+      box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04);
+      border-radius: 3px;
+      padding: 38px 46px;
+      position: relative;
+    }
+
+    /* Worksheet Header */
+    .worksheet-header {
+      border: none;
+      padding: 0;
+      margin-bottom: 24px;
+      background: transparent;
+      font-family: var(--font-typewriter);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
+    .handout-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      font-family: var(--font-typewriter);
+      color: var(--ink-main);
+      margin-bottom: 0;
+    }
+
+    .handout-subtitle {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    .stamp-badge {
+      border: 3px solid var(--lang-color);
+      color: var(--lang-color);
+      padding: 6px 14px;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      transform: rotate(-2deg);
+      display: inline-block;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Section Jump Navigation */
+    .jump-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 18px auto 22px auto;
+    }
+
+    .jump-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+
+    .jump-num:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    /* Sticky / Floating Compact Section Navigation Pill */
+    .sticky-jump-nav {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translate(-50%, -150%);
+      z-index: 35;
+      background-color: rgba(255, 253, 249, 0.96);
+      border: 1px solid var(--ink-rule);
+      box-shadow: 0 6px 20px rgba(45, 40, 35, 0.14), 0 2px 6px rgba(45, 40, 35, 0.06);
+      border-radius: 999px;
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(4px);
+      transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sticky-jump-nav.visible {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sticky-jump-nav .jump-num {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+
+    .sticky-jump-nav .jump-num.active {
+      background-color: #c8beaa;
+      color: var(--ink-main);
+    }
+
+    .jump-return-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 28px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background-color: var(--highlight);
+      border: 1px solid var(--ink-rule);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1;
+      transition: background-color 0.15s, transform 0.15s;
+    }
+
+    .jump-return-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-return-btn:hover {
+      background-color: #e6dac0;
+      transform: translateY(-1px);
+    }
+
+    .jump-bookmark-btn {
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background-color: #e6e0d2;
+      color: var(--lang-color);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      padding: 0;
+      transition: background-color 0.15s, transform 0.15s, opacity 0.2s;
+    }
+
+    .jump-bookmark-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-bookmark-btn:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+    }
+
+    .jump-bookmark-btn svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    /* Handout Sections */
+    .section-title {
+      font-family: var(--font-typewriter);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--ink-rule);
+      padding-bottom: 8px;
+      margin: 36px 0 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      scroll-margin-top: 62px;
+    }
+
+    .section-title-link {
+      color: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .section-title-link:hover {
+      opacity: 0.8;
+    }
+
+    .section-action-hint {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--ink-muted);
+      opacity: 0.65;
+    }
+
+    .section-title .section-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      margin-right: 0;
+      flex-shrink: 0;
+    }
+
+    /* Instructions callout (Roll-out / Roll-up) */
+    .instructions-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      padding: 9px 16px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: padding 0.25s ease;
+    }
+
+    .instructions-box.expanded {
+      padding: 12px 16px;
+    }
+
+    .instructions-heading {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-bottom: 0;
+      color: var(--ink-main);
+      transition: margin-bottom 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-heading {
+      margin-bottom: 8px;
+    }
+
+    .instructions-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .instructions-inner {
+      overflow: hidden;
+    }
+
+    .instructions-block {
+      margin-bottom: 4px;
+    }
+
+    .instructions-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .instructions-label {
+      font-weight: 700;
+    }
+
+    /* Reading Passage */
+    .reading-content p {
+      margin-bottom: 16px;
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+
+    .vocab-in-text {
+      background-color: rgba(242, 233, 203, 0.55);
+      padding: 0 2px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .reading-word.has-bookmark {
+      white-space: nowrap;
+    }
+
+    .reading-bookmark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lang-color);
+      cursor: pointer;
+      margin-right: 3px;
+      vertical-align: -2px;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .reading-bookmark:hover {
+      transform: scale(1.18);
+      opacity: 0.85;
+    }
+
+    .reading-bookmark svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .story-card {
+      margin-bottom: 22px;
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .story-card h3 {
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+      margin-bottom: 8px;
+      text-transform: none;
+    }
+
+    /* =========================================================
+       SECTION 2: VOCABULARIO (DRAG / DROP & HINT EXERCISE)
+       ========================================================= */
+    .vocab-container {
+      margin-top: 14px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .vocab-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 580px;
+      margin: 0 auto 16px auto;
+      gap: 6px;
+      min-height: 32px;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .vocab-pool-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-chip {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 3px 8px;
+      cursor: grab;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .vocab-chip:active {
+      cursor: grabbing;
+    }
+
+    .vocab-chip.dragging {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    .vocab-targets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) * {
+      pointer-events: none;
+    }
+
+    .vocab-drag-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1.5px solid var(--stamp-blue);
+      box-shadow: 0 6px 18px rgba(45, 40, 35, 0.22);
+      padding: 4px 10px;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .vocab-touch-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -100%);
+      font-family: var(--font-typewriter);
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 2px solid var(--stamp-blue);
+      box-shadow: 0 10px 28px rgba(45, 40, 35, 0.25);
+      padding: 6px 14px;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .vocab-target-card {
+      background-color: var(--paper-bg);
+      border: 1px dashed var(--ink-rule);
+      border-radius: 0;
+      padding: 8px 12px;
+      transition: background-color 0.15s ease;
+      cursor: pointer;
+      position: relative;
+      background-origin: border-box;
+    }
+
+    .vocab-targets.vocab-dragging-active .vocab-target-card.drag-over:not(.state-wrong):not(.state-correct),
+    .vocab-target-card.drag-over:not(.state-wrong):not(.state-correct) {
+      background-color: #e4dfd5 !important;
+      box-shadow: none !important;
+    }
+
+    .vocab-target-def {
+      font-size: 14px;
+      line-height: 1.35;
+      color: var(--ink-main);
+    }
+
+    /* Wrong Drop State */
+    .vocab-target-card.state-wrong {
+      background: #fbe4e4 !important;
+      border: 1px solid #eba8a8 !important;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
+      cursor: pointer;
+      padding: 18px 18px !important;
+    }
+
+    .wrong-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wrong-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 3.2;
+      stroke: var(--wrong-red);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wrong-def-text {
+      color: var(--ink-main);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .hint-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .hint-lightbulb-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .hint-text {
+      color: var(--ink-main);
+      font-size: 14px;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .lookup-btn {
+      color: var(--stamp-blue);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .lookup-btn:hover {
+      background-color: var(--paper-bg);
+      color: var(--ink-main);
+    }
+
+    .vocab-hint-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-border);
+      box-shadow: 0 14px 40px rgba(45, 40, 35, 0.25);
+      padding: 18px 18px;
+      z-index: 100;
+      width: 90%;
+      max-width: 480px;
+      cursor: pointer;
+    }
+
+    /* Correct Drop / Complete Dictionary Entry Card */
+    .vocab-target-card.state-correct,
+    .vocab-dict-card {
+      background: #e3f5e5 !important;
+      border: 1px solid #a3d9a8 !important;
+      box-shadow: 0 10px 32px rgba(45, 40, 35, 0.16);
+      z-index: 50;
+      padding: 18px 18px !important;
+      cursor: default;
+    }
+
+    .dict-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .dict-check-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 3.2;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .dict-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--ink-rule);
+      padding-bottom: 6px;
+    }
+
+    .dict-word {
+      font-family: var(--font-typewriter);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+    }
+
+    .dict-pos {
+      font-style: italic;
+      color: var(--ink-muted);
+      font-size: 14px;
+      font-family: var(--font-body);
+    }
+
+    .dict-def {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      color: var(--ink-main);
+    }
+
+    .dict-sentence {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--ink-muted);
+      border-left: 3px solid var(--stamp-blue);
+      padding-left: 12px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .dict-sentence mark {
+      background: var(--highlight);
+      color: var(--ink-main);
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+
+    /* Completed Words Section */
+    .vocab-completed-section {
+      margin-top: 16px;
+    }
+
+    .vocab-completed-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .vocab-completed-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-completed-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink-main);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .vocab-completed-pill:hover {
+      background: var(--paper-bg);
+      border-color: var(--correct-green);
+    }
+
+    .vocab-completed-pill .check-icon {
+      width: 14px;
+      height: 14px;
+      stroke-width: 3.2;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+    }
+
+    .vocab-completed-detail-area {
+      margin-bottom: 14px;
+    }
+
+    /* Page Dimming Overlay */
+    .vocab-dim-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(34, 32, 30, 0.45);
+      z-index: 40;
+      backdrop-filter: blur(1px);
+    }
+
+    .vocab-dim-overlay.active {
+      display: block;
+    }
+
+    /* =========================================================
+       SECTION 3: COMPREHENSION QUIZ (MULTIPLE CHOICE)
+       ========================================================= */
+    .quiz-container {
+      margin-top: 20px;
+    }
+
+    .question-card {
+      border: none;
+      padding: 22px;
+      margin-bottom: 22px;
+      background: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgba(45, 40, 35, 0.03);
+    }
+
+    .question-prompt {
+      font-weight: 700;
+      font-size: 17px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .q-number {
+      font-family: var(--font-typewriter);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink-main);
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+      margin-right: 2px;
+    }
+
+    .options-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-left: 28px;
+    }
+
+    .option-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 4px 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.45;
+      border-radius: 0;
+      transition: color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .option-item:hover {
+      background: transparent;
+    }
+
+    .option-item.selected .opt-letter {
+      color: var(--stamp-blue);
+      font-weight: 800;
+    }
+
+    .opt-letter {
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+
+    .opt-text {
+      flex: 1;
+    }
+
+    .feedback-box {
+      display: none;
+      margin-top: 4px;
+      margin-bottom: 6px;
+      margin-left: 20px;
+      padding: 8px 12px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      background-color: var(--paper-bg);
+    }
+
+    .feedback-box.show {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .feedback-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke-width: 3.2;
+      margin-top: 2px;
+    }
+
+    .feedback-box.correct-text {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+    }
+
+    .feedback-box.correct-text .feedback-icon {
+      stroke: var(--correct-green);
+      color: var(--correct-green);
+    }
+
+    .feedback-box.wrong-text {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+    }
+
+    .feedback-box.wrong-text .feedback-icon {
+      stroke: var(--wrong-red);
+      color: var(--wrong-red);
+    }
+
+    .feedback-content {
+      flex: 1;
+      line-height: 1.5;
+      color: var(--ink-main);
+    }
+
+    /* =========================================================
+       SECTION 4: PREGUNTAS DE DISCUSIÓN
+       ========================================================= */
+    .discussion-container {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin-top: 18px;
+    }
+
+    .discussion-questions {
+      list-style-type: decimal;
+      padding-left: 22px;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .discussion-questions li {
+      padding-left: 4px;
+      line-height: 1.55;
+    }
+
+    .question-hint-wrap {
+      white-space: nowrap;
+    }
+
+    .question-hint-btn {
+      color: #d97706;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      vertical-align: -2px;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+
+    .question-hint-btn:hover {
+      transform: scale(1.18);
+      opacity: 0.85;
+    }
+
+    .question-hint-btn svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    /* =========================================================
+       BOTTOM ACTIONS BAR & STANDARDIZED FOOTER
+       ========================================================= */
+    .bottom-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 36px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid var(--ink-rule);
+      border-bottom: 1px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .reset-container {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .reset-answers-btn {
+      background: none;
+      border: none;
+      color: var(--ink-muted);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      line-height: 1;
+      border-radius: 3px;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .reset-answers-btn:hover {
+      color: var(--ink-main);
+      background-color: var(--paper-bg);
+    }
+
+    .reset-icon {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2.2;
+      stroke: currentColor;
+    }
+
+    .reset-confirm-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      background-color: var(--paper-bg);
+      border: 1px solid var(--ink-rule);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+
+    .reset-confirm-text {
+      color: var(--wrong-red);
+      font-weight: 700;
+    }
+
+    .reset-confirm-btn {
+      background: var(--wrong-red);
+      color: #fff;
+      border: 1px solid var(--wrong-red);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      padding: 6px 10px 4px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      font-weight: 700;
+      transition: opacity 0.15s;
+      line-height: 1.2;
+    }
+
+    .reset-confirm-btn:hover {
+      opacity: 0.88;
+    }
+
+    .reset-cancel-btn {
+      background: var(--paper-sheet);
+      color: var(--ink-muted);
+      border: 1px solid var(--ink-border);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      padding: 6px 10px 4px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: color 0.15s, background-color 0.15s;
+      line-height: 1.2;
+    }
+
+    .reset-cancel-btn:hover {
+      color: var(--ink-main);
+      background-color: #fff;
+    }
+
+    .handout-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 0;
+      padding-top: 20px;
+      border-top: none;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      color: var(--ink-muted);
+      flex-wrap: wrap;
+    }
+
+    .handout-footer a {
+      color: var(--ink-main);
+      text-decoration: underline;
+    }
+
+    .handout-footer a:hover {
+      color: var(--stamp-blue);
+    }
+
+    /* =========================================================
+       RESPONSIVE LAYOUTS
+       ========================================================= */
+    @media (max-width: 680px) {
+      body {
+        overflow-x: hidden;
+        padding: 0 8px 12px 8px;
+      }
+      .handout-sheet, .utility-bar {
+        transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .page-slide-out-right {
+        transform: translateX(105vw) !important;
+        pointer-events: none;
+      }
+      .page-slide-in-right {
+        animation: pageSlideInFromRight 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      @keyframes pageSlideInFromRight {
+        from {
+          transform: translateX(105vw);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      .utility-bar {
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 24px 0 14px 0;
+      }
+      .handout-sheet {
+        padding: 20px 16px;
+      }
+      .header-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .stamp-badge {
+        margin: 4px auto 0 auto;
+        align-self: center;
+      }
+      .handout-title-group {
+        text-align: center;
+        width: 100%;
+      }
+      .handout-title-group h1 {
+        font-size: 21px;
+        line-height: 1.2;
+        letter-spacing: -0.2px;
+        text-align: center;
+      }
+      .handout-subtitle {
+        font-size: 15px;
+        line-height: 1.35;
+        margin-top: 14px;
+        margin-bottom: 14px;
+        text-align: center;
+      }
+      .jump-nav {
+        gap: 12px;
+        margin: 14px auto 18px auto;
+      }
+      .jump-num {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+      }
+      .instructions-heading {
+        text-align: center;
+      }
+      .section-title {
+        font-size: 15px;
+        letter-spacing: 0;
+        line-height: 1.25;
+        flex-wrap: nowrap;
+        gap: 6px;
+      }
+      .section-title-link {
+        gap: 6px;
+      }
+      .hide-mobile {
+        display: none;
+      }
+      .section-title .section-num {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+        margin-right: 0;
+      }
+      .section-action-hint {
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .options-list {
+        padding-left: 24px;
+      }
+      .vocab-pool {
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      .vocab-pool-row {
+        gap: 5px;
+      }
+      .vocab-chip {
+        font-size: 12px;
+        padding: 2px 6px;
+      }
+      .vocab-targets {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .vocab-target-card {
+        padding: 6px 10px;
+      }
+      .vocab-target-def {
+        font-size: 12.5px;
+        line-height: 1.3;
+      }
+      .vocab-completed-pool {
+        gap: 5px;
+      }
+      .vocab-completed-row {
+        gap: 5px;
+      }
+      .vocab-completed-pill {
+        font-size: 12px;
+        padding: 2px 6px;
+      }
+      .bottom-actions-bar {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+      }
+      .bottom-actions-bar .reset-container {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+      }
+      .bottom-actions-bar .reset-answers-btn {
+        padding: 0 10px;
+      }
+      .bottom-actions-bar .back-link {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+      }
+      .handout-footer {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Compact Navigation Pill -->
+  <nav class="sticky-jump-nav" id="sticky-jump-nav" aria-label="Navegación rápida de secciones"></nav>
+
+  <!-- Top Utility Bar -->
+  <div class="utility-bar">
+    <a href="../../index.html" class="back-link" onclick="return handleBackNavigation(event, '../../index.html')">
+      <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>Índice de Actividades</span>
+    </a>
+  </div>
+
+  <!-- Main Worksheet Paper Sheet -->
+  <main class="handout-sheet" id="top">
+
+    <!-- Header Section -->
+    <header class="worksheet-header">
+      <div class="header-top">
+        <div class="handout-title-group">
+          <h1>El Bazar de la Cuadra: Dominando Por y Para</h1>
+        </div>
+        <div class="stamp-badge">Español B2</div>
+      </div>
+      <p class="handout-subtitle">
+        Una animada jornada comunitaria en Medellín donde dos amigos organizan un bazar solidario mientras desentrañan las diferencias esenciales entre «por» y «para».
+      </p>
+
+      <!-- Centered Jump Links -->
+      <nav class="jump-nav" aria-label="Enlaces rápidos de sección">
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Lectura">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Preguntas">4</a>
+      </nav>
+
+      <!-- Roll-out / Roll-up Instructions Callout -->
+      <div class="instructions-box" id="instructions-box" onclick="toggleInstructions(event)" role="region" aria-expanded="false" tabindex="0" title="Clic para desplegar o plegar instrucciones">
+        <div class="instructions-heading">INSTRUCCIONES</div>
+        <div class="instructions-content">
+          <div class="instructions-inner">
+            <div class="instructions-block">
+              <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
+            </div>
+            <div class="instructions-block">
+              <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: READING PASSAGE -->
+    <section>
+      <h2 class="section-title" id="seccion-1">
+        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+          <span class="section-num">1</span> Lectura
+        </a>
+        <span class="section-action-hint">leer en voz alta</span>
+      </h2>
+
+      <div class="reading-content" id="reading-passage">
+        <div class="story-card">
+          <h3>El motivo y el destino</h3>
+          <p>
+            En un alegre barrio de Medellín, Mateo y Valentina compartían un reconfortante tintico en la <span class="vocab-in-text" data-key="vispera">víspera</span> del gran bazar solidario. Aquel festival había sido convocado por la junta comunal para financiar las mejoras de la biblioteca infantil del vecindario. Mientras pegaban carteles informativos por las paredes de cada esquina, Mateo confesó con humor su constante inseguridad al redactar los letreros. Valentina sonrió y decidió aclararle el panorama: empleamos «por» cuando expresamos la causa profunda, el motivo o la razón de actuar, como movilizarse con entusiasmo por amor al barrio; por el contrario, reservamos «para» para señalar el propósito futuro, la meta concreta o el beneficiario, tal como conseguir útiles escolares para los pequeños lectores. Además, Valentina añadió que «por» sirve para indicar el medio de comunicación o transporte, como difundir la invitación por redes sociales, mientras que «para» expresa una opinión personal, como cuando afirmamos que para nosotros la educación es prioritaria.
+          </p>
+        </div>
+
+        <div class="story-card">
+          <h3>El tiempo, los plazos y el recorrido</h3>
+          <p>
+            Para dejar la logística completamente lista antes de la apertura, a ambos muchachos les tocó <span class="vocab-in-text" data-key="madrugar">madrugar</span> con energía el sábado por la mañana. Durante tres horas recorrieron paso a paso la <span class="vocab-in-text" data-key="cuadra">cuadra</span> central, coordinando los puestos y transportando carpas bajo un cielo despejado. «Observa bien la diferencia espacial», señaló Valentina mientras avanzaban con prisa por el parque: «nos movemos por estas calles porque son la vía por donde transitamos, pero caminamos hacia la cancha deportiva para instalar la tarima principal». Del mismo modo, el montaje demandó paciencia por el intenso calor del mediodía, aunque la hora límite para inaugurar el bazar estaba programada para las dos de la tarde.
+          </p>
+        </div>
+
+        <div class="story-card">
+          <h3>Intercambios, tareas y puntos de vista</h3>
+          <p>
+            Para sortear el embotellamiento vehicular, un vecino voluntario tomó un oportuno <span class="vocab-in-text" data-key="atajo">atajo</span> por un sendero estrecho y llegó con el equipo de sonido contratado por los organizadores. El éxito colectivo dependía de un riguroso <span class="vocab-in-text" data-key="reparto">reparto</span> de tareas distribuido para que cada quien colaborara sin agotarse. En varios toldos se fomentó el <span class="vocab-in-text" data-key="trueque">trueque</span> comunitario, cambiando libros usados por frutas frescas traídas del campo. Las monedas entregadas con generosidad por los visitantes tintineaban sin cesar en la <span class="vocab-in-text" data-key="alcancia">alcancía</span> colocada junto a la entrada. Al finalizar el animado <span class="vocab-in-text" data-key="recorrido">recorrido</span> por los puestos, los anfitriones ofrecieron un delicioso <span class="vocab-in-text" data-key="agasajo">agasajo</span> con chocolate y buñuelos recién hechos para atender a la cuadrilla. Para Mateo, la distinción lingüística ya no albergaba misterio: todo el esfuerzo brindado por el vecindario había asegurado el abundante <span class="vocab-in-text" data-key="recaudo">recaudo</span> necesario para abrir las puertas de un espacio cultural digno.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: VOCABULARY -->
+    <section class="vocab-section">
+      <h2 class="section-title" id="seccion-2">
+        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+          <span class="section-num">2</span> Vocabulario
+        </a>
+        <span class="section-action-hint">arrastrar y soltar</span>
+      </h2>
+
+      <div class="vocab-container">
+        <!-- Top Waiting Words Pool -->
+        <div class="vocab-pool" id="vocab-pool" aria-label="Palabras disponibles para emparejar"></div>
+
+        <!-- Middle Target Definition Cards (Shuffled Order) -->
+        <div class="vocab-targets" id="vocab-targets" aria-label="Definiciones"></div>
+
+        <!-- Detail Preview Area for Completed Words -->
+        <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+        <!-- Bottom Completed Words Pool -->
+        <div class="vocab-completed-section">
+          <div class="vocab-completed-pool" id="vocab-completed-pool" aria-label="Palabras emparejadas con éxito"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: COMPREHENSION QUIZ -->
+    <section>
+      <h2 class="section-title" id="seccion-3">
+        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+          <span class="section-num">3</span> Comprensión
+        </a>
+        <span class="section-action-hint">opción múltiple</span>
+      </h2>
+
+      <div class="quiz-container">
+        <!-- Question 1 -->
+        <article class="question-card" data-q="1" data-correct="A">
+          <div class="question-prompt">
+            <span class="q-number">1.</span>
+            <span>¿Por qué motivo principal organizó la junta comunal el bazar en el vecindario?</span>
+          </div>
+          <ul class="options-list">
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(1, 'A')">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">Para recaudar fondos destinados a mejorar la biblioteca infantil comunitaria.</span>
+              </button>
+              <div class="feedback-box" id="feedback-1-A"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(1, 'B')">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">Para promover la venta comercial de artesanías costosas de otras ciudades.</span>
+              </button>
+              <div class="feedback-box" id="feedback-1-B"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(1, 'C')">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">Por culpa de una sanción administrativa que obligaba a los vecinos a limpiar las calles.</span>
+              </button>
+              <div class="feedback-box" id="feedback-1-C"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(1, 'D')">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">Para contratar a un equipo profesional de constructores para remodelar el parque.</span>
+              </button>
+              <div class="feedback-box" id="feedback-1-D"></div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Question 2 -->
+        <article class="question-card" data-q="2" data-correct="A">
+          <div class="question-prompt">
+            <span class="q-number">2.</span>
+            <span>Según la explicación que Valentina le da a Mateo, ¿cuál es la diferencia clave entre «por» y «para»?</span>
+          </div>
+          <ul class="options-list">
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(2, 'A')">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">«Por» indica el motivo, la causa o el medio, mientras que «para» expresa la finalidad, el destinatario o la meta.</span>
+              </button>
+              <div class="feedback-box" id="feedback-2-A"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(2, 'B')">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">«Por» se utiliza únicamente con personas y «para» solo se emplea para objetos inanimados.</span>
+              </button>
+              <div class="feedback-box" id="feedback-2-B"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(2, 'C')">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">«Por» expresa exclusivamente un plazo futuro y «para» denota la duración de un suceso en el pasado.</span>
+              </button>
+              <div class="feedback-box" id="feedback-2-C"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(2, 'D')">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">«Por» señala una opinión personal subjetiva y «para» se usa para citar fuentes científicas objetivas.</span>
+              </button>
+              <div class="feedback-box" id="feedback-2-D"></div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Question 3 -->
+        <article class="question-card" data-q="3" data-correct="A">
+          <div class="question-prompt">
+            <span class="q-number">3.</span>
+            <span>En la frase «caminamos hacia la cancha deportiva para instalar la tarima», ¿por qué se utiliza la preposición «para»?</span>
+          </div>
+          <ul class="options-list">
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(3, 'A')">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">Porque expresa el propósito o la meta final que motiva el desplazamiento hacia la cancha.</span>
+              </button>
+              <div class="feedback-box" id="feedback-3-A"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(3, 'B')">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">Porque indica la causa involuntaria que obligó a los jóvenes a salir de sus hogares.</span>
+              </button>
+              <div class="feedback-box" id="feedback-3-B"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(3, 'C')">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">Porque señala el medio de transporte mecánico a través del cual viajaron.</span>
+              </button>
+              <div class="feedback-box" id="feedback-3-C"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(3, 'D')">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">Porque denota un canje comercial de precios o intercambio de bienes.</span>
+              </button>
+              <div class="feedback-box" id="feedback-3-D"></div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Question 4 -->
+        <article class="question-card" data-q="4" data-correct="A">
+          <div class="question-prompt">
+            <span class="q-number">4.</span>
+            <span>¿Qué solución creativa implementaron los asistentes en varios puestos para conseguir bienes sin dinero?</span>
+          </div>
+          <ul class="options-list">
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(4, 'A')">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">El trueque solidario, cambiando libros usados por frutas frescas del campo.</span>
+              </button>
+              <div class="feedback-box" id="feedback-4-A"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(4, 'B')">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">Una rifa internacional de viajes organizada por internet.</span>
+              </button>
+              <div class="feedback-box" id="feedback-4-B"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(4, 'C')">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">La subasta de objetos antiguos al mejor postor extranjero.</span>
+              </button>
+              <div class="feedback-box" id="feedback-4-C"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(4, 'D')">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">El préstamo bancario con intereses reducidos para comprar víveres.</span>
+              </button>
+              <div class="feedback-box" id="feedback-4-D"></div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Question 5 -->
+        <article class="question-card" data-q="5" data-correct="A">
+          <div class="question-prompt">
+            <span class="q-number">5.</span>
+            <span>En la oración «el montaje demandó paciencia por el intenso calor del mediodía», ¿qué función cumple «por»?</span>
+          </div>
+          <ul class="options-list">
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(5, 'A')">
+                <span class="opt-letter">A.</span>
+                <span class="opt-text">Introduce la causa o motivo que hizo difícil el trabajo y exigió serenidad.</span>
+              </button>
+              <div class="feedback-box" id="feedback-5-A"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(5, 'B')">
+                <span class="opt-letter">B.</span>
+                <span class="opt-text">Señala el destinatario o beneficiario que va a recibir el calor.</span>
+              </button>
+              <div class="feedback-box" id="feedback-5-B"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(5, 'C')">
+                <span class="opt-letter">C.</span>
+                <span class="opt-text">Fija una fecha límite estricta e ineludible para concluir el montaje.</span>
+              </button>
+              <div class="feedback-box" id="feedback-5-C"></div>
+            </li>
+            <li class="option-wrapper">
+              <button type="button" class="option-item" onclick="selectOption(5, 'D')">
+                <span class="opt-letter">D.</span>
+                <span class="opt-text">Indica el precio monetario exacto pagado por la instalación de las carpas.</span>
+              </button>
+              <div class="feedback-box" id="feedback-5-D"></div>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 4: OPEN DISCUSSION QUESTIONS -->
+    <section>
+      <h2 class="section-title" id="seccion-4">
+        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+          <span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+        </a>
+        <span class="section-action-hint">responder y debatir</span>
+      </h2>
+
+      <div class="discussion-container">
+        <ol class="discussion-questions">
+          <li>
+            ¿Qué estrategias o reglas mnemotécnicas utilizas tú para recordar cuándo usar «por» y cuándo usar «para» en español al hablar o <span class="question-hint-wrap">escribir?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish,+assume+you+are+from+Germany:+%22%C2%BFQu%C3%A9+estrategias+o+reglas+mnemot%C3%A9nicas+utilizas+t%C3%BA+para+recordar+cu%C3%A1ndo+usar+por+y+cu%C3%A1ndo+usar+para+en+espa%C3%B1ol+al+hablar+o+escribir%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Ver respuesta de ejemplo en Google" aria-label="Ver respuesta de ejemplo en Google"><svg viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </li>
+          <li>
+            ¿En qué causas sociales o iniciativas de tu comunidad o vecindario te gustaría participar como voluntario, y por qué <span class="question-hint-wrap">razones?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish,+assume+you+are+from+Germany:+%22%C2%BFEn+qu%C3%A9+causas+sociales+o+iniciativas+de+tu+comunidad+o+vecindario+te+gustar%C3%ADa+participar+como+voluntario,+y+por+qu%C3%A9+razones%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Ver respuesta de ejemplo en Google" aria-label="Ver respuesta de ejemplo en Google"><svg viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </li>
+          <li>
+            ¿Qué opinas de alternativas económicas comunitarias como el trueque en comparación con las transacciones comerciales <span class="question-hint-wrap">convencionales?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish,+assume+you+are+from+Germany:+%22%C2%BFQu%C3%A9+opinas+de+alternativas+econ%C3%B3micas+comunitarias+como+el+trueque+en+comparaci%C3%B3n+con+las+transacciones+comerciales+convencionales%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Ver respuesta de ejemplo en Google" aria-label="Ver respuesta de ejemplo en Google"><svg viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </li>
+          <li>
+            Si tuvieras que organizar un evento solidario en tu barrio para el próximo mes, ¿qué actividades prepararías y para quiénes estaría <span class="question-hint-wrap">destinado?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish,+assume+you+are+from+Germany:+%22Si+tuvieras+que+organizar+un+evento+solidario+en+tu+barrio+para+el+pr%C3%B3ximo+mes,+%C2%BFqu%C3%A9+actividades+preparar%C3%ADas+y+para+qui%C3%A9nes+estar%C3%ADa+destinado%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Ver respuesta de ejemplo en Google" aria-label="Ver respuesta de ejemplo en Google"><svg viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Bottom Actions Bar -->
+    <div class="bottom-actions-bar">
+      <div class="reset-container">
+        <button type="button" class="reset-answers-btn" id="reset-btn" onclick="requestReset()">
+          <svg class="reset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          <span>Reiniciar respuestas</span>
+        </button>
+        <div class="reset-confirm-box" id="reset-confirm-box" style="display: none;">
+          <span class="reset-confirm-text">¿Confirmar reinicio?</span>
+          <button type="button" class="reset-cancel-btn" onclick="cancelReset()">Cancelar</button>
+          <button type="button" class="reset-confirm-btn" onclick="confirmReset()">Sí, reiniciar</button>
+        </div>
+      </div>
+
+      <a href="../../index.html" class="back-link" onclick="return handleBackNavigation(event, '../../index.html')">
+        <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Índice de Actividades</span>
+      </a>
+    </div>
+
+    <!-- Standardized Worksheet Footer -->
+    <footer class="handout-footer">
+      <span>See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+    </footer>
+
+  </main>
+
+  <!-- Page Dim Overlay for Active Modals -->
+  <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
+
+  <script>
+    // =========================================================
+    // STATE & CONFIGURATION
+    // =========================================================
+    const STORAGE_KEY = 'activity_porypara';
+
+    let userAnswers = {};
+    let completedVocab = [];
+    let readingBookmarks = [];
+    let activeModalCard = null;
+    let draggedWordKey = null;
+    let activePlacedWordKey = null;
+
+    // 10 Hardest Non-Cognate Vocabulary Words from the Text
+    const vocabData = {
+      vispera: {
+        word: "víspera",
+        pos: "sustantivo femenino",
+        def: "Día o momento inmediatamente anterior a un acontecimiento, fecha señalada o festividad.",
+        hint: "Se refiere al día o tiempo justo antes de una fecha o celebración especial",
+        sentence: "En un alegre barrio de Medellín, Mateo y Valentina compartían un reconfortante tintico en la víspera del gran bazar solidario."
+      },
+      madrugar: {
+        word: "madrugar",
+        pos: "verbo intransitivo",
+        def: "Levantarse de la cama a tempranas horas de la mañana, habitualmente al amanecer.",
+        hint: "Acción de levantarse muy temprano en la mañana",
+        sentence: "Para dejar la logística completamente lista antes de la apertura, a ambos muchachos les tocó madrugar con energía el sábado por la mañana."
+      },
+      cuadra: {
+        word: "cuadra",
+        pos: "sustantivo femenino",
+        def: "Tramo de una calle comprendido entre dos esquinas consecutivas de una manzana urbana.",
+        hint: "Distancia o segmento de calle entre una esquina y la siguiente",
+        sentence: "Durante tres horas recorrieron paso a paso la cuadra central, coordinando los puestos y transportando carpas bajo un cielo despejado."
+      },
+      atajo: {
+        word: "atajo",
+        pos: "sustantivo masculino",
+        def: "Camino o sendero más corto que se toma para llegar a un lugar desviándose de la vía habitual.",
+        hint: "Vía secundaria más breve que se toma para ahorrar tiempo en el camino",
+        sentence: "Para sortear el embotellamiento vehicular, un vecino voluntario tomó un oportuno atajo por un sendero estrecho y llegó con el equipo de sonido contratado por los organizadores."
+      },
+      reparto: {
+        word: "reparto",
+        pos: "sustantivo masculino",
+        def: "Distribución o asignación ordenada de cosas, tareas o funciones entre varias personas.",
+        hint: "División y asignación ordenada de responsabilidades o elementos entre un grupo",
+        sentence: "El éxito colectivo dependía de un riguroso reparto de tareas distribuido para que cada quien colaborara sin agotarse."
+      },
+      trueque: {
+        word: "trueque",
+        pos: "sustantivo masculino",
+        def: "Intercambio directo de bienes, servicios o productos sin la mediación de dinero.",
+        hint: "Intercambio de un bien por otro sin usar dinero en efectivo",
+        sentence: "En varios toldos se fomentó el trueque comunitario, cambiando libros usados por frutas frescas traídas del campo."
+      },
+      alcancia: {
+        word: "alcancía",
+        pos: "sustantivo femenino",
+        def: "Recipiente cerrado con una ranura estrecha en la parte superior que se usa para guardar y reunir monedas o billetes.",
+        hint: "Recipiente con una pequeña ranura donde se guardan y ahorran monedas",
+        sentence: "Las monedas entregadas con generosidad por los visitantes tintineaban sin cesar en la alcancía colocada junto a la entrada."
+      },
+      recorrido: {
+        word: "recorrido",
+        pos: "sustantivo masculino",
+        def: "Itinerario, trayecto o camino físico que se transita de un punto de inicio a un destino.",
+        hint: "Trayecto o camino que se transita visitando distintos puntos",
+        sentence: "Al finalizar el animado recorrido por los puestos, los anfitriones ofrecieron un delicioso agasajo con chocolate y buñuelos recién hechos para atender a la cuadrilla."
+      },
+      agasajo: {
+        word: "agasajo",
+        pos: "sustantivo masculino",
+        def: "Atención afectuosa, banquete o agasajo culinario que se brinda a los invitados en señal de hospitalidad o agradecimiento.",
+        hint: "Demostración de afecto o comida especial con la que se atiende y agradece a las personas",
+        sentence: "Al finalizar el animado recorrido por los puestos, los anfitriones ofrecieron un delicioso agasajo con chocolate y buñuelos recién hechos para atender a la cuadrilla."
+      },
+      recaudo: {
+        word: "recaudo",
+        pos: "sustantivo masculino",
+        def: "Acopio, cobranza o fondo de dinero que se ha reunido para un propósito determinado.",
+        hint: "Cantidad total de fondos o dinero reunido para una causa específica",
+        sentence: "Para Mateo, la distinción lingüística ya no albergaba misterio: todo el esfuerzo brindado por el vecindario había asegurado el abundante recaudo necesario para abrir las puertas de un espacio cultural digno."
+      }
+    };
+
+    // Shuffled display order for definition target cards
+    const vocabOrder = [
+      'madrugar',
+      'vispera',
+      'atajo',
+      'cuadra',
+      'trueque',
+      'reparto',
+      'recorrido',
+      'alcancia',
+      'recaudo',
+      'agasajo'
+    ];
+
+    // Comprehension question explanations
+    const explanations = {
+      1: {
+        A: "Exacto. El texto indica que el festival benéfico fue impulsado para dotar y financiar las mejoras de la biblioteca infantil del vecindario.",
+        B: "El objetivo no era comercializar artesanías externas con fines de lucro, sino apoyar un espacio educativo y cultural para la infancia local.",
+        C: "La iniciativa surgió voluntariamente por vocación solidaria vecinal, no debido a una obligación o multa municipal.",
+        D: "Las labores se realizaron mediante voluntariado y autogestión de la propia comunidad, no por la contratación de empresas externas."
+      },
+      2: {
+        A: "¡Correcto! Valentina aclara que «por» mira hacia el origen, causa o vía de la acción, mientras que «para» proyecta el objetivo, destinatario o fin previsto.",
+        B: "Ambas preposiciones se combinan tanto con personas como con cosas, dependiendo de si actúan como agentes/causas o como beneficiarios/metas.",
+        C: "Es justamente al revés: los plazos límites emplean «para» (para el mediodía) y la duración temporal utiliza «por» (por tres horas).",
+        D: "El punto de vista u opinión personal se formula con «para» (para mí, para nosotros), no con «por»."
+      },
+      3: {
+        A: "Correcto. «Para instalar» indica la finalidad o intención de la acción con infinitivo.",
+        B: "Instalar la tarima era una meta planificada y voluntaria, no una causa externa involuntaria.",
+        C: "El medio o vehículo se introduce con «por» (por tren, por avión) o «en», no con «para».",
+        D: "Los intercambios o precios se expresan con «por» (cambiar libros por frutas, pagar diez mil pesos por algo)."
+      },
+      4: {
+        A: "Muy bien. El texto relata que en varios toldos se facilitó el trueque comunitario de libros por alimentos agrícolas sin mediación de dinero en efectivo.",
+        B: "No se organizaron sorteos digitales, sino intercambios directos y presenciales entre las familias.",
+        C: "No hubo subastas privadas; el espíritu del evento era el apoyo mutuo y la solidaridad barrial.",
+        D: "El financiamiento no provino de créditos bancarios, sino de la colaboración comunitaria y donaciones en la alcancía."
+      },
+      5: {
+        A: "Exacto. «Por el intenso calor» expone la circunstancia causal que provocó la necesidad de paciencia.",
+        B: "El calor no es una persona ni un ente que reciba un beneficio; es la causa atmosférica que afectó la labor.",
+        C: "Las fechas límites se marcan con «para» (por ejemplo: para el mediodía), mientras que aquí «por el calor» explica la razón o causa.",
+        D: "No hay ninguna transacción monetaria en esa frase; se trata exclusivamente de un factor climático causante del esfuerzo extra."
+      }
+    };
+
+    function getGoogleSearchUrl(word) {
+      const q = `give me the definition of the word "${word}" in Spanish, and the translation of the word in English, and then three example sentences with that word, for each example, once in Spanish and once in English`;
+      return `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+    }
+
+    function formatWrongDef(text) {
+      if (!text) return '';
+      let s = text.trim();
+      s = s.charAt(0).toLowerCase() + s.slice(1);
+      return s.replace(/[.]+$/, '');
+    }
+
+    // =========================================================
+    // LOCAL STORAGE PERSISTENCE
+    // =========================================================
+    function loadSavedState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data && typeof data === 'object') {
+            userAnswers = data.mc || {};
+            completedVocab = Array.isArray(data.vocab) ? data.vocab : [];
+            if (Array.isArray(data.bookmarks)) {
+              readingBookmarks = data.bookmarks.map(Number).filter(n => !isNaN(n));
+            }
+          }
+        }
+      } catch (e) {
+        console.warn("Could not load from localStorage:", e);
+      }
+
+      // Restore Multiple Choice answers
+      Object.keys(userAnswers).forEach(qNum => {
+        const val = userAnswers[qNum];
+        applyQuestionFeedback(qNum, val);
+      });
+
+      // Render Vocabulary & Reading Bookmarks
+      renderVocabulary();
+      renderReadingBookmarks();
+    }
+
+    function saveState() {
+      try {
+        const state = {
+          mc: userAnswers,
+          vocab: completedVocab,
+          bookmarks: readingBookmarks
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn("Could not save to localStorage:", e);
+      }
+    }
+
+    // =========================================================
+    // READING BOOKMARKS (SHIFT + DOUBLE-CLICK ON ANY WORD)
+    // =========================================================
+    function initReadingWords() {
+      const sheet = document.querySelector('.handout-sheet');
+      if (!sheet || sheet.getAttribute('data-words-initialized') === 'true') return;
+      sheet.setAttribute('data-words-initialized', 'true');
+
+      let wordIndex = 0;
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.nodeValue;
+          if (!text || !text.trim()) return;
+          const regex = /([\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*)/gu;
+          let lastIdx = 0;
+          let match;
+          const frag = document.createDocumentFragment();
+          let found = false;
+
+          while ((match = regex.exec(text)) !== null) {
+            found = true;
+            if (match.index > lastIdx) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx, match.index)));
+            }
+            const span = document.createElement('span');
+            span.className = 'reading-word';
+            span.setAttribute('data-word-idx', String(wordIndex++));
+            span.textContent = match[0];
+            frag.appendChild(span);
+            lastIdx = regex.lastIndex;
+          }
+
+          if (found) {
+            if (lastIdx < text.length) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+            }
+            node.parentNode.replaceChild(frag, node);
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (
+            node.closest('.vocab-section') ||
+            node.closest('.jump-nav') ||
+            node.closest('.sticky-jump-nav') ||
+            node.closest('.utility-bar') ||
+            node.closest('.bottom-actions-bar') ||
+            node.closest('.lookup-btn') ||
+            node.closest('button') ||
+            node.tagName === 'BUTTON' ||
+            node.tagName === 'SVG' ||
+            node.tagName === 'SCRIPT' ||
+            node.tagName === 'STYLE' ||
+            node.classList.contains('instructions-heading') ||
+            node.classList.contains('section-num') ||
+            node.classList.contains('section-action-hint') ||
+            node.classList.contains('feedback-box')
+          ) {
+            return;
+          }
+
+          if (node.classList.contains('vocab-in-text')) {
+            const wrap = document.createElement('span');
+            wrap.className = 'reading-word';
+            wrap.setAttribute('data-word-idx', String(wordIndex++));
+            node.parentNode.replaceChild(wrap, node);
+            wrap.appendChild(node);
+            return;
+          }
+
+          const children = Array.from(node.childNodes);
+          children.forEach(processNode);
+        }
+      }
+
+      const targetAreas = sheet.querySelectorAll(
+        '.instructions-inner, .reading-content, .quiz-container, .discussion-container'
+      );
+      if (targetAreas.length > 0) {
+        targetAreas.forEach(area => processNode(area));
+      } else {
+        processNode(sheet);
+      }
+
+      sheet.addEventListener('dblclick', (e) => {
+        if (!e.shiftKey) return;
+        if (e.target && e.target.closest('.reading-bookmark')) return;
+
+        let wordEl = e.target && e.target.closest ? e.target.closest('.reading-word') : null;
+        if (!wordEl && window.getSelection) {
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const startNode = range.startContainer;
+            const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement;
+            if (startEl && sheet.contains(startEl)) {
+              wordEl = startEl.closest('.reading-word');
+            }
+          }
+        }
+
+        if (!wordEl) return;
+
+        const idx = parseInt(wordEl.getAttribute('data-word-idx'), 10);
+        if (isNaN(idx)) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        addReadingBookmark(idx);
+
+        const clearSel = () => {
+          if (window.getSelection) {
+            const sel = window.getSelection();
+            if (sel) sel.removeAllRanges();
+          }
+        };
+        clearSel();
+        requestAnimationFrame(clearSel);
+      });
+    }
+
+    function addReadingBookmark(idx) {
+      if (!readingBookmarks.includes(idx)) {
+        readingBookmarks.push(idx);
+        readingBookmarks.sort((a, b) => a - b);
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function removeReadingBookmark(idx) {
+      const next = readingBookmarks.filter(item => item !== idx);
+      if (next.length !== readingBookmarks.length) {
+        readingBookmarks = next;
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function updateStickyBookmarkState() {
+      const bmBtn = document.getElementById('jump-bookmark-btn');
+      if (!bmBtn) return;
+      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+      if (bookmarkEls.length === 0) {
+        bmBtn.classList.remove('show');
+        return;
+      }
+      if (bookmarkEls.length === 1) {
+        const rect = bookmarkEls[0].getBoundingClientRect();
+        const isVisible = (rect.top >= 40 && rect.bottom <= window.innerHeight - 40);
+        if (isVisible) {
+          bmBtn.classList.remove('show');
+        } else {
+          bmBtn.classList.add('show');
+        }
+        return;
+      }
+      bmBtn.classList.add('show');
+    }
+
+    function renderReadingBookmarks() {
+      document.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
+      document.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
+
+      readingBookmarks.forEach(idx => {
+        const wordEl = document.querySelector(`.reading-word[data-word-idx="${idx}"]`);
+        if (!wordEl) return;
+        wordEl.classList.add('has-bookmark');
+
+        const bm = document.createElement('span');
+        bm.className = 'reading-bookmark';
+        bm.setAttribute('data-bookmark-idx', String(idx));
+        bm.setAttribute('title', 'Eliminar marcador');
+        bm.setAttribute('aria-label', 'Eliminar marcador');
+        bm.setAttribute('role', 'button');
+        bm.setAttribute('tabindex', '0');
+        bm.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
+
+        bm.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          removeReadingBookmark(idx);
+        });
+
+        bm.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            removeReadingBookmark(idx);
+          }
+        });
+
+        wordEl.insertBefore(bm, wordEl.firstChild);
+      });
+
+      updateStickyBookmarkState();
+    }
+
+    // =========================================================
+    // INSTRUCTIONS ROLL-OUT / ROLL-UP LOGIC
+    // =========================================================
+    function toggleInstructions(e) {
+      if (e && e.shiftKey) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      const box = document.getElementById('instructions-box');
+      if (!box) return;
+      const isExpanded = box.classList.toggle('expanded');
+      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const box = document.getElementById('instructions-box');
+      if (box) {
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleInstructions(e);
+          }
+        });
+      }
+    });
+
+    // =========================================================
+    // SNAPPY SCROLL & SCROLL TO TOP LOGIC
+    // =========================================================
+    let activeScrollRaf = null;
+    function snappyScrollTo(targetY, duration = 280) {
+      if (activeScrollRaf) {
+        cancelAnimationFrame(activeScrollRaf);
+        activeScrollRaf = null;
+      }
+      const startY = window.scrollY;
+      const docHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      const clampedTarget = Math.max(0, Math.min(targetY, docHeight - window.innerHeight));
+      const diff = clampedTarget - startY;
+      if (Math.abs(diff) < 2) return;
+      const startTime = performance.now();
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        window.scrollTo(0, startY + diff * easeOutCubic(progress));
+        if (progress < 1) {
+          activeScrollRaf = requestAnimationFrame(step);
+        } else {
+          activeScrollRaf = null;
+        }
+      }
+      activeScrollRaf = requestAnimationFrame(step);
+    }
+
+    window.addEventListener('wheel', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+    window.addEventListener('touchstart', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+
+    function scrollToTop(e) {
+      if (e) e.preventDefault();
+      snappyScrollTo(0, 280);
+    }
+
+    // =========================================================
+    // VOCABULARY EXERCISE LOGIC
+    // =========================================================
+    function safeDismiss(callback, e) {
+      if (e && e.target && e.target.closest('.lookup-btn')) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      callback();
+    }
+
+    function appendBalancedRows(container, keys, createItemFn, rowClass, maxPerRow) {
+      const total = keys.length;
+      if (total === 0) return;
+
+      const availableWidth = container.clientWidth || 320;
+      let numRows = maxPerRow ? Math.ceil(total / maxPerRow) : (total >= 6 ? 2 : 1);
+
+      while (numRows <= total) {
+        container.innerHTML = '';
+        const base = Math.floor(total / numRows);
+        const remainder = total % numRows;
+
+        let startIndex = 0;
+        let overflows = false;
+
+        for (let r = 0; r < numRows; r++) {
+          const count = base + (r < remainder ? 1 : 0);
+          const rowKeys = keys.slice(startIndex, startIndex + count);
+          startIndex += count;
+
+          const row = document.createElement('div');
+          row.className = rowClass;
+          rowKeys.forEach(k => {
+            const el = createItemFn(k);
+            if (el) row.appendChild(el);
+          });
+          container.appendChild(row);
+
+          if (row.scrollWidth > availableWidth && count > 1) {
+            overflows = true;
+          }
+        }
+
+        if (!overflows || numRows >= total) {
+          break;
+        }
+        numRows++;
+      }
+    }
+
+    function renderVocabulary(animState) {
+      const prevChipRects = animState && animState.prevChipRects ? animState.prevChipRects : animState;
+      const prevCompletedOffsets = animState && animState.prevCompletedOffsets ? animState.prevCompletedOffsets : null;
+      const newlyCompletedKey = animState && animState.newlyCompletedKey ? animState.newlyCompletedKey : null;
+
+      const pool = document.getElementById('vocab-pool');
+      const targets = document.getElementById('vocab-targets');
+      const completedPool = document.getElementById('vocab-completed-pool');
+      const detailArea = document.getElementById('vocab-completed-detail');
+
+      if (!pool || !targets || !completedPool) return;
+
+      const savedScrollY = window.scrollY;
+
+      pool.innerHTML = '';
+      targets.innerHTML = '';
+      completedPool.innerHTML = '';
+      if (detailArea) detailArea.innerHTML = '';
+
+      const allKeys = Object.keys(vocabData);
+      const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
+
+      // 1. Render Waiting Words Pool
+      if (remainingKeys.length === 0) {
+        pool.innerHTML = '';
+        pool.style.display = 'none';
+      } else {
+        pool.style.display = 'flex';
+        const createChip = (k) => {
+          const item = vocabData[k];
+          const chip = document.createElement('div');
+          chip.className = 'vocab-chip';
+          chip.setAttribute('draggable', 'true');
+          chip.setAttribute('data-key', k);
+          chip.textContent = item.word;
+
+          chip.addEventListener('dragstart', handleDragStart);
+          chip.addEventListener('dragend', handleDragEnd);
+
+          chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            showWordHintModal(k);
+          });
+
+          setupTouchDrag(chip, k);
+          return chip;
+        };
+
+        appendBalancedRows(pool, remainingKeys, createChip, 'vocab-pool-row');
+      }
+
+      // 2. Render Target Definitions (Shuffled Order)
+      vocabOrder.forEach(targetKey => {
+        if (completedVocab.includes(targetKey)) return;
+
+        const item = vocabData[targetKey];
+        const card = document.createElement('div');
+        card.className = 'vocab-target-card';
+        card.setAttribute('data-target-key', targetKey);
+        card.innerHTML = `
+          <div class="vocab-target-def">${item.def}</div>
+        `;
+
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('dragleave', handleDragLeave);
+        card.addEventListener('drop', handleDrop);
+
+        card.addEventListener('click', (e) => {
+          handleTargetCardClick(card, targetKey, e);
+        });
+
+        targets.appendChild(card);
+      });
+
+      // 3. Render Completed Section Pills
+      completedPool.innerHTML = '';
+      if (completedVocab.length > 0) {
+        const createPill = (k) => {
+          const item = vocabData[k];
+          if (!item) return null;
+          const pill = document.createElement('div');
+          pill.className = 'vocab-completed-pill';
+          pill.setAttribute('data-key', k);
+          pill.innerHTML = `
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>${item.word}</span>
+          `;
+          pill.addEventListener('click', () => {
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            toggleCompletedDetail(k);
+          });
+          return pill;
+        };
+
+        appendBalancedRows(completedPool, completedVocab, createPill, 'vocab-completed-row', 3);
+      }
+
+      if (Math.abs(window.scrollY - savedScrollY) > 1) {
+        window.scrollTo(0, savedScrollY);
+      }
+
+      // 4. FLIP Animation: smoothly slide remaining top chips
+      if (prevChipRects && remainingKeys.length > 0) {
+        const chipsToAnimate = [];
+        pool.querySelectorAll('.vocab-chip').forEach(chip => {
+          const k = chip.getAttribute('data-key');
+          const oldRect = prevChipRects[k];
+          if (oldRect) {
+            const newRect = chip.getBoundingClientRect();
+            const dx = oldRect.left - newRect.left;
+            const dy = oldRect.top - newRect.top;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              chip.style.transition = 'none';
+              chip.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              chipsToAnimate.push(chip);
+            }
+          }
+        });
+
+        if (chipsToAnimate.length > 0) {
+          void pool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              chipsToAnimate.forEach(chip => {
+                chip.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                chip.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  chip.style.transition = '';
+                  chip.style.transform = '';
+                };
+                chip.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+            });
+          });
+        }
+      }
+
+      // 5. FLIP Animation for Completed Words Pool
+      if (newlyCompletedKey && completedVocab.length > 0) {
+        const newPoolRect = completedPool.getBoundingClientRect();
+        const pillsToSlide = [];
+        let newPillEl = null;
+
+        completedPool.querySelectorAll('.vocab-completed-pill').forEach(pill => {
+          const k = pill.getAttribute('data-key');
+          if (k === newlyCompletedKey) {
+            newPillEl = pill;
+          } else if (prevCompletedOffsets && prevCompletedOffsets[k]) {
+            const r = pill.getBoundingClientRect();
+            const curLeft = r.left - newPoolRect.left;
+            const curTop = r.top - newPoolRect.top;
+            const dx = prevCompletedOffsets[k].left - curLeft;
+            const dy = prevCompletedOffsets[k].top - curTop;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              pill.style.transition = 'none';
+              pill.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              pillsToSlide.push(pill);
+            }
+          }
+        });
+
+        if (newPillEl) {
+          newPillEl.style.transition = 'none';
+          newPillEl.style.opacity = '0';
+          newPillEl.style.transform = 'scale(0.82)';
+        }
+
+        if (pillsToSlide.length > 0 || newPillEl) {
+          void completedPool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              pillsToSlide.forEach(pill => {
+                pill.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                pill.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  pill.style.transition = '';
+                  pill.style.transform = '';
+                };
+                pill.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+
+              if (newPillEl) {
+                newPillEl.style.transition = 'opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                newPillEl.style.opacity = '1';
+                newPillEl.style.transform = 'scale(1)';
+                const cleanupNew = () => {
+                  newPillEl.style.transition = '';
+                  newPillEl.style.opacity = '';
+                  newPillEl.style.transform = '';
+                };
+                newPillEl.addEventListener('transitionend', cleanupNew, { once: true });
+                setTimeout(cleanupNew, 500);
+              }
+            });
+          });
+        }
+      }
+    }
+
+    function showWordHintModal(wordKey) {
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      hideModal();
+
+      const modal = document.createElement('div');
+      modal.className = 'vocab-hint-modal';
+      modal.id = 'active-hint-modal';
+      modal.innerHTML = `
+        <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${item.word}</span>
+            <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+              <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hint-row">
+          <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+          </svg>
+          <div class="hint-text">${item.hint}</div>
+        </div>
+      `;
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('.lookup-btn')) return;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        hideModal();
+      });
+
+      document.body.appendChild(modal);
+      activeModalCard = modal;
+      showOverlay();
+    }
+
+    function hideModal() {
+      const existing = document.getElementById('active-hint-modal');
+      if (existing) existing.remove();
+      hideOverlay();
+      activeModalCard = null;
+    }
+
+    function handleTargetCardClick(card, targetKey, e) {
+      if (card.classList.contains('state-wrong')) {
+        safeDismiss(() => dismissWrongState(card), e);
+        return;
+      }
+
+      if (card.classList.contains('state-correct')) {
+        safeDismiss(() => dismissCorrectState(targetKey), e);
+        return;
+      }
+    }
+
+    let mouseDragAvatar = null;
+
+    function onDocDragOver(e) {
+      if (mouseDragAvatar && e.clientX > 0 && e.clientY > 0) {
+        mouseDragAvatar.style.left = e.clientX + 'px';
+        mouseDragAvatar.style.top = e.clientY + 'px';
+      }
+    }
+
+    function cleanupMouseDragAvatar() {
+      if (mouseDragAvatar) {
+        mouseDragAvatar.remove();
+        mouseDragAvatar = null;
+      }
+      document.removeEventListener('dragover', onDocDragOver);
+    }
+
+    function handleDragStart(e) {
+      if (activeModalCard) {
+        e.preventDefault();
+        return;
+      }
+      draggedWordKey = this.getAttribute('data-key');
+      this.classList.add('dragging');
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+      e.dataTransfer.setData('text/plain', draggedWordKey);
+      e.dataTransfer.effectAllowed = 'move';
+
+      cleanupMouseDragAvatar();
+      mouseDragAvatar = document.createElement('div');
+      mouseDragAvatar.className = 'vocab-drag-avatar';
+      mouseDragAvatar.textContent = this.textContent.trim();
+      document.body.appendChild(mouseDragAvatar);
+      mouseDragAvatar.style.left = (e.clientX || 0) + 'px';
+      mouseDragAvatar.style.top = (e.clientY || 0) + 'px';
+
+      const emptyImg = new Image();
+      emptyImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      if (e.dataTransfer && e.dataTransfer.setDragImage) {
+        e.dataTransfer.setDragImage(emptyImg, 0, 0);
+      }
+
+      document.addEventListener('dragover', onDocDragOver);
+
+      setTimeout(() => {
+        if (this.classList.contains('dragging')) {
+          this.style.opacity = '0';
+          this.style.visibility = 'hidden';
+        }
+      }, 0);
+    }
+
+    function handleDragEnd() {
+      cleanupMouseDragAvatar();
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+      const key = this.getAttribute('data-key');
+      if (!activeModalCard || activePlacedWordKey !== key) {
+        this.classList.remove('dragging');
+        this.style.opacity = '';
+        this.style.visibility = '';
+      }
+      draggedWordKey = null;
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      this.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      if (e && e.relatedTarget && this.contains(e.relatedTarget)) return;
+      this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      cleanupMouseDragAvatar();
+      if (activeModalCard) return;
+      const wordKey = e.dataTransfer.getData('text/plain') || draggedWordKey;
+      const targetKey = this.getAttribute('data-target-key');
+      if (wordKey && targetKey) {
+        processWordPlacement(wordKey, targetKey, this);
+      }
+    }
+
+    function processWordPlacement(wordKey, targetKey, card) {
+      hideModal();
+      activePlacedWordKey = wordKey;
+
+      const waitingChip = document.querySelector(`#vocab-pool .vocab-chip[data-key="${wordKey}"]`);
+      if (waitingChip) {
+        waitingChip.classList.add('dragging');
+        waitingChip.style.opacity = '0';
+        waitingChip.style.visibility = 'hidden';
+      }
+
+      if (wordKey === targetKey) {
+        // === CORRECT MATCH ===
+        const item = vocabData[targetKey];
+        card.classList.remove('state-wrong');
+        card.classList.add('state-correct');
+        activeModalCard = card;
+
+        card.innerHTML = `
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word">${item.word}</span>
+              <span class="dict-pos">${item.pos}</span>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="dict-def-row">
+            <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="var(--correct-green)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="dict-def" style="margin-bottom: 0;">${item.def}</div>
+          </div>
+          <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
+        `;
+
+        showOverlay();
+      } else {
+        // === WRONG MATCH ===
+        const placedWord = vocabData[wordKey];
+        const targetItem = vocabData[targetKey];
+        card.classList.remove('state-correct');
+        card.classList.add('state-wrong');
+        card.setAttribute('data-wrong-word-key', wordKey);
+        activeModalCard = card;
+
+        card.innerHTML = `
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${placedWord.word}</span>
+              <a href="${getGoogleSearchUrl(placedWord.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="wrong-def-row">
+            <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="var(--wrong-red)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="wrong-def-text">${formatWrongDef(targetItem.def)}</div>
+          </div>
+          <div class="hint-row">
+            <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+              <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+            </svg>
+            <div class="hint-text">${placedWord.hint}</div>
+          </div>
+        `;
+
+        showOverlay();
+      }
+    }
+
+    function dismissWrongState(card) {
+      hideOverlay();
+      activeModalCard = null;
+      activePlacedWordKey = null;
+      renderVocabulary();
+    }
+
+    function dismissCorrectState(wordKey) {
+      const prevChipRects = {};
+      document.querySelectorAll('#vocab-pool .vocab-chip').forEach(chip => {
+        const k = chip.getAttribute('data-key');
+        if (k && k !== wordKey) {
+          prevChipRects[k] = chip.getBoundingClientRect();
+        }
+      });
+
+      const prevCompletedOffsets = {};
+      const completedPoolEl = document.getElementById('vocab-completed-pool');
+      if (completedPoolEl) {
+        const poolRect = completedPoolEl.getBoundingClientRect();
+        completedPoolEl.querySelectorAll('.vocab-completed-pill').forEach(pill => {
+          const k = pill.getAttribute('data-key');
+          if (k) {
+            const r = pill.getBoundingClientRect();
+            prevCompletedOffsets[k] = {
+              left: r.left - poolRect.left,
+              top: r.top - poolRect.top
+            };
+          }
+        });
+      }
+
+      hideOverlay();
+      activeModalCard = null;
+      activePlacedWordKey = null;
+      if (!completedVocab.includes(wordKey)) {
+        completedVocab.push(wordKey);
+        saveState();
+      }
+      renderVocabulary({
+        prevChipRects,
+        prevCompletedOffsets,
+        newlyCompletedKey: wordKey
+      });
+    }
+
+    function showOverlay() {
+      const overlay = document.getElementById('vocab-overlay');
+      if (overlay) overlay.classList.add('active');
+    }
+
+    function hideOverlay() {
+      const overlay = document.getElementById('vocab-overlay');
+      if (overlay) overlay.classList.remove('active');
+    }
+
+    function handleOverlayClick(e) {
+      if (activeModalCard && activeModalCard.id === 'active-hint-modal') {
+        hideModal();
+        return;
+      }
+      safeDismiss(() => {
+        if (activeModalCard) {
+          if (activeModalCard.classList.contains('state-wrong')) {
+            dismissWrongState(activeModalCard);
+          } else if (activeModalCard.classList.contains('state-correct')) {
+            const targetKey = activeModalCard.getAttribute('data-target-key');
+            dismissCorrectState(targetKey);
+          } else {
+            hideModal();
+          }
+        }
+      }, e);
+    }
+
+    function toggleCompletedDetail(wordKey) {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (!detailArea) return;
+
+      if (detailArea.getAttribute('data-active-word') === wordKey) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return;
+      }
+
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      detailArea.setAttribute('data-active-word', wordKey);
+      detailArea.innerHTML = `
+        <div class="vocab-dict-card">
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word">${item.word}</span>
+              <span class="dict-pos">${item.pos}</span>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="dict-def-row">
+            <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="var(--correct-green)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="dict-def" style="margin-bottom: 0;">${item.def}</div>
+          </div>
+          <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
+        </div>
+      `;
+
+      const dictCard = detailArea.querySelector('.vocab-dict-card');
+      if (dictCard) {
+        dictCard.addEventListener('click', (e) => {
+          safeDismiss(() => {
+            detailArea.innerHTML = '';
+            detailArea.removeAttribute('data-active-word');
+          }, e);
+        });
+      }
+    }
+
+    function setupTouchDrag(chip, key) {
+      let touchMoved = false;
+      let touchAvatar = null;
+      let lastTargetCard = null;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (activeModalCard) return;
+        touchMoved = false;
+        draggedWordKey = key;
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (activeModalCard) return;
+        const touch = e.touches[0];
+        if (!touch) return;
+
+        if (!touchMoved) {
+          touchMoved = true;
+          chip.classList.add('dragging');
+          chip.style.opacity = '0';
+          chip.style.visibility = 'hidden';
+
+          const targetsContainer = document.getElementById('vocab-targets');
+          if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+
+          touchAvatar = document.createElement('div');
+          touchAvatar.className = 'vocab-touch-avatar';
+          touchAvatar.textContent = chip.textContent;
+          document.body.appendChild(touchAvatar);
+        }
+
+        if (touchAvatar) {
+          touchAvatar.style.left = touch.clientX + 'px';
+          touchAvatar.style.top = (touch.clientY - 35) + 'px';
+        }
+
+        const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+        const card = elem ? elem.closest('.vocab-target-card') : null;
+        if (card !== lastTargetCard) {
+          if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
+          if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
+            card.classList.add('drag-over');
+          }
+          lastTargetCard = card;
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+
+        if (!touchMoved) {
+          draggedWordKey = null;
+          return;
+        }
+
+        const touch = e.changedTouches[0];
+        const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
+        const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
+        const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
+
+        if (targetCard && targetKey && !activeModalCard) {
+          processWordPlacement(key, targetKey, targetCard);
+        } else {
+          chip.classList.remove('dragging');
+          chip.style.opacity = '';
+          chip.style.visibility = '';
+        }
+        draggedWordKey = null;
+      });
+
+      chip.addEventListener('touchcancel', () => {
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+        draggedWordKey = null;
+      });
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE QUIZ LOGIC (RADIO-FREE)
+    // =========================================================
+    function selectOption(qNum, value) {
+      if (window.event && window.event.shiftKey) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (userAnswers[qNum] === value) {
+        delete userAnswers[qNum];
+        applyQuestionFeedback(qNum, null);
+        saveState();
+        return;
+      }
+      userAnswers[qNum] = value;
+      applyQuestionFeedback(qNum, value);
+      saveState();
+    }
+
+    function applyQuestionFeedback(qNum, value) {
+      const card = document.querySelector(`.question-card[data-q="${qNum}"]`);
+      if (!card) return;
+      const correctVal = card.getAttribute('data-correct');
+
+      const allOptionItems = card.querySelectorAll('.option-item');
+      allOptionItems.forEach(item => item.classList.remove('selected'));
+
+      const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
+      allFeedbackBoxes.forEach(fb => {
+        fb.className = 'feedback-box';
+        fb.innerHTML = '';
+      });
+
+      if (!value) {
+        card.classList.remove('answered', 'correct', 'incorrect');
+        return;
+      }
+
+      const activeOption = card.querySelector(`.option-item[onclick*="'${value}'"]`);
+      if (activeOption) activeOption.classList.add('selected');
+
+      const feedbackBox = document.getElementById(`feedback-${qNum}-${value}`);
+      if (!feedbackBox) return;
+
+      const qExplanations = explanations[qNum] || {};
+      const explanation = qExplanations[value] || '';
+
+      card.classList.add('answered');
+      if (value === correctVal) {
+        card.classList.remove('incorrect');
+        card.classList.add('correct');
+        feedbackBox.className = 'feedback-box show correct-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      } else {
+        card.classList.remove('correct');
+        card.classList.add('incorrect');
+        feedbackBox.className = 'feedback-box show wrong-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      }
+    }
+
+    // =========================================================
+    // RESET WORKSHEET
+    // =========================================================
+    let resetTimer = null;
+
+    function requestReset() {
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (!btn || !box) return;
+      btn.style.display = 'none';
+      box.style.display = 'inline-flex';
+
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        cancelReset();
+      }, 8000);
+    }
+
+    function cancelReset() {
+      if (resetTimer) {
+        clearTimeout(resetTimer);
+        resetTimer = null;
+      }
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (btn) btn.style.display = 'inline-flex';
+      if (box) box.style.display = 'none';
+    }
+
+    function confirmReset() {
+      cancelReset();
+      executeReset();
+    }
+
+    function executeReset() {
+      userAnswers = {};
+      completedVocab = [];
+      readingBookmarks = [];
+      activeModalCard = null;
+      activePlacedWordKey = null;
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      const optionItems = document.querySelectorAll('.option-item');
+      optionItems.forEach(item => item.classList.remove('selected'));
+
+      const cards = document.querySelectorAll('.question-card');
+      cards.forEach(c => {
+        c.classList.remove('answered', 'correct', 'incorrect');
+      });
+
+      const feedbacks = document.querySelectorAll('.feedback-box');
+      feedbacks.forEach(f => {
+        f.textContent = '';
+        f.className = 'feedback-box';
+      });
+
+      hideModal();
+      renderVocabulary();
+      renderReadingBookmarks();
+    }
+
+    // =========================================================
+    // STICKY COMPACT SECTION NAV & RETURN TO PREVIOUS SPOT
+    // =========================================================
+    let savedReturnScrollY = null;
+
+    function setupStickyJumpNav() {
+      const headerJumpNav = document.querySelector('.jump-nav');
+      const stickyNav = document.getElementById('sticky-jump-nav');
+      if (!headerJumpNav || !stickyNav) return;
+
+      stickyNav.innerHTML = '';
+      const headerLinks = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
+      const sectionIds = [];
+
+      const returnBtn = document.createElement('button');
+      returnBtn.type = 'button';
+      returnBtn.className = 'jump-return-btn';
+      returnBtn.id = 'jump-return-btn';
+      returnBtn.title = 'Volver al punto anterior';
+      returnBtn.setAttribute('aria-label', 'Volver al punto anterior');
+      returnBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
+      stickyNav.appendChild(returnBtn);
+
+      headerLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('#')) {
+          sectionIds.push(href.slice(1));
+        }
+        const clone = link.cloneNode(true);
+        stickyNav.appendChild(clone);
+      });
+
+      const bmBtn = document.createElement('button');
+      bmBtn.type = 'button';
+      bmBtn.className = 'jump-bookmark-btn';
+      bmBtn.id = 'jump-bookmark-btn';
+      bmBtn.title = 'Ir al siguiente marcador';
+      bmBtn.setAttribute('aria-label', 'Ir al siguiente marcador');
+      bmBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>';
+      bmBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleBookmarkJump();
+      });
+      stickyNav.appendChild(bmBtn);
+
+      function handleBookmarkJump() {
+        const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+        if (bookmarkEls.length === 0) return;
+
+        bookmarkEls.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+        let nextBm = bookmarkEls.find(bm => bm.getBoundingClientRect().top > 120);
+        if (!nextBm) {
+          nextBm = bookmarkEls[0];
+        }
+
+        const rect = nextBm.getBoundingClientRect();
+        const targetY = window.scrollY + rect.top - 80;
+        snappyScrollTo(Math.max(0, targetY), 280);
+      }
+
+      function returnToPreviousSpot() {
+        if (savedReturnScrollY !== null) {
+          const targetY = savedReturnScrollY;
+          savedReturnScrollY = null;
+          returnBtn.classList.remove('show');
+          snappyScrollTo(targetY, 280);
+        }
+      }
+
+      returnBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        returnToPreviousSpot();
+      });
+
+      function handleJumpClick(e) {
+        const href = this.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        const targetId = href.slice(1);
+        const targetEl = document.getElementById(targetId);
+        if (!targetEl) return;
+        e.preventDefault();
+
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
+
+        if (Math.abs(window.scrollY - targetTop) > 100) {
+          savedReturnScrollY = window.scrollY;
+          returnBtn.classList.add('show');
+        }
+
+        snappyScrollTo(Math.max(0, targetTop), 280);
+      }
+
+      headerJumpNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
+      stickyNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
+
+      function updateStickyNavState() {
+        const rect = headerJumpNav.getBoundingClientRect();
+        const shouldShow = rect.bottom < 6;
+        stickyNav.classList.toggle('visible', shouldShow);
+
+        if (!shouldShow && window.scrollY < 80) {
+          savedReturnScrollY = null;
+          returnBtn.classList.remove('show');
+        }
+
+        let currentSectionId = sectionIds[0] || '';
+        const threshold = 130;
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const top = el.getBoundingClientRect().top;
+            if (top <= threshold) {
+              currentSectionId = id;
+            }
+          }
+        }
+
+        stickyNav.querySelectorAll('.jump-num').forEach(a => {
+          const isMatch = a.getAttribute('href') === `#${currentSectionId}`;
+          a.classList.toggle('active', isMatch);
+        });
+
+        updateStickyBookmarkState();
+      }
+
+      window.addEventListener('scroll', updateStickyNavState, { passive: true });
+      updateStickyNavState();
+    }
+
+    let cachedActivityStyles = '';
+    function getPageStyles() {
+      if (!cachedActivityStyles) {
+        cachedActivityStyles = Array.from(document.querySelectorAll('style'))
+          .map(s => s.outerHTML)
+          .join('\n');
+      }
+      return cachedActivityStyles;
+    }
+
+    function prefetchUrl(url) {
+      if (!url) return;
+      if (!document.querySelector(`link[rel="prefetch"][href="${url}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    }
+
+    function captureOutgoingActivity(direction) {
+      try {
+        const styles = getPageStyles();
+        const util = document.querySelector('.utility-bar');
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          const html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          sessionStorage.setItem('nav-direction', direction);
+          sessionStorage.setItem('nav-outgoing-styles', styles);
+          sessionStorage.setItem('nav-outgoing-html', html);
+          sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
+          sessionStorage.setItem('nav-outgoing-padding', '0 8px 12px 8px');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function handleBackNavigation(e, url) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
+      if (window.innerWidth <= 680) {
+        if (e) e.preventDefault();
+        const targetUrl = url || '../../index.html';
+        captureOutgoingActivity('backward');
+        window.location.href = targetUrl;
+        return false;
+      }
+      return true;
+    }
+
+    // Simultaneously whoosh outgoing main page off to the left as activity page whooshes in from the right
+    (function runIncomingTransition() {
+      try {
+        if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'forward') {
+          const outStyles = sessionStorage.getItem('nav-outgoing-styles') || '';
+          const outHtml = sessionStorage.getItem('nav-outgoing-html') || '';
+          const outScroll = parseFloat(sessionStorage.getItem('nav-outgoing-scroll') || '0');
+          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '12px 8px';
+
+          sessionStorage.removeItem('nav-direction');
+          sessionStorage.removeItem('nav-outgoing-styles');
+          sessionStorage.removeItem('nav-outgoing-html');
+          sessionStorage.removeItem('nav-outgoing-scroll');
+          sessionStorage.removeItem('nav-outgoing-padding');
+
+          const sheet = document.querySelector('.handout-sheet');
+          const util = document.querySelector('.utility-bar');
+          if (sheet) {
+            sheet.classList.remove('page-slide-out-right');
+            sheet.classList.add('page-slide-in-right');
+            const cleanupSheet = () => sheet.classList.remove('page-slide-in-right');
+            sheet.addEventListener('animationend', cleanupSheet, { once: true });
+            setTimeout(cleanupSheet, 340);
+          }
+          if (util) {
+            util.classList.remove('page-slide-out-right');
+            util.classList.add('page-slide-in-right');
+            const cleanupUtil = () => util.classList.remove('page-slide-in-right');
+            util.addEventListener('animationend', cleanupUtil, { once: true });
+            setTimeout(cleanupUtil, 340);
+          }
+
+          if (outHtml) {
+            const overlayHost = document.createElement('div');
+            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
+            const shadow = overlayHost.attachShadow({ mode: 'open' });
+            shadow.innerHTML = `
+              ${outStyles}
+              <style>
+                :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+                .outgoing-stage {
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: ${outPadding};
+                  transform: translate3d(0, -${outScroll}px, 0);
+                  animation: whooshOutLeft 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                }
+                @keyframes whooshOutLeft {
+                  from { transform: translate3d(0, -${outScroll}px, 0); }
+                  to { transform: translate3d(-105vw, -${outScroll}px, 0); }
+                }
+              </style>
+              <div class="outgoing-stage">${outHtml}</div>
+            `;
+            document.body.appendChild(overlayHost);
+            setTimeout(() => {
+              overlayHost.remove();
+            }, 240);
+          }
+        }
+      } catch (e) {}
+    })();
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      getPageStyles();
+      initReadingWords();
+      loadSavedState();
+      setupStickyJumpNav();
+
+      document.querySelectorAll('.back-link').forEach(link => {
+        const url = link.getAttribute('href') || '../../index.html';
+        link.addEventListener('pointerdown', () => prefetchUrl(url), { passive: true });
+        link.addEventListener('touchstart', () => prefetchUrl(url), { passive: true });
+      });
+
+      document.querySelectorAll('.vocab-in-text').forEach(span => {
+        span.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (e.shiftKey) return;
+          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+          const key = span.getAttribute('data-key') || span.textContent.trim().toLowerCase();
+          if (vocabData[key]) {
+            showWordHintModal(key);
+          }
+        });
+      });
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          if (!activeModalCard) renderVocabulary();
+        });
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (!activeModalCard) renderVocabulary();
+    });
+
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const sheet = document.querySelector('.handout-sheet');
+        const util = document.querySelector('.utility-bar');
+        if (sheet) sheet.classList.remove('page-slide-out-right', 'page-slide-in-right');
+        if (util) util.classList.remove('page-slide-out-right', 'page-slide-in-right');
+      }
+    });
+  </script>
+</body>
+</html>
+
