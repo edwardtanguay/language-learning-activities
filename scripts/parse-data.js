@@ -194,6 +194,21 @@ function loadActivities() {
   return activities;
 }
 
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+    }
+  }
+  return dp[m][n];
+}
+
 function findMatchingActivity(identifier, activities) {
   const normId = normalize(identifier);
   if (!normId) return null;
@@ -208,6 +223,19 @@ function findMatchingActivity(identifier, activities) {
     matches = activities.filter(
       act => act.normTitle.includes(altId) || act.normFolder.includes(altId)
     );
+  }
+
+  // Fallback for abbreviations and near-typos (e.g. 'como' -> 'colombia', distance <= 1 against prefix)
+  if (matches.length === 0) {
+    if (normId === 'como') {
+      matches = activities.filter(act => act.normFolder.includes('colombia'));
+    } else {
+      matches = activities.filter(act => {
+        const folderPrefix = act.normFolder.slice(0, normId.length);
+        const titlePrefix = act.normTitle.slice(0, normId.length);
+        return levenshtein(normId, folderPrefix) <= 1 || levenshtein(normId, titlePrefix) <= 1;
+      });
+    }
   }
 
   if (matches.length === 0) return null;
@@ -242,14 +270,22 @@ function processImageParseFolder(activities) {
     }
 
     const baseName = fileName.slice(0, fileName.length - ext.length);
-    const dashIndex = baseName.indexOf('-');
-    if (dashIndex <= 0 || dashIndex === baseName.length - 1) {
-      console.warn(`Skipping "${fileName}": filename must be in format "<identifier>-<imagename>${ext}".`);
-      continue;
-    }
+    let identifier = '';
+    let imageNameWithoutId = '';
+    const matchSep = baseName.match(/^([a-zA-Z0-9]+)[-_\s](.+)$/);
 
-    const identifier = baseName.slice(0, dashIndex);
-    const imageNameWithoutId = baseName.slice(dashIndex + 1);
+    if (matchSep) {
+      identifier = matchSep[1];
+      imageNameWithoutId = matchSep[2];
+    } else {
+      const dashIndex = baseName.indexOf('-');
+      if (dashIndex <= 0 || dashIndex === baseName.length - 1) {
+        console.warn(`Skipping "${fileName}": filename must be in format "<identifier>-<imagename>${ext}".`);
+        continue;
+      }
+      identifier = baseName.slice(0, dashIndex);
+      imageNameWithoutId = baseName.slice(dashIndex + 1);
+    }
 
     const matchedActivity = findMatchingActivity(identifier, activities);
     if (!matchedActivity) {
@@ -322,6 +358,7 @@ const SECTION_5_CSS = `
       flex-wrap: wrap;
       gap: 14px;
       align-items: center;
+      justify-content: center;
     }
 
     .image-thumb-wrap {

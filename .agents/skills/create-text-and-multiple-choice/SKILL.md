@@ -140,9 +140,10 @@ Each activity file should include the following sections:
    - Text length must always be approximately 400 words (do NOT display the word count anywhere).
    - Natural left alignment (`text-align: left;`) with automatic hyphenation disabled (`hyphens: none;`) to prevent words from splitting across line ends (e.g., no "plane-" and "ta.").
    - Subtle In-Text Vocabulary Highlighting: The 10 vocabulary words featured in Section 2 are subtly styled when they appear in the reading passage (`.vocab-in-text`, e.g. `background-color: rgba(242, 233, 203, 0.55); padding: 0 2px; border-radius: 2px; cursor: pointer;`) just enough to notice them as special without disrupting reading flow. Do NOT use underlines or dotted borders, as they make words look too much like clickable links. Clicking any highlighted vocabulary word in the text opens the hint modal (showing the word, Google lookup icon, and hint text), matching the popup that opens when clicking a waiting word chip.
-   - **Reading Word Bookmarks (`Ctrl` / `Cmd` + Double-Click)**:
-     - `Ctrl`-double-clicking (or `Cmd`-double-clicking on macOS) any word in `.reading-content` places a small inline ribbon bookmark SVG icon (`.reading-bookmark`, `14px`, colored in `var(--lang-color)`) immediately to the **left** of that word and immediately deselects the word (`window.getSelection().removeAllRanges()`).
+   - **Word Bookmarks (`Shift` + Double-Click)**:
+     - `Shift`-double-clicking any word across worksheet text content (instructions, reading, questions; excluding interactive chips/buttons) places a small inline ribbon bookmark SVG icon (`.reading-bookmark`, `14px`, colored in `var(--lang-color)`) immediately to the **left** of that word and immediately deselects the word (`window.getSelection().removeAllRanges()`). Using `Shift` ensures bookmarking never conflicts with `Ctrl`+`C` copying.
      - Saved in `localStorage` (`bookmarks` array under `STORAGE_KEY`) and remains until the bookmark icon is clicked (which deletes it) or "Reiniciar respuestas" is confirmed.
+     - When one or more bookmarks exist, a circular bookmark jump button (`.jump-bookmark-btn`, with bookmark ribbon SVG colored in `var(--lang-color)`) appears at the right end of `.sticky-jump-nav` to jump to the next bookmark down (wrapping to the top), disappearing when a single bookmark is scrolled into view.
    - Paragraphs and subsection cards must NOT have vertical lines on the left (clean unbordered text).
    - Divided into logical paragraphs or subsections. Subsection titles use the serif body font with standard capitalization (`text-transform: none; font-weight: 700;`) without numbers (e.g., `<h3>La Costa (Región Litoral)</h3>`).
 5. **Section 2: Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:
@@ -189,7 +190,7 @@ Each activity file should include the following sections:
    - Options have NO background fill and NO hover background (`background: transparent;`), with tight vertical spacing between options.
    - Option letters are followed by a period (`A.`, `B.`, `C.`, `D.`) with option text positioned close to the period. When an option is selected, its option letter highlights in bold/accent color (`--stamp-blue`). Clicking an already-selected option again deselects it and closes its feedback box.
    - Contextual Inline Feedback:
-     - Selecting an option immediately displays its feedback box directly beneath that selected option (inside the option wrapper), rather than at the bottom of the question card.
+     - Selecting an option immediately displays its feedback box directly beneath that selected option (inside the option wrapper), rather than at the bottom of the question card, styled with the same rich pastel colors and subtle borders as Section 2 vocabulary modals: correct feedback uses pastel green (`background-color: #e3f5e5; border: 1px solid #a3d9a8;`) and wrong feedback uses pastel red (`background-color: #fbe4e4; border: 1px solid #eba8a8;`).
      - Only show feedback beneath the actively selected option (switching to another option moves the feedback).
      - Display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
      - Do NOT include status text words like "¡Correcto!" or "Incorrecto.", and do NOT prefix explanations with option letters.

@@ -259,6 +259,36 @@
       transform: translateY(-1px);
     }
 
+    .jump-bookmark-btn {
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background-color: #e6e0d2;
+      color: var(--lang-color);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      padding: 0;
+      transition: background-color 0.15s, transform 0.15s, opacity 0.2s;
+    }
+
+    .jump-bookmark-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-bookmark-btn:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+    }
+
+    .jump-bookmark-btn svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
     /* Handout Sections */
     .section-title {
       font-family: var(--font-typewriter);
@@ -938,9 +968,19 @@
       margin-top: 2px;
     }
 
+    .feedback-box.correct-text {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+    }
+
     .feedback-box.correct-text .feedback-icon {
       stroke: var(--correct-green);
       color: var(--correct-green);
+    }
+
+    .feedback-box.wrong-text {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
     }
 
     .feedback-box.wrong-text .feedback-icon {
@@ -991,6 +1031,7 @@
       flex-wrap: wrap;
       gap: 14px;
       align-items: center;
+      justify-content: center;
     }
 
     .image-thumb-wrap {
@@ -2006,12 +2047,12 @@
     }
 
     // =========================================================
-    // READING BOOKMARKS (CTRL + DOUBLE-CLICK ON A WORD)
+    // READING BOOKMARKS (SHIFT + DOUBLE-CLICK ON ANY WORD)
     // =========================================================
     function initReadingWords() {
-      const container = document.querySelector('.reading-content');
-      if (!container || container.getAttribute('data-words-initialized') === 'true') return;
-      container.setAttribute('data-words-initialized', 'true');
+      const sheet = document.querySelector('.handout-sheet');
+      if (!sheet || sheet.getAttribute('data-words-initialized') === 'true') return;
+      sheet.setAttribute('data-words-initialized', 'true');
 
       let wordIndex = 0;
 
@@ -2045,6 +2086,27 @@
             node.parentNode.replaceChild(frag, node);
           }
         } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (
+            node.closest('.vocab-section') ||
+            node.closest('.jump-nav') ||
+            node.closest('.sticky-jump-nav') ||
+            node.closest('.utility-bar') ||
+            node.closest('.bottom-actions-bar') ||
+            node.closest('.image-thumb-wrap') ||
+            node.closest('.lookup-btn') ||
+            node.closest('button') ||
+            node.tagName === 'BUTTON' ||
+            node.tagName === 'SVG' ||
+            node.tagName === 'SCRIPT' ||
+            node.tagName === 'STYLE' ||
+            node.classList.contains('instructions-heading') ||
+            node.classList.contains('section-num') ||
+            node.classList.contains('section-action-hint') ||
+            node.classList.contains('feedback-box')
+          ) {
+            return;
+          }
+
           if (node.classList.contains('vocab-in-text')) {
             const wrap = document.createElement('span');
             wrap.className = 'reading-word';
@@ -2053,28 +2115,23 @@
             wrap.appendChild(node);
             return;
           }
+
           const children = Array.from(node.childNodes);
           children.forEach(processNode);
         }
       }
 
-      processNode(container);
+      const targetAreas = sheet.querySelectorAll(
+        '.instructions-inner, .reading-content, .quiz-container, .discussion-container'
+      );
+      if (targetAreas.length > 0) {
+        targetAreas.forEach(area => processNode(area));
+      } else {
+        processNode(sheet);
+      }
 
-      let lastCtrlDownTime = 0;
-      container.addEventListener('mousedown', (e) => {
-        if (e.ctrlKey || e.metaKey) {
-          lastCtrlDownTime = Date.now();
-        }
-      });
-
-      container.addEventListener('contextmenu', (e) => {
-        if (e.ctrlKey && e.button === 0) {
-          e.preventDefault();
-        }
-      });
-
-      container.addEventListener('dblclick', (e) => {
-        if (!e.ctrlKey && !e.metaKey && (Date.now() - lastCtrlDownTime > 600)) return;
+      sheet.addEventListener('dblclick', (e) => {
+        if (!e.shiftKey) return;
         if (e.target && e.target.closest('.reading-bookmark')) return;
 
         let wordEl = e.target && e.target.closest ? e.target.closest('.reading-word') : null;
@@ -2084,7 +2141,7 @@
             const range = sel.getRangeAt(0);
             const startNode = range.startContainer;
             const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement;
-            if (startEl && container.contains(startEl)) {
+            if (startEl && sheet.contains(startEl)) {
               wordEl = startEl.closest('.reading-word');
             }
           }
@@ -2096,6 +2153,7 @@
         if (isNaN(idx)) return;
 
         e.preventDefault();
+        e.stopPropagation();
         addReadingBookmark(idx);
 
         const clearSel = () => {
@@ -2127,15 +2185,33 @@
       renderReadingBookmarks();
     }
 
-    function renderReadingBookmarks() {
-      const container = document.querySelector('.reading-content');
-      if (!container) return;
+    function updateStickyBookmarkState() {
+      const bmBtn = document.getElementById('jump-bookmark-btn');
+      if (!bmBtn) return;
+      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+      if (bookmarkEls.length === 0) {
+        bmBtn.classList.remove('show');
+        return;
+      }
+      if (bookmarkEls.length === 1) {
+        const rect = bookmarkEls[0].getBoundingClientRect();
+        const isVisible = (rect.top >= 40 && rect.bottom <= window.innerHeight - 40);
+        if (isVisible) {
+          bmBtn.classList.remove('show');
+        } else {
+          bmBtn.classList.add('show');
+        }
+        return;
+      }
+      bmBtn.classList.add('show');
+    }
 
-      container.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
-      container.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
+    function renderReadingBookmarks() {
+      document.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
+      document.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
 
       readingBookmarks.forEach(idx => {
-        const wordEl = container.querySelector(`.reading-word[data-word-idx="${idx}"]`);
+        const wordEl = document.querySelector(`.reading-word[data-word-idx="${idx}"]`);
         if (!wordEl) return;
         wordEl.classList.add('has-bookmark');
 
@@ -2164,12 +2240,15 @@
 
         wordEl.insertBefore(bm, wordEl.firstChild);
       });
+
+      updateStickyBookmarkState();
     }
 
     // =========================================================
     // INSTRUCTIONS ROLL-OUT / ROLL-UP LOGIC
     // =========================================================
     function toggleInstructions(e) {
+      if (e && e.shiftKey) return;
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       const box = document.getElementById('instructions-box');
       if (!box) return;
@@ -2910,6 +2989,7 @@
     // MULTIPLE CHOICE QUIZ LOGIC (RADIO-FREE)
     // =========================================================
     function selectOption(qNum, value) {
+      if (window.event && window.event.shiftKey) return;
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       if (userAnswers[qNum] === value) {
         delete userAnswers[qNum];
@@ -3344,6 +3424,35 @@
         stickyNav.appendChild(clone);
       });
 
+      const bmBtn = document.createElement('button');
+      bmBtn.type = 'button';
+      bmBtn.className = 'jump-bookmark-btn';
+      bmBtn.id = 'jump-bookmark-btn';
+      bmBtn.title = 'Ir al siguiente marcador';
+      bmBtn.setAttribute('aria-label', 'Ir al siguiente marcador');
+      bmBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>';
+      bmBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleBookmarkJump();
+      });
+      stickyNav.appendChild(bmBtn);
+
+      function handleBookmarkJump() {
+        const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+        if (bookmarkEls.length === 0) return;
+
+        bookmarkEls.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+        let nextBm = bookmarkEls.find(bm => bm.getBoundingClientRect().top > 120);
+        if (!nextBm) {
+          nextBm = bookmarkEls[0];
+        }
+
+        const rect = nextBm.getBoundingClientRect();
+        const targetY = window.scrollY + rect.top - 80;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+      }
+
       function returnToPreviousSpot() {
         if (savedReturnScrollY !== null) {
           const targetY = savedReturnScrollY;
@@ -3416,6 +3525,8 @@
           const isMatch = a.getAttribute('href') === `#${currentSectionId}`;
           a.classList.toggle('active', isMatch);
         });
+
+        updateStickyBookmarkState();
       }
 
       window.addEventListener('scroll', updateStickyNavState, { passive: true });
@@ -3527,7 +3638,7 @@
       document.querySelectorAll('.vocab-in-text').forEach(span => {
         span.addEventListener('click', (e) => {
           e.stopPropagation();
-          if (e.ctrlKey || e.metaKey) return;
+          if (e.shiftKey) return;
           if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
           const key = span.getAttribute('data-key') || span.textContent.trim().toLowerCase();
           if (vocabData[key]) {
