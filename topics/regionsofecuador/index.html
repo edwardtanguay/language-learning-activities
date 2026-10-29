@@ -55,7 +55,7 @@
     }
 
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
     }
 
     /* Top utility bar */
@@ -2284,11 +2284,51 @@
     });
 
     // =========================================================
-    // SCROLL TO TOP LOGIC
+    // SNAPPY SCROLL & SCROLL TO TOP LOGIC
     // =========================================================
+    let activeScrollRaf = null;
+    function snappyScrollTo(targetY, duration = 280) {
+      if (activeScrollRaf) {
+        cancelAnimationFrame(activeScrollRaf);
+        activeScrollRaf = null;
+      }
+      const startY = window.scrollY;
+      const docHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      const clampedTarget = Math.max(0, Math.min(targetY, docHeight - window.innerHeight));
+      const diff = clampedTarget - startY;
+      if (Math.abs(diff) < 2) return;
+      const startTime = performance.now();
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        window.scrollTo(0, startY + diff * easeOutCubic(progress));
+        if (progress < 1) {
+          activeScrollRaf = requestAnimationFrame(step);
+        } else {
+          activeScrollRaf = null;
+        }
+      }
+      activeScrollRaf = requestAnimationFrame(step);
+    }
+
+    window.addEventListener('wheel', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+    window.addEventListener('touchstart', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+
     function scrollToTop(e) {
       if (e) e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      snappyScrollTo(0, 280);
     }
 
     // =========================================================
@@ -3464,7 +3504,7 @@
 
         const rect = nextBm.getBoundingClientRect();
         const targetY = window.scrollY + rect.top - 80;
-        window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+        snappyScrollTo(Math.max(0, targetY), 280);
       }
 
       function returnToPreviousSpot() {
@@ -3472,7 +3512,7 @@
           const targetY = savedReturnScrollY;
           savedReturnScrollY = null;
           returnBtn.classList.remove('show');
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
+          snappyScrollTo(targetY, 280);
         }
       }
 
@@ -3503,7 +3543,7 @@
           returnBtn.classList.add('show');
         }
 
-        window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+        snappyScrollTo(Math.max(0, targetTop), 280);
       }
 
       headerJumpNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
