@@ -1118,7 +1118,7 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
 
   <!-- Fullscreen Dimming Overlay -->
   <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
@@ -1132,7 +1132,7 @@
   </div>
 
   <!-- Handout Sheet -->
-  <main class="handout-sheet" id="top">
+  <main class="handout-sheet">
 
     <!-- Header -->
     <header class="worksheet-header">
@@ -1174,7 +1174,7 @@
 
     <!-- Section 1: Reading Text -->
     <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">1</span> Lectura</a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">1</span> Lectura</a>
       <span class="section-action-hint">leer en voz alta</span>
     </h2>
 
@@ -1207,7 +1207,7 @@
 
     <!-- Section 2: Vocabulary Drag & Drop -->
     <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
       <span class="section-action-hint">arrastrar y soltar</span>
     </h2>
 
@@ -1233,7 +1233,7 @@
 
     <!-- Section 3: Interactive Comprehension Questions -->
     <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">3</span> Comprensión</a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
 
@@ -1433,7 +1433,7 @@
 
     <!-- Section 4: Open Questions Section -->
     <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
 
@@ -1697,6 +1697,14 @@
         });
       }
     });
+
+    // =========================================================
+    // SCROLL TO TOP LOGIC
+    // =========================================================
+    function scrollToTop(e) {
+      if (e) e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // =========================================================
     // VOCABULARY EXERCISE LOGIC
