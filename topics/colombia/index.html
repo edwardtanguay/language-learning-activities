@@ -193,6 +193,72 @@
       box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
     }
 
+    /* Sticky Section Jump Pill & Return to Reading */
+    .sticky-jump-nav {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translate3d(-50%, -150%, 0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 880;
+      background: rgba(255, 253, 249, 0.96);
+      border: 1px solid var(--ink-border);
+      box-shadow: 0 4px 16px rgba(45, 40, 35, 0.14);
+      border-radius: 999px;
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .sticky-jump-nav.visible {
+      transform: translate3d(-50%, 0, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sticky-jump-nav .jump-num {
+      width: 27px;
+      height: 27px;
+      font-size: 14px;
+    }
+
+    .sticky-jump-nav .jump-num.active {
+      background-color: var(--stamp-blue);
+      color: #fff;
+    }
+
+    .jump-return-btn {
+      background: var(--highlight);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 999px;
+      height: 27px;
+      padding: 0 9px;
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: background-color 0.15s, transform 0.15s;
+    }
+
+    .jump-return-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-return-btn:hover {
+      background-color: #e6dbb8;
+      transform: translateY(-1px);
+    }
+
     /* Handout Sections */
     .section-title {
       font-family: var(--font-typewriter);
@@ -412,23 +478,28 @@
         background-position: 0 0, 0 100%, 0 0, 100% 0;
       }
       100% {
-        background-position: 12px 0, -12px 100%, 0 -12px, 100% 12px;
+        background-position: 8px 0, -8px 100%, 0 -8px, 100% 8px;
       }
     }
 
     .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) {
-      border-color: transparent !important;
+      border: 1px solid transparent !important;
+      background-origin: border-box;
       background-image: 
-        linear-gradient(90deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%),
-        linear-gradient(90deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%),
-        linear-gradient(0deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%),
-        linear-gradient(0deg, rgba(175, 165, 150, 0.5) 50%, transparent 50%);
+        linear-gradient(90deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%),
+        linear-gradient(90deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%),
+        linear-gradient(0deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%),
+        linear-gradient(0deg, rgba(190, 182, 170, 0.36) 50%, transparent 50%);
       background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-      background-size: 6px 1px, 6px 1px, 1px 6px, 1px 6px;
+      background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
       background-position: 0 0, 0 100%, 0 0, 100% 0;
-      animation: marchingAnts 2s linear infinite;
+      animation: marchingAnts 3.5s linear infinite;
       background-color: var(--paper-bg);
       box-shadow: none;
+    }
+
+    .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) * {
+      pointer-events: none;
     }
 
     .vocab-drag-avatar {
@@ -470,17 +541,14 @@
       border: 1px dashed var(--ink-rule);
       border-radius: 0;
       padding: 8px 12px;
-      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      transition: background-color 0.15s ease;
       cursor: pointer;
       position: relative;
     }
 
     .vocab-target-card.drag-over {
-      border: 1.5px solid var(--stamp-blue) !important;
-      background-image: none !important;
-      animation: none !important;
-      background-color: #f0f4f9 !important;
-      box-shadow: 0 0 0 2px rgba(29, 67, 115, 0.2) !important;
+      background-color: #f3ebd3 !important;
+      box-shadow: none !important;
     }
 
     .vocab-target-def {
@@ -937,6 +1005,14 @@
       display: flex;
     }
 
+    .image-lightbox-overlay.is-zoomed {
+      cursor: grab;
+    }
+
+    .image-lightbox-overlay.is-panning {
+      cursor: grabbing;
+    }
+
     .image-lightbox-img {
       max-width: 94vw;
       max-height: 92vh;
@@ -1247,7 +1323,7 @@
         padding: 0;
         background-image: none;
       }
-      .utility-bar, .bottom-actions-bar, .reset-answers-btn, .vocab-dim-overlay {
+      .utility-bar, .bottom-actions-bar, .reset-answers-btn, .vocab-dim-overlay, .sticky-jump-nav {
         display: none !important;
       }
       .handout-sheet {
@@ -1263,6 +1339,9 @@
   </style>
 </head>
 <body id="top">
+
+  <!-- Sticky Floating Section Jump Pill -->
+  <nav class="sticky-jump-nav" id="sticky-jump-nav" aria-label="Navegación rápida de secciones"></nav>
 
   <!-- Fullscreen Dimming Overlay -->
   <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
@@ -1615,13 +1694,25 @@
 
     <section class="images-section" id="images-section">
       <div class="images-grid">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cafetero.jpg', 'cafetero')">
+          <img src="images/es-colombia-cafetero.jpg" alt="cafetero" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-picturemap.jpg', 'picturemap')">
+          <img src="images/es-colombia-picturemap.jpg" alt="picturemap" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-tatacoadesert.jpg', 'tatacoadesert')">
+          <img src="images/es-colombia-tatacoadesert.jpg" alt="tatacoadesert" class="image-thumb" loading="lazy">
+        </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomap.jpg', 'topomap')">
           <img src="images/es-colombia-topomap.jpg" alt="topomap" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomapclear.jpg', 'topomapclear')">
+          <img src="images/es-colombia-topomapclear.jpg" alt="topomapclear" class="image-thumb" loading="lazy">
         </div>
       </div>
     </section>
 
-    <!-- Bottom Actions / Navigation -->
+<!-- Bottom Actions / Navigation -->
     <div class="bottom-actions-bar">
       <div class="reset-container" id="reset-container">
         <button class="reset-answers-btn" id="reset-btn" onclick="requestReset()" title="Reiniciar respuestas de esta actividad">
@@ -1932,6 +2023,8 @@
 
       if (!pool || !targets || !completedPool) return;
 
+      const savedScrollY = window.scrollY;
+
       pool.innerHTML = '';
       targets.innerHTML = '';
       completedPool.innerHTML = '';
@@ -1972,31 +2065,6 @@
         };
 
         appendBalancedRows(pool, remainingKeys, createChip, 'vocab-pool-row');
-
-        if (prevChipRects) {
-          pool.querySelectorAll('.vocab-chip').forEach(chip => {
-            const k = chip.getAttribute('data-key');
-            const oldRect = prevChipRects[k];
-            if (oldRect) {
-              const newRect = chip.getBoundingClientRect();
-              const dx = oldRect.left - newRect.left;
-              const dy = oldRect.top - newRect.top;
-              if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-                chip.style.transition = 'none';
-                chip.style.transform = `translate(${dx}px, ${dy}px)`;
-                chip.getBoundingClientRect();
-                chip.style.transition = 'transform 0.28s cubic-bezier(0.25, 1, 0.5, 1)';
-                chip.style.transform = 'translate(0, 0)';
-                const cleanup = () => {
-                  chip.style.transition = '';
-                  chip.style.transform = '';
-                };
-                chip.addEventListener('transitionend', cleanup, { once: true });
-                setTimeout(cleanup, 320);
-              }
-            }
-          });
-        }
       }
 
       // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
@@ -2045,6 +2113,45 @@
         };
 
         appendBalancedRows(completedPool, completedVocab, createPill, 'vocab-completed-row', 3);
+      }
+
+      // 4. FLIP Animation: smoothly slide remaining waiting words into their new positions to fill the gap
+      if (prevChipRects && remainingKeys.length > 0) {
+        if (Math.abs(window.scrollY - savedScrollY) > 1) {
+          window.scrollTo(0, savedScrollY);
+        }
+        const chipsToAnimate = [];
+        pool.querySelectorAll('.vocab-chip').forEach(chip => {
+          const k = chip.getAttribute('data-key');
+          const oldRect = prevChipRects[k];
+          if (oldRect) {
+            const newRect = chip.getBoundingClientRect();
+            const dx = oldRect.left - newRect.left;
+            const dy = oldRect.top - newRect.top;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              chip.style.transition = 'none';
+              chip.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              chipsToAnimate.push(chip);
+            }
+          }
+        });
+        if (chipsToAnimate.length > 0) {
+          void pool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              chipsToAnimate.forEach(chip => {
+                chip.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                chip.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  chip.style.transition = '';
+                  chip.style.transform = '';
+                };
+                chip.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+            });
+          });
+        }
       }
     }
 
@@ -2178,7 +2285,8 @@
       this.classList.add('drag-over');
     }
 
-    function handleDragLeave() {
+    function handleDragLeave(e) {
+      if (e && e.relatedTarget && this.contains(e.relatedTarget)) return;
       this.classList.remove('drag-over');
     }
 
@@ -2599,8 +2707,9 @@
     }
 
     // =========================================================
-    // SECTION 5: IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // SECTION 5: IMAGE LIGHTBOX (DESKTOP WHEEL/DRAG & MOBILE PINCH-ZOOM)
     // =========================================================
+    const LB_MAX_SCALE = 50;
     let lbScale = 1;
     let lbTranslateX = 0;
     let lbTranslateY = 0;
@@ -2612,11 +2721,21 @@
     let lbLastTouchY = 0;
     let lbGestureMoved = false;
     let lbIgnoreNextClick = false;
+    let lbMouseDragging = false;
+    let lbMouseStartX = 0;
+    let lbMouseStartY = 0;
+    let lbLastMouseX = 0;
+    let lbLastMouseY = 0;
 
     function applyLightboxTransform() {
+      const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       if (img) {
         img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
+      }
+      if (overlay) {
+        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
+        overlay.classList.toggle('is-panning', lbMouseDragging && lbScale > 1.01);
       }
     }
 
@@ -2631,6 +2750,7 @@
       lbTranslateY = 0;
       lbGestureMoved = false;
       lbIgnoreNextClick = false;
+      lbMouseDragging = false;
       applyLightboxTransform();
       overlay.classList.add('active');
     }
@@ -2639,7 +2759,7 @@
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       if (!overlay) return;
-      overlay.classList.remove('active');
+      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
         img.src = '';
         img.style.transform = '';
@@ -2647,6 +2767,7 @@
       lbScale = 1;
       lbTranslateX = 0;
       lbTranslateY = 0;
+      lbMouseDragging = false;
     }
 
     function handleLightboxClick(e) {
@@ -2670,6 +2791,70 @@
       document.addEventListener('DOMContentLoaded', () => {
         const overlay = document.getElementById('image-lightbox');
         if (!overlay) return;
+
+        // Desktop Mouse Wheel / Trackpad Zoom (up to LB_MAX_SCALE, centered on cursor)
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const prevScale = lbScale;
+          const nextScale = Math.min(Math.max(1, prevScale * zoomFactor), LB_MAX_SCALE);
+
+          if (nextScale <= 1.005) {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          } else {
+            const rect = overlay.getBoundingClientRect();
+            const cursorX = e.clientX - (rect.left + rect.width / 2);
+            const cursorY = e.clientY - (rect.top + rect.height / 2);
+            const ratio = nextScale / prevScale;
+            lbTranslateX = cursorX - (cursorX - lbTranslateX) * ratio;
+            lbTranslateY = cursorY - (cursorY - lbTranslateY) * ratio;
+            lbScale = nextScale;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        // Desktop Click-and-Drag Pan when zoomed in
+        overlay.addEventListener('mousedown', (e) => {
+          if (e.button !== 0 || !overlay.classList.contains('active')) return;
+          lbGestureMoved = false;
+          if (lbScale > 1.01) {
+            e.preventDefault();
+            lbMouseDragging = true;
+            lbMouseStartX = e.clientX;
+            lbMouseStartY = e.clientY;
+            lbLastMouseX = e.clientX;
+            lbLastMouseY = e.clientY;
+            applyLightboxTransform();
+          }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!lbMouseDragging) return;
+          const dx = e.clientX - lbLastMouseX;
+          const dy = e.clientY - lbLastMouseY;
+          if (Math.hypot(e.clientX - lbMouseStartX, e.clientY - lbMouseStartY) > 4) {
+            lbGestureMoved = true;
+          }
+          lbTranslateX += dx;
+          lbTranslateY += dy;
+          lbLastMouseX = e.clientX;
+          lbLastMouseY = e.clientY;
+          applyLightboxTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (!lbMouseDragging) return;
+          lbMouseDragging = false;
+          applyLightboxTransform();
+          if (lbGestureMoved) {
+            lbIgnoreNextClick = true;
+            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
+          }
+        });
 
         overlay.addEventListener('touchstart', (e) => {
           if (e.touches.length === 2) {
@@ -2696,7 +2881,7 @@
             const dx = e.touches[0].clientX - e.touches[1].clientX;
             const dy = e.touches[0].clientY - e.touches[1].clientY;
             const dist = Math.hypot(dx, dy);
-            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), 6);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
 
             const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
             const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
@@ -2750,6 +2935,104 @@
         });
       });
     })();
+
+    // =========================================================
+    // STICKY FLOATING SECTION JUMP NAV & "GO TO IMAGES & COME BACK"
+    // =========================================================
+    let savedReturnScrollY = null;
+
+    function setupStickyJumpNav() {
+      const headerJumpNav = document.querySelector('.jump-nav');
+      const stickyNav = document.getElementById('sticky-jump-nav');
+      if (!headerJumpNav || !stickyNav) return;
+
+      const buildStickyLinks = () => {
+        stickyNav.innerHTML = '';
+        const returnBtn = document.createElement('button');
+        returnBtn.type = 'button';
+        returnBtn.className = 'jump-return-btn';
+        returnBtn.id = 'jump-return-btn';
+        returnBtn.title = 'Volver al punto anterior';
+        returnBtn.innerHTML = '↩';
+        returnBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (savedReturnScrollY !== null) {
+            const targetY = savedReturnScrollY;
+            savedReturnScrollY = null;
+            returnBtn.classList.remove('show');
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+        });
+        stickyNav.appendChild(returnBtn);
+
+        const links = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
+        links.forEach(origLink => {
+          const clone = origLink.cloneNode(true);
+          clone.addEventListener('click', (e) => handleJumpClick(e, clone.getAttribute('href')));
+          stickyNav.appendChild(clone);
+        });
+
+        links.forEach(origLink => {
+          origLink.addEventListener('click', (e) => handleJumpClick(e, origLink.getAttribute('href')));
+        });
+      };
+
+      const handleJumpClick = (e, href) => {
+        if (!href || !href.startsWith('#')) return;
+        const targetEl = document.querySelector(href);
+        if (!targetEl) return;
+        e.preventDefault();
+
+        const returnBtn = document.getElementById('jump-return-btn');
+
+        // If clicking '5' (Images) while already at Section 5 and a return scroll position exists, toggle back!
+        if (href === '#seccion-5') {
+          const rect5 = targetEl.getBoundingClientRect();
+          const alreadyAtImages = Math.abs(rect5.top) < 160 && savedReturnScrollY !== null;
+          if (alreadyAtImages) {
+            const targetY = savedReturnScrollY;
+            savedReturnScrollY = null;
+            if (returnBtn) returnBtn.classList.remove('show');
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+            return;
+          }
+        }
+
+        // Save current scroll position so learner can jump to Images (or another section) and come right back
+        savedReturnScrollY = window.scrollY;
+        if (returnBtn) {
+          returnBtn.classList.add('show');
+        }
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+
+      buildStickyLinks();
+
+      const updateStickyState = () => {
+        const navRect = headerJumpNav.getBoundingClientRect();
+        const shouldShow = navRect.bottom < 0;
+        stickyNav.classList.toggle('visible', shouldShow);
+
+        const stickyLinks = Array.from(stickyNav.querySelectorAll('.jump-num'));
+        let activeHref = null;
+        for (const link of stickyLinks) {
+          const href = link.getAttribute('href');
+          const sec = href ? document.querySelector(href) : null;
+          if (sec) {
+            const r = sec.getBoundingClientRect();
+            if (r.top <= 140) {
+              activeHref = href;
+            }
+          }
+        }
+        stickyLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === activeHref);
+        });
+      };
+
+      window.addEventListener('scroll', updateStickyState, { passive: true });
+      updateStickyState();
+    }
 
     function captureOutgoingActivity(direction) {
       try {
@@ -2849,6 +3132,7 @@
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
       loadSavedState();
+      setupStickyJumpNav();
 
       // Click on vocabulary words in reading text opens hint modal
       document.querySelectorAll('.vocab-in-text').forEach(span => {

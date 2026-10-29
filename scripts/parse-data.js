@@ -96,8 +96,15 @@ function ensureNoHyphenTopicDirs() {
   for (const entry of entries) {
     if (entry.isDirectory() && entry.name.includes('-')) {
       const oldName = entry.name;
-      const newName = oldName.replace(/-/g, '');
       const oldPath = path.join(TOPICS_DIR, oldName);
+      const oldIndexPath = path.join(oldPath, 'index.html');
+      if (fs.existsSync(oldIndexPath)) {
+        const oldHtml = fs.readFileSync(oldIndexPath, 'utf8');
+        if (oldHtml.includes('data-redirect-page="true"')) {
+          continue;
+        }
+      }
+      const newName = oldName.replace(/-/g, '');
       const newPath = path.join(TOPICS_DIR, newName);
       if (!fs.existsSync(newPath)) {
         fs.renameSync(oldPath, newPath);
@@ -129,6 +136,7 @@ function loadActivities() {
     if (!fs.existsSync(indexPath)) continue;
 
     const html = fs.readFileSync(indexPath, 'utf8');
+    if (html.includes('data-redirect-page="true"')) continue;
     const langMatch = html.match(/<html[^>]*\blang=["']([^"']+)["']/i);
     const lang = langMatch ? langMatch[1].toLowerCase().trim() : 'es';
 
@@ -324,6 +332,14 @@ const SECTION_5_CSS = `
       display: flex;
     }
 
+    .image-lightbox-overlay.is-zoomed {
+      cursor: grab;
+    }
+
+    .image-lightbox-overlay.is-panning {
+      cursor: grabbing;
+    }
+
     .image-lightbox-img {
       max-width: 94vw;
       max-height: 92vh;
@@ -358,13 +374,21 @@ const SECTION_5_JS = `
     let lbPanStartY = 0;
     let lbLastTouchX = 0;
     let lbLastTouchY = 0;
+    let lbMouseDown = false;
+    let lbLastMouseX = 0;
+    let lbLastMouseY = 0;
     let lbGestureMoved = false;
     let lbIgnoreNextClick = false;
+    const LB_MAX_SCALE = 50;
 
     function applyLightboxTransform() {
+      const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       if (img) {
         img.style.transform = \`translate3d(\${lbTranslateX}px, \${lbTranslateY}px, 0) scale(\${lbScale})\`;
+      }
+      if (overlay) {
+        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
       }
     }
 
@@ -377,8 +401,10 @@ const SECTION_5_JS = `
       lbScale = 1;
       lbTranslateX = 0;
       lbTranslateY = 0;
+      lbMouseDown = false;
       lbGestureMoved = false;
       lbIgnoreNextClick = false;
+      overlay.classList.remove('is-zoomed', 'is-panning');
       applyLightboxTransform();
       overlay.classList.add('active');
     }
@@ -387,7 +413,7 @@ const SECTION_5_JS = `
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       if (!overlay) return;
-      overlay.classList.remove('active');
+      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
         img.src = '';
         img.style.transform = '';
@@ -395,6 +421,7 @@ const SECTION_5_JS = `
       lbScale = 1;
       lbTranslateX = 0;
       lbTranslateY = 0;
+      lbMouseDown = false;
     }
 
     function handleLightboxClick(e) {
@@ -418,6 +445,71 @@ const SECTION_5_JS = `
       document.addEventListener('DOMContentLoaded', () => {
         const overlay = document.getElementById('image-lightbox');
         if (!overlay) return;
+
+        // Desktop mouse wheel / trackpad zoom toward cursor (unlimited / up to 50x)
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
+
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        // Desktop click-and-drag pan when zoomed in
+        overlay.addEventListener('mousedown', (e) => {
+          if (e.button !== 0 || !overlay.classList.contains('active')) return;
+          lbMouseDown = true;
+          lbGestureMoved = false;
+          lbPanStartX = e.clientX;
+          lbPanStartY = e.clientY;
+          lbLastMouseX = e.clientX;
+          lbLastMouseY = e.clientY;
+          if (lbScale > 1.01) {
+            overlay.classList.add('is-panning');
+          }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!lbMouseDown) return;
+          const curX = e.clientX;
+          const curY = e.clientY;
+          if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 5) {
+            lbGestureMoved = true;
+          }
+          if (lbScale > 1.01 && lbGestureMoved) {
+            e.preventDefault();
+            lbTranslateX += (curX - lbLastMouseX);
+            lbTranslateY += (curY - lbLastMouseY);
+            lbLastMouseX = curX;
+            lbLastMouseY = curY;
+            applyLightboxTransform();
+          }
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (!lbMouseDown) return;
+          lbMouseDown = false;
+          overlay.classList.remove('is-panning');
+          if (lbGestureMoved) {
+            lbIgnoreNextClick = true;
+            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
+          }
+        });
 
         overlay.addEventListener('touchstart', (e) => {
           if (e.touches.length === 2) {
@@ -444,7 +536,7 @@ const SECTION_5_JS = `
             const dx = e.touches[0].clientX - e.touches[1].clientX;
             const dy = e.touches[0].clientY - e.touches[1].clientY;
             const dist = Math.hypot(dx, dy);
-            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), 6);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
 
             const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
             const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
@@ -530,6 +622,20 @@ function updateActivityHtmlForImages(activity) {
   const originalHtml = fs.readFileSync(activity.indexPath, 'utf8');
   let html = originalHtml;
   const i18n = SECTION_5_I18N[activity.lang] || SECTION_5_I18N.es;
+
+  // Check if any previously referenced images in Section 5 were deleted from /images
+  const existingImgMatches = Array.from(
+    originalHtml.matchAll(/<img\s+src="images\/([^"]+)"/g),
+    m => m[1]
+  );
+  const currentImgSet = new Set(imageFiles);
+  for (const oldImg of existingImgMatches) {
+    if (!currentImgSet.has(oldImg)) {
+      console.log(
+        `Removed deleted image from topics/${activity.folderName}/index.html: images/${oldImg}`
+      );
+    }
+  }
 
   const section5Regex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/;
   const jump5Regex = /\s*<a href="#seccion-5"[^>]*>5<\/a>/g;

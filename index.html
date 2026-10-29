@@ -148,6 +148,113 @@
       color: var(--ink-main);
     }
 
+    .filter-select-native {
+      display: none !important;
+    }
+
+    /* Custom Styled Dropdown */
+    .custom-dropdown {
+      position: relative;
+      display: inline-block;
+      font-family: var(--font-body);
+    }
+
+    .custom-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink-main);
+      background-color: #fff;
+      border: 1px solid var(--ink-rule);
+      border-radius: 2px;
+      padding: 5px 10px;
+      min-width: 162px;
+      cursor: pointer;
+      text-align: left;
+      line-height: 1.35;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .custom-dropdown-trigger:hover {
+      border-color: var(--ink-muted);
+    }
+
+    .custom-dropdown.open .custom-dropdown-trigger {
+      border-color: var(--ink-muted);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.08);
+    }
+
+    .custom-dropdown-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .custom-dropdown-arrow {
+      width: 14px;
+      height: 14px;
+      stroke: var(--ink-muted);
+      stroke-width: 2.2;
+      fill: none;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, stroke 0.15s;
+    }
+
+    .custom-dropdown.open .custom-dropdown-arrow {
+      transform: rotate(180deg);
+      stroke: var(--ink-main);
+    }
+
+    .custom-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 100%;
+      width: max-content;
+      max-width: min(260px, 90vw);
+      max-height: 280px;
+      overflow-y: auto;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 2px;
+      box-shadow: 0 10px 28px rgba(45, 40, 35, 0.15), 0 2px 6px rgba(45, 40, 35, 0.06);
+      list-style: none;
+      padding: 4px 0;
+      margin: 0;
+      z-index: 500;
+    }
+
+    .custom-dropdown.open .custom-dropdown-menu {
+      display: block;
+    }
+
+    .custom-dropdown-option {
+      padding: 7px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink-main);
+      cursor: pointer;
+      line-height: 1.3;
+      transition: background-color 0.12s;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .custom-dropdown-option:hover {
+      background-color: rgba(242, 233, 203, 0.55);
+    }
+
+    .custom-dropdown-option.selected {
+      background-color: var(--highlight);
+      font-weight: 600;
+    }
+
     .search-input-wrap {
       position: relative;
       display: inline-flex;
@@ -394,6 +501,27 @@
         font-size: 12.5px;
         padding: 5px 4px;
       }
+      .filter-dropdowns-row .custom-dropdown {
+        width: 100%;
+        display: block;
+      }
+      .filter-dropdowns-row .custom-dropdown-trigger {
+        width: 100%;
+        min-width: 0;
+        font-size: 12.5px;
+        padding: 6px 8px;
+        gap: 6px;
+      }
+      .filter-dropdowns-row .custom-dropdown-menu {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+      }
+      .filter-dropdowns-row .custom-dropdown-option {
+        font-size: 13px;
+        padding: 8px 10px;
+        white-space: normal;
+      }
       .filter-search-group {
         width: 100%;
       }
@@ -478,7 +606,7 @@
       <div class="filter-dropdowns-row">
         <div class="filter-group">
           <label for="lang-filter">Idioma:</label>
-          <select id="lang-filter" class="filter-select" onchange="filterActivities()">
+          <select id="lang-filter" class="filter-select filter-select-native" onchange="filterActivities()">
             <option value="all">Todos los idiomas</option>
             <option value="en">Inglés (en)</option>
             <option value="de">Alemán (de)</option>
@@ -492,16 +620,48 @@
             <option value="is">Islandés (is)</option>
             <option value="da">Danés (da)</option>
           </select>
+          <div class="custom-dropdown" id="lang-dropdown" data-select="lang-filter">
+            <button type="button" class="custom-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span class="custom-dropdown-label">Todos los idiomas</span>
+              <svg class="custom-dropdown-arrow" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <ul class="custom-dropdown-menu" role="listbox">
+              <li class="custom-dropdown-option selected" role="option" data-value="all" aria-selected="true">Todos los idiomas</li>
+              <li class="custom-dropdown-option" role="option" data-value="en" aria-selected="false">Inglés (en)</li>
+              <li class="custom-dropdown-option" role="option" data-value="de" aria-selected="false">Alemán (de)</li>
+              <li class="custom-dropdown-option" role="option" data-value="fr" aria-selected="false">Francés (fr)</li>
+              <li class="custom-dropdown-option" role="option" data-value="es" aria-selected="false">Español (es)</li>
+              <li class="custom-dropdown-option" role="option" data-value="it" aria-selected="false">Italiano (it)</li>
+              <li class="custom-dropdown-option" role="option" data-value="nl" aria-selected="false">Neerlandés (nl)</li>
+              <li class="custom-dropdown-option" role="option" data-value="pl" aria-selected="false">Polaco (pl)</li>
+              <li class="custom-dropdown-option" role="option" data-value="ru" aria-selected="false">Ruso (ru)</li>
+              <li class="custom-dropdown-option" role="option" data-value="el" aria-selected="false">Griego (el)</li>
+              <li class="custom-dropdown-option" role="option" data-value="is" aria-selected="false">Islandés (is)</li>
+              <li class="custom-dropdown-option" role="option" data-value="da" aria-selected="false">Danés (da)</li>
+            </ul>
+          </div>
         </div>
 
         <div class="filter-group">
           <label for="level-filter">Nivel:</label>
-          <select id="level-filter" class="filter-select" onchange="filterActivities()">
+          <select id="level-filter" class="filter-select filter-select-native" onchange="filterActivities()">
             <option value="all">Todos los niveles</option>
             <option value="A2">Elemental (A2)</option>
             <option value="B1">Intermedio (B1)</option>
             <option value="B2">Intermedio alto (B2)</option>
           </select>
+          <div class="custom-dropdown" id="level-dropdown" data-select="level-filter">
+            <button type="button" class="custom-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span class="custom-dropdown-label">Todos los niveles</span>
+              <svg class="custom-dropdown-arrow" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <ul class="custom-dropdown-menu" role="listbox">
+              <li class="custom-dropdown-option selected" role="option" data-value="all" aria-selected="true">Todos los niveles</li>
+              <li class="custom-dropdown-option" role="option" data-value="A2" aria-selected="false">Elemental (A2)</li>
+              <li class="custom-dropdown-option" role="option" data-value="B1" aria-selected="false">Intermedio (B1)</li>
+              <li class="custom-dropdown-option" role="option" data-value="B2" aria-selected="false">Intermedio alto (B2)</li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -568,8 +728,82 @@
   </main>
 
   <script>
+    function closeAllDropdowns() {
+      document.querySelectorAll('.custom-dropdown.open').forEach(dd => {
+        dd.classList.remove('open');
+        const btn = dd.querySelector('.custom-dropdown-trigger');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    function setupCustomDropdowns() {
+      document.querySelectorAll('.custom-dropdown').forEach(dd => {
+        const selectId = dd.getAttribute('data-select');
+        const selectEl = document.getElementById(selectId);
+        const trigger = dd.querySelector('.custom-dropdown-trigger');
+        const labelEl = dd.querySelector('.custom-dropdown-label');
+        const options = dd.querySelectorAll('.custom-dropdown-option');
+
+        if (!trigger || !selectEl) return;
+
+        // Also allow clicking the associated <label> to toggle the dropdown
+        const associatedLabel = document.querySelector(`label[for="${selectId}"]`);
+        if (associatedLabel) {
+          associatedLabel.style.cursor = 'pointer';
+          associatedLabel.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            trigger.click();
+          });
+        }
+
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const wasOpen = dd.classList.contains('open');
+          closeAllDropdowns();
+          if (!wasOpen) {
+            dd.classList.add('open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        options.forEach(opt => {
+          opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const val = opt.getAttribute('data-value');
+            selectEl.value = val;
+            if (labelEl) labelEl.textContent = opt.textContent;
+            options.forEach(o => {
+              const isSelected = o === opt;
+              o.classList.toggle('selected', isSelected);
+              o.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+            });
+            closeAllDropdowns();
+            filterActivities();
+          });
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.custom-dropdown')) {
+          closeAllDropdowns();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeAllDropdowns();
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setupCustomDropdowns();
+    });
+
     function captureOutgoingPage(direction) {
       try {
+        closeAllDropdowns();
         document.querySelectorAll('select').forEach(sel => {
           Array.from(sel.options).forEach(opt => {
             if (opt.value === sel.value) opt.setAttribute('selected', 'selected');
