@@ -23,16 +23,18 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - **Antes de la clase / Before Class**: No bullet dot in front of the label. The label is capitalized (`Antes de la clase:`) followed by an all-lowercase description (e.g., `estudiante y profesor se familiarizan con el texto lo que deseen`, without trailing period).
     - **En clase / In Class**: No bullet dot in front of the label. The label is capitalized (`En clase:`) followed by an all-lowercase comma-separated list: `(1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos`.
     - Keep phrasing concise, inline, and readable in seconds.
-- **Header & Title on Mobile**:
+- **Header, Top Utility Bar & Title on Mobile**:
+  - On mobile (`max-width: 680px`), `body` has `padding: 0 8px 12px 8px;` and `.utility-bar` has `justify-content: center; align-items: center; margin: 0 auto; padding: 14px 0;` with `.back-link { line-height: 1; display: inline-flex; align-items: center; }` so "Índice de Actividades" is centered both horizontally and vertically in the space above the handout sheet.
   - On mobile (`max-width: 680px`), the stamp badge (`.stamp-badge`) is centered horizontally in the middle (`margin: 4px auto 0 auto; align-self: center;`), and the main title (`.handout-title-group h1`) and subtitle (`.handout-subtitle`) are centered.
   - The instructions callout heading (`.instructions-heading`, e.g. **INSTRUCCIONES**) is also centered on mobile.
 - **Section Numbering & Right-Side Action Hints**:
-  - Main sections across the worksheet are designated with clean numbers (1, 2, 3, 4) without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> Preguntas abiertas`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
+  - Main sections across the worksheet are designated with clean numbers (1, 2, 3, 4) without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
     - Section 1: "read aloud" (in Spanish: `leer en voz alta`)
     - Section 2: "drag and drop" (in Spanish: `arrastrar y soltar`)
     - Section 3: "multiple choice" (in Spanish: `opción múltiple`)
     - Section 4: "answer and discuss" (in Spanish: `responder y debatir`)
+  - On mobile (`max-width: 680px`), `.section-title` uses `flex-wrap: nowrap;` and Section 4 hides the word "abiertas" (`<span class="hide-mobile"> abiertas</span>`, or equivalent modifier in other languages) so it displays just "Preguntas" and keeps the right-side action hint (`responder y debatir`) on the same single line.
 - **Section 1: Reading Passage (Lectura)**:
   - Titled "Lectura" in the target language (without "Texto de" or period), paired with right-aligned action hint "read aloud" in the target language.
   - The reading text should always be approximately 400 words in length, divided into logical paragraphs or subsections.
@@ -44,7 +46,8 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Section 2: Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:
   - Positioned immediately following Section 1 (the reading text).
   - Titled "Vocabulary" translated into the target language (e.g., `<span class="section-num">2</span> Vocabulario` in Spanish, without "Clave" or period), paired with right-aligned action hint "drag and drop" in the target language.
-  - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
+  - Features the 10 hardest words from the text.
+  - **No English Cognates**: Each of the 10 vocabulary words must be strictly ONE standard single word in the target language and MUST NOT be an obvious cognate or look obviously similar to an English word. For example, do NOT pick words like `esmeraldas` (obviously "emeralds"), `ritmos` (too close to "rhythm"), `coloridos` ("colorful"), `emblemático` ("emblematic"), `imponente` ("imposing"), `islotes` ("islets"), or `biodiversidad` ("biodiversity"). Instead, pick genuine non-cognate words whose meaning is not obvious to an English speaker, such as `laderas` ("slopes"), `cosecha` ("harvest"), `llanuras` ("plains"), `faldas` ("foothills"), `mariscos` ("seafood"), `caudalosos` ("high-volume/mighty"), `maduros` ("ripe"), `dorada` ("golden"), `acogedora` ("welcoming"), or `decenas` ("dozens").
   - Layout & Interaction:
     - Top: waiting word chips in `.vocab-pool`. Styled identical to completed word pills below (same typewriter font, 13px font size, ink-main color, parchment sheet background, 3px 8px padding, square corners, without green checkmark).
     - Top & Completed Pool Row Balancing: Both the top waiting words pool (`.vocab-pool`) and the bottom completed words pool (`.vocab-completed-pool`) must distribute buttons into centered non-wrapping rows (`flex-wrap: nowrap;`) with as equal a number of buttons per row as possible (`Math.floor(total / numRows)` and `total % numRows`, so row counts differ by at most 1). Dynamically increase `numRows` whenever any row's `scrollWidth` exceeds the container's `clientWidth` so buttons never wrap into uneven orphan lines (such as `4, 1, 4, 1` on mobile, instead rendering balanced rows like `4, 3, 3` or `3, 3, 2, 2`). Re-evaluate on font load and window resize.
@@ -85,13 +88,13 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - Do NOT include status text words like "¡Correcto!" or "Incorrecto.", and do NOT prefix explanations with option letters.
     - Keep question cards clean and neutral; do NOT color the entire question card green or red.
 - **Section 4: Open Questions Section (Preguntas abiertas)**:
-  - Heading standardized to "Open Questions" in the target language (e.g., `<span class="section-num">4</span> Preguntas abiertas` in Spanish, `Offene Fragen` in German, `Questions ouvertes` in French), paired with right-aligned action hint "answer and discuss" in the target language (e.g., `responder y debatir`).
+  - Heading standardized to "Open Questions" in the target language on desktop (e.g., `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>` in Spanish, `<span><span class="hide-mobile">Offene </span>Fragen</span>` in German, `<span>Questions<span class="hide-mobile"> ouvertes</span></span>` in French), paired with right-aligned action hint "answer and discuss" in the target language (e.g., `responder y debatir`). On mobile (`max-width: 680px`), `.hide-mobile` is hidden (`display: none;`) so Section 4 displays just "Preguntas" (or equivalent single word) and "responder y debatir" stays on the same line.
   - Borderless and transparent container (remove dashed or solid outline boxes).
   - No boilerplate introductory instructions.
   - Next to each question, include a warm amber lightbulb SVG icon (`#d97706` stroke, `#fef3c7` fill) linking to Google search in a new tab: `answer this question in three sentences in <Language>, assume you are from <Country/Persona (default Germany)>: "<question>"`.
   - **Non-Breaking Icon Attachment**: The lightbulb icon must NEVER dangle alone on its own line. Always wrap the preceding word, a non-breaking space (`&nbsp;`), and the icon link inside `<span class="question-hint-wrap">word?&nbsp;<a ...>...</a></span>` with `white-space: nowrap;` so that if line-breaking occurs, the word and lightbulb wrap together to the new line.
 - **Bottom Actions Bar & Embedded In-Place Reset Confirmation**:
-  - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the back link and reset button are equally distant from the horizontal rule lines above and below them on both desktop and mobile.
+  - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) and zero vertical button padding on mobile (`.bottom-actions-bar .reset-answers-btn { padding: 0 10px; }`, `.back-link { line-height: 1; }`) so the back link ("Índice de Actividades") and reset button are equally distant from the horizontal rule lines above and below them on both desktop and mobile.
   - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI with Cancel placed first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or on cancel.
   - Clears all `localStorage` state (both multiple-choice answers and completed vocabulary).
 - **Standardized Footers**:
@@ -124,10 +127,11 @@ Use the following standardized languages, 2-letter ISO codes, and hex colors eve
   - Entire card is clickable (`cursor: pointer;`) to open the activity, with hover showing an intense soft shadow (`0 10px 28px rgba(45, 40, 35, 0.12)`) without border outline changes.
   - Title link has `pointer-events: none;` and no hover effects (no underline or color change) so the user intuitively feels the entire card panel is clickable.
   - The "Abrir actividad →" button is omitted from the card.
-- **Catalog Header (`index.html`)**: On mobile, the main header title ("Language Learning Activities") and subtitle ("Hojas pedagógicas para autoestudio, tándems y profesores") are centered.
-- **Catalog Dropdown Filter (`index.html`)**:
+- **Catalog Header (`index.html`)**: On mobile, the main header title ("Language Learning Activities") and subtitle ("Hojas pedagógicas para autoestudio, tándems y profesores") are centered. The subtitle uses `text-wrap: balance; max-width: 270px; margin-left: auto; margin-right: auto;` and non-breaking spaces (`tándems&nbsp;y&nbsp;profesores`) so it breaks evenly near the middle and never leaves a single word alone on the second line.
+- **Catalog Dropdown Filter & Search (`index.html`)**:
   - Form controls (select dropdowns, search input, labels) use the clean standard body serif font (`"Lora", Georgia, serif`), matching the rest of the page. The dropdown includes all 11 standardized languages in the canonical order.
-  - Mobile view (`max-width: 680px`): "Idioma:" and "Nivel:" labels are removed, the two dropdowns sit centered side-by-side on a single line filling 100% width (50%/50%), and the search bar extends across 100% full width.
+  - Search box clear ("X") button: When there is text inside `#search-input`, display an "X" button (`.search-clear-btn`) on the far right inside the search box that clears the input, re-filters the catalog, and focuses the input.
+  - Mobile view (`max-width: 680px`): "Idioma:" and "Nivel:" labels are removed, the two dropdowns sit centered side-by-side on a single line filling 100% width (50%/50%) with a slightly smaller font (`font-size: 12.5px; padding: 5px 4px;`) so full labels like "Todos los idiomas" fit completely on mobile screens, and the search bar extends across 100% full width.
 - **Activity Pages (`topics/<slug>/index.html`)**: The header stamp badge (`.stamp-badge`) and language metadata tags use the designated language color (e.g., `#be185d` for Spanish) to resemble an authentic colored ink stamp, while preserving the calm mimeograph ink aesthetic for the rest of the worksheet.
 
 ## Pedagogical Guidelines
@@ -141,6 +145,6 @@ Use the following standardized languages, 2-letter ISO codes, and hex colors eve
 
 ## Agent Execution Rules
 
+- **Use `/grill-me` by Default When Running Skills**: Whenever any skill in `.agents/skills/` runs, always begin with a `/grill-me` style interactive interview (asking one question at a time via the `ask_question` tool, with a `(Recommended)` option placed first) to clarify any missing parameters, subtopics/angles, regional dialect, or persona before generating the activity.
 - **No Browser Testing**: Do not launch browser subagents or open browser tabs to verify activities. Users test them manually.
-- **Clarify Missing Information**: If target language, proficiency level, or topic is missing, prompt the user before creating the activity.
 - **Follow Skill Definitions**: Follow the relevant skill file in `.agents/skills/` for layout, structure, and metadata standards.

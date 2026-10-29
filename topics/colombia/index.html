@@ -68,6 +68,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      line-height: 1;
     }
 
     .back-link:hover {
@@ -765,7 +766,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 10px;
+      padding: 4px 10px;
+      line-height: 1;
       border-radius: 3px;
       transition: color 0.15s, background-color 0.15s;
     }
@@ -865,10 +867,13 @@
        ========================================================= */
     @media (max-width: 680px) {
       body {
-        padding: 12px 8px;
+        padding: 0 8px 12px 8px;
       }
       .utility-bar {
         justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 14px 0;
       }
       .handout-sheet {
         padding: 20px 16px;
@@ -906,8 +911,11 @@
         font-size: 15px;
         letter-spacing: 0;
         line-height: 1.25;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 6px;
+      }
+      .hide-mobile {
+        display: none;
       }
       .section-title .section-num {
         width: 28px;
@@ -917,6 +925,7 @@
       }
       .section-action-hint {
         font-size: 12px;
+        white-space: nowrap;
       }
       .options-list {
         padding-left: 24px;
@@ -954,7 +963,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 16px;
+        gap: 14px;
         padding-top: 20px;
         padding-bottom: 20px;
       }
@@ -962,6 +971,9 @@
       .bottom-actions-bar .reset-container {
         justify-content: center;
         text-align: center;
+      }
+      .bottom-actions-bar .reset-answers-btn {
+        padding: 0 10px;
       }
       .handout-footer {
         flex-direction: column;
@@ -1001,7 +1013,7 @@
   <div class="utility-bar">
     <a href="../../index.html" class="back-link">
       <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-      Índice de Actividades
+      <span>Índice de Actividades</span>
     </a>
   </div>
 
@@ -1042,27 +1054,27 @@
 
     <article class="reading-content">
       <p>
-        Colombia es un país fascinante situado en el extremo noroccidental de América del Sur, que sirve como puerta de entrada entre Centroamérica y el continente sudamericano. Es la única nación de la región que posee costas tanto en el mar Caribe como en el océano Pacífico. Además, su territorio está atravesado por tres grandes <span class="vocab-in-text">cordilleras</span> andinas, lo que crea una extraordinaria variedad de climas, paisajes y tradiciones.
+        Colombia es un país fascinante situado en el extremo noroccidental de América del Sur, que sirve como puerta de entrada entre Centroamérica y el continente sudamericano. Es la única nación de la región que posee costas tanto en el mar Caribe como en el océano Pacífico. Además, su territorio está <span class="vocab-in-text">atravesado</span> por tres grandes cordilleras andinas, lo que crea una extraordinaria variedad de climas, paisajes y tradiciones.
       </p>
 
       <div class="region-card">
         <h3>El Eje Cafetero y la Región Andina</h3>
         <p>
-          En el corazón montañoso del país se encuentran ciudades muy dinámicas como Bogotá, la extensa capital situada a 2.600 metros de altitud, y Medellín, conocida como la «Ciudad de la Eterna Primavera» por su agradable clima templado durante todo el año. Más hacia el centro se extiende el famoso Eje Cafetero, declarado Patrimonio de la Humanidad. En las verdes <span class="vocab-in-text">laderas</span> de estas montañas, miles de familias campesinas cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta. Durante la época de <span class="vocab-in-text">cosecha</span>, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más maduros.
+          En el corazón montañoso del país se encuentran ciudades muy dinámicas como Bogotá, la extensa capital situada a 2.600 metros de altitud, y Medellín, conocida como la «Ciudad de la Eterna Primavera» por su agradable clima templado durante todo el año. Más hacia el centro se extiende el famoso Eje Cafetero, declarado Patrimonio de la Humanidad. En las verdes <span class="vocab-in-text">laderas</span> de estas montañas, miles de familias <span class="vocab-in-text">campesinas</span> cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta. Durante la época de <span class="vocab-in-text">cosecha</span>, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más <span class="vocab-in-text">maduros</span>.
         </p>
       </div>
 
       <div class="region-card">
         <h3>La Costa Caribe y Cartagena de Indias</h3>
         <p>
-          Hacia el norte, el paisaje cambia por completo al llegar a las aguas cálidas del mar Caribe. Allí brilla Cartagena de Indias, una joya histórica famosa por su antigua ciudad <span class="vocab-in-text">amurallada</span> y sus balcones coloniales cubiertos de flores tropicales. Muy cerca se encuentra también el Parque Nacional Tayrona, donde la sierra nevada y la selva húmeda se encuentran directamente con playas de arena dorada. En toda la costa se respira un ambiente alegre marcado por <span class="vocab-in-text">ritmos</span> musicales tradicionales como la cumbia y el vallenato, mientras se disfrutan platos típicos como la arepa de huevo y el pescado frito con arroz de coco.
+          Hacia el norte, el paisaje cambia por completo al llegar a las aguas cálidas del mar Caribe. Allí brilla Cartagena de Indias, una joya histórica famosa por su antigua ciudad <span class="vocab-in-text">amurallada</span> y sus balcones coloniales cubiertos de flores tropicales. Muy cerca se encuentra también el Parque Nacional Tayrona, donde la sierra nevada y la selva húmeda se encuentran directamente con playas de arena <span class="vocab-in-text">dorada</span>. En toda la costa se respira un ambiente alegre marcado por ritmos musicales tradicionales como la cumbia y el vallenato, mientras se disfrutan platos típicos como la arepa de huevo y el pescado frito con arroz de coco.
         </p>
       </div>
 
       <div class="region-card">
         <h3>Los Llanos, la Amazonía y el Encanto Colombiano</h3>
         <p>
-          Al oriente de los Andes se abren las inmensas <span class="vocab-in-text">llanuras</span> de la Orinoquía y la profunda selva amazónica, territorios de ríos gigantescos y una naturaleza casi virgen. Sin embargo, más allá de su geografía y de sus mundialmente famosas <span class="vocab-in-text">esmeraldas</span>, el mayor tesoro de Colombia es su gente <span class="vocab-in-text">acogedora</span>. Desde los <span class="vocab-in-text">coloridos</span> zócalos de pueblos como Guatapé hasta el <span class="vocab-in-text">emblemático</span> Valle de Cocora, hogar de las palmas de cera más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.
+          Al oriente de los Andes se abren las inmensas <span class="vocab-in-text">llanuras</span> de la Orinoquía y la profunda selva amazónica, territorios de ríos gigantescos y una naturaleza casi virgen. Sin embargo, más allá de su geografía y de sus mundialmente famosas esmeraldas, el mayor tesoro de Colombia es su gente <span class="vocab-in-text">acogedora</span>. Desde los coloridos zócalos de pueblos como Guatapé hasta el emblemático Valle de Cocora, hogar de las palmas de <span class="vocab-in-text">cera</span> más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.
         </p>
       </div>
     </article>
@@ -1295,7 +1307,7 @@
 
     <!-- Section 4: Open Questions Section -->
     <h2 class="section-title">
-      <span><span class="section-num">4</span> Preguntas abiertas</span>
+      <span><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></span>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
 
@@ -1323,7 +1335,7 @@
     <div class="bottom-actions-bar">
       <a href="../../index.html" class="back-link">
         <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Índice de Actividades
+        <span>Índice de Actividades</span>
       </a>
       <div class="reset-container" id="reset-container">
         <button class="reset-answers-btn" id="reset-btn" onclick="requestReset()" title="Reiniciar respuestas de esta actividad">
@@ -1350,13 +1362,13 @@
     // VOCABULARY DATA (10 KEY WORDS)
     // =========================================================
     const vocabData = {
-      cordilleras: {
-        key: "cordilleras",
-        word: "cordilleras",
-        pos: "f. pl.",
-        def: "Series de montañas enlazadas entre sí que atraviesan una extensa región geográfica.",
+      atravesado: {
+        key: "atravesado",
+        word: "atravesado",
+        pos: "adj. / part.",
+        def: "Cruzado o recorrido de un extremo a otro por un camino, río o cadena de montañas.",
         sentence: "«Además, su territorio está atravesado por tres grandes cordilleras andinas, lo que crea una extraordinaria variedad de climas, paisajes y tradiciones.»",
-        hint: "se refiere a grandes cadenas de montañas unidas entre sí"
+        hint: "indica que algo es cruzado de lado a lado en su extensión"
       },
       laderas: {
         key: "laderas",
@@ -1366,13 +1378,29 @@
         sentence: "«En las verdes laderas de estas montañas, miles de familias campesinas cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta.»",
         hint: "alude a las pendientes o costados inclinados de una elevación montañosa"
       },
+      campesinas: {
+        key: "campesinas",
+        word: "campesinas",
+        pos: "adj. f. pl.",
+        def: "Pertenecientes a la vida rural o a las personas que viven y trabajan habitualmente en el campo.",
+        sentence: "«En las verdes laderas de estas montañas, miles de familias campesinas cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta.»",
+        hint: "describe a quienes viven en el medio rural y se dedican a labrar la tierra"
+      },
       cosecha: {
         key: "cosecha",
         word: "cosecha",
         pos: "f.",
-        def: "Temporada y actividad de recoger los frutos o granos de la tierra cuando están maduros.",
+        def: "Temporada y actividad de recoger los frutos o granos de la tierra cuando están listos.",
         sentence: "«Durante la época de cosecha, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más maduros.»",
         hint: "es el momento agrícola en que se recogen los frutos del campo"
+      },
+      maduros: {
+        key: "maduros",
+        word: "maduros",
+        pos: "adj. m. pl.",
+        def: "Dicho de los frutos: que han alcanzado su desarrollo completo y están en el punto óptimo para recolectarse o comerse.",
+        sentence: "«Durante la época de cosecha, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más maduros.»",
+        hint: "se dice de las frutas que ya no están verdes y están listas para comer"
       },
       amurallada: {
         key: "amurallada",
@@ -1382,13 +1410,13 @@
         sentence: "«Allí brilla Cartagena de Indias, una joya histórica famosa por su antigua ciudad amurallada y sus balcones coloniales cubiertos de flores tropicales.»",
         hint: "describe una ciudad antigua rodeada de gruesos muros de piedra"
       },
-      ritmos: {
-        key: "ritmos",
-        word: "ritmos",
-        pos: "m. pl.",
-        def: "Compases y estilos musicales característicos que marcan la cadencia del canto y del baile.",
-        sentence: "«En toda la costa se respira un ambiente alegre marcado por ritmos musicales tradicionales como la cumbia y el vallenato, mientras se disfrutan platos típicos como la arepa de huevo y el pescado frito con arroz de coco.»",
-        hint: "tiene relación con el compás de la música y los estilos de baile"
+      dorada: {
+        key: "dorada",
+        word: "dorada",
+        pos: "adj. f.",
+        def: "Que posee un color amarillo brillante parecido al del oro.",
+        sentence: "«Muy cerca se encuentra también el Parque Nacional Tayrona, donde la sierra nevada y la selva húmeda se encuentran directamente con playas de arena dorada.»",
+        hint: "se refiere a un tono amarillo reluciente semejante al metal precioso"
       },
       llanuras: {
         key: "llanuras",
@@ -1398,14 +1426,6 @@
         sentence: "«Al oriente de los Andes se abren las inmensas llanuras de la Orinoquía y la profunda selva amazónica, territorios de ríos gigantescos y una naturaleza casi virgen.»",
         hint: "se refiere a terrenos muy amplios, abiertos y completamente planos"
       },
-      esmeraldas: {
-        key: "esmeraldas",
-        word: "esmeraldas",
-        pos: "f. pl.",
-        def: "Piedras preciosas de color verde intenso y transparente, muy valoradas en la joyería.",
-        sentence: "«Sin embargo, más allá de su geografía y de sus mundialmente famosas esmeraldas, el mayor tesoro de Colombia es su gente acogedora.»",
-        hint: "son gemas o piedras minerales valiosas de color verde brillante"
-      },
       acogedora: {
         key: "acogedora",
         word: "acogedora",
@@ -1414,26 +1434,18 @@
         sentence: "«Sin embargo, más allá de su geografía y de sus mundialmente famosas esmeraldas, el mayor tesoro de Colombia es su gente acogedora.»",
         hint: "describe a personas o lugares muy hospitalarios y amables con el visitante"
       },
-      coloridos: {
-        key: "coloridos",
-        word: "coloridos",
-        pos: "adj. pl.",
-        def: "Que destacan por tener una combinación alegre de muchos colores vivos y variados.",
+      cera: {
+        key: "cera",
+        word: "cera",
+        pos: "f.",
+        def: "Sustancia grasa e impermeable producida por las abejas o por ciertas plantas como recubrimiento protector.",
         sentence: "«Desde los coloridos zócalos de pueblos como Guatapé hasta el emblemático Valle de Cocora, hogar de las palmas de cera más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.»",
-        hint: "indica que algo está pintado o decorado con muchos tonos vivos"
-      },
-      emblematico: {
-        key: "emblematico",
-        word: "emblemático",
-        pos: "adj.",
-        def: "Que resulta muy representativo o simbólico de la identidad de un país o región.",
-        sentence: "«Desde los coloridos zócalos de pueblos como Guatapé hasta el emblemático Valle de Cocora, hogar de las palmas de cera más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.»",
-        hint: "significa que un lugar o elemento funciona como símbolo muy representativo"
+        hint: "es una sustancia natural e impermeable con la que también se fabrican las velas"
       }
     };
 
     // Shuffled initial definition order
-    const vocabOrder = ["amurallada", "cosecha", "llanuras", "emblematico", "cordilleras", "esmeraldas", "laderas", "acogedora", "ritmos", "coloridos"];
+    const vocabOrder = ["amurallada", "cosecha", "llanuras", "cera", "atravesado", "maduros", "laderas", "acogedora", "campesinas", "dorada"];
 
     let completedVocab = [];
     let draggedWordKey = null;
@@ -1501,7 +1513,9 @@
           if (parsed && typeof parsed === 'object') {
             if (parsed.mc || parsed.vocab) {
               userAnswers = parsed.mc || {};
-              completedVocab = Array.isArray(parsed.vocab) ? parsed.vocab : [];
+              completedVocab = Array.isArray(parsed.vocab)
+                ? parsed.vocab.filter(k => vocabData[k])
+                : [];
             } else {
               userAnswers = parsed;
               completedVocab = [];
@@ -2000,11 +2014,9 @@
       if (!card) return;
       const correctVal = card.getAttribute('data-correct');
 
-      // Update active option styling
       const allOptionItems = card.querySelectorAll('.option-item');
       allOptionItems.forEach(item => item.classList.remove('selected'));
 
-      // Hide all feedback boxes for this question first
       const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
       allFeedbackBoxes.forEach(fb => {
         fb.className = 'feedback-box';
@@ -2122,4 +2134,3 @@
   </script>
 </body>
 </html>
-

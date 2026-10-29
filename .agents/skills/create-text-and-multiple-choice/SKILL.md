@@ -7,19 +7,20 @@ description: Create a self-contained language learning activity with a reading t
 
 This skill creates a self-contained language learning activity page inside `topics/<topic-slug>/index.html` and registers it in the main catalog (`index.html`).
 
-## 1. Gather Required Information
+## 1. Use `/grill-me` by Default to Gather & Refine Information
 
-Before creating the activity, check if the user has provided all necessary parameters:
-1. **Topic**: The theme or subject matter (e.g., "Regions of Ecuador", "Ordering Tapas in Madrid", "Job Interview in Berlin").
-2. **Target Language**: The language being learned (e.g., Spanish, German, French, Japanese).
-3. **Regional Dialect / Style (optional but recommended)**: e.g., Latin American Spanish, Peninsular Spanish, Swiss German, Brazilian Portuguese.
-4. **Proficiency Level**: Explain levels clearly with everyday terms because some users do not know CEFR codes:
-   - **Beginner (A1–A2)**: Simple sentences, core daily vocabulary, present tense, high-frequency structures.
-   - **Intermediate (B1–B2)**: Connected paragraphs, past/future/subjunctive tenses, real-world scenarios, nuanced opinions.
-   - **Advanced (C1–C2)**: Complex idiomatic expressions, cultural nuances, professional or literary phrasing.
-5. **Number of Questions**: Default to 4–6 multiple-choice questions unless specified.
-
-> **Rule**: If any required information (Topic, Target Language, or Level) is missing from the user's prompt, use the `ask_question` tool to ask the user. When asking about the level, always include descriptive labels (Beginner, Intermediate, Advanced) alongside any CEFR letters.
+Whenever this skill runs, **always start with a `/grill-me` style interactive interview** before generating the activity:
+- Ask questions **one at a time** using the `ask_question` tool.
+- For each question, put your recommended answer first, prefixed with `(Recommended)`.
+- Walk through any missing parameters or design choices one-by-one until you and the user have a shared understanding:
+  1. **Topic & Specific Subtopics/Focus**: The theme or subject matter (e.g., "Regions of Ecuador", "Ordering Tapas in Madrid", "Job Interview in Berlin") and which specific aspects or sections to highlight.
+  2. **Target Language**: The language being learned (e.g., Spanish, German, French, Italian).
+  3. **Regional Dialect / Style**: e.g., Latin American Spanish, Peninsular Spanish, Standard German, Swiss German.
+  4. **Proficiency Level**: Explain levels clearly with everyday terms alongside CEFR codes:
+     - **Beginner (A1–A2)**: Simple sentences, core daily vocabulary, present tense, high-frequency structures.
+     - **Intermediate (B1–B2)**: Connected paragraphs, past/future/subjunctive tenses, real-world scenarios, nuanced opinions.
+     - **Advanced (C1–C2)**: Complex idiomatic expressions, cultural nuances, professional or literary phrasing.
+  5. **Learner Persona / Origin Country (for Section 4 Google Lookup)**: Default to Germany unless the user specifies another country/persona.
 
 ---
 
@@ -67,18 +68,19 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Monospace / Typewriter font stack: `"Courier New", Courier, "Courier Prime", monospace` for headers, instructions, numbers, and buttons.
   - Clean readable serif/sans for long reading passages: `Georgia, "Times New Roman", serif` or clean typewriter.
   - Subsection titles under reading passages use the serif body font with standard capitalization (`text-transform: none; font-weight: 700;`) so learners can distinguish uppercase from lowercase letters.
-  - On mobile (`max-width: 680px`), use tight line-heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for title, `15px` for section titles) so multi-line titles read cohesively and headings fit on one line more often.
+  - On mobile (`max-width: 680px`), use tight line-heights (`1.15`–`1.25`), reduced letter-spacing (`0` to `-0.2px`), and scaled heading sizes (`21px` for title, `15px` for section titles) so multi-line titles read cohesively and headings fit on one line.
 - **Title Area & Content Overview**:
   - Unboxed title header (`border: none;`).
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
 - **Circular Section Numbers & Right-Side Action Hints**:
-  - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> Preguntas abiertas`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
+  - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
     - Section 1: "read aloud" (in Spanish: `leer en voz alta`)
     - Section 2: "drag and drop" (in Spanish: `arrastrar y soltar`)
     - Section 3: "multiple choice" (in Spanish: `opción múltiple`)
     - Section 4: "answer and discuss" (in Spanish: `responder y debatir`)
+  - On mobile (`max-width: 680px`), `.section-title` uses `flex-wrap: nowrap;` and Section 4 hides the word "abiertas" (`<span class="hide-mobile"> abiertas</span>`) so it displays just "Preguntas" and keeps "responder y debatir" on the same line.
 - **No Word Count Indicators**:
   - Do NOT include `~400 palabras` or word count badges anywhere on the worksheet.
 - **Top-Alignment for Checkboxes, Radios, and Icons**:
@@ -87,13 +89,13 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - All text across the worksheet must be freely selectable and copyable by the learner (reading passage, word chips, definition cards, completed word pills, popup dictionary entries, quiz questions, options, and feedback explanations).
   - Never apply `user-select: none;` to text elements.
   - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons. Single-click dismissals are debounced (~250ms) so that double-clicking to select a word does not dismiss the card.
-  - Text selection on quiz option labels must never toggle radio buttons.
-- **Dual Navigation & Embedded In-Place Reset Confirmation**:
-  - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar.
+- **Dual Navigation, Mobile Vertical Centering & Embedded In-Place Reset Confirmation**:
+  - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar, with `.back-link { line-height: 1; display: inline-flex; align-items: center; }`.
+  - On mobile (`max-width: 680px`), `body` uses `padding: 0 8px 12px 8px;` and `.utility-bar` uses `justify-content: center; align-items: center; margin: 0 auto; padding: 14px 0;` so "Índice de Actividades" is centered both horizontally and vertically in the space above the handout sheet.
   - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar to clear both multiple-choice and vocabulary states in `localStorage`.
   - **Embedded In-Place Reset Confirmation UX**: Never use a native browser `confirm()` popup. Clicking "Reiniciar respuestas" replaces the button in-place with an inline confirmation UI with Cancel first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or upon clicking Cancel.
-  - Both desktop and mobile: set equal upper and lower padding on the bottom actions bar (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the navigation texts are equally distant from the dividing lines above and below.
-  - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`).
+  - Both desktop and mobile: set equal upper and lower padding on the bottom actions bar (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) and remove extra vertical button padding on mobile (`.bottom-actions-bar .reset-answers-btn { padding: 0 10px; }`) so the navigation texts are equally distant from the dividing lines above and below.
+  - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers.
 - **Standardized Footers**:
   - At the bottom of individual activity worksheets, display only: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).
   - Main catalog (`index.html`) footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
@@ -129,7 +131,8 @@ Each activity file should include the following sections:
 5. **Section 2: Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:
    - Positioned immediately following Section 1 (the reading text).
    - Title standardized to "Vocabulary" translated into the target language without period (e.g., `<span class="section-num">2</span> Vocabulario`), with right-aligned action hint "drag and drop" in the target language.
-   - Features the 10 hardest words from the text. Each word must be strictly ONE standard single word in the target language (e.g., "decenas", "calurosa", "nevados", "cálido"), avoiding multi-word phrases or broad international terms like "Biodiversidad".
+   - Features the 10 hardest words from the text.
+   - **No English Cognates**: Each of the 10 vocabulary words must be strictly ONE standard single word in the target language and MUST NOT be an obvious cognate or look obviously similar to an English word. For example, do NOT pick words like `esmeraldas` (obviously "emeralds"), `ritmos` (too close to "rhythm"), `coloridos` ("colorful"), `emblemático` ("emblematic"), `imponente` ("imposing"), `islotes` ("islets"), or `biodiversidad` ("biodiversity"). Instead, pick genuine non-cognate words whose meaning is not obvious to an English speaker, such as `laderas` ("slopes"), `cosecha` ("harvest"), `llanuras` ("plains"), `faldas` ("foothills"), `mariscos` ("seafood"), `caudalosos` ("high-volume/mighty"), `maduros` ("ripe"), `dorada` ("golden"), `acogedora` ("welcoming"), or `decenas` ("dozens").
    - Top area: flex pool of waiting word chips (`.vocab-pool`). Styled identical to completed word pills below (same typewriter font, 13px font size, ink-main color, parchment sheet background, 3px 8px padding, square corners, without green checkmark).
    - Waiting & Completed Pool Row Balancing: Both `.vocab-pool` and `.vocab-completed-pool` distribute buttons into centered non-wrapping rows (`flex-wrap: nowrap;`) with as equal a number of buttons per row as possible (`Math.floor(total / numRows)` and `total % numRows`, so row counts differ by at most 1). Dynamically increment `numRows` whenever any row's `scrollWidth` exceeds the container's `clientWidth` so buttons never wrap into uneven orphan lines (such as `4, 1, 4, 1` on mobile, instead rendering balanced rows like `4, 3, 3` or `3, 3, 2, 2`). Re-evaluate on font load and window resize.
    - Middle area: active target definition cards in shuffled order (`.vocab-targets`). Cards show definition only with NO placeholder prompt ("Toca o arrastra aquí...").
@@ -172,7 +175,7 @@ Each activity file should include the following sections:
    - Progress Persistence:
      - User selections are saved in `localStorage` with a unique key (e.g., `activity_<topic-slug>`).
 7. **Section 4: Open Questions Section (Preguntas abiertas)**:
-   - Section heading standardized to "Open Questions" translated into the target language without period (e.g., `<span class="section-num">4</span> Preguntas abiertas` in Spanish, `Offene Fragen` in German, `Questions ouvertes` in French), with right-aligned action hint "answer and discuss" in the target language (e.g. `responder y debatir`).
+   - Section heading standardized to "Open Questions" translated into the target language without period on desktop, and shortened to just "Questions" (`Preguntas`) on mobile via `<span class="hide-mobile">` (e.g., `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>` in Spanish, `<span><span class="hide-mobile">Offene </span>Fragen</span>` in German, `<span>Questions<span class="hide-mobile"> ouvertes</span></span>` in French), with right-aligned action hint "answer and discuss" in the target language (e.g. `responder y debatir`) so the heading and action hint stay on a single line on mobile.
    - Borderless and transparent container (no dashed or solid outline boxes).
    - Do NOT include boilerplate introductory instructions.
    - 4–5 open-ended conversation questions in the target language designed for practice with tutors, exchange partners, or self-reflection.
@@ -182,7 +185,7 @@ Each activity file should include the following sections:
    - Matching back link to catalog (`← Índice de Actividades`).
    - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI with Cancel first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or on cancel.
    - Clears both multiple-choice answers and completed vocabulary from `localStorage`.
-   - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so controls are equally distant from dividing lines above and below on both desktop and mobile.
+   - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) and zero vertical button padding on mobile (`.bottom-actions-bar .reset-answers-btn { padding: 0 10px; }`) so controls are equally distant from dividing lines above and below on both desktop and mobile.
    - On mobile screens, both controls are centered horizontally and vertically.
 9. **Standardized Footer**:
    - Individual activity worksheets display: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).
@@ -202,6 +205,6 @@ After creating `topics/<topic-slug>/index.html`:
    - Title link has `pointer-events: none;` and no hover underline or color change so learners intuitively feel the entire card panel is clickable.
    - The "Abrir actividad →" button is omitted from the card.
    - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font.
-   - Catalog dropdown filter controls use standard body serif font (`"Lora", Georgia, serif`). On mobile (`max-width: 680px`), "Idioma:" and "Nivel:" labels are removed, dropdowns sit centered together on one line (50%/50%), and the search bar extends across full width.
+   - Catalog dropdown filter controls use standard body serif font (`"Lora", Georgia, serif`). On mobile (`max-width: 680px`), "Idioma:" and "Nivel:" labels are removed, dropdowns sit centered together on one line (50%/50%) with smaller font (`font-size: 12.5px; padding: 5px 4px;`) so full labels like "Todos los idiomas" fit completely, and the search bar extends across full width with a clear ("X") button on the far right when text is present.
    - Catalog footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
 3. Maintain tidy chronological or categorical sorting.

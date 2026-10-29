@@ -68,6 +68,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      line-height: 1;
     }
 
     .back-link:hover {
@@ -793,7 +794,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 10px;
+      padding: 4px 10px;
+      line-height: 1;
       border-radius: 3px;
       transition: color 0.15s, background-color 0.15s;
     }
@@ -897,10 +899,13 @@
        ========================================================= */
     @media (max-width: 680px) {
       body {
-        padding: 12px 8px;
+        padding: 0 8px 12px 8px;
       }
       .utility-bar {
         justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 14px 0;
       }
       .handout-sheet {
         padding: 20px 16px;
@@ -938,8 +943,11 @@
         font-size: 15px;
         letter-spacing: 0;
         line-height: 1.25;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 6px;
+      }
+      .hide-mobile {
+        display: none;
       }
       .section-title .section-num {
         width: 28px;
@@ -949,6 +957,7 @@
       }
       .section-action-hint {
         font-size: 12px;
+        white-space: nowrap;
       }
       .options-list {
         padding-left: 24px;
@@ -986,7 +995,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 16px;
+        gap: 14px;
         padding-top: 20px;
         padding-bottom: 20px;
       }
@@ -994,6 +1003,9 @@
       .bottom-actions-bar .reset-container {
         justify-content: center;
         text-align: center;
+      }
+      .bottom-actions-bar .reset-answers-btn {
+        padding: 0 10px;
       }
       .handout-footer {
         flex-direction: column;
@@ -1033,13 +1045,13 @@
 <body>
 
   <!-- Fullscreen Dimming Overlay -->
-  <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick()"></div>
+  <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
 
   <!-- Utility Nav -->
   <div class="utility-bar">
     <a href="../../index.html" class="back-link">
       <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-      Índice de Actividades
+      <span>Índice de Actividades</span>
     </a>
   </div>
 
@@ -1086,14 +1098,14 @@
       <div class="region-card">
         <h3>La Costa (Región Litoral)</h3>
         <p>
-          Ubicada entre el océano Pacífico y las <span class="vocab-in-text">faldas</span> occidentales de los Andes, la Costa se caracteriza por su clima <span class="vocab-in-text">cálido</span> y tropical. En esta región se encuentra Guayaquil, la ciudad más poblada del país y su principal puerto comercial. La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los mariscos frescos, el verde (plátano verde <span class="vocab-in-text">machacado</span>) y platos típicos como el <em>bolón de verde</em> y el <em>encebollado</em>.
+          Ubicada entre el océano Pacífico y las <span class="vocab-in-text">faldas</span> occidentales de los Andes, la Costa se caracteriza por su clima <span class="vocab-in-text">cálido</span> y tropical. En esta región se encuentra Guayaquil, la ciudad más poblada del país y su principal puerto comercial. La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los <span class="vocab-in-text">mariscos</span> frescos, el verde (plátano verde <span class="vocab-in-text">machacado</span>) y platos típicos como el <em>bolón de verde</em> y el <em>encebollado</em>.
         </p>
       </div>
 
       <div class="region-card">
         <h3>La Sierra (Región Interandina)</h3>
         <p>
-          La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la <span class="vocab-in-text">imponente</span> Cordillera de los Andes. Aquí se sitúa Quito, la capital histórica del país a 2.850 metros sobre el nivel del mar, cuyo centro colonial fue declarado el primer Patrimonio de la Humanidad por la UNESCO en 1978. La región está rodeada por la famosa «Avenida de los Volcanes», que incluye gigantes <span class="vocab-in-text">nevados</span> como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra). El clima es fresco o templado, y las comunidades indígenas conservan ricas tradiciones textiles y ferias vibrantes como el mercado de Otavalo.
+          La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la imponente Cordillera de los Andes. Aquí se sitúa Quito, la capital histórica del país a 2.850 metros sobre el nivel del mar, cuyo centro colonial fue declarado el primer Patrimonio de la Humanidad por la UNESCO en 1978. La región está <span class="vocab-in-text">rodeada</span> por la famosa «Avenida de los Volcanes», que incluye gigantes <span class="vocab-in-text">nevados</span> como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra). El clima es fresco o templado, y las comunidades indígenas conservan ricas tradiciones textiles y ferias vibrantes como el mercado de Otavalo.
         </p>
       </div>
 
@@ -1107,7 +1119,7 @@
       <div class="region-card">
         <h3>Las Islas Galápagos (Región Insular)</h3>
         <p>
-          Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y <span class="vocab-in-text">decenas</span> de <span class="vocab-in-text">islotes</span>. Este rincón del mundo inspiró al naturalista británico Charles Darwin a formular su teoría de la evolución por selección natural en 1835. Gran parte de su flora y fauna es endémica, lo que significa que no existe de manera natural en ningún otro lugar: tortugas gigantes terrestres, iguanas marinas capaces de nadar, y los curiosos piqueros de patas azules.
+          Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y <span class="vocab-in-text">decenas</span> de islotes. Este rincón del mundo inspiró al naturalista británico Charles Darwin a formular su teoría de la evolución por selección natural en 1835. Gran parte de su flora y fauna es endémica, lo que significa que no existe de manera natural en ningún otro lugar: tortugas gigantes terrestres, iguanas marinas capaces de nadar, y los curiosos piqueros de patas azules.
         </p>
       </div>
     </article>
@@ -1340,7 +1352,7 @@
 
     <!-- Section 4: Discussion Questions Section -->
     <h2 class="section-title">
-      <span><span class="section-num">4</span> Preguntas abiertas</span>
+      <span><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></span>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
 
@@ -1368,7 +1380,7 @@
     <div class="bottom-actions-bar">
       <a href="../../index.html" class="back-link">
         <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Índice de Actividades
+        <span>Índice de Actividades</span>
       </a>
       <div class="reset-container" id="reset-container">
         <button class="reset-answers-btn" id="reset-btn" onclick="requestReset()" title="Reiniciar respuestas de esta actividad">
@@ -1419,13 +1431,21 @@
         sentence: "«Ubicada entre el océano Pacífico y las faldas occidentales de los Andes, la Costa se caracteriza por su clima cálido y tropical.»",
         hint: "se refiere a la parte baja o base inclinada de una elevación montañosa"
       },
-      imponente: {
-        key: "imponente",
-        word: "imponente",
-        pos: "adj.",
-        def: "Que causa gran impresión, respeto o asombro por su majestuosidad o tamaño.",
-        sentence: "«La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la imponente Cordillera de los Andes.»",
-        hint: "expresa una cualidad majestuosa o que impresiona fuertemente"
+      mariscos: {
+        key: "mariscos",
+        word: "mariscos",
+        pos: "m. pl.",
+        def: "Animales marinos invertebrados comestibles, especialmente crustáceos y moluscos como camarones, cangrejos y conchas.",
+        sentence: "«La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los mariscos frescos, el verde (plátano verde machacado) y platos típicos como el bolón de verde y el encebollado.»",
+        hint: "alude a animales del mar como camarones, langostas o moluscos que se sirven como alimento"
+      },
+      rodeada: {
+        key: "rodeada",
+        word: "rodeada",
+        pos: "adj. / part.",
+        def: "Circundada o cercada alrededor por otros elementos, montañas o límites naturales.",
+        sentence: "«La región está rodeada por la famosa «Avenida de los Volcanes», que incluye gigantes nevados como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra).»",
+        hint: "indica que algo tiene elementos colocados todo alrededor suyo cerrando el círculo"
       },
       nevados: {
         key: "nevados",
@@ -1466,19 +1486,11 @@
         def: "Conjuntos formados por diez unidades cada uno, o cantidades aproximadas de varios grupos de diez.",
         sentence: "«Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y decenas de islotes.»",
         hint: "expresa una cantidad numérica formada por grupos de diez unidades"
-      },
-      islotes: {
-        key: "islotes",
-        word: "islotes",
-        pos: "m. pl.",
-        def: "Islas muy pequeñas, rocosas o despobladas.",
-        sentence: "«Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y decenas de islotes.»",
-        hint: "son pequeñas islas despobladas o formaciones rocosas menores"
       }
     };
 
     // Shuffled initial definition order
-    const vocabOrder = ["calurosa", "faldas", "machacado", "islotes", "calido", "nevados", "selva", "imponente", "decenas", "caudalosos"];
+    const vocabOrder = ["calurosa", "faldas", "machacado", "rodeada", "calido", "nevados", "selva", "mariscos", "decenas", "caudalosos"];
 
     let completedVocab = [];
     let draggedWordKey = null;
@@ -1546,7 +1558,9 @@
           if (parsed && typeof parsed === 'object') {
             if (parsed.mc || parsed.vocab) {
               userAnswers = parsed.mc || {};
-              completedVocab = Array.isArray(parsed.vocab) ? parsed.vocab : [];
+              completedVocab = Array.isArray(parsed.vocab)
+                ? parsed.vocab.filter(k => vocabData[k])
+                : [];
             } else {
               userAnswers = parsed;
               completedVocab = [];

@@ -105,6 +105,7 @@
       font-style: italic;
       font-family: var(--font-body);
       line-height: 1.5;
+      text-wrap: balance;
     }
 
     /* Filter & Search Bar */
@@ -147,8 +148,43 @@
       color: var(--ink-main);
     }
 
+    .search-input-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
     .search-input {
       min-width: 200px;
+      padding-right: 28px;
+    }
+
+    .search-clear-btn {
+      display: none;
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--ink-muted);
+      cursor: pointer;
+      padding: 3px;
+      line-height: 1;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    .search-clear-btn:hover {
+      color: var(--ink-main);
+    }
+
+    .search-clear-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2.4;
     }
 
     /* Activity Cards */
@@ -308,6 +344,10 @@
         font-size: 15px;
         line-height: 1.35;
         text-align: center;
+        text-wrap: balance;
+        max-width: 270px;
+        margin-left: auto;
+        margin-right: auto;
       }
       .filter-bar {
         flex-direction: column;
@@ -331,8 +371,13 @@
       }
       .filter-dropdowns-row .filter-select {
         width: 100%;
+        font-size: 12.5px;
+        padding: 5px 4px;
       }
       .filter-search-group {
+        width: 100%;
+      }
+      .filter-search-group .search-input-wrap {
         width: 100%;
       }
       .filter-search-group .search-input {
@@ -403,7 +448,7 @@
       <div class="header-top">
         <div class="catalog-title-group">
           <h1>Language Learning Activities</h1>
-          <div class="catalog-subtitle">Hojas pedagógicas para autoestudio, tándems y profesores</div>
+          <div class="catalog-subtitle">Hojas pedagógicas para autoestudio, tándems&nbsp;y&nbsp;profesores</div>
         </div>
       </div>
     </header>
@@ -441,7 +486,12 @@
       </div>
 
       <div class="filter-group filter-search-group">
-        <input type="text" id="search-input" class="search-input" placeholder="Buscar tema..." oninput="filterActivities()">
+        <div class="search-input-wrap">
+          <input type="text" id="search-input" class="search-input" placeholder="Buscar tema..." oninput="filterActivities()">
+          <button type="button" class="search-clear-btn" id="search-clear-btn" onclick="clearSearch()" aria-label="Borrar búsqueda" title="Borrar búsqueda">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -504,10 +554,24 @@
       window.location.href = url;
     }
 
+    function clearSearch() {
+      const input = document.getElementById('search-input');
+      input.value = '';
+      filterActivities();
+      input.focus();
+    }
+
     function filterActivities() {
       const lang = document.getElementById('lang-filter').value.toLowerCase();
       const level = document.getElementById('level-filter').value.toLowerCase();
-      const search = document.getElementById('search-input').value.toLowerCase().trim();
+      const searchInput = document.getElementById('search-input');
+      const rawSearch = searchInput.value;
+      const search = rawSearch.toLowerCase().trim();
+
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (clearBtn) {
+        clearBtn.style.display = rawSearch.length > 0 ? 'inline-flex' : 'none';
+      }
 
       const cards = document.querySelectorAll('.activity-card');
       let visibleCount = 0;
