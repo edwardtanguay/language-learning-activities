@@ -36,6 +36,8 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Section 1: Reading Passage (Lectura)**:
   - Titled "Lectura" in the target language (without "Texto de" or period), paired with right-aligned action hint "read aloud" in the target language.
   - The reading text should always be approximately 400 words in length, divided into logical paragraphs or subsections.
+  - Natural left alignment (`text-align: left;`) with automatic hyphenation disabled (`hyphens: none;`) to prevent words from splitting across line ends (e.g., no "plane-" and "ta.").
+  - Subtle In-Text Vocabulary Highlighting: The 10 vocabulary words featured in Section 2 are subtly styled when they appear in the reading passage (`.vocab-in-text`, e.g. `background-color: rgba(242, 233, 203, 0.55); padding: 0 2px; border-radius: 2px;`) just enough to notice them as special without disrupting reading flow. Do NOT use underlines or dotted borders, as they make words look too much like clickable links.
   - Do NOT include word count indicators (such as `~400 palabras`) anywhere in section titles, subtitles, or headers.
   - Paragraphs and subsection cards must NOT have vertical border lines on the left (clean unbordered text).
   - Subsection titles (e.g., `La Costa (Región Litoral)`) must use a normal font (`var(--font-body)`, serif) with standard capitalization (`text-transform: none; font-weight: 700;`) so learners can clearly distinguish uppercase and lowercase letters. Numbers must NOT be included in subsection titles.
@@ -50,6 +52,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - Pill & Card Styling: All pills (waiting word chips `.vocab-chip` and completed word pills `.vocab-completed-pill`) and target cards must be square-cornered (`border-radius: 0;`).
     - Compact Mobile Layout: Ultra-compact styling (tight gap, ~6px 10px card padding, 13.5px definition font) ensuring all 10 definitions are visible and accessible without cumbersome scrolling.
     - Fully responsive: supports mouse drag, touch drag, and tap-to-select for seamless mobile usability.
+    - Equal Popup Padding: In all popups and modals (hint popup modal, wrong-drop state card, and correct-drop dictionary card), padding is uniform on all four sides (top, bottom, left, and right: 18px).
     - Word chip click on top: clicking a waiting chip opens a hint popup displaying the word title with a lookup icon next to it, followed by a warm amber lightbulb SVG icon (`#d97706`) and the hint text in the target language (hint helps without making the answer obvious, no trailing punctuation, no repeating word prefix).
     - Lookup icon: next to the word at the top, a magnifying glass lookup button opens a new tab and searches Google: `give me the definition of the word "<word>" in <language>, and the translation of the word in English, and then three example sentences with that word, for each example, once in <language> and once in English`.
     - Wrong drop panel:
@@ -59,7 +62,8 @@ Each activity lives in `topics/<topic-slug>/index.html`:
       - To the right of the word title at the top, a lookup icon.
       - No X close button in the upper right. Text is fully selectable to copy, but clicking the box anywhere (without text selected) closes it and returns the chip to the waiting pool.
     - Correct drop: creates a complete boxed dictionary entry for that word with a very light green background (`#f4faf4` with border `#cce8ce`), green checkmark SVG to the left of the definition text, word, part of speech, lookup icon, and the complete full sentence from the reading text highlighting the word (without ellipsis). Displays elevated in-place on the card and dims the page. Learner can freely select text or double-click words. Single-clicking the card anywhere or clicking outside dismisses it, removing the card and moving the chip to completed words. NO X close button in the upper right.
-    - Completed words section: no section title; displays completed words in a flex row of square-cornered pills, each with a green check SVG icon to its left.
+    - Completed words section: no section title; displays completed words in square-cornered pills, each with a green check SVG icon to its left.
+    - Completed Pool Balancing & Centering: The completed words area is always centered horizontally. Completed word pills are distributed equally across balanced rows with at most 3 words per row (e.g., when 10 words are completed, they are distributed across 4 rows as 3, 3, 2, 2; when 6 words, 3 and 3; when 5 words, 3 and 2). Each row uses flexbox with no wrapping, preventing awkward orphan singletons.
     - Clicking any completed word pill pops open its complete dictionary definition card (matching the light green card with green checkmark next to definition and full sentence) in a designated view area above the pills. Clicking the card again or clicking outside closes it (no X button).
     - Double-click word selection: on pop-up and modal cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
     - Completed vocabulary progress is persisted in `localStorage` and reset with the "Reiniciar respuestas" button.
@@ -87,12 +91,12 @@ Each activity lives in `topics/<topic-slug>/index.html`:
   - **Non-Breaking Icon Attachment**: The lightbulb icon must NEVER dangle alone on its own line. Always wrap the preceding word, a non-breaking space (`&nbsp;`), and the icon link inside `<span class="question-hint-wrap">word?&nbsp;<a ...>...</a></span>` with `white-space: nowrap;` so that if line-breaking occurs, the word and lightbulb wrap together to the new line.
 - **Bottom Actions Bar & Embedded In-Place Reset Confirmation**:
   - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the back link and reset button are equally distant from the horizontal rule lines above and below them on both desktop and mobile.
-  - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI (`¿Confirmar reinicio? [Sí, reiniciar] [Cancelar]`) that auto-reverts after 8 seconds or on cancel.
+  - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI with Cancel placed first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or on cancel.
   - Clears all `localStorage` state (both multiple-choice answers and completed vocabulary).
-- **Standardized Footer & Mobile Centering**:
-  - Footer displays: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
-  - On mobile (`max-width: 680px`), remove "Language Learning Activities" and the bullet dot, centering only "See more projects by Edward".
-  - On root `index.html` catalog footer, the "Guía para creadores" link features a thick arrow (`stroke-width: 3`).
+- **Standardized Footers**:
+  - Activity pages display only: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).
+  - Main catalog (`index.html`) footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
+  - On mobile (`max-width: 680px`), items in the footer stack vertically centered.
 
 ## Standardized Languages & Palette
 
@@ -114,12 +118,15 @@ Use the following standardized languages, 2-letter ISO codes, and hex colors eve
 
 - **Ordering**: The above order must always be used whenever languages are listed together (e.g., catalog filters, documentation, legends).
 - **Catalog Cards (`index.html`)**:
-  - Activity cards display a `.badge-lang` combining the language and level (e.g. `Español B1`) styled with the target language's color.
+  - The language/level supertitle (e.g. `Español B1`) is placed directly above the activity title with tight vertical spacing (`gap: 2px; margin-bottom: 8px;`), styled in the target language's color, forming a unified headline unit.
   - Entire card is clickable (`cursor: pointer;`) to open the activity, with hover showing an intense soft shadow (`0 10px 28px rgba(45, 40, 35, 0.12)`) without border outline changes.
+  - No hover effects on the title link (no underline or color change) so the user intuitively feels the entire card is clickable.
   - The "Abrir actividad →" button is omitted from the card.
-  - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font, and the language/level badge is displayed as an unbordered red supertitle above the activity title.
+  - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font, and the language/level badge is displayed as an unbordered supertitle above the activity title.
 - **Catalog Header (`index.html`)**: On mobile, the main header title ("Language Learning Activities") and subtitle ("Hojas pedagógicas para autoestudio, tándems y profesores") are centered.
-- **Catalog Dropdown Filter (`index.html`)**: Form controls (select dropdowns, search input, labels) use the clean standard body serif font (`"Lora", Georgia, serif`), matching the rest of the page. The dropdown includes all 11 standardized languages in the canonical order.
+- **Catalog Dropdown Filter (`index.html`)**:
+  - Form controls (select dropdowns, search input, labels) use the clean standard body serif font (`"Lora", Georgia, serif`), matching the rest of the page. The dropdown includes all 11 standardized languages in the canonical order.
+  - Mobile view (`max-width: 680px`): "Idioma:" and "Nivel:" labels are removed, the two dropdowns sit centered side-by-side on a single line filling 100% width (50%/50%), and the search bar extends across 100% full width.
 - **Activity Pages (`topics/<slug>/index.html`)**: The header stamp badge (`.stamp-badge`) and language metadata tags use the designated language color (e.g., `#be185d` for Spanish) to resemble an authentic colored ink stamp, while preserving the calm mimeograph ink aesthetic for the rest of the worksheet.
 
 ## Pedagogical Guidelines

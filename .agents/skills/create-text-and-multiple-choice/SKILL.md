@@ -91,12 +91,13 @@ Follow the project design philosophy defined in `AGENTS.md`:
 - **Dual Navigation & Embedded In-Place Reset Confirmation**:
   - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar.
   - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar to clear both multiple-choice and vocabulary states in `localStorage`.
-  - **Embedded In-Place Reset Confirmation UX**: Never use a native browser `confirm()` popup. Clicking "Reiniciar respuestas" replaces the button in-place with an inline confirmation UI (`¿Confirmar reinicio? [Sí, reiniciar] [Cancelar]`) that auto-reverts after 8 seconds or upon clicking Cancel.
+  - **Embedded In-Place Reset Confirmation UX**: Never use a native browser `confirm()` popup. Clicking "Reiniciar respuestas" replaces the button in-place with an inline confirmation UI with Cancel first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or upon clicking Cancel.
   - Both desktop and mobile: set equal upper and lower padding on the bottom actions bar (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so the navigation texts are equally distant from the dividing lines above and below.
   - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers (`.utility-bar { justify-content: center; }` and `.bottom-actions-bar { flex-direction: column; align-items: center; justify-content: center; }`).
-- **Standardized Footer**:
-  - At the very bottom of the worksheet: `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
-  - On mobile screens (`max-width: 680px`), remove "Language Learning Activities" and the bullet dot, leaving only "See more projects by Edward" centered.
+- **Standardized Footers**:
+  - At the bottom of individual activity worksheets, display only: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).
+  - Main catalog (`index.html`) footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
+  - On mobile screens (`max-width: 680px`), footer items stack vertically centered.
 - **Responsive Layout**:
   - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout.
   - Mobile (Portrait): Single-column stack with comfortable padding, tight line spacing, and touch-friendly controls.
@@ -121,6 +122,8 @@ Each activity file should include the following sections:
    - Titled "Lectura" in the target language without period (e.g., `<span class="section-num">1</span> Lectura`), with right-aligned action hint "read aloud" in the target language.
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
    - Text length must always be approximately 400 words (do NOT display the word count anywhere).
+   - Natural left alignment (`text-align: left;`) with automatic hyphenation disabled (`hyphens: none;`) to prevent words from splitting across line ends (e.g., no "plane-" and "ta.").
+   - Subtle In-Text Vocabulary Highlighting: The 10 vocabulary words featured in Section 2 are subtly styled when they appear in the reading passage (`.vocab-in-text`, e.g. `background-color: rgba(242, 233, 203, 0.55); padding: 0 2px; border-radius: 2px;`) just enough to notice them as special without disrupting reading flow. Do NOT use underlines or dotted borders, as they make words look too much like clickable links.
    - Paragraphs and subsection cards must NOT have vertical lines on the left (clean unbordered text).
    - Divided into logical paragraphs or subsections. Subsection titles use the serif body font with standard capitalization (`text-transform: none; font-weight: 700;`) without numbers (e.g., `<h3>La Costa (Región Litoral)</h3>`).
 5. **Section 2: Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:
@@ -133,6 +136,7 @@ Each activity file should include the following sections:
    - Square Corners & Narrow Padding: All pills (waiting chips `.vocab-chip` and completed pills `.vocab-completed-pill`) and definition cards have square corners (`border-radius: 0;`).
    - Compact Mobile View: Ultra-compact single column layout on mobile screens (~6px 10px padding, 13.5px font size, 6px gap) so all 10 definitions fit on screen without extensive scrolling.
    - Supports mouse drag-and-drop, touch drag, and tap-to-select for smooth mobile support.
+   - Equal Popup Padding: In all popups and modals (hint popup modal, wrong-drop state card, and correct-drop dictionary card), padding is uniform on all four sides (top, bottom, left, and right: 18px).
    - Word chip click on top: clicking a waiting chip opens a hint popup displaying the word title with a lookup icon next to it, followed by a warm amber lightbulb SVG icon (`#d97706`) and the hint text in the target language (hint helps without making the answer obvious, no trailing punctuation, no repeating word prefix).
    - Lookup icon: next to the word at the top, a magnifying glass lookup button opens a new tab and searches Google: `give me the definition of the word "<word>" in <language>, and the translation of the word in English, and then three example sentences with that word, for each example, once in <language> and once in English`.
    - Wrong drop panel:
@@ -142,7 +146,8 @@ Each activity file should include the following sections:
      - To the right of the word title at the top, a lookup icon.
      - No X close button in the upper right. Text is fully selectable to copy, but clicking the box anywhere (without text selected) closes it and returns the chip to the waiting pool.
    - Correct drop: creates a complete boxed dictionary entry with a very light green background (`#f4faf4` with border `#cce8ce`), green checkmark SVG next to the definition, word, part of speech, lookup icon, and full complete sentence from the reading text without ellipsis (`...`). Elevated in-place on the definition card with page dimmed. Clicking anywhere on the card or outside dismisses it (no X button), removing the card and moving the chip to completed words.
-   - Completed words section: no title; displays completed words in a flex row of square-cornered pills, each with a green check SVG icon to its left.
+   - Completed words section: no title; displays completed words in square-cornered pills, each with a green check SVG icon to its left.
+   - Completed Pool Balancing & Centering: The completed words area is always centered horizontally. Completed word pills are distributed equally across balanced rows with at most 3 words per row (e.g., when 10 words are completed, they are distributed across 4 rows as 3, 3, 2, 2; when 6 words, 3 and 3; when 5 words, 3 and 2). Each row uses flexbox with no wrapping, preventing awkward orphan singletons.
    - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills. Clicking the card again or clicking outside closes it (no X button).
    - Double-click word selection: on pop-up and modal cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
    - Persists completed vocabulary in `localStorage` and resets on "Reiniciar respuestas".
@@ -175,13 +180,13 @@ Each activity file should include the following sections:
    - **Non-Breaking Icon Attachment**: The lightbulb icon must NEVER dangle alone on its own line. Always wrap the preceding word, a non-breaking space (`&nbsp;`), and the icon link inside `<span class="question-hint-wrap">word?&nbsp;<a ...>...</a></span>` with `white-space: nowrap;` so that if line-breaking occurs, the word and lightbulb wrap together to the new line.
 8. **Bottom Actions & Navigation Bar**:
    - Matching back link to catalog (`← Índice de Actividades`).
-   - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI (`¿Confirmar reinicio? [Sí, reiniciar] [Cancelar]`) that auto-reverts after 8 seconds or on cancel.
+   - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI with Cancel first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or on cancel.
    - Clears both multiple-choice answers and completed vocabulary from `localStorage`.
    - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) so controls are equally distant from dividing lines above and below on both desktop and mobile.
    - On mobile screens, both controls are centered horizontally and vertically.
 9. **Standardized Footer**:
-   - `Language Learning Activities • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics).
-   - On mobile screens (`max-width: 680px`), remove "Language Learning Activities" and the bullet dot, leaving only "See more projects by Edward" centered.
+   - Individual activity worksheets display: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).
+   - On mobile screens (`max-width: 680px`), centered.
 
 ---
 
@@ -191,10 +196,11 @@ After creating `topics/<topic-slug>/index.html`:
 1. Read the root `index.html`.
 2. Add the new activity to the catalog list with:
    - `<article class="activity-card" data-lang="<code> <language>" data-level="<level>" data-topic="..." onclick="openCard('topics/<topic-slug>/index.html', event)">`
-   - Language and level combined into a single badge: `<span class="badge-lang lang-<code>">Language Level</span>` (e.g., `<span class="badge-lang lang-es">Español B1</span>`)
+   - Language and level displayed as a supertitle directly above the activity title with tight vertical spacing (`gap: 2px; margin-bottom: 8px;`): `<span class="badge-lang lang-<code>">Language Level</span>` (e.g., `<span class="badge-lang lang-es">Español B1</span>`).
    - Card has `cursor: pointer;` and intense hover shadow without border outline changes.
+   - Title link has no hover underline or color change so learners intuitively feel the entire card panel is clickable.
    - The "Abrir actividad →" button is omitted from the card.
-   - On mobile (`max-width: 680px`), the badge transforms into an unbordered red supertitle above the title, card padding is reduced, and description font is slightly smaller.
-   - Catalog dropdown filter controls use standard body serif font (`"Lora", Georgia, serif`).
-   - Catalog footer "Guía para creadores" link features a thick arrow (`stroke-width: 3`).
+   - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font, and the language/level badge is displayed as an unbordered supertitle above the activity title.
+   - Catalog dropdown filter controls use standard body serif font (`"Lora", Georgia, serif`). On mobile (`max-width: 680px`), "Idioma:" and "Nivel:" labels are removed, dropdowns sit centered together on one line (50%/50%), and the search bar extends across full width.
+   - Catalog footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
 3. Maintain tidy chronological or categorical sorting.

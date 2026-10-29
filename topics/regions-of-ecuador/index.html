@@ -227,8 +227,15 @@
     /* Reading Passage */
     .reading-content p {
       margin-bottom: 16px;
-      text-align: justify;
-      hyphens: auto;
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+
+    .vocab-in-text {
+      background-color: rgba(242, 233, 203, 0.55);
+      padding: 0 2px;
+      border-radius: 2px;
     }
 
     .region-card {
@@ -350,6 +357,7 @@
       z-index: 50;
       box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
       cursor: pointer;
+      padding: 18px 18px !important;
     }
 
     .wrong-def-row {
@@ -418,7 +426,7 @@
       background: var(--paper-sheet);
       border: 1px solid var(--ink-border);
       box-shadow: 0 14px 40px rgba(45, 40, 35, 0.25);
-      padding: 18px 22px;
+      padding: 18px 18px;
       z-index: 100;
       width: 90%;
       max-width: 480px;
@@ -432,7 +440,7 @@
       border: 1px solid #cce8ce !important;
       box-shadow: 0 10px 32px rgba(45, 40, 35, 0.16);
       z-index: 50;
-      padding: 18px 20px;
+      padding: 18px 18px !important;
       cursor: default;
     }
 
@@ -527,8 +535,18 @@
 
     .vocab-completed-pool {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .vocab-completed-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
     }
 
     .vocab-completed-pill {
@@ -1065,28 +1083,28 @@
       <div class="region-card">
         <h3>La Costa (Región Litoral)</h3>
         <p>
-          Ubicada entre el océano Pacífico y las faldas occidentales de los Andes, la Costa se caracteriza por su clima cálido y tropical. En esta región se encuentra Guayaquil, la ciudad más poblada del país y su principal puerto comercial. La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los mariscos frescos, el verde (plátano verde machacado) y platos típicos como el <em>bolón de verde</em> y el <em>encebollado</em>.
+          Ubicada entre el océano Pacífico y las <span class="vocab-in-text">faldas</span> occidentales de los Andes, la Costa se caracteriza por su clima <span class="vocab-in-text">cálido</span> y tropical. En esta región se encuentra Guayaquil, la ciudad más poblada del país y su principal puerto comercial. La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los mariscos frescos, el verde (plátano verde <span class="vocab-in-text">machacado</span>) y platos típicos como el <em>bolón de verde</em> y el <em>encebollado</em>.
         </p>
       </div>
 
       <div class="region-card">
         <h3>La Sierra (Región Interandina)</h3>
         <p>
-          La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la imponente Cordillera de los Andes. Aquí se sitúa Quito, la capital histórica del país a 2.850 metros sobre el nivel del mar, cuyo centro colonial fue declarado el primer Patrimonio de la Humanidad por la UNESCO en 1978. La región está rodeada por la famosa «Avenida de los Volcanes», que incluye gigantes nevados como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra). El clima es fresco o templado, y las comunidades indígenas conservan ricas tradiciones textiles y ferias vibrantes como el mercado de Otavalo.
+          La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la <span class="vocab-in-text">imponente</span> Cordillera de los Andes. Aquí se sitúa Quito, la capital histórica del país a 2.850 metros sobre el nivel del mar, cuyo centro colonial fue declarado el primer Patrimonio de la Humanidad por la UNESCO en 1978. La región está rodeada por la famosa «Avenida de los Volcanes», que incluye gigantes <span class="vocab-in-text">nevados</span> como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra). El clima es fresco o templado, y las comunidades indígenas conservan ricas tradiciones textiles y ferias vibrantes como el mercado de Otavalo.
         </p>
       </div>
 
       <div class="region-card">
         <h3>El Oriente (Región Amazónica)</h3>
         <p>
-          Hacia el este de los Andes se extiende la selva amazónica ecuatoriana. Es una región densa, calurosa y húmeda, regada por caudalosos ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas. El Oriente representa casi la mitad del territorio nacional, pero concentra un porcentaje muy reducido de la población. Aquí habitan nacionalidades indígenas como los Kichwa, Shuar y Waorani, quienes protegen un ecosistema único lleno de miles de especies de aves, insectos, anfibios y plantas medicinales.
+          Hacia el este de los Andes se extiende la <span class="vocab-in-text">selva</span> amazónica ecuatoriana. Es una región densa, <span class="vocab-in-text">calurosa</span> y húmeda, regada por <span class="vocab-in-text">caudalosos</span> ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas. El Oriente representa casi la mitad del territorio nacional, pero concentra un porcentaje muy reducido de la población. Aquí habitan nacionalidades indígenas como los Kichwa, Shuar y Waorani, quienes protegen un ecosistema único lleno de miles de especies de aves, insectos, anfibios y plantas medicinales.
         </p>
       </div>
 
       <div class="region-card">
         <h3>Las Islas Galápagos (Región Insular)</h3>
         <p>
-          Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y decenas de islotes. Este rincón del mundo inspiró al naturalista británico Charles Darwin a formular su teoría de la evolución por selección natural en 1835. Gran parte de su flora y fauna es endémica, lo que significa que no existe de manera natural en ningún otro lugar: tortugas gigantes terrestres, iguanas marinas capaces de nadar, y los curiosos piqueros de patas azules.
+          Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y <span class="vocab-in-text">decenas</span> de <span class="vocab-in-text">islotes</span>. Este rincón del mundo inspiró al naturalista británico Charles Darwin a formular su teoría de la evolución por selección natural en 1835. Gran parte de su flora y fauna es endémica, lo que significa que no existe de manera natural en ningún otro lugar: tortugas gigantes terrestres, iguanas marinas capaces de nadar, y los curiosos piqueros de patas azules.
         </p>
       </div>
     </article>
@@ -1356,16 +1374,14 @@
         </button>
         <div class="reset-confirm-box" id="reset-confirm-box" style="display: none;">
           <span class="reset-confirm-text">¿Confirmar reinicio?</span>
-          <button class="reset-confirm-btn" onclick="confirmReset()">Sí, reiniciar</button>
           <button class="reset-cancel-btn" onclick="cancelReset()">Cancelar</button>
+          <button class="reset-confirm-btn" onclick="confirmReset()">Sí, reiniciar</button>
         </div>
       </div>
     </div>
 
     <!-- Footer -->
     <footer class="handout-footer">
-      <span class="footer-brand">Language Learning Activities</span>
-      <span class="footer-dot">•</span>
       <span class="footer-author">See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
     </footer>
 
@@ -1676,23 +1692,46 @@
         targets.appendChild(card);
       });
 
-      // 3. Render Completed Section Pills (no title, just pills with green check)
-      completedVocab.forEach(k => {
-        const item = vocabData[k];
-        if (!item) return;
-        const pill = document.createElement('div');
-        pill.className = 'vocab-completed-pill';
-        pill.setAttribute('data-key', k);
-        pill.innerHTML = `
-          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          <span>${item.word}</span>
-        `;
-        pill.addEventListener('click', () => {
-          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-          toggleCompletedDetail(k);
-        });
-        completedPool.appendChild(pill);
-      });
+      // 3. Render Completed Section Pills (centered, equally distributed across two lines if >= 6)
+      completedPool.innerHTML = '';
+      if (completedVocab.length > 0) {
+        const createPill = (k) => {
+          const item = vocabData[k];
+          if (!item) return null;
+          const pill = document.createElement('div');
+          pill.className = 'vocab-completed-pill';
+          pill.setAttribute('data-key', k);
+          pill.innerHTML = `
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>${item.word}</span>
+          `;
+          pill.addEventListener('click', () => {
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            toggleCompletedDetail(k);
+          });
+          return pill;
+        };
+
+        const total = completedVocab.length;
+        const numRows = Math.ceil(total / 3);
+        const base = Math.floor(total / numRows);
+        const remainder = total % numRows;
+
+        let startIndex = 0;
+        for (let r = 0; r < numRows; r++) {
+          const count = base + (r < remainder ? 1 : 0);
+          const rowKeys = completedVocab.slice(startIndex, startIndex + count);
+          startIndex += count;
+
+          const row = document.createElement('div');
+          row.className = 'vocab-completed-row';
+          rowKeys.forEach(k => {
+            const p = createPill(k);
+            if (p) row.appendChild(p);
+          });
+          completedPool.appendChild(row);
+        }
+      }
     }
 
     function showWordHintModal(wordKey) {
