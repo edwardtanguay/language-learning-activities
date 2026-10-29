@@ -389,6 +389,34 @@
       cursor: pointer;
     }
 
+    .reading-word.has-bookmark {
+      white-space: nowrap;
+    }
+
+    .reading-bookmark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lang-color);
+      cursor: pointer;
+      margin-right: 3px;
+      vertical-align: -2px;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .reading-bookmark:hover {
+      transform: scale(1.18);
+      opacity: 0.85;
+    }
+
+    .reading-bookmark svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
     .region-card {
       margin-bottom: 22px;
       padding-left: 0;
@@ -1024,11 +1052,22 @@
       align-self: flex-end;
       line-height: 1.2;
       transition: opacity 0.2s ease;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+
+    .image-lightbox-caption::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
     }
 
     .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
       opacity: 0;
+      pointer-events: none;
     }
 
     /* =========================================================
@@ -1901,6 +1940,7 @@
     };
 
     let userAnswers = {};
+    let readingBookmarks = [];
     const STORAGE_KEY = 'activity_colombia';
 
     // =========================================================
@@ -1912,14 +1952,18 @@
         if (saved) {
           const parsed = JSON.parse(saved);
           if (parsed && typeof parsed === 'object') {
-            if (parsed.mc || parsed.vocab) {
+            if (parsed.mc || parsed.vocab || parsed.bookmarks) {
               userAnswers = parsed.mc || {};
               completedVocab = Array.isArray(parsed.vocab)
                 ? parsed.vocab.filter(k => vocabData[k])
                 : [];
+              readingBookmarks = Array.isArray(parsed.bookmarks)
+                ? parsed.bookmarks.filter(idx => Number.isInteger(idx) && idx >= 0)
+                : [];
             } else {
               userAnswers = parsed;
               completedVocab = [];
+              readingBookmarks = [];
             }
           }
         }
@@ -1933,20 +1977,183 @@
         applyQuestionFeedback(qNum, val);
       });
 
-      // Render Vocabulary
+      // Render Vocabulary & Reading Bookmarks
       renderVocabulary();
+      renderReadingBookmarks();
     }
 
     function saveState() {
       try {
         const state = {
           mc: userAnswers,
-          vocab: completedVocab
+          vocab: completedVocab,
+          bookmarks: readingBookmarks
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (e) {
         console.warn("Could not save to localStorage:", e);
       }
+    }
+
+    // =========================================================
+    // READING BOOKMARKS (CTRL + DOUBLE-CLICK ON A WORD)
+    // =========================================================
+    function initReadingWords() {
+      const container = document.querySelector('.reading-content');
+      if (!container || container.getAttribute('data-words-initialized') === 'true') return;
+      container.setAttribute('data-words-initialized', 'true');
+
+      let wordIndex = 0;
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.nodeValue;
+          if (!text || !text.trim()) return;
+          const regex = /([\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*)/gu;
+          let lastIdx = 0;
+          let match;
+          const frag = document.createDocumentFragment();
+          let found = false;
+
+          while ((match = regex.exec(text)) !== null) {
+            found = true;
+            if (match.index > lastIdx) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx, match.index)));
+            }
+            const span = document.createElement('span');
+            span.className = 'reading-word';
+            span.setAttribute('data-word-idx', String(wordIndex++));
+            span.textContent = match[0];
+            frag.appendChild(span);
+            lastIdx = regex.lastIndex;
+          }
+
+          if (found) {
+            if (lastIdx < text.length) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+            }
+            node.parentNode.replaceChild(frag, node);
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.classList.contains('vocab-in-text')) {
+            const wrap = document.createElement('span');
+            wrap.className = 'reading-word';
+            wrap.setAttribute('data-word-idx', String(wordIndex++));
+            node.parentNode.replaceChild(wrap, node);
+            wrap.appendChild(node);
+            return;
+          }
+          const children = Array.from(node.childNodes);
+          children.forEach(processNode);
+        }
+      }
+
+      processNode(container);
+
+      let lastCtrlDownTime = 0;
+      container.addEventListener('mousedown', (e) => {
+        if (e.ctrlKey || e.metaKey) {
+          lastCtrlDownTime = Date.now();
+        }
+      });
+
+      container.addEventListener('contextmenu', (e) => {
+        if (e.ctrlKey && e.button === 0) {
+          e.preventDefault();
+        }
+      });
+
+      container.addEventListener('dblclick', (e) => {
+        if (!e.ctrlKey && !e.metaKey && (Date.now() - lastCtrlDownTime > 600)) return;
+        if (e.target && e.target.closest('.reading-bookmark')) return;
+
+        let wordEl = e.target && e.target.closest ? e.target.closest('.reading-word') : null;
+        if (!wordEl && window.getSelection) {
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const startNode = range.startContainer;
+            const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement;
+            if (startEl && container.contains(startEl)) {
+              wordEl = startEl.closest('.reading-word');
+            }
+          }
+        }
+
+        if (!wordEl) return;
+
+        const idx = parseInt(wordEl.getAttribute('data-word-idx'), 10);
+        if (isNaN(idx)) return;
+
+        e.preventDefault();
+        addReadingBookmark(idx);
+
+        const clearSel = () => {
+          if (window.getSelection) {
+            const sel = window.getSelection();
+            if (sel) sel.removeAllRanges();
+          }
+        };
+        clearSel();
+        requestAnimationFrame(clearSel);
+      });
+    }
+
+    function addReadingBookmark(idx) {
+      if (!readingBookmarks.includes(idx)) {
+        readingBookmarks.push(idx);
+        readingBookmarks.sort((a, b) => a - b);
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function removeReadingBookmark(idx) {
+      const next = readingBookmarks.filter(item => item !== idx);
+      if (next.length !== readingBookmarks.length) {
+        readingBookmarks = next;
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function renderReadingBookmarks() {
+      const container = document.querySelector('.reading-content');
+      if (!container) return;
+
+      container.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
+      container.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
+
+      readingBookmarks.forEach(idx => {
+        const wordEl = container.querySelector(`.reading-word[data-word-idx="${idx}"]`);
+        if (!wordEl) return;
+        wordEl.classList.add('has-bookmark');
+
+        const bm = document.createElement('span');
+        bm.className = 'reading-bookmark';
+        bm.setAttribute('data-bookmark-idx', String(idx));
+        bm.setAttribute('title', 'Eliminar marcador');
+        bm.setAttribute('aria-label', 'Eliminar marcador');
+        bm.setAttribute('role', 'button');
+        bm.setAttribute('tabindex', '0');
+        bm.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
+
+        bm.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          removeReadingBookmark(idx);
+        });
+
+        bm.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            removeReadingBookmark(idx);
+          }
+        });
+
+        wordEl.insertBefore(bm, wordEl.firstChild);
+      });
     }
 
     // =========================================================
@@ -2787,6 +2994,7 @@
     function executeReset() {
       userAnswers = {};
       completedVocab = [];
+      readingBookmarks = [];
       activeModalCard = null;
       activePlacedWordKey = null;
 
@@ -2810,6 +3018,7 @@
 
       hideModal();
       renderVocabulary();
+      renderReadingBookmarks();
     }
 
     // =========================================================
@@ -2828,6 +3037,7 @@
     let lbGestureMoved = false;
     let lbIgnoreNextClick = false;
     let lbMouseDragging = false;
+    let lbSelectingCaption = false;
     let lbMouseStartX = 0;
     let lbMouseStartY = 0;
     let lbLastMouseX = 0;
@@ -2861,6 +3071,7 @@
       lbGestureMoved = false;
       lbIgnoreNextClick = false;
       lbMouseDragging = false;
+      lbSelectingCaption = false;
       applyLightboxTransform();
       overlay.classList.add('active');
     }
@@ -2870,6 +3081,12 @@
       const img = document.getElementById('image-lightbox-img');
       const caption = document.getElementById('image-lightbox-caption');
       if (!overlay) return;
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
+          sel.removeAllRanges();
+        }
+      }
       overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
         img.src = '';
@@ -2882,11 +3099,15 @@
       lbTranslateX = 0;
       lbTranslateY = 0;
       lbMouseDragging = false;
+      lbSelectingCaption = false;
     }
 
     function handleLightboxClick(e) {
       if (lbIgnoreNextClick) {
         lbIgnoreNextClick = false;
+        return;
+      }
+      if (e && e.target && e.target.closest('.image-lightbox-caption')) {
         return;
       }
       closeImageLightbox();
@@ -2931,15 +3152,22 @@
           applyLightboxTransform();
         }, { passive: false });
 
-        // Desktop Click-and-Drag Pan when zoomed in
+        // Desktop Click-and-Drag Pan when zoomed in (or caption text selection)
         overlay.addEventListener('mousedown', (e) => {
           if (e.button !== 0 || !overlay.classList.contains('active')) return;
+          if (e.target && e.target.closest('.image-lightbox-caption')) {
+            lbSelectingCaption = true;
+            lbMouseStartX = e.clientX;
+            lbMouseStartY = e.clientY;
+            return;
+          }
+          lbSelectingCaption = false;
           lbGestureMoved = false;
+          lbMouseStartX = e.clientX;
+          lbMouseStartY = e.clientY;
           if (lbScale > 1.01) {
             e.preventDefault();
             lbMouseDragging = true;
-            lbMouseStartX = e.clientX;
-            lbMouseStartY = e.clientY;
             lbLastMouseX = e.clientX;
             lbLastMouseY = e.clientY;
             applyLightboxTransform();
@@ -2960,7 +3188,22 @@
           applyLightboxTransform();
         });
 
-        window.addEventListener('mouseup', () => {
+        window.addEventListener('mouseup', (e) => {
+          if (lbSelectingCaption) {
+            lbSelectingCaption = false;
+            lbIgnoreNextClick = true;
+            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
+            return;
+          }
+          if (
+            overlay.classList.contains('active') &&
+            window.getSelection &&
+            window.getSelection().toString().trim().length > 0 &&
+            Math.hypot(e.clientX - lbMouseStartX, e.clientY - lbMouseStartY) > 4
+          ) {
+            lbIgnoreNextClick = true;
+            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
+          }
           if (!lbMouseDragging) return;
           lbMouseDragging = false;
           applyLightboxTransform();
@@ -2971,6 +3214,11 @@
         });
 
         overlay.addEventListener('touchstart', (e) => {
+          if (e.target && e.target.closest('.image-lightbox-caption')) {
+            lbSelectingCaption = true;
+            return;
+          }
+          lbSelectingCaption = false;
           if (e.touches.length === 2) {
             lbGestureMoved = true;
             const dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -3252,6 +3500,7 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
+      initReadingWords();
       loadSavedState();
       setupStickyJumpNav();
 
@@ -3259,6 +3508,7 @@
       document.querySelectorAll('.vocab-in-text').forEach(span => {
         span.addEventListener('click', (e) => {
           e.stopPropagation();
+          if (e.ctrlKey || e.metaKey) return;
           if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
           const key = span.getAttribute('data-key') || span.textContent.trim().toLowerCase();
           if (vocabData[key]) {

@@ -140,6 +140,9 @@ Each activity file should include the following sections:
    - Text length must always be approximately 400 words (do NOT display the word count anywhere).
    - Natural left alignment (`text-align: left;`) with automatic hyphenation disabled (`hyphens: none;`) to prevent words from splitting across line ends (e.g., no "plane-" and "ta.").
    - Subtle In-Text Vocabulary Highlighting: The 10 vocabulary words featured in Section 2 are subtly styled when they appear in the reading passage (`.vocab-in-text`, e.g. `background-color: rgba(242, 233, 203, 0.55); padding: 0 2px; border-radius: 2px; cursor: pointer;`) just enough to notice them as special without disrupting reading flow. Do NOT use underlines or dotted borders, as they make words look too much like clickable links. Clicking any highlighted vocabulary word in the text opens the hint modal (showing the word, Google lookup icon, and hint text), matching the popup that opens when clicking a waiting word chip.
+   - **Reading Word Bookmarks (`Ctrl` / `Cmd` + Double-Click)**:
+     - `Ctrl`-double-clicking (or `Cmd`-double-clicking on macOS) any word in `.reading-content` places a small inline ribbon bookmark SVG icon (`.reading-bookmark`, `14px`, colored in `var(--lang-color)`) immediately to the **left** of that word and immediately deselects the word (`window.getSelection().removeAllRanges()`).
+     - Saved in `localStorage` (`bookmarks` array under `STORAGE_KEY`) and remains until the bookmark icon is clicked (which deletes it) or "Reiniciar respuestas" is confirmed.
    - Paragraphs and subsection cards must NOT have vertical lines on the left (clean unbordered text).
    - Divided into logical paragraphs or subsections. Subsection titles use the serif body font with standard capitalization (`text-transform: none; font-weight: 700;`) without numbers (e.g., `<h3>La Costa (Región Litoral)</h3>`).
 5. **Section 2: Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:

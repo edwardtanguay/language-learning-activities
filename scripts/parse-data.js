@@ -413,11 +413,22 @@ const SECTION_5_CSS = `
       align-self: flex-end;
       line-height: 1.2;
       transition: opacity 0.2s ease;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+
+    .image-lightbox-caption::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
     }
 
     .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
       opacity: 0;
+      pointer-events: none;
     }
 `;
 
@@ -444,6 +455,7 @@ const SECTION_5_JS = `
     let lbLastTouchX = 0;
     let lbLastTouchY = 0;
     let lbMouseDown = false;
+    let lbSelectingCaption = false;
     let lbLastMouseX = 0;
     let lbLastMouseY = 0;
     let lbGestureMoved = false;
@@ -475,6 +487,7 @@ const SECTION_5_JS = `
       lbTranslateX = 0;
       lbTranslateY = 0;
       lbMouseDown = false;
+      lbSelectingCaption = false;
       lbGestureMoved = false;
       lbIgnoreNextClick = false;
       overlay.classList.remove('is-zoomed', 'is-panning');
@@ -487,6 +500,12 @@ const SECTION_5_JS = `
       const img = document.getElementById('image-lightbox-img');
       const caption = document.getElementById('image-lightbox-caption');
       if (!overlay) return;
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
+          sel.removeAllRanges();
+        }
+      }
       overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
         img.src = '';
@@ -499,11 +518,15 @@ const SECTION_5_JS = `
       lbTranslateX = 0;
       lbTranslateY = 0;
       lbMouseDown = false;
+      lbSelectingCaption = false;
     }
 
     function handleLightboxClick(e) {
       if (lbIgnoreNextClick) {
         lbIgnoreNextClick = false;
+        return;
+      }
+      if (e && e.target && e.target.closest('.image-lightbox-caption')) {
         return;
       }
       closeImageLightbox();
@@ -547,9 +570,16 @@ const SECTION_5_JS = `
           applyLightboxTransform();
         }, { passive: false });
 
-        // Desktop click-and-drag pan when zoomed in
+        // Desktop click-and-drag pan when zoomed in (or caption text selection)
         overlay.addEventListener('mousedown', (e) => {
           if (e.button !== 0 || !overlay.classList.contains('active')) return;
+          if (e.target && e.target.closest('.image-lightbox-caption')) {
+            lbSelectingCaption = true;
+            lbPanStartX = e.clientX;
+            lbPanStartY = e.clientY;
+            return;
+          }
+          lbSelectingCaption = false;
           lbMouseDown = true;
           lbGestureMoved = false;
           lbPanStartX = e.clientX;
@@ -578,7 +608,22 @@ const SECTION_5_JS = `
           }
         });
 
-        window.addEventListener('mouseup', () => {
+        window.addEventListener('mouseup', (e) => {
+          if (lbSelectingCaption) {
+            lbSelectingCaption = false;
+            lbIgnoreNextClick = true;
+            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
+            return;
+          }
+          if (
+            overlay.classList.contains('active') &&
+            window.getSelection &&
+            window.getSelection().toString().trim().length > 0 &&
+            Math.hypot(e.clientX - lbPanStartX, e.clientY - lbPanStartY) > 4
+          ) {
+            lbIgnoreNextClick = true;
+            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
+          }
           if (!lbMouseDown) return;
           lbMouseDown = false;
           overlay.classList.remove('is-panning');
@@ -589,6 +634,11 @@ const SECTION_5_JS = `
         });
 
         overlay.addEventListener('touchstart', (e) => {
+          if (e.target && e.target.closest('.image-lightbox-caption')) {
+            lbSelectingCaption = true;
+            return;
+          }
+          lbSelectingCaption = false;
           if (e.touches.length === 2) {
             lbGestureMoved = true;
             const dx = e.touches[0].clientX - e.touches[1].clientX;
