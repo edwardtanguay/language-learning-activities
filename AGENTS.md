@@ -18,17 +18,22 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Local State & Reset**: Interactive features (e.g., quiz answers, vocabulary completion state) must use `localStorage` for persistence, and MUST include a visible reset button that restores the worksheet to its initial state.
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, wrong-drop hints, and navigation links) must be exclusively in the target language.
-- **Structured Instructions Callout**:
-  - The instructions box outlines the workflow for both self-study and tandem/tutoring sessions concisely in the target language under the heading **INSTRUCCIONES**:
+- **Collapsible Instructions Callout**:
+  - By default, displays only a subtle, clickable typewriter toggle on the left: `▸ Instrucciones` (`.instructions-toggle-btn`).
+  - Clicking it expands to reveal the full highlighted box with **INSTRUCCIONES** centered and the workflow lines:
     - **Antes de la clase / Before Class**: No bullet dot in front of the label. The label is capitalized (`Antes de la clase:`) followed by an all-lowercase description (e.g., `estudiante y profesor se familiarizan con el texto lo que deseen`, without trailing period).
     - **En clase / In Class**: No bullet dot in front of the label. The label is capitalized (`En clase:`) followed by an all-lowercase comma-separated list: `(1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos`.
     - Keep phrasing concise, inline, and readable in seconds.
-- **Header, Top Utility Bar & Title on Mobile**:
-  - On mobile (`max-width: 680px`), `body` has `padding: 0 8px 12px 8px;` and `.utility-bar` has `justify-content: center; align-items: center; margin: 0 auto; padding: 14px 0;` with `.back-link { line-height: 1; display: inline-flex; align-items: center; }` so "Índice de Actividades" is centered both horizontally and vertically in the space above the handout sheet.
+  - Clicking the expanded box or button toggles it closed back to the collapsed state.
+- **Header, Top Utility Bar, Jump Links & Title on Mobile**:
+  - The top utility bar has generous top padding (desktop: `padding-top: 14px;`, mobile: `padding: 24px 0 14px 0;`) so "Índice de Actividades" has comfortable space from the top of the page.
+  - On mobile (`max-width: 680px`), `body` has `padding: 0 8px 12px 8px;` and `.utility-bar` has `justify-content: center; align-items: center; margin: 0 auto; padding: 24px 0 14px 0;` with `.back-link { line-height: 1; display: inline-flex; align-items: center; }` so "Índice de Actividades" is centered both horizontally and vertically in the space above the handout sheet.
   - On mobile (`max-width: 680px`), the stamp badge (`.stamp-badge`) is centered horizontally in the middle (`margin: 4px auto 0 auto; align-self: center;`), and the main title (`.handout-title-group h1`) and subtitle (`.handout-subtitle`) are centered.
-  - The instructions callout heading (`.instructions-heading`, e.g. **INSTRUCCIONES**) is also centered on mobile.
-- **Section Numbering & Right-Side Action Hints**:
+  - **Centered Jump Links (1, 2, 3, 4)**: Positioned directly under the subtitle and before the Instructions toggle, a centered navigation bar (`.jump-nav`) displays four round numbers `1`, `2`, `3`, `4` inside circular badges (~32px diameter, background `#e6e0d2`, dark charcoal number centered) that smoothly scroll to `#seccion-1`, `#seccion-2`, `#seccion-3`, and `#seccion-4`.
+  - The instructions callout heading (`.instructions-heading`, e.g. **INSTRUCCIONES**) is centered on both desktop and mobile when expanded.
+- **Section Numbering, Title Link to Top & Right-Side Action Hints**:
   - Main sections across the worksheet are designated with clean numbers (1, 2, 3, 4) without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
+  - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll back to the very top of the worksheet without disruptive underlines (`text-decoration: none; color: inherit; cursor: pointer;`).
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
     - Section 1: "read aloud" (in Spanish: `leer en voz alta`)
     - Section 2: "drag and drop" (in Spanish: `arrastrar y soltar`)
@@ -55,8 +60,13 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - Pill & Card Styling: All pills (waiting word chips `.vocab-chip` and completed word pills `.vocab-completed-pill`) and target cards must be square-cornered (`border-radius: 0;`).
     - Compact Mobile Layout: Ultra-compact styling (tight gap, ~6px 10px card padding, 12.5px definition font) ensuring all 10 definitions are visible and accessible without cumbersome scrolling.
     - Fully responsive: supports mouse drag, touch drag, and tap-to-select for seamless mobile usability.
+    - Word Dragging & Active Drop Targets:
+      - While a word is being dragged (both desktop and mobile), the word chip is visually hidden from the waiting pool (`opacity: 0; visibility: hidden;`) without collapsing other chips, giving clear feedback that it has been picked up.
+      - While dragging, definition target cards are given an active selectable appearance (`.vocab-targets.vocab-dragging-active .vocab-target-card` with subtle blue dashed border and soft highlight) indicating they are valid drop targets.
+      - **Mobile 2x Floating Avatar**: During touch drag on mobile screens, a floating clone avatar (`.vocab-touch-avatar`) is displayed 2x larger than standard text, elevated and offset above the learner's finger (`transform: translate(-50%, -100%);`) so the finger never obscures the dragged word.
     - Equal Popup Padding: In all popups and modals (hint popup modal, wrong-drop state card, and correct-drop dictionary card), padding is uniform on all four sides (top, bottom, left, and right: 18px).
     - Word chip click on top: clicking a waiting chip opens a hint popup displaying the word title with a lookup icon next to it, followed by a warm amber lightbulb SVG icon (`#d97706`) and the hint text in the target language (hint helps without making the answer obvious, no trailing punctuation, no repeating word prefix).
+    - **Instant Hint Modal Dismissal**: Clicking anywhere on the hint modal or its overlay immediately closes it without delay (no 250ms debounce pause).
     - Lookup icon: next to the word at the top, a magnifying glass lookup button opens a new tab and searches Google: `give me the definition of the word "<word>" in <language>, and the translation of the word in English, and then three example sentences with that word, for each example, once in <language> and once in English`.
     - Wrong drop panel:
       - Very light red background (`#fdf6f6` with border `#f5cfcf`).
@@ -68,7 +78,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
     - Completed words section: no section title; displays completed words in square-cornered pills, each with a green check SVG icon to its left.
     - Completed Pool Balancing & Centering: The completed words area is always centered horizontally. Completed word pills are distributed equally across balanced rows with at most 3 words per row (e.g., when 10 words are completed, they are distributed across 4 rows as 3, 3, 2, 2; when 6 words, 3 and 3; when 5 words, 3 and 2). Each row uses flexbox with no wrapping, preventing awkward orphan singletons.
     - Clicking any completed word pill pops open its complete dictionary definition card (matching the light green card with green checkmark next to definition and full sentence) in a designated view area above the pills. Clicking the card again or clicking outside closes it (no X button).
-    - Double-click word selection: on pop-up and modal cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
+    - Double-click word selection: on dictionary and wrong-drop pop-up cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
     - Clean completion: when all vocabulary words have been matched, do not display any completion message (such as "¡Todas las palabras han sido emparejadas con éxito!"); the top waiting words pool area collapses cleanly (`display: none;`) without leaving awkward empty space above the completed words.
     - Completed vocabulary progress is persisted in `localStorage` and reset with the "Reiniciar respuestas" button.
 - **Universal Text Selection & Copy/Paste Support**:
@@ -96,7 +106,7 @@ Each activity lives in `topics/<topic-slug>/index.html`:
 - **Bottom Actions Bar & Embedded In-Place Reset Confirmation**:
   - The reset container is placed on the left and the back link ("Índice de Actividades") is placed on the right (stacked vertically with reset first on mobile).
   - Equal upper and lower padding (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) and zero vertical button padding on mobile (`.bottom-actions-bar .reset-answers-btn { padding: 0 10px; }`, `.back-link { line-height: 1; }`) so the back link ("Índice de Actividades") and reset button are equally distant from the horizontal rule lines above and below them on both desktop and mobile.
-  - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI with Cancel placed first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or on cancel.
+  - **Embedded In-Place Reset Confirmation UX**: Clicking "Reiniciar respuestas" must never trigger an ugly native browser `confirm()` popup. Instead, clicking the button replaces it in-place in the button bar with an inline confirmation UI with Cancel placed first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or on cancel. Both "Cancelar" and "Sí, reiniciar" buttons feature comfortable top padding inside the buttons (`padding: 6px 10px 4px 10px;`) for optimal visual balance.
   - Clears all `localStorage` state (both multiple-choice answers and completed vocabulary).
 - **Standardized Footers**:
   - Activity pages display only: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).

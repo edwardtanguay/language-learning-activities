@@ -73,8 +73,10 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Unboxed title header (`border: none;`).
   - Contains the activity title (`<h1>`), the prominent tilted stamp badge, and directly beneath them a concise 1–2 sentence description of the content in the target language (italicized serif text, `font-size: 16px; color: var(--ink-muted); margin: 18px 0; line-height: 1.5;` with balanced vertical spacing having as much padding/margin below as above) before the instructions box.
   - Do NOT include generic subtitle slogans, student name/date fill-in lines, or metadata tag lists.
-- **Circular Section Numbers & Right-Side Action Hints**:
+- **Circular Section Numbers, Jump Links & Right-Side Action Hints**:
+  - **Centered Jump Links (1, 2, 3, 4)**: Positioned directly under the subtitle and before the Instructions toggle, a centered navigation bar (`.jump-nav`) displays four round numbers `1`, `2`, `3`, `4` inside circular badges (~32px diameter, background `#e6e0d2`, dark charcoal number centered) that smoothly scroll to `#seccion-1`, `#seccion-2`, `#seccion-3`, and `#seccion-4`.
   - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`) — e.g., `<span class="section-num">1</span> Lectura`, `<span class="section-num">2</span> Vocabulario`, `<span class="section-num">3</span> Comprensión`, `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>`. Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Section 3 are clearly numbered 1, 2, 3... without ambiguity.
+  - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll back to the very top of the worksheet without disruptive underlines (`text-decoration: none; color: inherit; cursor: pointer;`).
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
     - Section 1: "read aloud" (in Spanish: `leer en voz alta`)
     - Section 2: "drag and drop" (in Spanish: `arrastrar y soltar`)
@@ -88,12 +90,13 @@ Follow the project design philosophy defined in `AGENTS.md`:
 - **Universal Text Selection & Copy/Paste Support**:
   - All text across the worksheet must be freely selectable and copyable by the learner (reading passage, word chips, definition cards, completed word pills, popup dictionary entries, quiz questions, options, and feedback explanations).
   - Never apply `user-select: none;` to text elements.
-  - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons. Single-click dismissals are debounced (~250ms) so that double-clicking to select a word does not dismiss the card.
+  - Interactive popup/modal cards (dictionary definitions, wrong-drop hint banners) must never accidentally dismiss or close when a learner clicks or highlights text to copy. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons. Single-click dismissals on dictionary cards are debounced (~250ms) so that double-clicking to select a word does not dismiss the card, whereas hint modals close immediately without delay.
 - **Dual Navigation, Mobile Vertical Centering & Embedded In-Place Reset Confirmation**:
   - Include the back link (`← Índice de Actividades`) both at the top utility bar and in the bottom actions bar, with `.back-link { line-height: 1; display: inline-flex; align-items: center; }`.
-  - On mobile (`max-width: 680px`), `body` uses `padding: 0 8px 12px 8px;` and `.utility-bar` uses `justify-content: center; align-items: center; margin: 0 auto; padding: 14px 0;` so "Índice de Actividades" is centered both horizontally and vertically in the space above the handout sheet.
+  - The top utility bar has comfortable top padding (desktop: `padding-top: 14px;`, mobile: `padding: 24px 0 14px 0;`).
+  - On mobile (`max-width: 680px`), `body` uses `padding: 0 8px 12px 8px;` and `.utility-bar` uses `justify-content: center; align-items: center; margin: 0 auto; padding: 24px 0 14px 0;` so "Índice de Actividades" is centered both horizontally and vertically in the space above the handout sheet.
   - Do NOT include bulky score counters (e.g. remove "Score: X / Y"). Include a discrete reset button in the target language (e.g., "↺ Reiniciar respuestas" in Spanish) in the bottom actions bar to clear both multiple-choice and vocabulary states in `localStorage`.
-  - **Embedded In-Place Reset Confirmation UX**: Never use a native browser `confirm()` popup. Clicking "Reiniciar respuestas" replaces the button in-place with an inline confirmation UI with Cancel first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or upon clicking Cancel.
+  - **Embedded In-Place Reset Confirmation UX**: Never use a native browser `confirm()` popup. Clicking "Reiniciar respuestas" replaces the button in-place with an inline confirmation UI with Cancel first: (`¿Confirmar reinicio? [Cancelar] [Sí, reiniciar]`) that auto-reverts after 8 seconds or upon clicking Cancel. Both "Cancelar" and "Sí, reiniciar" buttons have generous top padding inside the buttons (`padding: 6px 10px 4px 10px;`) for optimal visual balance.
   - Bottom actions bar layout: place the reset container on the left and the back link ("Índice de Actividades") on the right (stacked vertically with reset first on mobile).
   - Both desktop and mobile: set equal upper and lower padding on the bottom actions bar (`padding-top: 20px; padding-bottom: 20px; border-top: 1px solid var(--ink-rule); border-bottom: 1px solid var(--ink-rule);`) and remove extra vertical button padding on mobile (`.bottom-actions-bar .reset-answers-btn { padding: 0 10px; }`) so the navigation texts are equally distant from the dividing lines above and below.
   - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers.
@@ -116,11 +119,13 @@ Each activity file should include the following sections:
    - Do NOT include a print button.
 2. **Worksheet Header**:
    - Title (`<h1>`), enlarged tilted stamp badge (`[Language] [Level]`), and concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
-3. **Structured Instructions Callout Box**:
-   - Outlines the lesson plan concisely in the target language under the heading **INSTRUCCIONES**:
+3. **Collapsible Instructions Callout Box**:
+   - By default, displays only a subtle, clickable typewriter toggle on the left: `▸ Instrucciones` (`.instructions-toggle-btn`).
+   - Clicking it expands to reveal the full highlighted box with **INSTRUCCIONES** centered and the workflow lines:
      - **Antes de la clase / Before Class**: No bullet dot in front of the label. Capitalized label (`Antes de la clase:`) followed by an all-lowercase description (e.g., `estudiante y profesor se familiarizan con el texto lo que deseen`, without trailing period).
      - **En clase / In Class**: No bullet dot in front of the label. Capitalized label (`En clase:`) followed by an all-lowercase comma-separated list: `(1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos`.
      - Keep phrasing concise, inline, and readable in seconds.
+   - Clicking the expanded box or button toggles it closed back to the collapsed state.
 4. **Section 1: Reading Passage (Lectura)**:
    - Titled "Lectura" in the target language without period (e.g., `<span class="section-num">1</span> Lectura`), with right-aligned action hint "read aloud" in the target language.
    - Authentic, engaging reading passage written at the designated proficiency level in the target language.
@@ -140,8 +145,13 @@ Each activity file should include the following sections:
    - Square Corners & Narrow Padding: All pills (waiting chips `.vocab-chip` and completed pills `.vocab-completed-pill`) and definition cards have square corners (`border-radius: 0;`).
    - Compact Mobile View: Ultra-compact single column layout on mobile screens (~6px 10px padding, 12.5px font size, 6px gap) so all 10 definitions fit on screen without extensive scrolling.
    - Supports mouse drag-and-drop, touch drag, and tap-to-select for smooth mobile support.
+   - Word Dragging & Active Drop Targets:
+     - While a word is being dragged (desktop or mobile), the word chip is visually hidden from the waiting pool (`opacity: 0; visibility: hidden;`) without collapsing the layout of other chips.
+     - Target cards acquire an active selectable appearance (`.vocab-targets.vocab-dragging-active .vocab-target-card` with subtle blue dashed border and light tint) indicating valid drop zones.
+     - **Mobile 2x Floating Avatar**: During touch drag on mobile screens, an elevated floating clone avatar (`.vocab-touch-avatar`) is displayed 2x larger than standard text, positioned above the learner's finger (`transform: translate(-50%, -100%);`) so the finger never obscures the dragged word.
    - Equal Popup Padding: In all popups and modals (hint popup modal, wrong-drop state card, and correct-drop dictionary card), padding is uniform on all four sides (top, bottom, left, and right: 18px).
    - Word chip click on top: clicking a waiting chip opens a hint popup displaying the word title with a lookup icon next to it, followed by a warm amber lightbulb SVG icon (`#d97706`) and the hint text in the target language (hint helps without making the answer obvious, no trailing punctuation, no repeating word prefix).
+   - **Instant Hint Modal Dismissal**: Clicking anywhere on the hint modal or its overlay immediately closes it without delay (no 250ms debounce pause).
    - Lookup icon: next to the word at the top, a magnifying glass lookup button opens a new tab and searches Google: `give me the definition of the word "<word>" in <language>, and the translation of the word in English, and then three example sentences with that word, for each example, once in <language> and once in English`.
    - Wrong drop panel:
      - Very light red background (`#fdf6f6` with border `#f5cfcf`).
@@ -153,7 +163,7 @@ Each activity file should include the following sections:
    - Completed words section: no title; displays completed words in square-cornered pills, each with a green check SVG icon to its left.
    - Completed Pool Balancing & Centering: The completed words area is always centered horizontally. Completed word pills are distributed equally across balanced rows with at most 3 words per row (e.g., when 10 words are completed, they are distributed across 4 rows as 3, 3, 2, 2; when 6 words, 3 and 3; when 5 words, 3 and 2). Each row uses flexbox with no wrapping, preventing awkward orphan singletons.
    - Clicking any completed word pill pops open its complete dictionary definition card in a designated view area above the pills. Clicking the card again or clicking outside closes it (no X button).
-   - Double-click word selection: on pop-up and modal cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
+   - Double-click word selection: on dictionary and wrong-drop pop-up cards, single-click dismissal is debounced (~250ms) so that double-clicking to select a word does not dismiss or close the card.
    - Persists completed vocabulary in `localStorage` and resets on "Reiniciar respuestas".
 6. **Section 3: Interactive Comprehension Questions**:
    - Heading standardized to "Comprehension" in the target language without period (e.g., `<span class="section-num">3</span> Comprensión`), with right-aligned action hint "multiple choice" in the target language.

@@ -50,10 +50,15 @@
       background-size: 24px 24px;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     /* Top utility bar */
     .utility-bar {
       max-width: 860px;
       margin: 0 auto 16px auto;
+      padding-top: 14px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -149,6 +154,38 @@
       white-space: nowrap;
     }
 
+    /* Section Jump Navigation */
+    .jump-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 18px auto 22px auto;
+    }
+
+    .jump-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+
+    .jump-num:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
     /* Handout Sections */
     .section-title {
       font-family: var(--font-typewriter);
@@ -161,12 +198,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      scroll-margin-top: 18px;
     }
 
-    .section-title > span:first-child {
+    .section-title-link {
+      color: inherit;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .section-title-link:hover {
+      opacity: 0.8;
     }
 
     .section-action-hint {
@@ -196,21 +242,58 @@
       flex-shrink: 0;
     }
 
-    /* Instructions callout */
+    /* Instructions callout (Collapsible) */
+    .instructions-wrapper {
+      margin-bottom: 24px;
+    }
+
+    .instructions-toggle-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 0;
+      line-height: 1.2;
+      transition: color 0.15s;
+    }
+
+    .instructions-toggle-btn:hover {
+      color: var(--ink-main);
+    }
+
+    .instructions-arrow {
+      display: inline-block;
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .instructions-toggle-btn.expanded .instructions-arrow {
+      transform: rotate(90deg);
+    }
+
     .instructions-box {
       background-color: var(--highlight);
       border-left: 4px solid var(--ink-rule);
       padding: 12px 16px;
       font-family: var(--font-typewriter);
       font-size: 14px;
-      margin-bottom: 24px;
+      margin-top: 8px;
+      margin-bottom: 0;
       line-height: 1.45;
+      cursor: pointer;
     }
 
     .instructions-heading {
       font-weight: 700;
       margin-bottom: 6px;
       letter-spacing: 0.5px;
+      text-align: center;
     }
 
     .instructions-block {
@@ -318,7 +401,8 @@
     }
 
     .vocab-chip.dragging {
-      opacity: 0.35;
+      opacity: 0 !important;
+      visibility: hidden !important;
     }
 
     .vocab-targets {
@@ -326,6 +410,29 @@
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       gap: 8px;
       margin-bottom: 16px;
+    }
+
+    .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) {
+      border: 1.5px dashed var(--stamp-blue);
+      background-color: #fafcfe;
+      box-shadow: 0 0 0 1px rgba(29, 67, 115, 0.15);
+    }
+
+    .vocab-touch-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -100%);
+      font-family: var(--font-typewriter);
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 2px solid var(--stamp-blue);
+      box-shadow: 0 10px 28px rgba(45, 40, 35, 0.25);
+      padding: 6px 14px;
+      white-space: nowrap;
+      border-radius: 0;
     }
 
     .vocab-target-card {
@@ -836,11 +943,12 @@
       border: 1px solid var(--wrong-red);
       font-family: var(--font-typewriter);
       font-size: 12px;
-      padding: 3px 8px;
+      padding: 6px 10px 4px 10px;
       cursor: pointer;
       border-radius: 2px;
       font-weight: 700;
       transition: opacity 0.15s;
+      line-height: 1.2;
     }
 
     .reset-confirm-btn:hover {
@@ -853,10 +961,11 @@
       border: 1px solid var(--ink-border);
       font-family: var(--font-typewriter);
       font-size: 12px;
-      padding: 3px 8px;
+      padding: 6px 10px 4px 10px;
       cursor: pointer;
       border-radius: 2px;
       transition: color 0.15s, background-color 0.15s;
+      line-height: 1.2;
     }
 
     .reset-cancel-btn:hover {
@@ -906,7 +1015,7 @@
         justify-content: center;
         align-items: center;
         margin: 0 auto;
-        padding: 14px 0;
+        padding: 24px 0 14px 0;
       }
       .handout-sheet {
         padding: 20px 16px;
@@ -937,6 +1046,15 @@
         margin-bottom: 14px;
         text-align: center;
       }
+      .jump-nav {
+        gap: 12px;
+        margin: 14px auto 18px auto;
+      }
+      .jump-num {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+      }
       .instructions-heading {
         text-align: center;
       }
@@ -945,6 +1063,9 @@
         letter-spacing: 0;
         line-height: 1.25;
         flex-wrap: nowrap;
+        gap: 6px;
+      }
+      .section-title-link {
         gap: 6px;
       }
       .hide-mobile {
@@ -1057,7 +1178,7 @@
   </div>
 
   <!-- Handout Sheet -->
-  <main class="handout-sheet">
+  <main class="handout-sheet" id="top">
 
     <!-- Header -->
     <header class="worksheet-header">
@@ -1072,22 +1193,36 @@
       <p class="handout-subtitle">
         Una exploración de la geografía, biodiversidad y riqueza cultural de la Costa, la Sierra, el Oriente y las Islas Galápagos.
       </p>
+
+      <!-- Section Jump Navigation -->
+      <nav class="jump-nav" aria-label="Navegación de secciones">
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Lectura">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Preguntas">4</a>
+      </nav>
     </header>
 
-    <!-- Instructions -->
-    <div class="instructions-box">
-      <div class="instructions-heading">INSTRUCCIONES</div>
-      <div class="instructions-block">
-        <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
-      </div>
-      <div class="instructions-block">
-        <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+    <!-- Instructions (Collapsible) -->
+    <div class="instructions-wrapper">
+      <button class="instructions-toggle-btn" id="instructions-toggle-btn" onclick="toggleInstructions()" aria-expanded="false" title="Mostrar u ocultar instrucciones">
+        <span class="instructions-arrow" id="instructions-arrow">▸</span>
+        <span>Instrucciones</span>
+      </button>
+      <div class="instructions-box" id="instructions-box" style="display: none;" onclick="toggleInstructions()" title="Clic para cerrar">
+        <div class="instructions-heading">INSTRUCCIONES</div>
+        <div class="instructions-block">
+          <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
+        </div>
+        <div class="instructions-block">
+          <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+        </div>
       </div>
     </div>
 
     <!-- Section 1: Reading Text -->
-    <h2 class="section-title">
-      <span><span class="section-num">1</span> Lectura</span>
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">1</span> Lectura</a>
       <span class="section-action-hint">leer en voz alta</span>
     </h2>
 
@@ -1126,8 +1261,8 @@
     </article>
 
     <!-- Section 2: Vocabulary Drag & Drop -->
-    <h2 class="section-title">
-      <span><span class="section-num">2</span> Vocabulario</span>
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
       <span class="section-action-hint">arrastrar y soltar</span>
     </h2>
 
@@ -1152,8 +1287,8 @@
     </section>
 
     <!-- Section 3: Interactive Comprehension Questions -->
-    <h2 class="section-title">
-      <span><span class="section-num">3</span> Comprensión</span>
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">3</span> Comprensión</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
 
@@ -1352,8 +1487,8 @@
     </div>
 
     <!-- Section 4: Discussion Questions Section -->
-    <h2 class="section-title">
-      <span><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></span>
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" title="Volver al inicio"><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
 
@@ -1595,6 +1730,25 @@
     }
 
     // =========================================================
+    // INSTRUCTIONS COLLAPSE LOGIC
+    // =========================================================
+    function toggleInstructions() {
+      const box = document.getElementById('instructions-box');
+      const btn = document.getElementById('instructions-toggle-btn');
+      if (!box || !btn) return;
+      const isVisible = box.style.display !== 'none';
+      if (isVisible) {
+        box.style.display = 'none';
+        btn.classList.remove('expanded');
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        box.style.display = 'block';
+        btn.classList.add('expanded');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    // =========================================================
     // VOCABULARY EXERCISE LOGIC
     // =========================================================
     let dismissClickTimer = null;
@@ -1788,7 +1942,9 @@
       `;
 
       modal.addEventListener('click', (e) => {
-        safeDismiss(() => hideModal(), e);
+        if (e.target.closest('.lookup-btn')) return;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        hideModal();
       });
 
       document.body.appendChild(modal);
@@ -1822,12 +1978,25 @@
       }
       draggedWordKey = this.getAttribute('data-key');
       this.classList.add('dragging');
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
       e.dataTransfer.setData('text/plain', draggedWordKey);
       e.dataTransfer.effectAllowed = 'move';
+
+      setTimeout(() => {
+        if (this.classList.contains('dragging')) {
+          this.style.opacity = '0';
+          this.style.visibility = 'hidden';
+        }
+      }, 0);
     }
 
     function handleDragEnd() {
       this.classList.remove('dragging');
+      this.style.opacity = '';
+      this.style.visibility = '';
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
       draggedWordKey = null;
     }
 
@@ -1947,11 +2116,13 @@
     }
 
     function handleOverlayClick(e) {
+      if (activeModalCard && activeModalCard.id === 'active-hint-modal') {
+        hideModal();
+        return;
+      }
       safeDismiss(() => {
         if (activeModalCard) {
-          if (activeModalCard.id === 'active-hint-modal') {
-            hideModal();
-          } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (activeModalCard.classList.contains('state-wrong')) {
             dismissWrongState(activeModalCard);
           } else if (activeModalCard.classList.contains('state-correct')) {
             const targetKey = activeModalCard.getAttribute('data-target-key');
@@ -2008,27 +2179,78 @@
       }
     }
 
-    // Touch event helper for mobile drag & drop
+    // Touch event helper for mobile drag & drop with 2x enlarged floating avatar
     function setupTouchDrag(chip, key) {
       let touchMoved = false;
+      let touchAvatar = null;
+      let lastTargetCard = null;
 
       chip.addEventListener('touchstart', (e) => {
         if (activeModalCard) return;
         touchMoved = false;
-        chip.classList.add('dragging');
         draggedWordKey = key;
       }, { passive: true });
 
       chip.addEventListener('touchmove', (e) => {
-        touchMoved = true;
+        if (activeModalCard) return;
+        const touch = e.touches[0];
+        if (!touch) return;
+
+        if (!touchMoved) {
+          touchMoved = true;
+          chip.classList.add('dragging');
+          chip.style.opacity = '0';
+          chip.style.visibility = 'hidden';
+
+          const targetsContainer = document.getElementById('vocab-targets');
+          if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+
+          touchAvatar = document.createElement('div');
+          touchAvatar.className = 'vocab-touch-avatar';
+          touchAvatar.textContent = chip.textContent;
+          document.body.appendChild(touchAvatar);
+        }
+
+        if (touchAvatar) {
+          touchAvatar.style.left = touch.clientX + 'px';
+          touchAvatar.style.top = (touch.clientY - 35) + 'px';
+        }
+
+        // Highlight card under finger
+        const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+        const card = elem ? elem.closest('.vocab-target-card') : null;
+        if (card !== lastTargetCard) {
+          if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
+          if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
+            card.classList.add('drag-over');
+          }
+          lastTargetCard = card;
+        }
       }, { passive: true });
 
       chip.addEventListener('touchend', (e) => {
         chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+
         if (!touchMoved) {
           // Tap handled by click listener
           return;
         }
+
         const touch = e.changedTouches[0];
         const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
         if (targetElement) {
@@ -2039,6 +2261,23 @@
               processWordPlacement(key, targetKey, targetCard);
             }
           }
+        }
+        draggedWordKey = null;
+      });
+
+      chip.addEventListener('touchcancel', () => {
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
         }
         draggedWordKey = null;
       });
