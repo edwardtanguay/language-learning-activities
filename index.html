@@ -47,6 +47,10 @@
       user-select: text;
     }
 
+    html, body {
+      touch-action: manipulation;
+    }
+
     body {
       background-color: var(--paper-bg);
       color: var(--ink-main);
@@ -307,9 +311,16 @@
       padding: 22px 24px;
       border-radius: 3px;
       box-shadow: 0 2px 5px rgba(45, 40, 35, 0.03);
-      transition: background 0.15s, box-shadow 0.15s;
+      transition: background 0.15s, box-shadow 0.15s, transform 0.1s ease;
       position: relative;
       cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .activity-card:active {
+      transform: scale(0.985);
+      background-color: #f7f3ea;
     }
 
     .activity-card:hover {
@@ -434,7 +445,7 @@
       }
       .handout-sheet {
         padding: 20px 16px;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .page-slide-out-left {
         transform: translateX(-105vw) !important;
@@ -443,7 +454,7 @@
       .page-slide-in-left {
         position: relative;
         z-index: 10000;
-        animation: pageSlideInFromLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        animation: pageSlideInFromLeft 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       }
       @keyframes pageSlideInFromLeft {
         from {
@@ -797,8 +808,39 @@
       });
     }
 
+    let cachedPageStyles = '';
+    function getPageStyles() {
+      if (!cachedPageStyles) {
+        cachedPageStyles = Array.from(document.querySelectorAll('style'))
+          .map(s => s.outerHTML)
+          .join('\n');
+      }
+      return cachedPageStyles;
+    }
+
+    function prefetchUrl(url) {
+      if (!url) return;
+      if (!document.querySelector(`link[rel="prefetch"][href="${url}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       setupCustomDropdowns();
+      getPageStyles();
+      // Prefetch on pointerdown/touchstart for instant mobile switching
+      document.querySelectorAll('.activity-card').forEach(card => {
+        const onclickAttr = card.getAttribute('onclick') || '';
+        const match = onclickAttr.match(/openCard\(['"]([^'"]+)['"]/);
+        if (match) {
+          const url = match[1];
+          card.addEventListener('pointerdown', () => prefetchUrl(url), { passive: true });
+          card.addEventListener('touchstart', () => prefetchUrl(url), { passive: true });
+        }
+      });
     });
 
     function captureOutgoingPage(direction) {
@@ -813,9 +855,7 @@
         document.querySelectorAll('input').forEach(inp => {
           inp.setAttribute('value', inp.value);
         });
-        const styles = Array.from(document.querySelectorAll('style'))
-          .map(s => s.outerHTML)
-          .join('\n');
+        const styles = getPageStyles();
         const sheet = document.querySelector('.handout-sheet');
         if (sheet) {
           sessionStorage.setItem('nav-direction', direction);
@@ -895,7 +935,7 @@
                   box-sizing: border-box;
                   padding: ${outPadding};
                   transform: translate3d(0, -${outScroll}px, 0);
-                  animation: whooshOutRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                  animation: whooshOutRight 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
                 }
                 @keyframes whooshOutRight {
                   from { transform: translate3d(0, -${outScroll}px, 0); }
@@ -907,7 +947,7 @@
             document.body.appendChild(overlayHost);
             setTimeout(() => {
               overlayHost.remove();
-            }, 320);
+            }, 240);
           }
         }
       } catch (e) {}

@@ -39,6 +39,10 @@
       user-select: text;
     }
 
+    html, body {
+      touch-action: manipulation;
+    }
+
     body {
       background-color: var(--paper-bg);
       color: var(--ink-main);
@@ -74,6 +78,14 @@
       align-items: center;
       gap: 8px;
       line-height: 1;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.1s ease, transform 0.1s ease;
+    }
+
+    .back-link:active {
+      opacity: 0.65;
+      transform: scale(0.97);
     }
 
     .back-link:hover {
@@ -1284,14 +1296,14 @@
         padding: 0 8px 12px 8px;
       }
       .handout-sheet, .utility-bar {
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .page-slide-out-right {
         transform: translateX(105vw) !important;
         pointer-events: none;
       }
       .page-slide-in-right {
-        animation: pageSlideInFromRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        animation: pageSlideInFromRight 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       }
       @keyframes pageSlideInFromRight {
         from {
@@ -3533,11 +3545,29 @@
       updateStickyNavState();
     }
 
-    function captureOutgoingActivity(direction) {
-      try {
-        const styles = Array.from(document.querySelectorAll('style'))
+    let cachedActivityStyles = '';
+    function getPageStyles() {
+      if (!cachedActivityStyles) {
+        cachedActivityStyles = Array.from(document.querySelectorAll('style'))
           .map(s => s.outerHTML)
           .join('\n');
+      }
+      return cachedActivityStyles;
+    }
+
+    function prefetchUrl(url) {
+      if (!url) return;
+      if (!document.querySelector(`link[rel="prefetch"][href="${url}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    }
+
+    function captureOutgoingActivity(direction) {
+      try {
+        const styles = getPageStyles();
         const util = document.querySelector('.utility-bar');
         const sheet = document.querySelector('.handout-sheet');
         if (sheet) {
@@ -3610,7 +3640,7 @@
                   box-sizing: border-box;
                   padding: ${outPadding};
                   transform: translate3d(0, -${outScroll}px, 0);
-                  animation: whooshOutLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                  animation: whooshOutLeft 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
                 }
                 @keyframes whooshOutLeft {
                   from { transform: translate3d(0, -${outScroll}px, 0); }
@@ -3622,7 +3652,7 @@
             document.body.appendChild(overlayHost);
             setTimeout(() => {
               overlayHost.remove();
-            }, 320);
+            }, 240);
           }
         }
       } catch (e) {}
@@ -3630,9 +3660,17 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
+      getPageStyles();
       initReadingWords();
       loadSavedState();
       setupStickyJumpNav();
+
+      // Prefetch back navigation on touch/pointer down for instant switching
+      document.querySelectorAll('.back-link').forEach(link => {
+        const url = link.getAttribute('href') || '../../index.html';
+        link.addEventListener('pointerdown', () => prefetchUrl(url), { passive: true });
+        link.addEventListener('touchstart', () => prefetchUrl(url), { passive: true });
+      });
 
       // Click on vocabulary words in reading text opens hint modal
       document.querySelectorAll('.vocab-in-text').forEach(span => {
