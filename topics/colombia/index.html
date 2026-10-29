@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colombia: Tierra de Café, Ritmos y Contrastes | Actividad de Español B1</title>
+  <meta name="description" content="Actividad de lectura, vocabulario y comprensión de español nivel B1 intermedio sobre la geografía, cultura y regiones de Colombia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       1970s SCHOOL HANDOUT DESIGN SYSTEM
+       Simple, clean, nostalgic, paper-and-ink aesthetic
+       ========================================================= */
+    :root {
+      --paper-bg: #f9f6ef;
+      --paper-sheet: #fffdf9;
+      --ink-main: #22201e;
+      --ink-muted: #5e5953;
+      --ink-border: #d5cebf;
+      --ink-rule: #d5cebf;
+      --stamp-blue: #1d4373;
+      --lang-color: #be185d; /* Standard Spanish (es) */
+      --correct-green: #235c34;
+      --correct-bg: #eef7ee;
+      --wrong-red: #8f2a24;
+      --wrong-bg: #faeef0;
+      --highlight: #f2e9cb;
+      --font-typewriter: "Courier Prime", "Courier New", Courier, monospace;
+      --font-body: "Lora", Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      color: var(--ink-main);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.65;
+      padding: 24px 16px;
+      background-image: radial-gradient(var(--ink-rule) 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+
+    /* Top utility bar */
+    .utility-bar {
+      max-width: 860px;
+      margin: 0 auto 16px auto;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+    }
+
+    .back-link {
+      color: var(--stamp-blue);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .back-arrow {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.8;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Main Handout Container - Paper sheet with realistic desk drop-shadow */
+    .handout-sheet {
+      max-width: 860px;
+      margin: 0 auto;
+      background-color: var(--paper-sheet);
+      border: 1px solid #e8e2d5;
+      box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04);
+      border-radius: 3px;
+      padding: 38px 46px;
+      position: relative;
+    }
+
+    /* Worksheet Header */
+    .worksheet-header {
+      border: none;
+      padding: 0;
+      margin-bottom: 24px;
+      background: transparent;
+      font-family: var(--font-typewriter);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      text-transform: uppercase;
+      font-family: var(--font-typewriter);
+      color: var(--ink-main);
+      margin-bottom: 0;
+    }
+
+    .handout-subtitle {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    .stamp-badge {
+      border: 3px solid var(--lang-color);
+      color: var(--lang-color);
+      padding: 6px 14px;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      transform: rotate(-2deg);
+      display: inline-block;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    /* Handout Sections */
+    .section-title {
+      font-family: var(--font-typewriter);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--ink-rule);
+      padding-bottom: 8px;
+      margin: 36px 0 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title > span:first-child {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-action-hint {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--ink-muted);
+      opacity: 0.65;
+    }
+
+    .section-title .section-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      margin-right: 0;
+      flex-shrink: 0;
+    }
+
+    /* Instructions callout */
+    .instructions-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      padding: 12px 16px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    .instructions-heading {
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .instructions-block {
+      margin-bottom: 4px;
+    }
+
+    .instructions-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .instructions-label {
+      font-weight: 700;
+    }
+
+    /* Reading Passage */
+    .reading-content p {
+      margin-bottom: 16px;
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+
+    .vocab-in-text {
+      background-color: rgba(242, 233, 203, 0.55);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .region-card {
+      margin-bottom: 22px;
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .region-card h3 {
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+      margin-bottom: 8px;
+      text-transform: none;
+    }
+
+    /* =========================================================
+       SECTION 2: VOCABULARIO (DRAG / DROP & HINT EXERCISE)
+       ========================================================= */
+    .vocab-container {
+      margin-top: 14px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .vocab-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 580px;
+      margin: 0 auto 16px auto;
+      gap: 6px;
+      min-height: 32px;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .vocab-pool-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-chip {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 3px 8px;
+      cursor: grab;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .vocab-chip:active {
+      cursor: grabbing;
+    }
+
+    .vocab-chip.selected {
+      border-color: var(--stamp-blue);
+      background-color: var(--highlight);
+      box-shadow: 0 0 0 2px var(--stamp-blue);
+    }
+
+    .vocab-chip.dragging {
+      opacity: 0.35;
+    }
+
+    .vocab-targets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .vocab-target-card {
+      background: var(--paper-bg);
+      border: 1px dashed var(--ink-rule);
+      border-radius: 0;
+      padding: 8px 12px;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .vocab-target-card.drag-over {
+      border-color: var(--stamp-blue);
+      background-color: #f0f4f9;
+      box-shadow: 0 0 0 2px rgba(29, 67, 115, 0.2);
+    }
+
+    .vocab-target-def {
+      font-size: 14px;
+      line-height: 1.35;
+      color: var(--ink-main);
+    }
+
+    /* Wrong Drop State */
+    .vocab-target-card.state-wrong {
+      background: #fdf6f6 !important;
+      border: 1px solid #f5cfcf !important;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
+      cursor: pointer;
+      padding: 18px 18px !important;
+    }
+
+    .wrong-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wrong-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 3.2;
+      stroke: var(--wrong-red);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wrong-def-text {
+      color: var(--ink-main);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .hint-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .hint-lightbulb-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .hint-text {
+      color: var(--ink-main);
+      font-size: 14px;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .lookup-btn {
+      color: var(--stamp-blue);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .lookup-btn:hover {
+      background-color: var(--paper-bg);
+      color: var(--ink-main);
+    }
+
+    .vocab-hint-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-border);
+      box-shadow: 0 14px 40px rgba(45, 40, 35, 0.25);
+      padding: 18px 18px;
+      z-index: 100;
+      width: 90%;
+      max-width: 480px;
+      cursor: pointer;
+    }
+
+    /* Correct Drop / Complete Dictionary Entry Card */
+    .vocab-target-card.state-correct,
+    .vocab-dict-card {
+      background: #f4faf4 !important;
+      border: 1px solid #cce8ce !important;
+      box-shadow: 0 10px 32px rgba(45, 40, 35, 0.16);
+      z-index: 50;
+      padding: 18px 18px !important;
+      cursor: default;
+    }
+
+    .dict-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .dict-check-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 3.2;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .dict-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--ink-rule);
+      padding-bottom: 6px;
+    }
+
+    .dict-word {
+      font-family: var(--font-typewriter);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+    }
+
+    .dict-pos {
+      font-style: italic;
+      color: var(--ink-muted);
+      font-size: 14px;
+      font-family: var(--font-body);
+    }
+
+    .dict-def {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      color: var(--ink-main);
+    }
+
+    .dict-sentence {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--ink-muted);
+      border-left: 3px solid var(--stamp-blue);
+      padding-left: 12px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .dict-sentence mark {
+      background: var(--highlight);
+      color: var(--ink-main);
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+
+    /* Completed Words Section */
+    .vocab-completed-section {
+      margin-top: 16px;
+    }
+
+    .vocab-completed-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .vocab-completed-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-completed-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink-main);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .vocab-completed-pill:hover {
+      background: var(--paper-bg);
+      border-color: var(--correct-green);
+    }
+
+    .vocab-completed-pill .check-icon {
+      width: 14px;
+      height: 14px;
+      stroke-width: 3.2;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+    }
+
+    .vocab-completed-detail-area {
+      margin-bottom: 14px;
+    }
+
+    /* Page Dimming Overlay */
+    .vocab-dim-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(34, 32, 30, 0.45);
+      z-index: 40;
+      backdrop-filter: blur(1px);
+    }
+
+    .vocab-dim-overlay.active {
+      display: block;
+    }
+
+    /* =========================================================
+       SECTION 3: COMPREHENSION QUIZ (MULTIPLE CHOICE)
+       ========================================================= */
+    .quiz-container {
+      margin-top: 20px;
+    }
+
+    .question-card {
+      border: none;
+      padding: 22px;
+      margin-bottom: 22px;
+      background: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgba(45, 40, 35, 0.03);
+    }
+
+    .question-prompt {
+      font-weight: 700;
+      font-size: 17px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .q-number {
+      font-family: var(--font-typewriter);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink-main);
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+      margin-right: 2px;
+    }
+
+    .options-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-left: 28px;
+    }
+
+    .option-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 4px 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.45;
+      border-radius: 0;
+      transition: color 0.15s;
+    }
+
+    .option-item:hover {
+      background: transparent;
+    }
+
+    .option-item.selected .opt-letter {
+      color: var(--stamp-blue);
+      font-weight: 800;
+    }
+
+    .opt-letter {
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+
+    .opt-text {
+      flex: 1;
+    }
+
+    /* Feedback states */
+    .question-card.answered.correct,
+    .question-card.answered.incorrect {
+      border: none;
+      background-color: #fff;
+    }
+
+    .feedback-box {
+      display: none;
+      margin-top: 4px;
+      margin-bottom: 6px;
+      margin-left: 20px;
+      padding: 8px 12px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      background-color: var(--paper-bg);
+    }
+
+    .feedback-box.show {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .feedback-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke-width: 3.2;
+      margin-top: 2px;
+    }
+
+    .feedback-box.correct-text .feedback-icon {
+      stroke: var(--correct-green);
+      color: var(--correct-green);
+    }
+
+    .feedback-box.wrong-text .feedback-icon {
+      stroke: var(--wrong-red);
+      color: var(--wrong-red);
+    }
+
+    .feedback-content {
+      flex: 1;
+      line-height: 1.5;
+      color: var(--ink-main);
+    }
+
+    /* =========================================================
+       SECTION 4: PREGUNTAS ABIERTAS
+       ========================================================= */
+    .discussion-container {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin-top: 18px;
+    }
+
+    .discussion-questions {
+      list-style-type: decimal;
+      padding-left: 22px;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .discussion-questions li {
+      padding-left: 4px;
+      line-height: 1.55;
+    }
+
+    /* =========================================================
+       BOTTOM ACTIONS BAR & STANDARDIZED FOOTER
+       ========================================================= */
+    .bottom-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 36px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid var(--ink-rule);
+      border-bottom: 1px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .reset-container {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .reset-answers-btn {
+      background: none;
+      border: none;
+      color: var(--ink-muted);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 3px;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .reset-answers-btn:hover {
+      color: var(--ink-main);
+      background-color: var(--paper-bg);
+    }
+
+    .reset-icon {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2.2;
+      stroke: currentColor;
+    }
+
+    .reset-confirm-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      background-color: var(--paper-bg);
+      border: 1px solid var(--ink-rule);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+
+    .reset-confirm-text {
+      color: var(--wrong-red);
+      font-weight: 700;
+    }
+
+    .reset-confirm-btn {
+      background: var(--wrong-red);
+      color: #fff;
+      border: 1px solid var(--wrong-red);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      padding: 3px 8px;
+      cursor: pointer;
+      border-radius: 2px;
+      font-weight: 700;
+      transition: opacity 0.15s;
+    }
+
+    .reset-confirm-btn:hover {
+      opacity: 0.88;
+    }
+
+    .reset-cancel-btn {
+      background: var(--paper-sheet);
+      color: var(--ink-muted);
+      border: 1px solid var(--ink-border);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      padding: 3px 8px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .reset-cancel-btn:hover {
+      color: var(--ink-main);
+      background-color: #fff;
+    }
+
+    .question-hint-wrap {
+      white-space: nowrap;
+    }
+
+    .handout-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 0;
+      padding-top: 20px;
+      border-top: none;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      color: var(--ink-muted);
+      flex-wrap: wrap;
+    }
+
+    .handout-footer a {
+      color: var(--ink-main);
+      text-decoration: underline;
+    }
+
+    .handout-footer a:hover {
+      color: var(--stamp-blue);
+    }
+
+    /* =========================================================
+       RESPONSIVE LAYOUTS
+       ========================================================= */
+    @media (max-width: 680px) {
+      body {
+        padding: 12px 8px;
+      }
+      .utility-bar {
+        justify-content: center;
+      }
+      .handout-sheet {
+        padding: 20px 16px;
+      }
+      .header-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .stamp-badge {
+        margin: 4px auto 0 auto;
+        align-self: center;
+      }
+      .handout-title-group {
+        text-align: center;
+        width: 100%;
+      }
+      .handout-title-group h1 {
+        font-size: 21px;
+        line-height: 1.2;
+        letter-spacing: -0.2px;
+        text-align: center;
+      }
+      .handout-subtitle {
+        font-size: 15px;
+        line-height: 1.35;
+        margin-top: 14px;
+        margin-bottom: 14px;
+        text-align: center;
+      }
+      .instructions-heading {
+        text-align: center;
+      }
+      .section-title {
+        font-size: 15px;
+        letter-spacing: 0;
+        line-height: 1.25;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .section-title .section-num {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+        margin-right: 0;
+      }
+      .section-action-hint {
+        font-size: 12px;
+      }
+      .options-list {
+        padding-left: 24px;
+      }
+      .vocab-pool {
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      .vocab-pool-row {
+        gap: 5px;
+      }
+      .vocab-chip {
+        font-size: 12px;
+        padding: 2px 6px;
+      }
+      .vocab-targets {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .vocab-target-card {
+        padding: 6px 10px;
+      }
+      .vocab-target-def {
+        font-size: 13.5px;
+        line-height: 1.35;
+      }
+      .vocab-completed-pool {
+        gap: 5px;
+      }
+      .vocab-completed-pill {
+        font-size: 12px;
+        padding: 2px 6px;
+      }
+      .bottom-actions-bar {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      .bottom-actions-bar .back-link,
+      .bottom-actions-bar .reset-container {
+        justify-content: center;
+        text-align: center;
+      }
+      .handout-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        text-align: center;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+        background-image: none;
+      }
+      .utility-bar, .bottom-actions-bar, .reset-answers-btn, .vocab-dim-overlay {
+        display: none !important;
+      }
+      .handout-sheet {
+        border: none;
+        box-shadow: none;
+        padding: 15mm 10mm;
+        max-width: 100%;
+      }
+      .question-card, .vocab-target-card {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fullscreen Dimming Overlay -->
+  <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
+
+  <!-- Utility Nav -->
+  <div class="utility-bar">
+    <a href="../../index.html" class="back-link">
+      <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Índice de Actividades
+    </a>
+  </div>
+
+  <!-- Handout Sheet -->
+  <main class="handout-sheet">
+
+    <!-- Header -->
+    <header class="worksheet-header">
+      <div class="header-top">
+        <div class="handout-title-group">
+          <h1>Colombia: Tierra de Café, Ritmos y Contrastes</h1>
+        </div>
+        <div class="stamp-badge">
+          Español B1
+        </div>
+      </div>
+      <p class="handout-subtitle">
+        Un recorrido por la geografía diversa, la tradición cafetera, la costa caribeña y la calidez humana de Colombia.
+      </p>
+    </header>
+
+    <!-- Instructions -->
+    <div class="instructions-box">
+      <div class="instructions-heading">INSTRUCCIONES</div>
+      <div class="instructions-block">
+        <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
+      </div>
+      <div class="instructions-block">
+        <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+      </div>
+    </div>
+
+    <!-- Section 1: Reading Text -->
+    <h2 class="section-title">
+      <span><span class="section-num">1</span> Lectura</span>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+
+    <article class="reading-content">
+      <p>
+        Colombia es un país fascinante situado en el extremo noroccidental de América del Sur, que sirve como puerta de entrada entre Centroamérica y el continente sudamericano. Es la única nación de la región que posee costas tanto en el mar Caribe como en el océano Pacífico. Además, su territorio está atravesado por tres grandes <span class="vocab-in-text">cordilleras</span> andinas, lo que crea una extraordinaria variedad de climas, paisajes y tradiciones.
+      </p>
+
+      <div class="region-card">
+        <h3>El Eje Cafetero y la Región Andina</h3>
+        <p>
+          En el corazón montañoso del país se encuentran ciudades muy dinámicas como Bogotá, la extensa capital situada a 2.600 metros de altitud, y Medellín, conocida como la «Ciudad de la Eterna Primavera» por su agradable clima templado durante todo el año. Más hacia el centro se extiende el famoso Eje Cafetero, declarado Patrimonio de la Humanidad. En las verdes <span class="vocab-in-text">laderas</span> de estas montañas, miles de familias campesinas cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta. Durante la época de <span class="vocab-in-text">cosecha</span>, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más maduros.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>La Costa Caribe y Cartagena de Indias</h3>
+        <p>
+          Hacia el norte, el paisaje cambia por completo al llegar a las aguas cálidas del mar Caribe. Allí brilla Cartagena de Indias, una joya histórica famosa por su antigua ciudad <span class="vocab-in-text">amurallada</span> y sus balcones coloniales cubiertos de flores tropicales. Muy cerca se encuentra también el Parque Nacional Tayrona, donde la sierra nevada y la selva húmeda se encuentran directamente con playas de arena dorada. En toda la costa se respira un ambiente alegre marcado por <span class="vocab-in-text">ritmos</span> musicales tradicionales como la cumbia y el vallenato, mientras se disfrutan platos típicos como la arepa de huevo y el pescado frito con arroz de coco.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>Los Llanos, la Amazonía y el Encanto Colombiano</h3>
+        <p>
+          Al oriente de los Andes se abren las inmensas <span class="vocab-in-text">llanuras</span> de la Orinoquía y la profunda selva amazónica, territorios de ríos gigantescos y una naturaleza casi virgen. Sin embargo, más allá de su geografía y de sus mundialmente famosas <span class="vocab-in-text">esmeraldas</span>, el mayor tesoro de Colombia es su gente <span class="vocab-in-text">acogedora</span>. Desde los <span class="vocab-in-text">coloridos</span> zócalos de pueblos como Guatapé hasta el <span class="vocab-in-text">emblemático</span> Valle de Cocora, hogar de las palmas de cera más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.
+        </p>
+      </div>
+    </article>
+
+    <!-- Section 2: Vocabulary Drag & Drop -->
+    <h2 class="section-title">
+      <span><span class="section-num">2</span> Vocabulario</span>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Interactive Comprehension Questions -->
+    <h2 class="section-title">
+      <span><span class="section-num">3</span> Comprensión</span>
+      <span class="section-action-hint">opción múltiple</span>
+    </h2>
+
+    <div class="quiz-container" id="quiz-container">
+
+      <!-- Question 1 -->
+      <div class="question-card" data-q="1" data-correct="B">
+        <div class="question-prompt">
+          <span class="q-number">1</span>
+          <span>¿Qué característica geográfica hace de Colombia un país único en América del Sur?</span>
+        </div>
+        <ul class="options-list">
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Es el único país sudamericano que no tiene montañas ni volcanes.</span>
+            </div>
+            <div class="feedback-box" id="feedback-1-A"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Es la única nación de la región con costas tanto en el mar Caribe como en el océano Pacífico.</span>
+            </div>
+            <div class="feedback-box" id="feedback-1-B"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Tiene el mismo clima frío en todas sus regiones durante todo el año.</span>
+            </div>
+            <div class="feedback-box" id="feedback-1-C"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(1, 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Está formado exclusivamente por islas situadas en el mar Caribe.</span>
+            </div>
+            <div class="feedback-box" id="feedback-1-D"></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-card" data-q="2" data-correct="C">
+        <div class="question-prompt">
+          <span class="q-number">2</span>
+          <span>¿Por qué recibe Medellín el apodo de la «Ciudad de la Eterna Primavera»?</span>
+        </div>
+        <ul class="options-list">
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Porque se encuentra al nivel del mar junto a las playas del Caribe.</span>
+            </div>
+            <div class="feedback-box" id="feedback-2-A"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Porque allí solo se cultivan cafés y flores durante los meses de marzo y abril.</span>
+            </div>
+            <div class="feedback-box" id="feedback-2-B"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Por disfrutar de un agradable clima templado de manera constante durante todo el año.</span>
+            </div>
+            <div class="feedback-box" id="feedback-2-C"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(2, 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Porque fue la primera ciudad fundada en la selva amazónica colombiana.</span>
+            </div>
+            <div class="feedback-box" id="feedback-2-D"></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-card" data-q="3" data-correct="A">
+        <div class="question-prompt">
+          <span class="q-number">3</span>
+          <span>¿Cómo se realiza la recolección del café en las montañas del Eje Cafetero según el texto?</span>
+        </div>
+        <ul class="options-list">
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Seleccionando a mano únicamente los granos rojos que están más maduros.</span>
+            </div>
+            <div class="feedback-box" id="feedback-3-A"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Utilizando grandes máquinas industriales en las llanuras orientales.</span>
+            </div>
+            <div class="feedback-box" id="feedback-3-B"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Cortando todas las ramas verdes y secas al mismo tiempo en invierno.</span>
+            </div>
+            <div class="feedback-box" id="feedback-3-C"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(3, 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Importando los granos desde las playas del Parque Nacional Tayrona.</span>
+            </div>
+            <div class="feedback-box" id="feedback-3-D"></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-card" data-q="4" data-correct="D">
+        <div class="question-prompt">
+          <span class="q-number">4</span>
+          <span>¿Qué elementos caracterizan especialmente a la región de la Costa Caribe colombiana?</span>
+        </div>
+        <ul class="options-list">
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Las cumbres nevadas de Bogotá y las minas de esmeraldas andinas.</span>
+            </div>
+            <div class="feedback-box" id="feedback-4-A"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Las palmas de cera del Valle de Cocora y el clima frío de alta montaña.</span>
+            </div>
+            <div class="feedback-box" id="feedback-4-B"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Las llanuras de la Orinoquía sin acceso a ningún mar ni océano.</span>
+            </div>
+            <div class="feedback-box" id="feedback-4-C"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(4, 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">La arquitectura colonial de Cartagena, el Parque Tayrona y ritmos como la cumbia y el vallenato.</span>
+            </div>
+            <div class="feedback-box" id="feedback-4-D"></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question-card" data-q="5" data-correct="B">
+        <div class="question-prompt">
+          <span class="q-number">5</span>
+          <span>¿Qué singularidad natural destaca en el famoso Valle de Cocora?</span>
+        </div>
+        <ul class="options-list">
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Es el único desierto de arena roja en la frontera con Panamá.</span>
+            </div>
+            <div class="feedback-box" id="feedback-5-A"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Es el hogar de las palmas de cera más altas del mundo.</span>
+            </div>
+            <div class="feedback-box" id="feedback-5-B"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Es el lugar donde nace el río Amazonas en la costa del Pacífico.</span>
+            </div>
+            <div class="feedback-box" id="feedback-5-C"></div>
+          </li>
+          <li class="option-wrapper">
+            <div class="option-item" onclick="selectOption(5, 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Es una antigua fortaleza militar rodeada de murallas junto al mar Caribe.</span>
+            </div>
+            <div class="feedback-box" id="feedback-5-D"></div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Section 4: Open Questions Section -->
+    <h2 class="section-title">
+      <span><span class="section-num">4</span> Preguntas abiertas</span>
+      <span class="section-action-hint">responder y debatir</span>
+    </h2>
+
+    <section class="discussion-container">
+      <ol class="discussion-questions">
+        <li>
+          Si tuvieras la oportunidad de recorrer Colombia durante dos semanas, ¿qué regiones o ciudades incluirías en tu itinerario y por <span class="question-hint-wrap">qué?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Si+tuvieras+la+oportunidad+de+recorrer+Colombia+durante+dos+semanas%2C+%C2%BFqu%C3%A9+regiones+o+ciudades+incluir%C3%ADas+en+tu+itinerario+y+por+qu%C3%A9%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+        </li>
+        <li>
+          El café colombiano es famoso en todo el mundo porque se cultiva y selecciona de forma artesanal. ¿Qué papel juega el café o el té en tu rutina diaria y en la cultura de tu <span class="question-hint-wrap">país?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22El+caf%C3%A9+colombiano+es+famoso+en+todo+el+mundo+porque+se+cultiva+y+selecciona+de+forma+artesanal.+%C2%BFQu%C3%A9+papel+juega+el+caf%C3%A9+o+el+t%C3%A9+en+tu+rutina+diaria+y+en+la+cultura+de+tu+pa%C3%ADs%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+        </li>
+        <li>
+          ¿Prefieres vivir o viajar a lugares con un clima templado de «eterna primavera» como Medellín, o te gustan más los cambios marcados entre las cuatro estaciones del <span class="question-hint-wrap">año?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFPrefieres+vivir+o+viajar+a+lugares+con+un+clima+templado+de+%C2%ABeterna+primavera%C2%BB+como+Medell%C3%ADn%2C+o+te+gustan+m%C3%A1s+los+cambios+marcados+entre+las+cuatro+estaciones+del+a%C3%B1o%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+        </li>
+        <li>
+          La música como la cumbia y el vallenato refleja la alegría de la costa colombiana. ¿Qué géneros musicales o bailes tradicionales representan mejor el carácter de tu región o <span class="question-hint-wrap">cultura?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22La+m%C3%BAsica+como+la+cumbia+y+el+vallenato+refleja+la+alegr%C3%ADa+de+la+costa+colombiana.+%C2%BFQu%C3%A9+g%C3%A9neros+musicales+o+bailes+tradicionales+representan+mejor+el+car%C3%A1cter+de+tu+regi%C3%B3n+o+cultura%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+        </li>
+        <li>
+          ¿Conoces alguna obra del escritor colombiano Gabriel García Márquez o películas inspiradas en la cultura de Colombia, como <em>Encanto</em>? ¿Qué te llama más la atención de ese universo <span class="question-hint-wrap">cultural?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFConoces+alguna+obra+del+escritor+colombiano+Gabriel+Garc%C3%ADa+M%C3%A1rquez+o+pel%C3%ADculas+inspiradas+en+la+cultura+de+Colombia%2C+como+Encanto%3F+%C2%BFQu%C3%A9+te+llama+m%C3%A1s+la+atenci%C3%B3n+de+ese+universo+cultural%3F%22" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar respuesta de ejemplo en Google" aria-label="Buscar respuesta de ejemplo en Google"><svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px; vertical-align: -2px;"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Bottom Actions / Navigation -->
+    <div class="bottom-actions-bar">
+      <a href="../../index.html" class="back-link">
+        <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Índice de Actividades
+      </a>
+      <div class="reset-container" id="reset-container">
+        <button class="reset-answers-btn" id="reset-btn" onclick="requestReset()" title="Reiniciar respuestas de esta actividad">
+          <svg class="reset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          Reiniciar respuestas
+        </button>
+        <div class="reset-confirm-box" id="reset-confirm-box" style="display: none;">
+          <span class="reset-confirm-text">¿Confirmar reinicio?</span>
+          <button class="reset-cancel-btn" onclick="cancelReset()">Cancelar</button>
+          <button class="reset-confirm-btn" onclick="confirmReset()">Sí, reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="handout-footer">
+      <span class="footer-author">See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+    </footer>
+
+  </main>
+
+  <script>
+    // =========================================================
+    // VOCABULARY DATA (10 KEY WORDS)
+    // =========================================================
+    const vocabData = {
+      cordilleras: {
+        key: "cordilleras",
+        word: "cordilleras",
+        pos: "f. pl.",
+        def: "Series de montañas enlazadas entre sí que atraviesan una extensa región geográfica.",
+        sentence: "«Además, su territorio está atravesado por tres grandes cordilleras andinas, lo que crea una extraordinaria variedad de climas, paisajes y tradiciones.»",
+        hint: "se refiere a grandes cadenas de montañas unidas entre sí"
+      },
+      laderas: {
+        key: "laderas",
+        word: "laderas",
+        pos: "f. pl.",
+        def: "Terrenos inclinados o pendientes que bajan por los lados de una montaña.",
+        sentence: "«En las verdes laderas de estas montañas, miles de familias campesinas cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta.»",
+        hint: "alude a las pendientes o costados inclinados de una elevación montañosa"
+      },
+      cosecha: {
+        key: "cosecha",
+        word: "cosecha",
+        pos: "f.",
+        def: "Temporada y actividad de recoger los frutos o granos de la tierra cuando están maduros.",
+        sentence: "«Durante la época de cosecha, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más maduros.»",
+        hint: "es el momento agrícola en que se recogen los frutos del campo"
+      },
+      amurallada: {
+        key: "amurallada",
+        word: "amurallada",
+        pos: "adj.",
+        def: "Dicho de una ciudad o recinto histórico: que está rodeado y protegido por grandes muros defensivos.",
+        sentence: "«Allí brilla Cartagena de Indias, una joya histórica famosa por su antigua ciudad amurallada y sus balcones coloniales cubiertos de flores tropicales.»",
+        hint: "describe una ciudad antigua rodeada de gruesos muros de piedra"
+      },
+      ritmos: {
+        key: "ritmos",
+        word: "ritmos",
+        pos: "m. pl.",
+        def: "Compases y estilos musicales característicos que marcan la cadencia del canto y del baile.",
+        sentence: "«En toda la costa se respira un ambiente alegre marcado por ritmos musicales tradicionales como la cumbia y el vallenato, mientras se disfrutan platos típicos como la arepa de huevo y el pescado frito con arroz de coco.»",
+        hint: "tiene relación con el compás de la música y los estilos de baile"
+      },
+      llanuras: {
+        key: "llanuras",
+        word: "llanuras",
+        pos: "f. pl.",
+        def: "Grandes extensiones de campo o terreno plano sin montañas ni elevaciones importantes.",
+        sentence: "«Al oriente de los Andes se abren las inmensas llanuras de la Orinoquía y la profunda selva amazónica, territorios de ríos gigantescos y una naturaleza casi virgen.»",
+        hint: "se refiere a terrenos muy amplios, abiertos y completamente planos"
+      },
+      esmeraldas: {
+        key: "esmeraldas",
+        word: "esmeraldas",
+        pos: "f. pl.",
+        def: "Piedras preciosas de color verde intenso y transparente, muy valoradas en la joyería.",
+        sentence: "«Sin embargo, más allá de su geografía y de sus mundialmente famosas esmeraldas, el mayor tesoro de Colombia es su gente acogedora.»",
+        hint: "son gemas o piedras minerales valiosas de color verde brillante"
+      },
+      acogedora: {
+        key: "acogedora",
+        word: "acogedora",
+        pos: "adj.",
+        def: "Que ofrece un trato hospitalario, cálido y amable que hace sentir cómodos a los demás.",
+        sentence: "«Sin embargo, más allá de su geografía y de sus mundialmente famosas esmeraldas, el mayor tesoro de Colombia es su gente acogedora.»",
+        hint: "describe a personas o lugares muy hospitalarios y amables con el visitante"
+      },
+      coloridos: {
+        key: "coloridos",
+        word: "coloridos",
+        pos: "adj. pl.",
+        def: "Que destacan por tener una combinación alegre de muchos colores vivos y variados.",
+        sentence: "«Desde los coloridos zócalos de pueblos como Guatapé hasta el emblemático Valle de Cocora, hogar de las palmas de cera más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.»",
+        hint: "indica que algo está pintado o decorado con muchos tonos vivos"
+      },
+      emblematico: {
+        key: "emblematico",
+        word: "emblemático",
+        pos: "adj.",
+        def: "Que resulta muy representativo o simbólico de la identidad de un país o región.",
+        sentence: "«Desde los coloridos zócalos de pueblos como Guatapé hasta el emblemático Valle de Cocora, hogar de las palmas de cera más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.»",
+        hint: "significa que un lugar o elemento funciona como símbolo muy representativo"
+      }
+    };
+
+    // Shuffled initial definition order
+    const vocabOrder = ["amurallada", "cosecha", "llanuras", "emblematico", "cordilleras", "esmeraldas", "laderas", "acogedora", "ritmos", "coloridos"];
+
+    let completedVocab = [];
+    let draggedWordKey = null;
+    let activeModalCard = null;
+
+    function getGoogleSearchUrl(word) {
+      const query = `give me the definition of the word "${word}" in Spanish, and the translation of the word in English, and then three example sentences with that word, for each example, once in Spanish and once in English`;
+      return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    }
+
+    function formatWrongDef(def) {
+      if (!def) return '';
+      let text = def.trim();
+      text = text.charAt(0).toLowerCase() + text.slice(1);
+      return text.replace(/[.,;:]+$/, '');
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE EXPLANATIONS (NO "¡CORRECTO!" / "INCORRECTO.")
+    // =========================================================
+    const explanations = {
+      1: {
+        A: "Por el contrario, el territorio colombiano está atravesado por tres grandes cordilleras andinas con numerosas montañas y volcanes.",
+        B: "Colombia es efectivamente el único país de América del Sur cuyas costas están bañadas tanto por el mar Caribe al norte como por el océano Pacífico al occidente.",
+        C: "Gracias a sus cordilleras y costas, Colombia presenta una enorme variedad de climas que van desde el calor tropical hasta el frío de alta montaña.",
+        D: "Aunque Colombia posee islas, la mayor parte de su territorio es continental y abarca montañas, llanuras y selva amazónica."
+      },
+      2: {
+        A: "Medellín no está en la costa del mar Caribe, sino en el corazón montañoso de la región andina.",
+        B: "El apodo no se debe a una cosecha exclusiva de dos meses, sino a la temperatura agradable que se mantiene durante los doce meses del año.",
+        C: "Su altitud intermedia en las montañas andinas le permite gozar de temperaturas suaves y agradables durante todo el año, similares a una primavera continua.",
+        D: "Medellín es una gran ciudad andina y no se encuentra en la región de la selva amazónica."
+      },
+      3: {
+        A: "En las laderas del Eje Cafetero, los recolectores cosechan el café de forma manual, eligiendo grano por grano únicamente aquellos que han alcanzado su madurez óptima.",
+        B: "El cultivo tradicional del Eje Cafetero se realiza en las laderas inclinadas de las montañas andinas a mano, no con maquinaria pesada en las llanuras.",
+        C: "Cortar ramas con granos verdes reduciría la calidad del café; por eso se seleccionan cuidadosamente solo los frutos rojos maduros.",
+        D: "El café se cultiva directamente en las montañas templadas del Eje Cafetero, no se importa desde las playas caribeñas."
+      },
+      4: {
+        A: "Bogotá y las zonas mineras de esmeraldas pertenecen al interior montañoso andino, lejos del litoral caribeño.",
+        B: "El Valle de Cocora y sus palmas de cera se localizan en la zona montañosa del Eje Cafetero, no en la Costa Caribe.",
+        C: "La Orinoquía se ubica en el oriente del país, mientras que la Costa Caribe está bañada directamente por el mar en el norte.",
+        D: "La Costa Caribe destaca por el encanto colonial y amurallado de Cartagena de Indias, las playas del Parque Tayrona y la alegría musical de la cumbia y el vallenato."
+      },
+      5: {
+        A: "El Valle de Cocora es un paisaje verde de montaña húmeda en el centro del país, no un desierto fronterizo.",
+        B: "El Valle de Cocora es célebre mundialmente por albergar las esbeltas palmas de cera del Quindío, reconocidas como las más altas del planeta y árbol nacional de Colombia.",
+        C: "El Valle de Cocora está en la región andina central y no tiene relación con el nacimiento del río Amazonas ni con la costa pacífica.",
+        D: "La fortaleza y ciudad amurallada junto al mar Caribe corresponde a Cartagena de Indias, no al Valle de Cocora."
+      }
+    };
+
+    let userAnswers = {};
+    const STORAGE_KEY = 'activity_colombia';
+
+    // =========================================================
+    // STATE MANAGEMENT (PERSISTENCE)
+    // =========================================================
+    function loadSavedState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed === 'object') {
+            if (parsed.mc || parsed.vocab) {
+              userAnswers = parsed.mc || {};
+              completedVocab = Array.isArray(parsed.vocab) ? parsed.vocab : [];
+            } else {
+              userAnswers = parsed;
+              completedVocab = [];
+            }
+          }
+        }
+      } catch (e) {
+        console.warn("Could not load from localStorage:", e);
+      }
+
+      // Restore Multiple Choice answers
+      Object.keys(userAnswers).forEach(qNum => {
+        const val = userAnswers[qNum];
+        applyQuestionFeedback(qNum, val);
+      });
+
+      // Render Vocabulary
+      renderVocabulary();
+    }
+
+    function saveState() {
+      try {
+        const state = {
+          mc: userAnswers,
+          vocab: completedVocab
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn("Could not save to localStorage:", e);
+      }
+    }
+
+    // =========================================================
+    // VOCABULARY EXERCISE LOGIC
+    // =========================================================
+    let dismissClickTimer = null;
+
+    function safeDismiss(callback, e) {
+      if (e && e.target && e.target.closest('.lookup-btn')) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+
+      if (dismissClickTimer) {
+        clearTimeout(dismissClickTimer);
+        dismissClickTimer = null;
+        return; // double-click to select word detected, cancel dismissal
+      }
+
+      dismissClickTimer = setTimeout(() => {
+        dismissClickTimer = null;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        callback();
+      }, 250);
+    }
+
+    function appendBalancedRows(container, keys, createItemFn, rowClass, maxPerRow) {
+      const total = keys.length;
+      if (total === 0) return;
+
+      const availableWidth = container.clientWidth || 320;
+      let numRows = maxPerRow ? Math.ceil(total / maxPerRow) : (total >= 6 ? 2 : 1);
+
+      while (numRows <= total) {
+        container.innerHTML = '';
+        const base = Math.floor(total / numRows);
+        const remainder = total % numRows;
+
+        let startIndex = 0;
+        let overflows = false;
+
+        for (let r = 0; r < numRows; r++) {
+          const count = base + (r < remainder ? 1 : 0);
+          const rowKeys = keys.slice(startIndex, startIndex + count);
+          startIndex += count;
+
+          const row = document.createElement('div');
+          row.className = rowClass;
+          rowKeys.forEach(k => {
+            const el = createItemFn(k);
+            if (el) row.appendChild(el);
+          });
+          container.appendChild(row);
+
+          if (row.scrollWidth > availableWidth && count > 1) {
+            overflows = true;
+          }
+        }
+
+        if (!overflows || numRows >= total) {
+          break;
+        }
+        numRows++;
+      }
+    }
+
+    function renderVocabulary() {
+      const pool = document.getElementById('vocab-pool');
+      const targets = document.getElementById('vocab-targets');
+      const completedPool = document.getElementById('vocab-completed-pool');
+      const detailArea = document.getElementById('vocab-completed-detail');
+
+      if (!pool || !targets || !completedPool) return;
+
+      pool.innerHTML = '';
+      targets.innerHTML = '';
+      completedPool.innerHTML = '';
+      if (detailArea) detailArea.innerHTML = '';
+
+      // All keys
+      const allKeys = Object.keys(vocabData);
+      const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
+
+      // 1. Render Waiting Words Pool (horizontally centered, balanced across rows without wrapping)
+      if (remainingKeys.length === 0) {
+        pool.innerHTML = '';
+        pool.style.display = 'none';
+      } else {
+        pool.style.display = 'flex';
+        const createChip = (k) => {
+          const item = vocabData[k];
+          const chip = document.createElement('div');
+          chip.className = 'vocab-chip';
+          chip.setAttribute('draggable', 'true');
+          chip.setAttribute('data-key', k);
+          chip.textContent = item.word;
+
+          // Drag events
+          chip.addEventListener('dragstart', handleDragStart);
+          chip.addEventListener('dragend', handleDragEnd);
+
+          // Click opens hint popup
+          chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            showWordHintModal(k);
+          });
+
+          // Touch drag support
+          setupTouchDrag(chip, k);
+          return chip;
+        };
+
+        appendBalancedRows(pool, remainingKeys, createChip, 'vocab-pool-row');
+      }
+
+      // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
+      vocabOrder.forEach(targetKey => {
+        if (completedVocab.includes(targetKey)) return;
+
+        const item = vocabData[targetKey];
+        const card = document.createElement('div');
+        card.className = 'vocab-target-card';
+        card.setAttribute('data-target-key', targetKey);
+        card.innerHTML = `
+          <div class="vocab-target-def">${item.def}</div>
+        `;
+
+        // Drop listeners
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('dragleave', handleDragLeave);
+        card.addEventListener('drop', handleDrop);
+
+        // Click dismiss or inspect
+        card.addEventListener('click', (e) => {
+          handleTargetCardClick(card, targetKey, e);
+        });
+
+        targets.appendChild(card);
+      });
+
+      // 3. Render Completed Section Pills (centered, equally distributed across balanced rows with at most 3 per row)
+      completedPool.innerHTML = '';
+      if (completedVocab.length > 0) {
+        const createPill = (k) => {
+          const item = vocabData[k];
+          if (!item) return null;
+          const pill = document.createElement('div');
+          pill.className = 'vocab-completed-pill';
+          pill.setAttribute('data-key', k);
+          pill.innerHTML = `
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>${item.word}</span>
+          `;
+          pill.addEventListener('click', () => {
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            toggleCompletedDetail(k);
+          });
+          return pill;
+        };
+
+        appendBalancedRows(completedPool, completedVocab, createPill, 'vocab-completed-row', 3);
+      }
+    }
+
+    function showWordHintModal(wordKey) {
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      hideModal();
+
+      const modal = document.createElement('div');
+      modal.className = 'vocab-hint-modal';
+      modal.id = 'active-hint-modal';
+      modal.innerHTML = `
+        <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${item.word}</span>
+            <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+              <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hint-row">
+          <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+          </svg>
+          <div class="hint-text">${item.hint}</div>
+        </div>
+      `;
+
+      modal.addEventListener('click', (e) => {
+        safeDismiss(() => hideModal(), e);
+      });
+
+      document.body.appendChild(modal);
+      activeModalCard = modal;
+      showOverlay();
+    }
+
+    function hideModal() {
+      const existing = document.getElementById('active-hint-modal');
+      if (existing) existing.remove();
+      hideOverlay();
+      activeModalCard = null;
+    }
+
+    function handleTargetCardClick(card, targetKey, e) {
+      if (card.classList.contains('state-wrong')) {
+        safeDismiss(() => dismissWrongState(card), e);
+        return;
+      }
+
+      if (card.classList.contains('state-correct')) {
+        safeDismiss(() => dismissCorrectState(targetKey), e);
+        return;
+      }
+    }
+
+    function handleDragStart(e) {
+      if (activeModalCard) {
+        e.preventDefault();
+        return;
+      }
+      draggedWordKey = this.getAttribute('data-key');
+      this.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', draggedWordKey);
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd() {
+      this.classList.remove('dragging');
+      draggedWordKey = null;
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      this.classList.add('drag-over');
+    }
+
+    function handleDragLeave() {
+      this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      const wordKey = e.dataTransfer.getData('text/plain') || draggedWordKey;
+      const targetKey = this.getAttribute('data-target-key');
+      if (wordKey && targetKey) {
+        processWordPlacement(wordKey, targetKey, this);
+      }
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();
+    }
+
+    // Process a word placed on a target card
+    function processWordPlacement(wordKey, targetKey, card) {
+      hideModal();
+
+      if (wordKey === targetKey) {
+        // === CORRECT MATCH ===
+        const item = vocabData[targetKey];
+        card.classList.remove('state-wrong');
+        card.classList.add('state-correct');
+        activeModalCard = card;
+
+        card.innerHTML = `
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word">${item.word}</span>
+              <span class="dict-pos">${item.pos}</span>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="dict-def-row">
+            <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="var(--correct-green)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="dict-def" style="margin-bottom: 0;">${item.def}</div>
+          </div>
+          <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
+        `;
+
+        showOverlay();
+      } else {
+        // === WRONG MATCH ===
+        const placedWord = vocabData[wordKey];
+        const targetItem = vocabData[targetKey];
+        card.classList.remove('state-correct');
+        card.classList.add('state-wrong');
+        card.setAttribute('data-wrong-word-key', wordKey);
+        activeModalCard = card;
+
+        card.innerHTML = `
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${placedWord.word}</span>
+              <a href="${getGoogleSearchUrl(placedWord.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="wrong-def-row">
+            <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="var(--wrong-red)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="wrong-def-text">${formatWrongDef(targetItem.def)}</div>
+          </div>
+          <div class="hint-row">
+            <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+              <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+            </svg>
+            <div class="hint-text">${placedWord.hint}</div>
+          </div>
+        `;
+
+        showOverlay();
+      }
+    }
+
+    function dismissWrongState(card) {
+      hideOverlay();
+      activeModalCard = null;
+      renderVocabulary();
+    }
+
+    function dismissCorrectState(wordKey) {
+      hideOverlay();
+      activeModalCard = null;
+      if (!completedVocab.includes(wordKey)) {
+        completedVocab.push(wordKey);
+        saveState();
+      }
+      renderVocabulary();
+    }
+
+    function showOverlay() {
+      const overlay = document.getElementById('vocab-overlay');
+      if (overlay) overlay.classList.add('active');
+    }
+
+    function hideOverlay() {
+      const overlay = document.getElementById('vocab-overlay');
+      if (overlay) overlay.classList.remove('active');
+    }
+
+    function handleOverlayClick(e) {
+      safeDismiss(() => {
+        if (activeModalCard) {
+          if (activeModalCard.id === 'active-hint-modal') {
+            hideModal();
+          } else if (activeModalCard.classList.contains('state-wrong')) {
+            dismissWrongState(activeModalCard);
+          } else if (activeModalCard.classList.contains('state-correct')) {
+            const targetKey = activeModalCard.getAttribute('data-target-key');
+            dismissCorrectState(targetKey);
+          } else {
+            hideModal();
+          }
+        }
+      }, e);
+    }
+
+    // Toggle completed word detail preview
+    function toggleCompletedDetail(wordKey) {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (!detailArea) return;
+
+      if (detailArea.getAttribute('data-active-word') === wordKey) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return;
+      }
+
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      detailArea.setAttribute('data-active-word', wordKey);
+      detailArea.innerHTML = `
+        <div class="vocab-dict-card">
+          <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word">${item.word}</span>
+              <span class="dict-pos">${item.pos}</span>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="dict-def-row">
+            <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="var(--correct-green)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="dict-def" style="margin-bottom: 0;">${item.def}</div>
+          </div>
+          <div class="dict-sentence">${item.sentence.replace(item.word, `<mark>${item.word}</mark>`)}</div>
+        </div>
+      `;
+
+      const dictCard = detailArea.querySelector('.vocab-dict-card');
+      if (dictCard) {
+        dictCard.addEventListener('click', (e) => {
+          safeDismiss(() => {
+            detailArea.innerHTML = '';
+            detailArea.removeAttribute('data-active-word');
+          }, e);
+        });
+      }
+    }
+
+    // Touch event helper for mobile drag & drop
+    function setupTouchDrag(chip, key) {
+      let touchMoved = false;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (activeModalCard) return;
+        touchMoved = false;
+        chip.classList.add('dragging');
+        draggedWordKey = key;
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', () => {
+        touchMoved = true;
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        chip.classList.remove('dragging');
+        if (!touchMoved) {
+          return;
+        }
+        const touch = e.changedTouches[0];
+        const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (targetElement) {
+          const targetCard = targetElement.closest('.vocab-target-card');
+          if (targetCard) {
+            const targetKey = targetCard.getAttribute('data-target-key');
+            if (targetKey) {
+              processWordPlacement(key, targetKey, targetCard);
+            }
+          }
+        }
+        draggedWordKey = null;
+      });
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE QUIZ LOGIC (RADIO-FREE)
+    // =========================================================
+    function selectOption(qNum, value) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (userAnswers[qNum] === value) {
+        delete userAnswers[qNum];
+        applyQuestionFeedback(qNum, null);
+        saveState();
+        return;
+      }
+      userAnswers[qNum] = value;
+      applyQuestionFeedback(qNum, value);
+      saveState();
+    }
+
+    function applyQuestionFeedback(qNum, value) {
+      const card = document.querySelector(`.question-card[data-q="${qNum}"]`);
+      if (!card) return;
+      const correctVal = card.getAttribute('data-correct');
+
+      // Update active option styling
+      const allOptionItems = card.querySelectorAll('.option-item');
+      allOptionItems.forEach(item => item.classList.remove('selected'));
+
+      // Hide all feedback boxes for this question first
+      const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
+      allFeedbackBoxes.forEach(fb => {
+        fb.className = 'feedback-box';
+        fb.innerHTML = '';
+      });
+
+      if (!value) {
+        card.classList.remove('answered', 'correct', 'incorrect');
+        return;
+      }
+
+      const activeOption = card.querySelector(`.option-item[onclick*="'${value}'"]`);
+      if (activeOption) activeOption.classList.add('selected');
+
+      const feedbackBox = document.getElementById(`feedback-${qNum}-${value}`);
+      if (!feedbackBox) return;
+
+      const qExplanations = explanations[qNum] || {};
+      const explanation = qExplanations[value] || '';
+
+      card.classList.add('answered');
+      if (value === correctVal) {
+        card.classList.remove('incorrect');
+        card.classList.add('correct');
+        feedbackBox.className = 'feedback-box show correct-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      } else {
+        card.classList.remove('correct');
+        card.classList.add('incorrect');
+        feedbackBox.className = 'feedback-box show wrong-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      }
+    }
+
+    // =========================================================
+    // RESET WORKSHEET
+    // =========================================================
+    let resetTimer = null;
+
+    function requestReset() {
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (!btn || !box) return;
+      btn.style.display = 'none';
+      box.style.display = 'inline-flex';
+
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        cancelReset();
+      }, 8000);
+    }
+
+    function cancelReset() {
+      if (resetTimer) {
+        clearTimeout(resetTimer);
+        resetTimer = null;
+      }
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (btn) btn.style.display = 'inline-flex';
+      if (box) box.style.display = 'none';
+    }
+
+    function confirmReset() {
+      cancelReset();
+      executeReset();
+    }
+
+    function executeReset() {
+      userAnswers = {};
+      completedVocab = [];
+      activeModalCard = null;
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      const optionItems = document.querySelectorAll('.option-item');
+      optionItems.forEach(item => item.classList.remove('selected'));
+
+      const cards = document.querySelectorAll('.question-card');
+      cards.forEach(c => {
+        c.classList.remove('answered', 'correct', 'incorrect');
+      });
+
+      const feedbacks = document.querySelectorAll('.feedback-box');
+      feedbacks.forEach(f => {
+        f.textContent = '';
+        f.className = 'feedback-box';
+      });
+
+      hideModal();
+      renderVocabulary();
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSavedState();
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          if (!activeModalCard) renderVocabulary();
+        });
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (!activeModalCard) renderVocabulary();
+    });
+  </script>
+</body>
+</html>
+
