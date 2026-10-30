@@ -717,27 +717,18 @@ const SECTION_IMAGES_CSS = `
     }
 
     .image-thumb-q-badge {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: rgba(20, 18, 16, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      box-sizing: border-box;
-      color: #fffdf9;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       line-height: 1;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(2px);
-      padding: 0;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+      pointer-events: none;
     }
 
     .image-thumb-q-badge svg {
-      width: 11px;
-      height: 11px;
+      width: 20px;
+      height: 20px;
       display: block;
-      fill: #fffdf9;
       pointer-events: none;
     }
 
@@ -820,9 +811,12 @@ const SECTION_IMAGES_CSS = `
     }
 
     .image-lightbox-q-pill {
-      background: rgba(24, 22, 20, 0.78);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(24, 22, 20, 0.82);
       color: #fffdf9;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 4px;
       padding: 6px 10px;
       font-family: var(--font-body);
@@ -837,7 +831,29 @@ const SECTION_IMAGES_CSS = `
       max-width: fit-content;
     }
 
-    .image-lightbox-q-pill::selection {
+    .image-lightbox-q-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      line-height: 1;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .image-lightbox-q-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .image-lightbox-q-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .image-lightbox-q-pill::selection,
+    .image-lightbox-q-text::selection {
       background: var(--highlight);
       color: var(--ink-main);
     }
@@ -936,10 +952,21 @@ const SECTION_LIGHTBOX_JS = `
           else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
         } catch (e) {}
         if (qList && qList.length > 0) {
+          const pillBubbleSvg = '<svg viewBox="0 0 20 20" width="16" height="16" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
           qList.forEach(q => {
             const pill = document.createElement('div');
             pill.className = 'image-lightbox-q-pill';
-            pill.textContent = q;
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'image-lightbox-q-icon';
+            iconSpan.innerHTML = pillBubbleSvg;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'image-lightbox-q-text';
+            textSpan.textContent = q;
+
+            pill.appendChild(iconSpan);
+            pill.appendChild(textSpan);
             questionsContainer.appendChild(pill);
           });
           questionsContainer.style.display = 'flex';
@@ -1209,7 +1236,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
 
       let qBadgesHtml = '';
       if (qList.length > 0) {
-        const bubbleSvg = '<svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg>';
+        const bubbleSvg = '<svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
         const badges = qList.map(() => `<span class="image-thumb-q-badge">${bubbleSvg}</span>`).join('');
         qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
       }
@@ -1235,7 +1262,7 @@ ${thumbsHtml}
 
 function ensureLightboxAssets(html) {
   let out = html;
-  if (!out.includes('.image-thumb-q-badge')) {
+  if (!out.includes('.image-lightbox-q-icon')) {
     const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?\.image-lightbox-overlay\.is-zoomed\s+\.image-lightbox-caption\s*\{[^}]*pointer-events:\s*none;\s*\}/;
     if (imagesCssRegex.test(out)) {
       out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
@@ -1261,7 +1288,7 @@ function ensureLightboxAssets(html) {
       );
     }
   }
-  if (!out.includes('questionsJson')) {
+  if (!out.includes('pillBubbleSvg')) {
     const lightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?setupLightboxTouchZoom\(\)[\s\S]*?\}\)\(\);/;
     if (lightboxJsRegex.test(out)) {
       out = out.replace(lightboxJsRegex, SECTION_LIGHTBOX_JS.trim());

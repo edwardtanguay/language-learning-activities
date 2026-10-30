@@ -56,10 +56,21 @@
           else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
         } catch (e) {}
         if (qList && qList.length > 0) {
+          const pillBubbleSvg = '<svg viewBox="0 0 20 20" width="16" height="16" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
           qList.forEach(q => {
             const pill = document.createElement('div');
             pill.className = 'image-lightbox-q-pill';
-            pill.textContent = q;
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'image-lightbox-q-icon';
+            iconSpan.innerHTML = pillBubbleSvg;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'image-lightbox-q-text';
+            textSpan.textContent = q;
+
+            pill.appendChild(iconSpan);
+            pill.appendChild(textSpan);
             questionsContainer.appendChild(pill);
           });
           questionsContainer.style.display = 'flex';
@@ -1668,7 +1679,7 @@
       border-radius: 1px;
     }
 
-    /* Thumbnail Question Marks */
+    /* Thumbnail Question/Statement Badges */
     .image-thumb-questions {
       position: absolute;
       bottom: 8px;
@@ -1681,27 +1692,18 @@
     }
 
     .image-thumb-q-badge {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: rgba(20, 18, 16, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      box-sizing: border-box;
-      color: #fffdf9;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       line-height: 1;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(2px);
-      padding: 0;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+      pointer-events: none;
     }
 
     .image-thumb-q-badge svg {
-      width: 11px;
-      height: 11px;
+      width: 20px;
+      height: 20px;
       display: block;
-      fill: #fffdf9;
       pointer-events: none;
     }
 
@@ -1784,9 +1786,12 @@
     }
 
     .image-lightbox-q-pill {
-      background: rgba(24, 22, 20, 0.78);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(24, 22, 20, 0.82);
       color: #fffdf9;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 4px;
       padding: 6px 10px;
       font-family: var(--font-body);
@@ -1801,7 +1806,29 @@
       max-width: fit-content;
     }
 
-    .image-lightbox-q-pill::selection {
+    .image-lightbox-q-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      line-height: 1;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .image-lightbox-q-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .image-lightbox-q-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .image-lightbox-q-pill::selection,
+    .image-lightbox-q-text::selection {
       background: var(--highlight);
       color: var(--ink-main);
     }
@@ -2102,22 +2129,22 @@
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg', 'El Alter tal como se ve desde la ciudad de Riobamba', '[&quot;Entonces, ¿desde Riobamba es posible ver tanto el Chimborazo como El Altar?&quot;,&quot;El conjunto de cimas de esta montaña es hermoso.&quot;]')">
           <img src="images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg" alt="El Alter tal como se ve desde la ciudad de Riobamba" class="image-thumb" loading="lazy">
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha', '[&quot;Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?&quot;,&quot;Y puedes verlo desde la ciudad de Quito?&quot;,&quot;¿Es realmente así de fácil llegar a la cima? El hombre vestido de rojo, a la derecha, parece estar muy relajado.&quot;]')">
           <img src="images/es-volcanesecuador-elvolcanrucupichincha.jpg" alt="El Volcán Rucu Pichincha" class="image-thumb" loading="lazy">
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[]')">
           <img src="images/es-volcanesecuador-lagoquilotoa.jpg" alt="Lago Quilotoa" class="image-thumb" loading="lazy">
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Cómo es Machachi?&quot;]')">
           <img src="images/es-volcanesecuador-machachi.jpg" alt="Machachi" class="image-thumb" loading="lazy">
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[&quot;¿Has estado alguna vez aquí? Parece un paisaje místico.&quot;]')">
           <img src="images/es-volcanesecuador-parquenacionalllanganates.jpg" alt="Parque Nacional Llanganates" class="image-thumb" loading="lazy">
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[]')">
           <img src="images/es-volcanesecuador-quitoylosvolcanes.jpg" alt="Quito y los volcanes" class="image-thumb" loading="lazy">
