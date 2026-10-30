@@ -1799,7 +1799,6 @@
       overflow: hidden;
       background: var(--paper-sheet);
       box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
-      margin-left: auto;
       margin-right: 0;
     }
 
@@ -1811,10 +1810,29 @@
     }
 
     @media (max-width: 680px) {
+      .header-top {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
       .topic-header-icon-wrap {
-        margin: 8px auto 4px auto;
-        width: 60px;
-        height: 60px;
+        width: 56px;
+        height: 56px;
+        margin: 0;
+      }
+      .handout-title-group {
+        flex: 1 1 calc(100% - 68px);
+        min-width: 0;
+        text-align: left;
+      }
+      .handout-title-group h1 {
+        text-align: left;
+      }
+      .stamp-badge {
+        margin: 4px auto 0 auto;
+        order: 3;
       }
     }
   
@@ -1958,6 +1976,7 @@
           <li>Es este un término que usarías? "su entrañable parce de Colombia"</li>
           <li>rucu: Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?</li>
           <li>rucu: Y puedes verlo desde la ciudad de Quito?</li>
+          <li>macha: ¿Has estado alguna vez en Machachi?</li>
         </ul>
       </div>
     </section>

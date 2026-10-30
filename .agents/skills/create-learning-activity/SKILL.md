@@ -71,7 +71,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Greek (`el`): `#0d9488`
   - Icelandic (`is`): `#06b6d4`
   - Danish (`da`): `#ff1493`
-  The header stamp badge (`.stamp-badge`) displaying `[Language] [Level]` (e.g. `Español B1`) uses `border: 3px solid var(--lang-color); color: var(--lang-color); font-size: 18px; font-weight: 800; transform: rotate(-2deg);` to look like a prominent colored ink stamp. On mobile (`max-width: 680px`), the stamp badge is centered horizontally in the middle (`margin: 4px auto 0 auto; align-self: center;`), and the main title (`.handout-title-group h1`), subtitle (`.handout-subtitle`), and instructions heading (`.instructions-heading`) are also centered.
+  The header stamp badge (`.stamp-badge`) displaying `[Language] [Level]` (e.g. `Español B1`) uses `border: 3px solid var(--lang-color); color: var(--lang-color); font-size: 18px; font-weight: 800; transform: rotate(-2deg);` to look like a prominent colored ink stamp. On mobile (`max-width: 680px`), when a topic icon is present, `[profile]` (`56px × 56px`) and `[title]` (`flex: 1 1 calc(100% - 68px); text-align: left;`) sit side-by-side on the top row, and the stamp badge wraps to the second row centered horizontally (`margin: 4px auto 0 auto; order: 3;`), with the subtitle (`.handout-subtitle`) and instructions heading (`.instructions-heading`) centered below.
 - **Paper on Desk Aesthetic**:
   - The main container (`.handout-sheet`) has a soft blurred drop-shadow (`box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04)`) and a delicate warm border (`1px solid #e8e2d5`), giving the look of a sheet of paper on a desk.
 - **No Harsh Black Outlines & Borderless Cards**:

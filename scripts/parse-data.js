@@ -596,7 +596,7 @@ const TOPIC_HEADER_ICON_CSS = `
         margin: 0;
       }
       .handout-title-group {
-        flex: 1;
+        flex: 1 1 calc(100% - 68px);
         min-width: 0;
         text-align: left;
       }
@@ -1096,7 +1096,10 @@ function updateActivityHtml(activity, questions, imageFiles) {
     if (!html.includes('.topic-header-icon-wrap')) {
       html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
     } else {
-      html = html.replace(/\/\* Topic Header Icon \*\/[\s\S]*?\.stamp-badge \{[\s\S]*?\}\s*\}/, TOPIC_HEADER_ICON_CSS.trim());
+      html = html.replace(
+        /\/\* Topic Header Icon \*\/[\s\S]*?@media\s*\(max-width:\s*680px\)\s*\{(?:\s*[^{}]*\{[^{}]*\})*\s*\}/,
+        TOPIC_HEADER_ICON_CSS.trim()
+      );
     }
     const iconTag = `<div class="topic-header-icon-wrap">\n          <img src="${activity.iconFile}" alt="${activity.title}" class="topic-header-icon">\n        </div>`;
     // Clean out existing icon
