@@ -5,6 +5,217 @@
     if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
       window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
     }
+  
+    // =========================================================
+    // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // =========================================================
+    let lbScale = 1;
+    let lbTranslateX = 0;
+    let lbTranslateY = 0;
+    let lbPinchStartDist = 0;
+    let lbPinchStartScale = 1;
+    let lbPanStartX = 0;
+    let lbPanStartY = 0;
+    let lbLastTouchX = 0;
+    let lbLastTouchY = 0;
+    let lbMouseDown = false;
+    let lbSelectingCaption = false;
+    let lbLastMouseX = 0;
+    let lbLastMouseY = 0;
+    let lbGestureMoved = false;
+    let lbIgnoreNextClick = false;
+    const LB_MAX_SCALE = 50;
+
+    function applyLightboxTransform() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      if (img) {
+        img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
+      }
+      if (overlay) {
+        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
+      }
+    }
+
+    function openImageLightbox(src, alt) {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      if (!overlay || !img) return;
+      img.src = src;
+      img.alt = alt || '';
+      if (caption) {
+        caption.textContent = alt || '';
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+      lbGestureMoved = false;
+      lbIgnoreNextClick = false;
+      overlay.classList.remove('is-zoomed', 'is-panning');
+      applyLightboxTransform();
+      overlay.classList.add('active');
+    }
+
+    function closeImageLightbox() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      if (!overlay) return;
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
+          sel.removeAllRanges();
+        }
+      }
+      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
+      if (img) {
+        img.src = '';
+        img.style.transform = '';
+      }
+      if (caption) {
+        caption.textContent = '';
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+    }
+
+    function handleLightboxClick(e) {
+      if (lbIgnoreNextClick) {
+        lbIgnoreNextClick = false;
+        return;
+      }
+      if (e && e.target && e.target.closest('.image-lightbox-caption')) {
+        return;
+      }
+      closeImageLightbox();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+        }
+      }
+    });
+
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
+
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
+
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2) {
+            e.preventDefault();
+            lbGestureMoved = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1515,6 +1726,175 @@
         display: none;
       }
     }
+  
+    /* =========================================================
+       IMAGES & FULLSCREEN LIGHTBOX
+       ========================================================= */
+    .images-section {
+      margin-top: 18px;
+      margin-bottom: 24px;
+    }
+
+    .images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-thumb-wrap {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      padding: 4px;
+      border-radius: 2px;
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.06);
+      cursor: zoom-in;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      display: inline-flex;
+    }
+
+    .image-thumb-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue);
+    }
+
+    .image-thumb {
+      height: 150px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 1px;
+    }
+
+    .image-lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(24, 22, 20, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: zoom-out;
+      touch-action: none;
+    }
+
+    .image-lightbox-overlay.active {
+      display: flex;
+    }
+
+    .image-lightbox-overlay.is-zoomed {
+      cursor: grab;
+    }
+
+    .image-lightbox-overlay.is-panning {
+      cursor: grabbing;
+    }
+
+    .image-lightbox-stage {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      max-width: 94vw;
+      max-height: 92vh;
+    }
+
+    .image-lightbox-img {
+      max-width: 94vw;
+      max-height: 86vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      transform-origin: center center;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      display: block;
+    }
+
+    .image-lightbox-caption {
+      margin-top: 8px;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 1.2px;
+      color: rgba(255, 253, 249, 0.88);
+      text-align: right;
+      align-self: flex-end;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      pointer-events: auto;
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+
+    .image-lightbox-caption::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
+      opacity: 0;
+      pointer-events: none;
+    }
+  
+    /* Topic Header Icon */
+    .topic-header-icon-wrap {
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-sheet);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      margin-right: 0;
+    }
+
+    .topic-header-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 680px) {
+      .header-top {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .topic-header-icon-wrap {
+        width: 56px;
+        height: 56px;
+        margin: 0;
+      }
+      .handout-title-group {
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+      }
+      .handout-title-group h1 {
+        text-align: left;
+      }
+      .stamp-badge {
+        margin: 4px auto 0 auto;
+        order: 3;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1536,6 +1916,9 @@
     <!-- Header Section -->
     <header class="worksheet-header">
       <div class="header-top">
+        <div class="topic-header-icon-wrap">
+          <img src="icon-porypara.jpg" alt="El Bazar de la Cuadra: Dominando Por y Para" class="topic-header-icon">
+        </div>
         <div class="handout-title-group">
           <h1>El Bazar de la Cuadra: Dominando Por y Para</h1>
         </div>
@@ -1547,10 +1930,11 @@
 
       <!-- Centered Jump Links -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Lectura">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Preguntas">4</a>
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Vocabulario">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
       </nav>
 
       <!-- Roll-out / Roll-up Instructions Callout -->
@@ -1594,11 +1978,27 @@
       </div>
     </header>
 
-    <!-- SECTION 1: READING PASSAGE -->
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="images-grid">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-porypara-usosdeporypara.jpg', 'Usos de por y para')">
+          <img src="images/es-porypara-usosdeporypara.jpg" alt="Usos de por y para" class="image-thumb" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+<!-- SECTION 1: READING PASSAGE -->
     <section>
-      <h2 class="section-title" id="seccion-1">
+      <h2 class="section-title" id="seccion-2">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">1</span> Lectura
+          <span class="section-num">2</span> Lectura
         </a>
         <span class="section-action-hint">leer en voz alta</span>
       </h2>
@@ -1629,9 +2029,9 @@
 
     <!-- SECTION 2: VOCABULARY -->
     <section class="vocab-section">
-      <h2 class="section-title" id="seccion-2">
+      <h2 class="section-title" id="seccion-3">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">2</span> Vocabulario
+          <span class="section-num">3</span> Vocabulario
         </a>
         <span class="section-action-hint">arrastrar y soltar</span>
       </h2>
@@ -1655,9 +2055,9 @@
 
     <!-- SECTION 3: COMPREHENSION QUIZ -->
     <section>
-      <h2 class="section-title" id="seccion-3">
+      <h2 class="section-title" id="seccion-4">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">3</span> Comprensión
+          <span class="section-num">4</span> Comprensión
         </a>
         <span class="section-action-hint">opción múltiple</span>
       </h2>
@@ -1857,9 +2257,9 @@
 
     <!-- SECTION 4: OPEN DISCUSSION QUESTIONS -->
     <section>
-      <h2 class="section-title" id="seccion-4">
+      <h2 class="section-title" id="seccion-5">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+          <span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
         </a>
         <span class="section-action-hint">responder y debatir</span>
       </h2>
@@ -1915,6 +2315,14 @@
 
   <!-- Page Dim Overlay for Active Modals -->
   <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
+
+  <!-- Fullscreen Image Lightbox -->
+  <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
+    <div class="image-lightbox-stage" id="image-lightbox-stage">
+      <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+      <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+    </div>
+  </div>
 
   <script>
     // =========================================================
