@@ -177,6 +177,7 @@ Use the following standardized languages, 2-letter ISO codes, and hex colors eve
   - Entire card is clickable (`cursor: pointer;`) to open the activity, with hover showing an intense soft shadow (`0 10px 28px rgba(45, 40, 35, 0.12)`) without border outline changes.
   - Title link has `pointer-events: none;` and no hover effects (no underline or color change) so the user intuitively feels the entire card panel is clickable.
   - Activity title uses tight line height (`line-height: 1.05;`) on both desktop and mobile so multi-line titles hold together cohesively as a single unit.
+  - **Topic Profile Icons (`.activity-card.has-icon`)**: All topic profile pictures on the main catalog are the exact same fixed square size (`98px × 98px` on desktop via `grid-template-columns: 98px 1fr; align-items: flex-start;`, and `70px × 70px` on mobile), top-aligned with the title row so longer titles or descriptions naturally expand the card downward while preserving the full bottom padding on every card.
   - The "Abrir actividad →" button is omitted from the card.
 - **Catalog Header (`index.html`)**: On mobile, the main header title ("Language Learning Activities") and subtitle ("Hojas pedagógicas para autoestudio, tándems y profesores") are centered. The subtitle uses `text-wrap: balance; max-width: 270px; margin-left: auto; margin-right: auto;` and non-breaking spaces (`tándems&nbsp;y&nbsp;profesores`) so it breaks evenly near the middle and never leaves a single word alone on the second line.
 - **Catalog Dropdown Filter & Search (`index.html`)**:

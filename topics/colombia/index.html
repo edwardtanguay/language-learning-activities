@@ -1516,6 +1516,53 @@
         page-break-inside: avoid;
       }
     }
+  
+    /* Topic Header Icon */
+    .topic-header-icon-wrap {
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-sheet);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      margin-right: 0;
+    }
+
+    .topic-header-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 680px) {
+      .header-top {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .topic-header-icon-wrap {
+        width: 56px;
+        height: 56px;
+        margin: 0;
+      }
+      .handout-title-group {
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+      }
+      .handout-title-group h1 {
+        text-align: left;
+      }
+      .stamp-badge {
+        margin: 4px auto 0 auto;
+        order: 3;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -1548,6 +1595,9 @@
     <!-- Header -->
     <header class="worksheet-header">
       <div class="header-top">
+        <div class="topic-header-icon-wrap">
+          <img src="icon-colombia.jpg" alt="Colombia: Tierra de Café, Ritmos y Contrastes" class="topic-header-icon">
+        </div>
         <div class="handout-title-group">
           <h1>Colombia: Tierra de Café, Ritmos y Contrastes</h1>
         </div>
