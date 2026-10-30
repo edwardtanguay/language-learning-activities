@@ -123,7 +123,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - On mobile screens (`max-width: 680px`), center navigation and reset controls horizontally and vertically within their containers.
 - **Standardized Footers**:
   - At the bottom of individual activity worksheets, display only: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).
-  - Main catalog (`index.html`) footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
+  - Main catalog (`index.html`) footer displays: `<a href="https://github.com/edwardtanguay/language-learning-activities">Crea tus propias actividades</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
   - On mobile screens (`max-width: 680px`), footer items stack vertically centered.
 - **Responsive Layout**:
   - Desktop & Tablet (Landscape): Generous margins, clean side-by-side or balanced layout.
@@ -245,5 +245,5 @@ After creating `topics/<topic-slug>/index.html`:
    - The "Abrir actividad →" button is omitted from the card.
    - Mobile view (`max-width: 680px`): reduced card padding, slightly smaller description font.
    - Catalog dropdown filter controls use standard body serif font (`"Lora", Georgia, serif`). On mobile (`max-width: 680px`), "Idioma:" and "Nivel:" labels are removed, dropdowns sit centered together on one line (50%/50%) with smaller font (`font-size: 12.5px; padding: 5px 4px;`) so full labels like "Todos los idiomas" fit completely, and the search bar extends across full width with a clear ("X") button on the far right when text is present.
-   - Catalog footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
+   - Catalog footer displays: `<a href="https://github.com/edwardtanguay/language-learning-activities">Crea tus propias actividades</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
 3. Maintain tidy chronological or categorical sorting.

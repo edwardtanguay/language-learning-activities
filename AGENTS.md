@@ -8,7 +8,7 @@ A platform for generating self-contained language learning activities and worksh
 - `topics/<foldername>/index.html`: Individual self-contained activity pages (directory names use lowercase alphanumeric words without hyphens, e.g., `topics/colombia/`, `topics/regionsofecuador/`).
 - `imageparse/`: Staging folder where bulk images (e.g., `col-andes.jpg`, `ecu-beach.jpg`) are dropped before running `npm run pd`.
 - `scripts/parse-data.js`: Node script executed via `npm run pd` ("parse data") to match, rename, and move images from `imageparse/` into `topics/<foldername>/images/` and update Section 5 (`Imágenes`) on the activity pages.
-- `creators/`: Resources and tools for activity creators.
+- `README.md`: Guide for language students and creators on using, personalizing, and publishing activities.
 - `.agents/skills/`: Agent skills defining specific creation workflows (e.g., `/create-text-and-multiple-choice`).
 
 ## Activity Architecture & Technical Rules
@@ -148,7 +148,7 @@ Each activity lives in `topics/<foldername>/index.html`:
   - Clears all `localStorage` state (both multiple-choice answers and completed vocabulary).
 - **Standardized Footers**:
   - Activity pages display only: `See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (with "Edward" in plain text, never italics, without "Language Learning Activities" or bullet dot).
-  - Main catalog (`index.html`) footer displays: `<a href="creators/index.html">Guía para creadores</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
+  - Main catalog (`index.html`) footer displays: `<a href="https://github.com/edwardtanguay/language-learning-activities">Crea tus propias actividades</a> • See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a>` (without arrows).
   - On mobile (`max-width: 680px`), items in the footer stack vertically centered.
 
 ## Standardized Languages & Palette
