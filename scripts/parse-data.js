@@ -561,6 +561,8 @@ const SECTION_QUESTIONS_CSS = `
     }
 `;
 
+const PROFILE_ZOOM_BTN_SVG = `<svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>`;
+
 const TOPIC_HEADER_ICON_CSS = `
     /* Topic Header Icon & Clickable Navigation */
     .header-top {
@@ -575,6 +577,7 @@ const TOPIC_HEADER_ICON_CSS = `
     }
 
     .topic-header-icon-wrap {
+      position: relative;
       flex-shrink: 0;
       width: 68px;
       height: 68px;
@@ -604,6 +607,62 @@ const TOPIC_HEADER_ICON_CSS = `
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    .profile-zoom-btn {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(20, 18, 16, 0.76);
+      color: #fffdf9;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
+      z-index: 2;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .profile-zoom-btn:hover {
+      background: rgba(20, 18, 16, 0.95);
+      transform: scale(1.12);
+      border-color: rgba(255, 255, 255, 0.65);
+    }
+
+    .profile-zoom-btn:active {
+      transform: scale(0.94);
+    }
+
+    .profile-zoom-btn svg {
+      display: block;
+      pointer-events: none;
+    }
+
+    @media (hover: hover) {
+      .profile-zoom-btn {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .topic-header-icon-wrap:hover .profile-zoom-btn,
+      .activity-card-icon-wrap:hover .profile-zoom-btn {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
+    @media (hover: none) {
+      .profile-zoom-btn {
+        opacity: 0.85;
+        pointer-events: auto;
+      }
     }
 
     .handout-title-group h1 {
@@ -639,6 +698,16 @@ const TOPIC_HEADER_ICON_CSS = `
         width: 56px;
         height: 56px;
         margin: 0;
+      }
+      .profile-zoom-btn {
+        width: 19px;
+        height: 19px;
+        right: 3px;
+        bottom: 3px;
+      }
+      .profile-zoom-btn svg {
+        width: 10px;
+        height: 10px;
       }
       .handout-title-group {
         flex: 0 1 auto;
@@ -1416,11 +1485,13 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
       html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
     } else {
       html = html.replace(
-        /\/\* Topic Header Icon[\s\S]*?@media\s*\(max-width:\s*680px\)\s*\{(?:\s*[^{}]*\{[^{}]*\})*\s*\}/,
+        /\/\* Topic Header Icon[\s\S]*?(?=\s*<\/style>)/,
         TOPIC_HEADER_ICON_CSS.trim()
       );
     }
-    const iconTag = `<div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">\n          <img src="${activity.iconFile}" alt="${activity.title}" class="topic-header-icon">\n        </div>`;
+    const safeTitle = activity.title.replace(/"/g, '&quot;');
+    const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${activity.iconFile}', '${safeTitle}');" title="Ampliar imagen" aria-label="Ampliar imagen">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
+    const iconTag = `<div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">\n          <img src="${activity.iconFile}" alt="${safeTitle}" class="topic-header-icon">\n          ${zoomBtn}\n        </div>`;
     // Clean out existing icon
     html = html.replace(/\s*<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
     // Insert icon on far left right after <div class="header-top">
@@ -1442,7 +1513,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   if (hasQuestions && !html.includes('.teacher-questions-card')) {
     html = html.replace('</style>', `${SECTION_QUESTIONS_CSS}  </style>`);
   }
-  if (hasImages) {
+  if (hasImages || activity.iconFile) {
     html = ensureLightboxAssets(html);
   }
 
@@ -1665,8 +1736,10 @@ function updateCatalogHtmlForIcons(activities) {
       if (!openingTag.includes('has-icon')) {
         openingTag = openingTag.replace('class="activity-card', 'class="activity-card has-icon');
       }
+      const safeTitle = activity.title.replace(/"/g, '&quot;');
       const iconPath = `topics/${activity.folderName}/${activity.iconFile}`;
-      const iconWrap = `<div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${activity.title}" class="activity-card-icon" loading="lazy">\n        </div>`;
+      const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${iconPath}', '${safeTitle}');" title="Ampliar imagen" aria-label="Ampliar imagen">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
+      const iconWrap = `<div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${safeTitle}" class="activity-card-icon" loading="lazy">\n          ${zoomBtn}\n        </div>`;
 
       innerContent = `\n        ${iconWrap}\n        <div class="activity-card-body">\n          ${cleanBody}\n        </div>\n      `;
     } else {
