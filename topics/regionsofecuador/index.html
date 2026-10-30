@@ -1148,17 +1148,25 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(24, 22, 20, 0.68);
+      background: rgba(20, 18, 16, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      box-sizing: border-box;
       color: #fffdf9;
-      font-family: var(--font-typewriter);
-      font-size: 13px;
-      font-weight: 700;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       line-height: 1;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(2px);
+      padding: 0;
+    }
+
+    .image-thumb-q-badge svg {
+      width: 11px;
+      height: 11px;
+      display: block;
+      fill: #fffdf9;
+      pointer-events: none;
     }
 
     .image-lightbox-overlay {

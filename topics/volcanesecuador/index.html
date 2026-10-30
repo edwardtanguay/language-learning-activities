@@ -1684,17 +1684,25 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(24, 22, 20, 0.68);
+      background: rgba(20, 18, 16, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      box-sizing: border-box;
       color: #fffdf9;
-      font-family: var(--font-typewriter);
-      font-size: 13px;
-      font-weight: 700;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       line-height: 1;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(2px);
+      padding: 0;
+    }
+
+    .image-thumb-q-badge svg {
+      width: 11px;
+      height: 11px;
+      display: block;
+      fill: #fffdf9;
+      pointer-events: none;
     }
 
     .image-lightbox-overlay {
@@ -2092,22 +2100,24 @@
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elaltarenlapartesuperior.jpg', 'El Altar en la parte superior', '[]')">
           <img src="images/es-volcanesecuador-elaltarenlapartesuperior.jpg" alt="El Altar en la parte superior" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg', 'El Alter tal como se ve desde la ciudad de Riobamba', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg', 'El Alter tal como se ve desde la ciudad de Riobamba', '[&quot;Entonces, ¿desde Riobamba es posible ver tanto el Chimborazo como El Altar?&quot;,&quot;El conjunto de cimas de esta montaña es hermoso.&quot;]')">
           <img src="images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg" alt="El Alter tal como se ve desde la ciudad de Riobamba" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha', '[&quot;Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?&quot;,&quot;Y puedes verlo desde la ciudad de Quito?&quot;,&quot;¿Es realmente así de fácil llegar a la cima? El hombre vestido de rojo, a la derecha, parece estar muy relajado.&quot;]')">
           <img src="images/es-volcanesecuador-elvolcanrucupichincha.jpg" alt="El Volcán Rucu Pichincha" class="image-thumb" loading="lazy">
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge">?</span><span class="image-thumb-q-badge">?</span><span class="image-thumb-q-badge">?</span></div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[]')">
           <img src="images/es-volcanesecuador-lagoquilotoa.jpg" alt="Lago Quilotoa" class="image-thumb" loading="lazy">
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Cómo es Machachi?&quot;]')">
           <img src="images/es-volcanesecuador-machachi.jpg" alt="Machachi" class="image-thumb" loading="lazy">
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge">?</span></div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[&quot;¿Has estado alguna vez aquí? Parece un paisaje místico.&quot;]')">
           <img src="images/es-volcanesecuador-parquenacionalllanganates.jpg" alt="Parque Nacional Llanganates" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[]')">
           <img src="images/es-volcanesecuador-quitoylosvolcanes.jpg" alt="Quito y los volcanes" class="image-thumb" loading="lazy">

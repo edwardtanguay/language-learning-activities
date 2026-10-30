@@ -704,7 +704,7 @@ const SECTION_IMAGES_CSS = `
       border-radius: 1px;
     }
 
-    /* Thumbnail Question Marks */
+    /* Thumbnail Question/Statement Badges */
     .image-thumb-questions {
       position: absolute;
       bottom: 8px;
@@ -720,17 +720,25 @@ const SECTION_IMAGES_CSS = `
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(24, 22, 20, 0.68);
+      background: rgba(20, 18, 16, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      box-sizing: border-box;
       color: #fffdf9;
-      font-family: var(--font-typewriter);
-      font-size: 13px;
-      font-weight: 700;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       line-height: 1;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(2px);
+      padding: 0;
+    }
+
+    .image-thumb-q-badge svg {
+      width: 11px;
+      height: 11px;
+      display: block;
+      fill: #fffdf9;
+      pointer-events: none;
     }
 
     .image-lightbox-overlay {
@@ -1201,7 +1209,8 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
 
       let qBadgesHtml = '';
       if (qList.length > 0) {
-        const badges = qList.map(() => '<span class="image-thumb-q-badge">?</span>').join('');
+        const bubbleSvg = '<svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M2 1a2 2 0 0 0-2 2v10.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 11H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/></svg>';
+        const badges = qList.map(() => `<span class="image-thumb-q-badge">${bubbleSvg}</span>`).join('');
         qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
       }
 
