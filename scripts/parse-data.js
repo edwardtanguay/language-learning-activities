@@ -486,7 +486,7 @@ function parseAndSyncImportTextDpod(activities) {
     fs.mkdirSync(IMPORT_TEXT_DIR, { recursive: true });
   }
 
-  const topicQuestions = {};
+  const rawTopicQuestions = {};
   if (fs.existsSync(IMPORT_DPOD_PATH)) {
     const content = fs.readFileSync(IMPORT_DPOD_PATH, 'utf8');
     const lines = content.split(/\r?\n/);
@@ -497,12 +497,12 @@ function parseAndSyncImportTextDpod(activities) {
       const topicMatch = line.match(/^##\s+([a-zA-Z0-9_\-]+)/);
       if (topicMatch) {
         currentTopic = topicMatch[1].toLowerCase().replace(/[^a-z0-9]/g, '');
-        if (!topicQuestions[currentTopic]) {
-          topicQuestions[currentTopic] = [];
+        if (!rawTopicQuestions[currentTopic]) {
+          rawTopicQuestions[currentTopic] = [];
         }
       } else if (currentTopic) {
         if (line.length > 5) {
-          topicQuestions[currentTopic].push(line);
+          rawTopicQuestions[currentTopic].push(line);
         }
       }
     }
@@ -512,7 +512,7 @@ function parseAndSyncImportTextDpod(activities) {
   const blocks = [];
   for (const activity of activities) {
     const folder = activity.folderName;
-    const questions = topicQuestions[folder] || [];
+    const questions = rawTopicQuestions[folder] || [];
     if (questions.length > 0) {
       blocks.push(`## ${folder}\n\n${questions.join('\n')}`);
     } else {
@@ -524,7 +524,7 @@ function parseAndSyncImportTextDpod(activities) {
   fs.writeFileSync(IMPORT_DPOD_PATH, newDpodContent, 'utf8');
   console.log('Synced import-text/import.dpod.txt with all current topics.');
 
-  return topicQuestions;
+  return rawTopicQuestions;
 }
 
 const SECTION_QUESTIONS_CSS = `
@@ -562,7 +562,18 @@ const SECTION_QUESTIONS_CSS = `
 `;
 
 const TOPIC_HEADER_ICON_CSS = `
-    /* Topic Header Icon */
+    /* Topic Header Icon & Clickable Navigation */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
     .topic-header-icon-wrap {
       flex-shrink: 0;
       width: 68px;
@@ -573,6 +584,19 @@ const TOPIC_HEADER_ICON_CSS = `
       background: var(--paper-sheet);
       box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
       margin-right: 0;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(45, 40, 35, 0.12);
+    }
+
+    .topic-header-icon-wrap:active {
+      transform: scale(0.97);
     }
 
     .topic-header-icon {
@@ -582,11 +606,32 @@ const TOPIC_HEADER_ICON_CSS = `
       display: block;
     }
 
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: none;
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--ink-main);
+      margin-bottom: 0;
+      cursor: pointer;
+      display: inline-block;
+      transition: opacity 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .handout-title-group h1:hover {
+      opacity: 0.82;
+    }
+
     @media (max-width: 680px) {
       .header-top {
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 12px;
       }
@@ -596,16 +641,21 @@ const TOPIC_HEADER_ICON_CSS = `
         margin: 0;
       }
       .handout-title-group {
-        flex: 1 1 calc(100% - 68px);
+        flex: 0 1 auto;
         min-width: 0;
         text-align: left;
       }
       .handout-title-group h1 {
+        font-size: 20px;
+        line-height: 1.15;
+        letter-spacing: -0.2px;
         text-align: left;
       }
       .stamp-badge {
+        width: 100%;
         margin: 4px auto 0 auto;
         order: 3;
+        text-align: center;
       }
     }
 `;
@@ -636,6 +686,7 @@ const SECTION_IMAGES_CSS = `
       cursor: zoom-in;
       transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
       display: inline-flex;
+      position: relative;
     }
 
     .image-thumb-wrap:hover {
@@ -651,6 +702,35 @@ const SECTION_IMAGES_CSS = `
       object-fit: cover;
       display: block;
       border-radius: 1px;
+    }
+
+    /* Thumbnail Question Marks */
+    .image-thumb-questions {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .image-thumb-q-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(24, 22, 20, 0.68);
+      color: #fffdf9;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(2px);
     }
 
     .image-lightbox-overlay {
@@ -686,6 +766,15 @@ const SECTION_IMAGES_CSS = `
       align-items: flex-end;
       max-width: 94vw;
       max-height: 92vh;
+      position: relative;
+    }
+
+    .image-lightbox-img-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+      max-width: 94vw;
+      max-height: 86vh;
     }
 
     .image-lightbox-img {
@@ -701,6 +790,48 @@ const SECTION_IMAGES_CSS = `
       user-select: none;
       -webkit-user-drag: none;
       display: block;
+    }
+
+    /* Lightbox Questions List Overlay in lower-left */
+    .image-lightbox-questions {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: calc(100% - 24px);
+      z-index: 5;
+      pointer-events: auto;
+      transition: opacity 0.2s ease;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-questions {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .image-lightbox-q-pill {
+      background: rgba(24, 22, 20, 0.78);
+      color: #fffdf9;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: left;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+      max-width: fit-content;
+    }
+
+    .image-lightbox-q-pill::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
     }
 
     .image-lightbox-caption {
@@ -738,7 +869,10 @@ const SECTION_LIGHTBOX_HTML = `
   <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
     <div class="image-lightbox-stage" id="image-lightbox-stage">
-      <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+      <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
+        <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+        <div class="image-lightbox-questions" id="image-lightbox-questions"></div>
+      </div>
       <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
     </div>
   </div>`;
@@ -775,15 +909,35 @@ const SECTION_LIGHTBOX_JS = `
       }
     }
 
-    function openImageLightbox(src, alt) {
+    function openImageLightbox(src, alt, questionsJson) {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
       if (!overlay || !img) return;
       img.src = src;
       img.alt = alt || '';
       if (caption) {
         caption.textContent = alt || '';
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+        let qList = [];
+        try {
+          if (Array.isArray(questionsJson)) qList = questionsJson;
+          else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
+        } catch (e) {}
+        if (qList && qList.length > 0) {
+          qList.forEach(q => {
+            const pill = document.createElement('div');
+            pill.className = 'image-lightbox-q-pill';
+            pill.textContent = q;
+            questionsContainer.appendChild(pill);
+          });
+          questionsContainer.style.display = 'flex';
+        } else {
+          questionsContainer.style.display = 'none';
+        }
       }
       lbScale = 1;
       lbTranslateX = 0;
@@ -801,6 +955,7 @@ const SECTION_LIGHTBOX_JS = `
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
       if (!overlay) return;
       if (window.getSelection) {
         const sel = window.getSelection();
@@ -816,6 +971,9 @@ const SECTION_LIGHTBOX_JS = `
       if (caption) {
         caption.textContent = '';
       }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+      }
       lbScale = 1;
       lbTranslateX = 0;
       lbTranslateY = 0;
@@ -828,7 +986,7 @@ const SECTION_LIGHTBOX_JS = `
         lbIgnoreNextClick = false;
         return;
       }
-      if (e && e.target && e.target.closest('.image-lightbox-caption')) {
+      if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
         return;
       }
       closeImageLightbox();
@@ -981,7 +1139,51 @@ ${listItems}
     </section>`;
 }
 
-function buildSectionImagesHtml(activity, imageFiles, sectionNum) {
+function matchQuestionsToImages(rawQuestions, imageFiles, activity) {
+  const teacherQuestions = [];
+  const imageQuestions = {}; // file -> array of questions
+  for (const file of imageFiles) {
+    imageQuestions[file] = [];
+  }
+
+  for (const rawLine of rawQuestions) {
+    const colonIdx = rawLine.indexOf(':');
+    if (colonIdx > 0) {
+      const prefix = rawLine.slice(0, colonIdx).trim();
+      const questionText = rawLine.slice(colonIdx + 1).trim();
+      const normPrefix = normalize(prefix);
+
+      // Find matching image file
+      let matchedFile = null;
+      for (const file of imageFiles) {
+        const ext = path.extname(file);
+        const base = file.slice(0, file.length - ext.length);
+        const actPrefix = `${activity.lang}-${activity.folderName}-`;
+        const rawSlug = base.startsWith(actPrefix) ? base.slice(actPrefix.length) : base;
+        const title = (activity.recordedTitles && activity.recordedTitles[file]) || formatImageTitle(rawSlug);
+
+        const normTitle = normalize(title);
+        const normFile = normalize(file);
+
+        if (normTitle.includes(normPrefix) || normFile.includes(normPrefix)) {
+          matchedFile = file;
+          break;
+        }
+      }
+
+      if (matchedFile) {
+        imageQuestions[matchedFile].push(questionText);
+        continue;
+      }
+    }
+
+    teacherQuestions.push(rawLine);
+  }
+
+  return { teacherQuestions, imageQuestions };
+}
+
+function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, sectionNum) {
   const i18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
   const thumbsHtml = imageFiles
     .map(file => {
@@ -993,7 +1195,17 @@ function buildSectionImagesHtml(activity, imageFiles, sectionNum) {
         (activity.recordedTitles && activity.recordedTitles[file]) ||
         formatImageTitle(rawSlug);
       const safeAlt = recordedTitle.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-      return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n        </div>`;
+
+      const qList = (imageQuestionsMap && imageQuestionsMap[file]) || [];
+      const safeQuestionsJson = JSON.stringify(qList).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+      let qBadgesHtml = '';
+      if (qList.length > 0) {
+        const badges = qList.map(() => '<span class="image-thumb-q-badge">?</span>').join('');
+        qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
+      }
+
+      return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">${qBadgesHtml}\n        </div>`;
     })
     .join('\n');
 
@@ -1014,22 +1226,38 @@ ${thumbsHtml}
 
 function ensureLightboxAssets(html) {
   let out = html;
-  if (!out.includes('.image-lightbox-overlay')) {
-    out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
+  if (!out.includes('.image-thumb-q-badge')) {
+    if (!out.includes('.image-lightbox-overlay')) {
+      out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
+    } else {
+      out = out.replace(
+        /\/\* =========================================================\s*IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?pointer-events:\s*none;\s*\}/,
+        SECTION_IMAGES_CSS.trim()
+      );
+    }
   }
-  if (!out.includes('id="image-lightbox"')) {
-    out = out.replace(
-      /(<div class="vocab-dim-overlay"[^>]*><\/div>)/,
-      `$1\n${SECTION_LIGHTBOX_HTML}`
-    );
-  } else if (!out.includes('id="image-lightbox-caption"')) {
-    out = out.replace(
-      /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?<\/div>/,
-      SECTION_LIGHTBOX_HTML.trim()
-    );
+  if (!out.includes('id="image-lightbox-questions"')) {
+    if (out.includes('id="image-lightbox"')) {
+      out = out.replace(
+        /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?<\/div>\s*<\/div>/,
+        SECTION_LIGHTBOX_HTML.trim()
+      );
+    } else {
+      out = out.replace(
+        /(<div class="vocab-dim-overlay"[^>]*><\/div>)/,
+        `$1\n${SECTION_LIGHTBOX_HTML}`
+      );
+    }
   }
-  if (!out.includes('function openImageLightbox')) {
-    out = out.replace('</script>', `${SECTION_LIGHTBOX_JS}\n  </script>`);
+  if (!out.includes('questionsJson')) {
+    if (out.includes('function openImageLightbox')) {
+      out = out.replace(
+        /\/\/\s*=========================================================\s*\/\/\s*IMAGE LIGHTBOX[\s\S]*?closeImageLightbox\(\);\s*\}/,
+        SECTION_LIGHTBOX_JS.trim()
+      );
+    } else {
+      out = out.replace('</script>', `${SECTION_LIGHTBOX_JS}\n  </script>`);
+    }
   }
   return out;
 }
@@ -1084,24 +1312,28 @@ function updateAllSectionHeadings(html, nums) {
   });
 }
 
-function updateActivityHtml(activity, questions, imageFiles) {
+function updateActivityHtml(activity, rawQuestions, imageFiles) {
   const originalHtml = fs.readFileSync(activity.indexPath, 'utf8');
   let html = originalHtml;
+
+  // Split raw questions between matched image questions and general teacher questions
+  const { teacherQuestions, imageQuestions } = matchQuestionsToImages(rawQuestions, imageFiles, activity);
+  const questions = teacherQuestions;
 
   const hasQuestions = questions && questions.length > 0;
   const hasImages = imageFiles && imageFiles.length > 0;
 
-  // 1. Topic Header Icon synchronization
+  // 1. Topic Header Icon synchronization & Clickable Header Navigation
   if (activity.iconFile) {
     if (!html.includes('.topic-header-icon-wrap')) {
       html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
     } else {
       html = html.replace(
-        /\/\* Topic Header Icon \*\/[\s\S]*?@media\s*\(max-width:\s*680px\)\s*\{(?:\s*[^{}]*\{[^{}]*\})*\s*\}/,
+        /\/\* Topic Header Icon[\s\S]*?@media\s*\(max-width:\s*680px\)\s*\{(?:\s*[^{}]*\{[^{}]*\})*\s*\}/,
         TOPIC_HEADER_ICON_CSS.trim()
       );
     }
-    const iconTag = `<div class="topic-header-icon-wrap">\n          <img src="${activity.iconFile}" alt="${activity.title}" class="topic-header-icon">\n        </div>`;
+    const iconTag = `<div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">\n          <img src="${activity.iconFile}" alt="${activity.title}" class="topic-header-icon">\n        </div>`;
     // Clean out existing icon
     html = html.replace(/\s*<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
     // Insert icon on far left right after <div class="header-top">
@@ -1112,6 +1344,12 @@ function updateActivityHtml(activity, questions, imageFiles) {
   } else {
     html = html.replace(/\s*<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
   }
+
+  // Ensure title in header is wrapped with clickable back navigation
+  html = html.replace(
+    /(<div class="handout-title-group"[^>]*>)\s*<h1[^>]*>([\s\S]*?)<\/h1>/i,
+    `$1\n          <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">$2</h1>`
+  );
 
   // 2. CSS synchronization
   if (hasQuestions && !html.includes('.teacher-questions-card')) {
@@ -1177,7 +1415,7 @@ function updateActivityHtml(activity, questions, imageFiles) {
     prefixBlocks += buildSectionQuestionsHtml(activity, questions) + '\n\n';
   }
   if (hasImages) {
-    prefixBlocks += buildSectionImagesHtml(activity, imageFiles, imagesNum) + '\n\n';
+    prefixBlocks += buildSectionImagesHtml(activity, imageFiles, imageQuestions, imagesNum) + '\n\n';
   }
 
   // Find the start of Reading section (e.g. <!-- SECTION ...: READING or <h2 class="section-title" id="seccion-...)
@@ -1212,6 +1450,12 @@ function updateActivityHtml(activity, questions, imageFiles) {
   html = html.replace(
     /if \(href === '#seccion-1' \|\| href === '#seccion-\d+'\)/g,
     `const lastHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');\n        if (href === '#seccion-1' || (lastHref && href === lastHref))`
+  );
+
+  // 9. Ensure handleBackNavigation navigates to main menu on desktop as well
+  html = html.replace(
+    /function handleBackNavigation\(e,\s*url\)\s*\{[\s\S]*?return true;\s*\}/,
+    `function handleBackNavigation(e, url) {\n      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;\n      const targetUrl = url || '../../index.html';\n      if (window.innerWidth <= 680) {\n        if (e) e.preventDefault();\n        captureOutgoingActivity('backward');\n        window.location.href = targetUrl;\n        return false;\n      }\n      window.location.href = targetUrl;\n      return false;\n    }`
   );
 
   if (html !== originalHtml) {

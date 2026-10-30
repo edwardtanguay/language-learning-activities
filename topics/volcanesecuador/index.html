@@ -1789,7 +1789,18 @@
       pointer-events: none;
     }
   
-    /* Topic Header Icon */
+    /* Topic Header Icon & Clickable Navigation */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
     .topic-header-icon-wrap {
       flex-shrink: 0;
       width: 68px;
@@ -1800,6 +1811,19 @@
       background: var(--paper-sheet);
       box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
       margin-right: 0;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(45, 40, 35, 0.12);
+    }
+
+    .topic-header-icon-wrap:active {
+      transform: scale(0.97);
     }
 
     .topic-header-icon {
@@ -1809,11 +1833,32 @@
       display: block;
     }
 
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: none;
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--ink-main);
+      margin-bottom: 0;
+      cursor: pointer;
+      display: inline-block;
+      transition: opacity 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .handout-title-group h1:hover {
+      opacity: 0.82;
+    }
+
     @media (max-width: 680px) {
       .header-top {
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 12px;
       }
@@ -1823,16 +1868,21 @@
         margin: 0;
       }
       .handout-title-group {
-        flex: 1 1 calc(100% - 68px);
+        flex: 0 1 auto;
         min-width: 0;
         text-align: left;
       }
       .handout-title-group h1 {
+        font-size: 20px;
+        line-height: 1.15;
+        letter-spacing: -0.2px;
         text-align: left;
       }
       .stamp-badge {
+        width: 100%;
         margin: 4px auto 0 auto;
         order: 3;
+        text-align: center;
       }
     }
   
@@ -1878,11 +1928,16 @@
   <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
 
   <!-- Fullscreen Image Lightbox -->
+  <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
     <div class="image-lightbox-stage" id="image-lightbox-stage">
-      <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+      <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
+        <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+        <div class="image-lightbox-questions" id="image-lightbox-questions"></div>
+      </div>
       <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
     </div>
+  </div>
   </div>
 
   <!-- Top Utility Bar -->
@@ -1899,11 +1954,11 @@
     <!-- Header Section -->
     <header class="worksheet-header">
       <div class="header-top">
-        <div class="topic-header-icon-wrap">
+        <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
           <img src="icon-volcanesecuador.jpg" alt="Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina" class="topic-header-icon">
         </div>
         <div class="handout-title-group">
-          <h1>Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina</h1>
+          <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina</h1>
         </div>
         <div class="stamp-badge">Español B1</div>
       </div>
@@ -1974,9 +2029,6 @@
       <div class="teacher-questions-card">
         <ul class="teacher-questions-list">
           <li>Es este un término que usarías? "su entrañable parce de Colombia"</li>
-          <li>rucu: Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?</li>
-          <li>rucu: Y puedes verlo desde la ciudad de Quito?</li>
-          <li>macha: ¿Has estado alguna vez en Machachi?</li>
         </ul>
       </div>
     </section>
@@ -1991,29 +2043,37 @@
 
     <section class="images-section" id="images-section">
       <div class="images-grid">
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa', '[]')">
           <img src="images/es-volcanesecuador-banosdeaguasanta.jpg" alt="Baños de Agua Santa" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo', '[]')">
           <img src="images/es-volcanesecuador-chimborazo.jpg" alt="Chimborazo" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi', '[]')">
           <img src="images/es-volcanesecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha', '[&quot;Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?&quot;,&quot;Y puedes verlo desde la ciudad de Quito?&quot;]')">
           <img src="images/es-volcanesecuador-elvolcanrucupichincha.jpg" alt="El Volcán Rucu Pichincha" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge">?</span><span class="image-thumb-q-badge">?</span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[]')">
           <img src="images/es-volcanesecuador-lagoquilotoa.jpg" alt="Lago Quilotoa" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-machachi.jpg', 'Machachi')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Cómo es Machachi?&quot;]')">
           <img src="images/es-volcanesecuador-machachi.jpg" alt="Machachi" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge">?</span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[]')">
           <img src="images/es-volcanesecuador-parquenacionalllanganates.jpg" alt="Parque Nacional Llanganates" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[]')">
           <img src="images/es-volcanesecuador-quitoylosvolcanes.jpg" alt="Quito y los volcanes" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-riobamba.jpg', 'Riobamba', '[]')">
+          <img src="images/es-volcanesecuador-riobamba.jpg" alt="Riobamba" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-volcantungurahua.jpg', 'Volcán Tungurahua', '[]')">
+          <img src="images/es-volcanesecuador-volcantungurahua.jpg" alt="Volcán Tungurahua" class="image-thumb" loading="lazy">
         </div>
       </div>
     </section>
@@ -3801,14 +3861,15 @@
 
     function handleBackNavigation(e, url) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
+      const targetUrl = url || '../../index.html';
       if (window.innerWidth <= 680) {
         if (e) e.preventDefault();
-        const targetUrl = url || '../../index.html';
         captureOutgoingActivity('backward');
         window.location.href = targetUrl;
         return false;
       }
-      return true;
+      window.location.href = targetUrl;
+      return false;
     }
 
     // Simultaneously whoosh outgoing main page off to the left as activity page whooshes in from the right

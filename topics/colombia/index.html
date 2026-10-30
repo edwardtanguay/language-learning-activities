@@ -1517,7 +1517,18 @@
       }
     }
   
-    /* Topic Header Icon */
+    /* Topic Header Icon & Clickable Navigation */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
     .topic-header-icon-wrap {
       flex-shrink: 0;
       width: 68px;
@@ -1528,6 +1539,19 @@
       background: var(--paper-sheet);
       box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
       margin-right: 0;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(45, 40, 35, 0.12);
+    }
+
+    .topic-header-icon-wrap:active {
+      transform: scale(0.97);
     }
 
     .topic-header-icon {
@@ -1537,11 +1561,32 @@
       display: block;
     }
 
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: none;
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--ink-main);
+      margin-bottom: 0;
+      cursor: pointer;
+      display: inline-block;
+      transition: opacity 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .handout-title-group h1:hover {
+      opacity: 0.82;
+    }
+
     @media (max-width: 680px) {
       .header-top {
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 12px;
       }
@@ -1551,16 +1596,21 @@
         margin: 0;
       }
       .handout-title-group {
-        flex: 1 1 calc(100% - 68px);
+        flex: 0 1 auto;
         min-width: 0;
         text-align: left;
       }
       .handout-title-group h1 {
+        font-size: 20px;
+        line-height: 1.15;
+        letter-spacing: -0.2px;
         text-align: left;
       }
       .stamp-badge {
+        width: 100%;
         margin: 4px auto 0 auto;
         order: 3;
+        text-align: center;
       }
     }
   </style>
@@ -1574,11 +1624,16 @@
   <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
 
   <!-- Fullscreen Image Lightbox -->
+  <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
     <div class="image-lightbox-stage" id="image-lightbox-stage">
-      <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+      <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
+        <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+        <div class="image-lightbox-questions" id="image-lightbox-questions"></div>
+      </div>
       <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
     </div>
+  </div>
   </div>
 
   <!-- Utility Nav -->
@@ -1595,11 +1650,11 @@
     <!-- Header -->
     <header class="worksheet-header">
       <div class="header-top">
-        <div class="topic-header-icon-wrap">
+        <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
           <img src="icon-colombia.jpg" alt="Colombia: Tierra de Café, Ritmos y Contrastes" class="topic-header-icon">
         </div>
         <div class="handout-title-group">
-          <h1>Colombia: Tierra de Café, Ritmos y Contrastes</h1>
+          <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">Colombia: Tierra de Café, Ritmos y Contrastes</h1>
         </div>
         <div class="stamp-badge">
           Español B1
@@ -1669,46 +1724,46 @@
 
     <section class="images-section" id="images-section">
       <div class="images-grid">
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')">
           <img src="images/es-colombia-cabosanjuanenelparquetayrona.jpg" alt="Cabo San Juan en el Parque Tayrona" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cafetero.jpg', 'Cafetero')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cafetero.jpg', 'Cafetero', '[]')">
           <img src="images/es-colombia-cafetero.jpg" alt="Cafetero" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')">
           <img src="images/es-colombia-cartagenaciudadamurallada.jpg" alt="Cartagena Ciudad Amurallada" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-guatape.jpg', 'Guatapé')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-guatape.jpg', 'Guatapé', '[]')">
           <img src="images/es-colombia-guatape.jpg" alt="Guatapé" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')">
           <img src="images/es-colombia-laamazoniacolombiana.jpg" alt="La Amazonía Colombiana" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')">
           <img src="images/es-colombia-losbalconesfloridosdecartagena.jpg" alt="Los Balcones Floridos De Cartagena" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losllanos.jpg', 'Los Llanos')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')">
           <img src="images/es-colombia-losllanos.jpg" alt="Los Llanos" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')">
           <img src="images/es-colombia-mapwithnatureareas.jpg" alt="Map With Nature Areas" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-parquetayrona.jpg', 'Parque Tayrona')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')">
           <img src="images/es-colombia-parquetayrona.jpg" alt="Parque Tayrona" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')">
           <img src="images/es-colombia-regionesdecolumbia.jpg" alt="Regiones de Columbia" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')">
           <img src="images/es-colombia-tatacoadesert.jpg" alt="Tatacoadesert" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomap.jpg', 'Topomap')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomap.jpg', 'Topomap', '[]')">
           <img src="images/es-colombia-topomap.jpg" alt="Topomap" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomapclear.jpg', 'Topomapclear')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')">
           <img src="images/es-colombia-topomapclear.jpg" alt="Topomapclear" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-valledecocora.jpg', 'Valle de Cocora')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')">
           <img src="images/es-colombia-valledecocora.jpg" alt="Valle de Cocora" class="image-thumb" loading="lazy">
         </div>
       </div>
@@ -3789,14 +3844,15 @@
 
     function handleBackNavigation(e, url) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
+      const targetUrl = url || '../../index.html';
       if (window.innerWidth <= 680) {
         if (e) e.preventDefault();
-        const targetUrl = url || '../../index.html';
         captureOutgoingActivity('backward');
         window.location.href = targetUrl;
         return false;
       }
-      return true;
+      window.location.href = targetUrl;
+      return false;
     }
 
     // Simultaneously whoosh outgoing main page off to the left as activity page whooshes in from the right
