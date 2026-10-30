@@ -3641,7 +3641,8 @@
         const returnBtn = document.getElementById('jump-return-btn');
 
         // If clicking '1' (Images) or '5' while already there and a return scroll position exists, toggle back!
-        if (href === '#seccion-1' || href === '#seccion-5') {
+        const lastHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');
+        if (href === '#seccion-1' || (lastHref && href === lastHref)) {
           const rectTarget = targetEl.getBoundingClientRect();
           const alreadyAtTarget = Math.abs(rectTarget.top) < 160 && savedReturnScrollY !== null;
           if (alreadyAtTarget) {
@@ -3685,7 +3686,7 @@
           stickyLinks.some(l => l.getAttribute('href') === '#seccion-5') &&
           (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 40)
         ) {
-          activeHref = '#seccion-5';
+          activeHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');
         }
         stickyLinks.forEach(link => {
           link.classList.toggle('active', link.getAttribute('href') === activeHref);

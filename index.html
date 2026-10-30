@@ -596,6 +596,51 @@
         display: none;
       }
     }
+  
+    .activity-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .activity-card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-card-icon-wrap {
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-bg);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .activity-card-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 680px) {
+      .activity-card {
+        padding: 16px;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .activity-card-icon-wrap {
+        width: 58px;
+        height: 58px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -691,6 +736,7 @@
 
       <!-- Topic 4: Volcanes de Ecuador -->
       <article class="activity-card" data-lang="es spanish español" data-level="B1" data-topic="volcanes ecuador andes cotopaxi chimborazo pichincha senderismo hiking montana jerga colombia jerga ecuador tungurahua quilotoa banos pastaza riobamba" onclick="openCard('topics/volcanesecuador/index.html', event)">
+        <div class="activity-card-body">
         <div class="activity-card-header">
           <h2 class="activity-title">
             <a href="topics/volcanesecuador/index.html">Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina</a>
@@ -703,6 +749,11 @@
         <p class="activity-desc">
           Dos amigos montañistas, uno ecuatoriano y otro colombiano, recorren la mítica Avenida de los Volcanes desde Pichincha y Cotopaxi hasta Baños, Quilotoa y Chimborazo mientras comparten consejos y jerga andina.
         </p>
+      
+        </div>
+        <div class="activity-card-icon-wrap">
+          <img src="topics/volcanesecuador/icon-volcanesecuador.jpg" alt="Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina" class="activity-card-icon" loading="lazy">
+        </div>
       </article>
 
       <!-- Topic 3: Por y Para en Colombia -->

@@ -17,21 +17,6 @@ Traditional language lessons often require hours of unpaid preparation from tuto
 
 ---
 
-## 🧑‍🎓 Can Be Used Completely Solo (No Teacher Required)
-
-Every activity can be used as a standalone self-study tool without a teacher:
-
-1. **Embedded Vocabulary Lookup:** Section 2 drag-and-drop includes immediate definition popups and one-click Google dictionary search queries formatted for detailed definitions and sample sentences.
-2. **Instant Exercise Verification:** Multiple-choice comprehension questions offer immediate validation, detailed grammar hints, and score tracking with `localStorage` persistence.
-3. **AI Study Buddies:** You can copy any sentence, question, or paragraph and paste it into modern AI assistants for instant translation, grammatical breakdown, and conversation practice:
-   - [ChatGPT](https://chatgpt.com)
-   - [Claude](https://claude.ai)
-   - [Google Gemini](https://gemini.google.com)
-   - [DeepL Translator](https://www.deepl.com/translator)
-   - [Google Translate](https://translate.google.com)
-
----
-
 ## 🛠️ Student Creator Guide: Create Activities with AI
 
 > **No coding required!** Even though this setup uses developer tools (git, editors, and AI agents), **you do not need to write a single line of code**. The AI handles 100% of the code, styles, and logic.
@@ -40,10 +25,10 @@ Every activity can be used as a standalone self-study tool without a teacher:
 
 | Tool | Type | Pricing | Best For |
 | :--- | :--- | :--- | :--- |
-| **[Google Antigravity](https://antigravity.google)** | AI Coding IDE | **Free** (during preview) | **Recommended:** Built-in agent workflow, reads project skills and files automatically. |
-| **[VS Code](https://code.visualstudio.com)** + **[GitHub Copilot](https://github.com/features/copilot)** | Code Editor + AI Plugin | Editor: **Free**<br>Copilot: **$10/mo** (free student tier) | Ubiquitous industry standard; great if you already use VS Code. |
-| **[Cursor](https://www.cursor.com)** | AI-first Code Editor | **Free tier** / **$20/mo Pro** | Seamless inline AI commands and project-wide context. |
-| **[Claude Code](https://claude.ai)** (Anthropic CLI) | Terminal Agent | Pay-per-token API / Claude Pro ($20/mo) | Powerful agentic coding directly from the command line. |
+| **[Google Antigravity](https://antigravity.google)** | AI Coding IDE | **~€21/mo** | **Recommended:** Built-in agent workflow, reads project skills and files automatically. |
+| **[VS Code](https://code.visualstudio.com)** + **[GitHub Copilot](https://github.com/features/copilot)** | Code Editor + AI Plugin | Editor: **Free**<br>Copilot: **~€10/mo** (free student tier) | Ubiquitous industry standard; great if you already use VS Code. |
+| **[Cursor](https://www.cursor.com)** | AI-first Code Editor | **Free tier** / **~€20/mo Pro** | Seamless inline AI commands and project-wide context. |
+| **[Claude Code](https://claude.ai)** (Anthropic CLI) | Terminal Agent | Pay-per-token API / Claude Pro (~€20/mo) | Powerful agentic coding directly from the command line. |
 
 ---
 
@@ -94,18 +79,40 @@ The AI will generate a complete, self-contained directory under `topics/<topicna
 
 ---
 
-### 4. Adding Images (Optional but Recommended)
+### 4. Adding Images and Topic Icons (Optional but Recommended)
 
-1. Drop your screenshots or photos into the `imageparse/` folder (e.g. `volcan-cotopaxi.jpg`, `mercado-artesanal.jpg`).
-2. Run the image parser script in your terminal:
+1. Drop your screenshots or photos into the `import-images/` folder (e.g. `volcan-cotopaxi.jpg`, `mercado-artesanal.jpg`).
+   - **Topic Icon:** To give an activity an icon on the main catalog and worksheet header, save an image matching the topic directory name (e.g. `volcanesecuador.jpg`).
+2. Run the parser script in your terminal:
    ```bash
    npm run pd
    ```
-   This automatically optimizes, renames, and moves the images into `topics/<topicname>/images/` and links them directly into the activity's visual gallery.
+   This automatically organizes, renames, and moves images into `topics/<topicname>/images/` and sets topic icons in `topics/<topicname>/icon-<topicname>.<ext>`.
 
 ---
 
-### 5. Publishing to Vercel for Free
+### 5. Adding Questions for Your Teacher
+
+You can prepare custom questions and discussion topics for your teacher:
+
+1. Open `import-text/import.dpod.txt`.
+2. Find the marker for your topic, for example:
+   ```text
+   ## volcanesecuador
+
+   ¿Es este un término que usarías? "su entrañable parce de Colombia"
+   ¿Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha? ¿Y puedes verlo desde la ciudad de Quito?
+   ```
+3. Add any questions or notes you want to ask during class (any line longer than 5 characters will be recognized).
+4. Run the parser script:
+   ```bash
+   npm run pd
+   ```
+   This automatically creates or updates **Section 1: Preguntas para el profesor** on your worksheet, displaying your questions in a clean bullet card.
+
+---
+
+### 6. Publishing to Vercel for Free
 
 Publish your personal worksheet collection online so you and your tutor can access it anywhere:
 
@@ -125,21 +132,43 @@ BEFORE CLASS (Solo Student Prep - ~15 mins)
   1. Generate activity with AI (5–10 mins)
   2. Read passage with translation assistance until comfortable
   3. Work through drag-and-drop vocabulary and multiple-choice questions
-  4. Note down discussion thoughts and questions for the tutor
-  5. Push to GitHub / Vercel
+  4. Note down discussion thoughts and questions for the tutor in import-text/import.dpod.txt
+  5. Run `npm run pd` and push to GitHub / Vercel
 
 DURING CLASS (Student & Tutor - 50%/50% Conversation)
-  1. Section 1 (Imágenes): Break the ice by discussing the pictures
-  2. Section 2 (Lectura): Read aloud; tutor checks pronunciation and rhythm
-  3. Section 3 (Vocabulario): Discuss nuances, collocations, and false friends
-  4. Section 4 (Comprensión): Review answers; tutor asks probing "why/how" questions
-  5. Section 5 (Preguntas): Open debate and storytelling
-  6. Final 3 minutes: Agree on next week's topic! Tutor sends error log.
+  1. Section 1 (Preguntas para el profesor): Ask the tutor your prepared questions (if added)
+  2. Section 2 (Imágenes): Break the ice by discussing the pictures
+  3. Section 3 (Lectura): Read aloud; tutor checks pronunciation and rhythm
+  4. Section 4 (Vocabulario): Discuss nuances, collocations, and false friends
+  5. Section 5 (Comprensión): Review answers; tutor asks probing "why/how" questions
+  6. Section 6 (Preguntas abiertas): Open debate and storytelling
+  7. Final 3 minutes: Agree on next week's topic! Tutor sends error log.
 ```
+
+---
+
+## 🧑‍🎓 Can Also Be Used Completely Solo (No Teacher Required)
+
+Every activity can be used as a standalone self-study tool without a teacher:
+
+1. **Embedded Vocabulary Lookup:** Section drag-and-drop includes immediate definition popups and one-click Google dictionary search queries formatted for detailed definitions and sample sentences.
+2. **Instant Exercise Verification:** Multiple-choice comprehension questions offer immediate validation, detailed grammar hints, and score tracking with `localStorage` persistence.
+3. **AI Study Buddies:** You can copy any sentence, question, or paragraph and paste it into modern AI assistants for instant translation, grammatical breakdown, and conversation practice:
+   - [ChatGPT](https://chatgpt.com)
+   - [Claude](https://claude.ai)
+   - [Google Gemini](https://gemini.google.com)
+   - [DeepL Translator](https://www.deepl.com/translator)
+   - [Google Translate](https://translate.google.com)
+
+---
+
+## 👤 Made by
+
+The project was created by Edward Tanguay.  
+See more projects by [Edward](https://tanguay.info).
 
 ---
 
 ## 📄 License
 
 Open-source educational material. Feel free to fork, adapt, and build activities for your own language learning journey!
-

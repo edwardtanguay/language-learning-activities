@@ -3,78 +3,205 @@ const path = require('path');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const TOPICS_DIR = path.join(ROOT_DIR, 'topics');
-const IMAGEPARSE_DIR = path.join(ROOT_DIR, 'imageparse');
+const IMPORT_IMAGES_DIR = path.join(ROOT_DIR, 'import-images');
+const LEGACY_IMAGEPARSE_DIR = path.join(ROOT_DIR, 'imageparse');
+const IMPORT_TEXT_DIR = path.join(ROOT_DIR, 'import-text');
+const IMPORT_DPOD_PATH = path.join(IMPORT_TEXT_DIR, 'import.dpod.txt');
 const SUPPORTED_EXTS = new Set(['.jpg', '.png', '.gif']);
+
+const SECTION_QUESTIONS_I18N = {
+  es: {
+    sectionTitle: 'Preguntas para el profesor',
+    actionHint: 'revisar en clase',
+    jumpTitle: 'Ir a Sección 1: Preguntas para el profesor',
+    topTitle: 'Volver al inicio'
+  },
+  en: {
+    sectionTitle: 'Questions for the Teacher',
+    actionHint: 'discuss in class',
+    jumpTitle: 'Go to Section 1: Questions for the Teacher',
+    topTitle: 'Back to top'
+  },
+  de: {
+    sectionTitle: 'Fragen an die Lehrkraft',
+    actionHint: 'im Unterricht besprechen',
+    jumpTitle: 'Zu Abschnitt 1: Fragen an die Lehrkraft',
+    topTitle: 'Nach oben'
+  },
+  fr: {
+    sectionTitle: 'Questions pour le professeur',
+    actionHint: 'à aborder en cours',
+    jumpTitle: 'Aller à la section 1 : Questions pour le professeur',
+    topTitle: 'Retour en haut'
+  },
+  it: {
+    sectionTitle: "Domande per l'insegnante",
+    actionHint: 'da discutere a lezione',
+    jumpTitle: "Vai alla sezione 1: Domande per l'insegnante",
+    topTitle: 'Torna su'
+  },
+  nl: {
+    sectionTitle: 'Vragen voor de docent',
+    actionHint: 'bespreken in de les',
+    jumpTitle: 'Ga naar sectie 1: Vragen voor de docent',
+    topTitle: 'Terug naar boven'
+  },
+  pl: {
+    sectionTitle: 'Pytania do nauczyciela',
+    actionHint: 'do omówienia na lekcji',
+    jumpTitle: 'Przejdź do sekcji 1: Pytania do nauczyciela',
+    topTitle: 'Powrót na górę'
+  },
+  ru: {
+    sectionTitle: 'Вопросы к преподавателю',
+    actionHint: 'обсудить на уроке',
+    jumpTitle: 'Перейти к разделу 1: Вопросы к преподавателю',
+    topTitle: 'Наверх'
+  },
+  el: {
+    sectionTitle: 'Ερωτήσεις για τον καθηγητή',
+    actionHint: 'συζήτηση στο μάθημα',
+    jumpTitle: 'Μετάβαση στην ενότητα 1: Ερωτήσεις για τον καθηγητή',
+    topTitle: 'Επιστροφή στην κορυφή'
+  },
+  is: {
+    sectionTitle: 'Spurningar til kennarans',
+    actionHint: 'ræða í tíma',
+    jumpTitle: 'Fara í kafla 1: Spurningar til kennarans',
+    topTitle: 'Fara efst'
+  },
+  da: {
+    sectionTitle: 'Spørgsmål til læreren',
+    actionHint: 'gennemgås i timen',
+    jumpTitle: 'Gå til afsnit 1: Spørgsmål til læreren',
+    topTitle: 'Tilbage til toppen'
+  }
+};
 
 const SECTION_IMAGES_I18N = {
   es: {
     sectionTitle: 'Imágenes',
     actionHint: 'clic para ampliar',
-    jumpTitle: 'Ir a Sección 1: Imágenes',
+    jumpTitle: 'Ir a Sección {N}: Imágenes',
     topTitle: 'Volver al inicio'
   },
   en: {
     sectionTitle: 'Images',
     actionHint: 'click to enlarge',
-    jumpTitle: 'Go to Section 1: Images',
+    jumpTitle: 'Go to Section {N}: Images',
     topTitle: 'Back to top'
   },
   de: {
     sectionTitle: 'Bilder',
     actionHint: 'zum Vergrößern klicken',
-    jumpTitle: 'Zu Abschnitt 1: Bilder',
+    jumpTitle: 'Zu Abschnitt {N}: Bilder',
     topTitle: 'Nach oben'
   },
   fr: {
     sectionTitle: 'Images',
     actionHint: 'cliquer pour agrandir',
-    jumpTitle: 'Aller à la section 1 : Images',
+    jumpTitle: 'Aller à la section {N} : Images',
     topTitle: 'Retour en haut'
   },
   it: {
     sectionTitle: 'Immagini',
     actionHint: 'clicca per ingrandire',
-    jumpTitle: 'Vai alla sezione 1: Immagini',
+    jumpTitle: 'Vai alla sezione {N}: Immagini',
     topTitle: 'Torna su'
   },
   nl: {
     sectionTitle: 'Afbeeldingen',
     actionHint: 'klik om te vergroten',
-    jumpTitle: 'Ga naar sectie 1: Afbeeldingen',
+    jumpTitle: 'Ga naar sectie {N}: Afbeeldingen',
     topTitle: 'Terug naar boven'
   },
   pl: {
     sectionTitle: 'Obrazy',
     actionHint: 'kliknij, aby powiększyć',
-    jumpTitle: 'Przejdź do sekcji 1: Obrazy',
+    jumpTitle: 'Przejdź do sekcji {N}: Obrazy',
     topTitle: 'Powrót na górę'
   },
   ru: {
     sectionTitle: 'Изображения',
     actionHint: 'нажмите для увеличения',
-    jumpTitle: 'Перейти к разделу 1: Изображения',
+    jumpTitle: 'Перейти к разделу {N}: Изображения',
     topTitle: 'Наверх'
   },
   el: {
     sectionTitle: 'Εικόνες',
     actionHint: 'κλικ για μεγέθυνση',
-    jumpTitle: 'Μετάβαση στην ενότητα 1: Εικόνες',
+    jumpTitle: 'Μετάβαση στην ενότητα {N}: Εικόνες',
     topTitle: 'Επιστροφή στην κορυφή'
   },
   is: {
     sectionTitle: 'Myndir',
     actionHint: 'smelltu til að stækka',
-    jumpTitle: 'Fara í kafla 1: Myndir',
+    jumpTitle: 'Fara í kafla {N}: Myndir',
     topTitle: 'Fara efst'
   },
   da: {
     sectionTitle: 'Billeder',
     actionHint: 'klik for at forstørre',
-    jumpTitle: 'Gå til afsnit 1: Billeder',
+    jumpTitle: 'Gå til afsnit {N}: Billeder',
     topTitle: 'Tilbage til toppen'
   }
 };
-const SECTION_5_I18N = SECTION_IMAGES_I18N;
+
+const SECTION_READING_I18N = {
+  es: 'Lectura',
+  en: 'Reading',
+  de: 'Lesetext',
+  fr: 'Lecture',
+  it: 'Lettura',
+  nl: 'Lezing',
+  pl: 'Czytanie',
+  ru: 'Чтение',
+  el: 'Ανάγνωση',
+  is: 'Lestur',
+  da: 'Læsning'
+};
+
+const SECTION_VOCAB_I18N = {
+  es: 'Vocabulario',
+  en: 'Vocabulary',
+  de: 'Wortschatz',
+  fr: 'Vocabulaire',
+  it: 'Vocabolario',
+  nl: 'Woordenschat',
+  pl: 'Słownictwo',
+  ru: 'Словарь',
+  el: 'Λεξιλόγιο',
+  is: 'Orðaforði',
+  da: 'Ordforråd'
+};
+
+const SECTION_QUIZ_I18N = {
+  es: 'Comprensión',
+  en: 'Comprehension',
+  de: 'Verständnis',
+  fr: 'Compréhension',
+  it: 'Comprensione',
+  nl: 'Begrip',
+  pl: 'Zrozumienie',
+  ru: 'Понимание',
+  el: 'Κατανόηση',
+  is: 'Skilningur',
+  da: 'Forståelse'
+};
+
+const SECTION_DISCUSS_I18N = {
+  es: 'Preguntas',
+  en: 'Questions',
+  de: 'Fragen',
+  fr: 'Questions',
+  it: 'Domande',
+  nl: 'Vragen',
+  pl: 'Pytania',
+  ru: 'Вопросы',
+  el: 'Ερωτήσεις',
+  is: 'Spurningar',
+  da: 'Spørgsmål'
+};
 
 function normalize(str) {
   return String(str || '')
@@ -95,9 +222,7 @@ function formatImageTitle(rawName) {
 }
 
 function cleanImageSlug(rawName) {
-  // Remove diacritics, convert to lowercase, and strip underscores, spaces, and hyphens
-  return normalize(rawName)
-    .replace(/[_\s-]+/g, '');
+  return normalize(rawName).replace(/[_\s-]+/g, '');
 }
 
 function ensureNoHyphenTopicDirs() {
@@ -137,6 +262,23 @@ function ensureNoHyphenTopicDirs() {
   }
 }
 
+function ensureImportImagesDir() {
+  if (fs.existsSync(LEGACY_IMAGEPARSE_DIR) && !fs.existsSync(IMPORT_IMAGES_DIR)) {
+    fs.renameSync(LEGACY_IMAGEPARSE_DIR, IMPORT_IMAGES_DIR);
+    console.log('Renamed folder: imageparse -> import-images');
+  } else if (!fs.existsSync(IMPORT_IMAGES_DIR)) {
+    fs.mkdirSync(IMPORT_IMAGES_DIR, { recursive: true });
+  }
+}
+
+function getCatalogTopicOrder() {
+  const rootIndexPath = path.join(ROOT_DIR, 'index.html');
+  if (!fs.existsSync(rootIndexPath)) return [];
+  const html = fs.readFileSync(rootIndexPath, 'utf8');
+  const matches = Array.from(html.matchAll(/topics\/([a-zA-Z0-9]+)\/index\.html/g), m => m[1].toLowerCase());
+  return [...new Set(matches)];
+}
+
 function loadActivities() {
   if (!fs.existsSync(TOPICS_DIR)) return [];
   const entries = fs.readdirSync(TOPICS_DIR, { withFileTypes: true });
@@ -161,6 +303,16 @@ function loadActivities() {
     const indexStat = fs.statSync(indexPath);
     const timestamp = folderStat.birthtimeMs || folderStat.mtimeMs || indexStat.mtimeMs;
 
+    // Check for topic icon in topic folder
+    let iconFile = null;
+    for (const ext of ['.jpg', '.png', '.gif']) {
+      const candidate = `icon-${folderName}${ext}`;
+      if (fs.existsSync(path.join(folderPath, candidate))) {
+        iconFile = candidate;
+        break;
+      }
+    }
+
     const recordedTitles = {};
     const existingImgAltMatches = html.matchAll(/<img\s+src="images\/([^"]+)"\s+alt="([^"]+)"/g);
     for (const m of existingImgAltMatches) {
@@ -169,10 +321,6 @@ function loadActivities() {
         .replace(/&quot;/g, '"')
         .replace(/&#39;/g, "'")
         .trim();
-      const ext = path.extname(imgFile);
-      const base = imgFile.slice(0, imgFile.length - ext.length);
-      const prefix = `${lang}-${folderName}-`;
-      const rawSlug = base.startsWith(prefix) ? base.slice(prefix.length) : base;
       if (existingAlt) {
         recordedTitles[imgFile] = existingAlt;
       }
@@ -188,9 +336,22 @@ function loadActivities() {
       normFolder: normalize(folderName),
       timestamp,
       mtimeMs: folderStat.mtimeMs,
+      iconFile,
       recordedTitles
     });
   }
+
+  // Sort activities by catalog order first, then timestamp
+  const catalogOrder = getCatalogTopicOrder();
+  activities.sort((a, b) => {
+    const idxA = catalogOrder.indexOf(a.folderName.toLowerCase());
+    const idxB = catalogOrder.indexOf(b.folderName.toLowerCase());
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    if (b.timestamp !== a.timestamp) return b.timestamp - a.timestamp;
+    return b.mtimeMs - a.mtimeMs;
+  });
 
   return activities;
 }
@@ -218,7 +379,6 @@ function findMatchingActivity(identifier, activities) {
     act => act.normTitle.includes(normId) || act.normFolder.includes(normId)
   );
 
-  // Fallback for Spanish article variants (e.g. "los" vs "las")
   if (matches.length === 0 && (normId === 'los' || normId === 'las')) {
     const altId = normId === 'los' ? 'las' : 'los';
     matches = activities.filter(
@@ -226,7 +386,6 @@ function findMatchingActivity(identifier, activities) {
     );
   }
 
-  // Fallback for abbreviations and near-typos (e.g. 'como' -> 'colombia', distance <= 1 against prefix)
   if (matches.length === 0) {
     if (normId === 'como') {
       matches = activities.filter(act => act.normFolder.includes('colombia'));
@@ -240,24 +399,12 @@ function findMatchingActivity(identifier, activities) {
   }
 
   if (matches.length === 0) return null;
-
-  // Sort by most recent first
-  matches.sort((a, b) => {
-    if (b.timestamp !== a.timestamp) return b.timestamp - a.timestamp;
-    return b.mtimeMs - a.mtimeMs;
-  });
-
   return matches[0];
 }
 
-function processImageParseFolder(activities) {
-  if (!fs.existsSync(IMAGEPARSE_DIR)) {
-    console.log('No /imageparse folder found. Creating empty /imageparse directory.');
-    fs.mkdirSync(IMAGEPARSE_DIR, { recursive: true });
-    return;
-  }
-
-  const files = fs.readdirSync(IMAGEPARSE_DIR, { withFileTypes: true });
+function processImportImagesFolder(activities) {
+  ensureImportImagesDir();
+  const files = fs.readdirSync(IMPORT_IMAGES_DIR, { withFileTypes: true });
   let processedCount = 0;
 
   for (const fileEntry of files) {
@@ -271,6 +418,26 @@ function processImageParseFolder(activities) {
     }
 
     const baseName = fileName.slice(0, fileName.length - ext.length);
+    const srcPath = path.join(IMPORT_IMAGES_DIR, fileName);
+
+    // 1. Check if filename matches an activity folder name directly (Topic Icon)
+    const matchedIconActivity = activities.find(
+      act => act.folderName.toLowerCase() === baseName.toLowerCase() ||
+             act.normFolder === normalize(baseName)
+    );
+
+    if (matchedIconActivity) {
+      const destIconName = `icon-${matchedIconActivity.folderName}${ext}`;
+      const destPath = path.join(matchedIconActivity.folderPath, destIconName);
+      fs.copyFileSync(srcPath, destPath);
+      fs.unlinkSync(srcPath);
+      matchedIconActivity.iconFile = destIconName;
+      processedCount++;
+      console.log(`Parsed topic icon: ${fileName} -> topics/${matchedIconActivity.folderName}/${destIconName}`);
+      continue;
+    }
+
+    // 2. Otherwise handle as gallery image: <identifier>-<imagename>.<ext>
     let identifier = '';
     let imageNameWithoutId = '';
     const matchSep = baseName.match(/^([a-zA-Z0-9]+)[-_\s](.+)$/);
@@ -281,7 +448,7 @@ function processImageParseFolder(activities) {
     } else {
       const dashIndex = baseName.indexOf('-');
       if (dashIndex <= 0 || dashIndex === baseName.length - 1) {
-        console.warn(`Skipping "${fileName}": filename must be in format "<identifier>-<imagename>${ext}".`);
+        console.warn(`Skipping "${fileName}": filename must match topic name or format "<identifier>-<imagename>${ext}".`);
         continue;
       }
       identifier = baseName.slice(0, dashIndex);
@@ -300,9 +467,7 @@ function processImageParseFolder(activities) {
     const targetImagesDir = path.join(matchedActivity.folderPath, 'images');
     fs.mkdirSync(targetImagesDir, { recursive: true });
 
-    const srcPath = path.join(IMAGEPARSE_DIR, fileName);
     const destPath = path.join(targetImagesDir, newFileName);
-
     fs.copyFileSync(srcPath, destPath);
     fs.unlinkSync(srcPath);
     matchedActivity.recordedTitles[newFileName] = recordedTitle;
@@ -312,45 +477,124 @@ function processImageParseFolder(activities) {
   }
 
   if (processedCount === 0) {
-    console.log('No new matching images to process in /imageparse.');
+    console.log('No new matching images to process in /import-images.');
   }
 }
 
-function buildSection1Html(activity, imageFiles) {
-  const i18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
-  const thumbsHtml = imageFiles
-    .map(file => {
-      const ext = path.extname(file);
-      const base = file.slice(0, file.length - ext.length);
-      const prefix = `${activity.lang}-${activity.folderName}-`;
-      const rawSlug = base.startsWith(prefix) ? base.slice(prefix.length) : base;
-      const recordedTitle =
-        (activity.recordedTitles && activity.recordedTitles[file]) ||
-        formatImageTitle(rawSlug);
-      const safeAlt = recordedTitle.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-      return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n        </div>`;
-    })
-    .join('\n');
+function parseAndSyncImportTextDpod(activities) {
+  if (!fs.existsSync(IMPORT_TEXT_DIR)) {
+    fs.mkdirSync(IMPORT_TEXT_DIR, { recursive: true });
+  }
 
-  return `    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
-        <span class="section-num">1</span> ${i18n.sectionTitle}
-      </a>
-      <span class="section-action-hint">${i18n.actionHint}</span>
-    </h2>
+  const topicQuestions = {};
+  if (fs.existsSync(IMPORT_DPOD_PATH)) {
+    const content = fs.readFileSync(IMPORT_DPOD_PATH, 'utf8');
+    const lines = content.split(/\r?\n/);
+    let currentTopic = null;
 
-    <section class="images-section" id="images-section">
-      <div class="images-grid">
-${thumbsHtml}
-      </div>
-    </section>`;
+    for (const rawLine of lines) {
+      const line = rawLine.trim();
+      const topicMatch = line.match(/^##\s+([a-zA-Z0-9_\-]+)/);
+      if (topicMatch) {
+        currentTopic = topicMatch[1].toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (!topicQuestions[currentTopic]) {
+          topicQuestions[currentTopic] = [];
+        }
+      } else if (currentTopic) {
+        if (line.length > 5) {
+          topicQuestions[currentTopic].push(line);
+        }
+      }
+    }
+  }
+
+  // Rescan activities in most recent first order and rewrite import.dpod.txt
+  const blocks = [];
+  for (const activity of activities) {
+    const folder = activity.folderName;
+    const questions = topicQuestions[folder] || [];
+    if (questions.length > 0) {
+      blocks.push(`## ${folder}\n\n${questions.join('\n')}`);
+    } else {
+      blocks.push(`## ${folder}\n`);
+    }
+  }
+
+  const newDpodContent = blocks.join('\n\n') + '\n';
+  fs.writeFileSync(IMPORT_DPOD_PATH, newDpodContent, 'utf8');
+  console.log('Synced import-text/import.dpod.txt with all current topics.');
+
+  return topicQuestions;
 }
-const buildSection5Html = buildSection1Html;
 
-const SECTION_5_CSS = `
+const SECTION_QUESTIONS_CSS = `
     /* =========================================================
-       SECTION 5: IMAGES & FULLSCREEN LIGHTBOX
+       SECTION 1: QUESTIONS FOR TEACHER
+       ========================================================= */
+    .teacher-questions-section {
+      margin-top: 14px;
+      margin-bottom: 28px;
+    }
+
+    .teacher-questions-card {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      padding: 18px 24px;
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.04);
+    }
+
+    .teacher-questions-list {
+      list-style-type: disc;
+      padding-left: 22px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .teacher-questions-list li {
+      font-family: var(--font-body);
+      font-size: 16.5px;
+      line-height: 1.6;
+      color: var(--ink-main);
+    }
+`;
+
+const TOPIC_HEADER_ICON_CSS = `
+    /* Topic Header Icon */
+    .topic-header-icon-wrap {
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-sheet);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    .topic-header-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 680px) {
+      .topic-header-icon-wrap {
+        margin: 8px auto 4px auto;
+        width: 60px;
+        height: 60px;
+      }
+    }
+`;
+
+const SECTION_IMAGES_CSS = `
+    /* =========================================================
+       IMAGES & FULLSCREEN LIGHTBOX
        ========================================================= */
     .images-section {
       margin-top: 18px;
@@ -472,7 +716,7 @@ const SECTION_5_CSS = `
     }
 `;
 
-const SECTION_5_LIGHTBOX_HTML = `
+const SECTION_LIGHTBOX_HTML = `
   <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
     <div class="image-lightbox-stage" id="image-lightbox-stage">
@@ -481,9 +725,9 @@ const SECTION_5_LIGHTBOX_HTML = `
     </div>
   </div>`;
 
-const SECTION_5_JS = `
+const SECTION_LIGHTBOX_JS = `
     // =========================================================
-    // SECTION 5: IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
     // =========================================================
     let lbScale = 1;
     let lbTranslateX = 0;
@@ -586,7 +830,6 @@ const SECTION_5_JS = `
         const overlay = document.getElementById('image-lightbox');
         if (!overlay) return;
 
-        // Desktop mouse wheel / trackpad zoom toward cursor (unlimited / up to 50x)
         overlay.addEventListener('wheel', (e) => {
           if (!overlay.classList.contains('active')) return;
           e.preventDefault();
@@ -610,77 +853,11 @@ const SECTION_5_JS = `
           applyLightboxTransform();
         }, { passive: false });
 
-        // Desktop click-and-drag pan when zoomed in (or caption text selection)
-        overlay.addEventListener('mousedown', (e) => {
-          if (e.button !== 0 || !overlay.classList.contains('active')) return;
-          if (e.target && e.target.closest('.image-lightbox-caption')) {
-            lbSelectingCaption = true;
-            lbPanStartX = e.clientX;
-            lbPanStartY = e.clientY;
-            return;
-          }
-          lbSelectingCaption = false;
-          lbMouseDown = true;
-          lbGestureMoved = false;
-          lbPanStartX = e.clientX;
-          lbPanStartY = e.clientY;
-          lbLastMouseX = e.clientX;
-          lbLastMouseY = e.clientY;
-          if (lbScale > 1.01) {
-            overlay.classList.add('is-panning');
-          }
-        });
-
-        window.addEventListener('mousemove', (e) => {
-          if (!lbMouseDown) return;
-          const curX = e.clientX;
-          const curY = e.clientY;
-          if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 5) {
-            lbGestureMoved = true;
-          }
-          if (lbScale > 1.01 && lbGestureMoved) {
-            e.preventDefault();
-            lbTranslateX += (curX - lbLastMouseX);
-            lbTranslateY += (curY - lbLastMouseY);
-            lbLastMouseX = curX;
-            lbLastMouseY = curY;
-            applyLightboxTransform();
-          }
-        });
-
-        window.addEventListener('mouseup', (e) => {
-          if (lbSelectingCaption) {
-            lbSelectingCaption = false;
-            lbIgnoreNextClick = true;
-            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
-            return;
-          }
-          if (
-            overlay.classList.contains('active') &&
-            window.getSelection &&
-            window.getSelection().toString().trim().length > 0 &&
-            Math.hypot(e.clientX - lbPanStartX, e.clientY - lbPanStartY) > 4
-          ) {
-            lbIgnoreNextClick = true;
-            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
-          }
-          if (!lbMouseDown) return;
-          lbMouseDown = false;
-          overlay.classList.remove('is-panning');
-          if (lbGestureMoved) {
-            lbIgnoreNextClick = true;
-            setTimeout(() => { lbIgnoreNextClick = false; }, 250);
-          }
-        });
-
         overlay.addEventListener('touchstart', (e) => {
-          if (e.target && e.target.closest('.image-lightbox-caption')) {
-            lbSelectingCaption = true;
-            return;
-          }
-          lbSelectingCaption = false;
+          if (!overlay.classList.contains('active')) return;
           if (e.touches.length === 2) {
-            lbGestureMoved = true;
+            e.preventDefault();
+            lbGestureMoved = false;
             const dx = e.touches[0].clientX - e.touches[1].clientX;
             const dy = e.touches[0].clientY - e.touches[1].clientY;
             lbPinchStartDist = Math.hypot(dx, dy);
@@ -688,15 +865,16 @@ const SECTION_5_JS = `
             lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
             lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
           } else if (e.touches.length === 1) {
-            lbGestureMoved = false;
             lbPanStartX = e.touches[0].clientX;
             lbPanStartY = e.touches[0].clientY;
             lbLastTouchX = e.touches[0].clientX;
             lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
           }
-        }, { passive: true });
+        }, { passive: false });
 
         overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
           if (e.touches.length === 2 && lbPinchStartDist > 0) {
             e.preventDefault();
             lbGestureMoved = true;
@@ -759,168 +937,422 @@ const SECTION_5_JS = `
     })();
 `;
 
+function buildSectionQuestionsHtml(activity, questions) {
+  const i18n = SECTION_QUESTIONS_I18N[activity.lang] || SECTION_QUESTIONS_I18N.es;
+  const listItems = questions
+    .map(q => {
+      const safeQ = q.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return `          <li>${safeQ}</li>`;
+    })
+    .join('\n');
+
+  return `    <!-- SECTION 1: QUESTIONS FOR TEACHER -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
+        <span class="section-num">1</span> ${i18n.sectionTitle}
+      </a>
+      <span class="section-action-hint">${i18n.actionHint}</span>
+    </h2>
+
+    <section class="teacher-questions-section" id="teacher-questions-section">
+      <div class="teacher-questions-card">
+        <ul class="teacher-questions-list">
+${listItems}
+        </ul>
+      </div>
+    </section>`;
+}
+
+function buildSectionImagesHtml(activity, imageFiles, sectionNum) {
+  const i18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
+  const thumbsHtml = imageFiles
+    .map(file => {
+      const ext = path.extname(file);
+      const base = file.slice(0, file.length - ext.length);
+      const prefix = `${activity.lang}-${activity.folderName}-`;
+      const rawSlug = base.startsWith(prefix) ? base.slice(prefix.length) : base;
+      const recordedTitle =
+        (activity.recordedTitles && activity.recordedTitles[file]) ||
+        formatImageTitle(rawSlug);
+      const safeAlt = recordedTitle.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n        </div>`;
+    })
+    .join('\n');
+
+  return `    <!-- SECTION ${sectionNum}: IMAGES -->
+    <h2 class="section-title" id="seccion-${sectionNum}">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
+        <span class="section-num">${sectionNum}</span> ${i18n.sectionTitle}
+      </a>
+      <span class="section-action-hint">${i18n.actionHint}</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="images-grid">
+${thumbsHtml}
+      </div>
+    </section>`;
+}
+
 function ensureLightboxAssets(html) {
   let out = html;
   if (!out.includes('.image-lightbox-overlay')) {
-    out = out.replace('</style>', `${SECTION_5_CSS}  </style>`);
+    out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
   }
   if (!out.includes('id="image-lightbox"')) {
     out = out.replace(
       /(<div class="vocab-dim-overlay"[^>]*><\/div>)/,
-      `$1\n${SECTION_5_LIGHTBOX_HTML}`
+      `$1\n${SECTION_LIGHTBOX_HTML}`
     );
   } else if (!out.includes('id="image-lightbox-caption"')) {
     out = out.replace(
       /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?<\/div>/,
-      SECTION_5_LIGHTBOX_HTML.trim()
+      SECTION_LIGHTBOX_HTML.trim()
     );
   }
   if (!out.includes('function openImageLightbox')) {
-    out = out.replace('</script>', `${SECTION_5_JS}\n  </script>`);
+    out = out.replace('</script>', `${SECTION_LIGHTBOX_JS}\n  </script>`);
   }
   return out;
 }
 
-function updateActivityHtmlForImages(activity) {
-  const imagesDir = path.join(activity.folderPath, 'images');
-  let imageFiles = [];
-  if (fs.existsSync(imagesDir)) {
-    const rawFiles = fs
-      .readdirSync(imagesDir)
-      .filter(f => SUPPORTED_EXTS.has(path.extname(f).toLowerCase()));
-
-    const prefix = `${activity.lang}-${activity.folderName}-`;
-    for (const file of rawFiles) {
-      const ext = path.extname(file);
-      const base = file.slice(0, file.length - ext.length);
-      if (base.startsWith(prefix)) {
-        const rawSlug = base.slice(prefix.length);
-        const cleanedSlug = cleanImageSlug(rawSlug);
-        if (cleanedSlug && (cleanedSlug !== rawSlug || file !== `${prefix}${cleanedSlug}${ext.toLowerCase()}`)) {
-          const newFile = `${prefix}${cleanedSlug}${ext}`.toLowerCase();
-          const oldPath = path.join(imagesDir, file);
-          const newPath = path.join(imagesDir, newFile);
-          if (oldPath.toLowerCase() === newPath.toLowerCase() || !fs.existsSync(newPath)) {
-            fs.renameSync(oldPath, newPath);
-          } else {
-            fs.unlinkSync(oldPath);
-          }
-          if (!activity.recordedTitles[newFile]) {
-            activity.recordedTitles[newFile] = formatImageTitle(rawSlug);
-          }
-          imageFiles.push(newFile);
-          continue;
-        }
-      }
-      imageFiles.push(file);
+function updateAllSectionHeadings(html, nums) {
+  return html.replace(/<h2 class="section-title"[^>]*>[\s\S]*?<\/h2>/g, (headingHtml) => {
+    // 1. Questions for teacher
+    if (headingHtml.includes('Preguntas para el profesor') || headingHtml.includes('Questions for the Teacher') || headingHtml.includes('revisar en clase')) {
+      if (!nums.questionsNum) return headingHtml;
+      return headingHtml
+        .replace(/id="seccion-\d+"/, `id="seccion-${nums.questionsNum}"`)
+        .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.questionsNum}</span>`);
     }
-    imageFiles.sort((a, b) => a.localeCompare(b));
-  }
 
+    // 2. Images
+    if (headingHtml.includes('Imágenes') || headingHtml.includes('Images') || headingHtml.includes('clic para ampliar') || headingHtml.includes('click to enlarge')) {
+      if (!nums.imagesNum) return headingHtml;
+      return headingHtml
+        .replace(/id="seccion-\d+"/, `id="seccion-${nums.imagesNum}"`)
+        .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.imagesNum}</span>`);
+    }
+
+    // 3. Reading
+    if (headingHtml.includes('leer en voz alta') || headingHtml.includes('read aloud') || headingHtml.includes('Lectura') || headingHtml.includes('Reading')) {
+      return headingHtml
+        .replace(/id="seccion-\d+"/, `id="seccion-${nums.readingNum}"`)
+        .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.readingNum}</span>`);
+    }
+
+    // 4. Vocabulary
+    if (headingHtml.includes('arrastrar y soltar') || headingHtml.includes('drag and drop') || headingHtml.includes('Vocabulario') || headingHtml.includes('Vocabulary')) {
+      return headingHtml
+        .replace(/id="seccion-\d+"/, `id="seccion-${nums.vocabNum}"`)
+        .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.vocabNum}</span>`);
+    }
+
+    // 5. Quiz / Comprehension
+    if (headingHtml.includes('opción múltiple') || headingHtml.includes('multiple choice') || headingHtml.includes('Comprensión') || headingHtml.includes('Comprehension')) {
+      return headingHtml
+        .replace(/id="seccion-\d+"/, `id="seccion-${nums.quizNum}"`)
+        .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.quizNum}</span>`);
+    }
+
+    // 6. Discussion / Open Questions
+    if (headingHtml.includes('responder y debatir') || headingHtml.includes('answer and discuss') || headingHtml.includes('abiertas')) {
+      return headingHtml
+        .replace(/id="seccion-\d+"/, `id="seccion-${nums.discussNum}"`)
+        .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.discussNum}</span>`);
+    }
+
+    return headingHtml;
+  });
+}
+
+function updateActivityHtml(activity, questions, imageFiles) {
   const originalHtml = fs.readFileSync(activity.indexPath, 'utf8');
   let html = originalHtml;
-  const i18n = SECTION_5_I18N[activity.lang] || SECTION_5_I18N.es;
 
-  // Check if any previously referenced images in Section 5 were deleted from /images
-  const existingImgMatches = Array.from(
-    originalHtml.matchAll(/<img\s+src="images\/([^"]+)"/g),
-    m => m[1]
-  );
-  const currentImgSet = new Set(imageFiles);
-  for (const oldImg of existingImgMatches) {
-    if (!currentImgSet.has(oldImg)) {
-      console.log(
-        `Removed deleted image from topics/${activity.folderName}/index.html: images/${oldImg}`
-      );
+  const hasQuestions = questions && questions.length > 0;
+  const hasImages = imageFiles && imageFiles.length > 0;
+
+  // 1. Topic Header Icon synchronization
+  if (activity.iconFile) {
+    if (!html.includes('.topic-header-icon-wrap')) {
+      html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
     }
-  }
-
-  const legacySection5Regex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/i;
-  html = html.replace(legacySection5Regex, '');
-
-  const section1Regex = /[ \t]*<!-- SECTION 1: IMAGES -->[\s\S]*?<\/section>\s*/i;
-  const existingSection1Regex = /([ \t]*<h2[^>]*id="seccion-1"[^>]*>[\s\S]*?<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*)/i;
-
-  if (imageFiles.length > 0) {
-    html = ensureLightboxAssets(html);
-    const imagesBlock = buildSection1Html(activity, imageFiles) + '\n\n';
-
-    if (section1Regex.test(html)) {
-      html = html.replace(section1Regex, imagesBlock);
-    } else if (existingSection1Regex.test(html)) {
-      html = html.replace(existingSection1Regex, imagesBlock);
+    const iconTag = `<div class="topic-header-icon-wrap">\n          <img src="${activity.iconFile}" alt="${activity.title}" class="topic-header-icon">\n        </div>`;
+    if (html.includes('class="topic-header-icon-wrap"')) {
+      html = html.replace(/<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/, iconTag.trim());
     } else {
-      // First time adding images: renumber existing sections 1..4 to 2..5
-      html = html.replace(/<span class="section-num">4<\/span>/g, '<span class="section-num">5</span>');
-      html = html.replace(/id="seccion-4"/g, 'id="seccion-5"');
-      html = html.replace(/href="#seccion-4"/g, 'href="#seccion-5"');
-
-      html = html.replace(/<span class="section-num">3<\/span>/g, '<span class="section-num">4</span>');
-      html = html.replace(/id="seccion-3"/g, 'id="seccion-4"');
-      html = html.replace(/href="#seccion-3"/g, 'href="#seccion-4"');
-
-      html = html.replace(/<span class="section-num">2<\/span>/g, '<span class="section-num">3</span>');
-      html = html.replace(/id="seccion-2"/g, 'id="seccion-3"');
-      html = html.replace(/href="#seccion-2"/g, 'href="#seccion-3"');
-
-      html = html.replace(/<span class="section-num">1<\/span>/g, '<span class="section-num">2</span>');
-      html = html.replace(/id="seccion-1"/g, 'id="seccion-2"');
-      html = html.replace(/href="#seccion-1"/g, 'href="#seccion-2"');
-
-      // Update jump-nav
       html = html.replace(
-        /(<nav class="jump-nav"[^>]*>[\s\S]*?)(<a href="#seccion-2")/,
-        `$1<a href="#seccion-1" class="jump-num" title="${i18n.jumpTitle}">1</a>\n        $2`
+        /(<div class="stamp-badge")/,
+        `${iconTag}\n        $1`
       );
-
-      // Insert images section before Section 2
-      const seccion2Marker = /(<!-- (?:SECTION 2|Section 2):|<h2 class="section-title" id="seccion-2">|<section>\s*<h2 class="section-title" id="seccion-2">)/;
-      if (seccion2Marker.test(html)) {
-        html = html.replace(seccion2Marker, `${imagesBlock}$1`);
-      } else {
-        html = html.replace(/(<\/header>\s*)/, `$1\n${imagesBlock}`);
-      }
     }
   } else {
-    // If no images exist, clean up Section 1 images if present
-    if (section1Regex.test(html) || existingSection1Regex.test(html)) {
-      html = html.replace(section1Regex, '');
-      html = html.replace(existingSection1Regex, '');
-      html = html.replace(/\s*<a href="#seccion-1"[^>]*>1<\/a>/g, '');
+    html = html.replace(/\s*<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
+  }
 
-      html = html.replace(/<span class="section-num">2<\/span>/g, '<span class="section-num">1</span>');
-      html = html.replace(/id="seccion-2"/g, 'id="seccion-1"');
-      html = html.replace(/href="#seccion-2"/g, 'href="#seccion-1"');
+  // 2. CSS synchronization
+  if (hasQuestions && !html.includes('.teacher-questions-card')) {
+    html = html.replace('</style>', `${SECTION_QUESTIONS_CSS}  </style>`);
+  }
+  if (hasImages) {
+    html = ensureLightboxAssets(html);
+  }
 
-      html = html.replace(/<span class="section-num">3<\/span>/g, '<span class="section-num">2</span>');
-      html = html.replace(/id="seccion-3"/g, 'id="seccion-2"');
-      html = html.replace(/href="#seccion-3"/g, 'href="#seccion-2"');
+  // 3. Strip any existing Questions and Images sections so core sections (Reading, Vocab, Quiz, Discuss) can be cleanly placed
+  const questionsSectionRegex = /[ \t]*(?:<!-- SECTION \d+: QUESTIONS FOR TEACHER -->\s*)?<h2 class="section-title" id="seccion-\d+">[\s\S]*?<section class="teacher-questions-section" id="teacher-questions-section">[\s\S]*?<\/section>\s*/i;
+  html = html.replace(questionsSectionRegex, '');
 
-      html = html.replace(/<span class="section-num">4<\/span>/g, '<span class="section-num">3</span>');
-      html = html.replace(/id="seccion-4"/g, 'id="seccion-3"');
-      html = html.replace(/href="#seccion-4"/g, 'href="#seccion-3"');
+  const imagesSectionRegex = /[ \t]*(?:<!-- SECTION \d+: IMAGES -->\s*)?<h2 class="section-title" id="seccion-\d+">[\s\S]*?<section class="images-section" id="images-section">[\s\S]*?<\/section>\s*/i;
+  const legacyImagesRegex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/i;
+  html = html.replace(imagesSectionRegex, '');
+  html = html.replace(legacyImagesRegex, '');
 
-      html = html.replace(/<span class="section-num">5<\/span>/g, '<span class="section-num">4</span>');
-      html = html.replace(/id="seccion-5"/g, 'id="seccion-4"');
-      html = html.replace(/href="#seccion-5"/g, 'href="#seccion-4"');
+  // 4. Calculate section numbering
+  let currentNum = 1;
+  let questionsNum = null;
+  let imagesNum = null;
+
+  if (hasQuestions) {
+    questionsNum = currentNum++;
+  }
+  if (hasImages) {
+    imagesNum = currentNum++;
+  }
+
+  const readingNum = currentNum++;
+  const vocabNum = currentNum++;
+  const quizNum = currentNum++;
+  const discussNum = currentNum++;
+  const totalSections = discussNum;
+
+  // 5. Update Jump Navigation
+  const jumpLinks = [];
+  const qI18n = SECTION_QUESTIONS_I18N[activity.lang] || SECTION_QUESTIONS_I18N.es;
+  const imgI18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
+  const readingTitle = SECTION_READING_I18N[activity.lang] || SECTION_READING_I18N.es;
+  const vocabTitle = SECTION_VOCAB_I18N[activity.lang] || SECTION_VOCAB_I18N.es;
+  const quizTitle = SECTION_QUIZ_I18N[activity.lang] || SECTION_QUIZ_I18N.es;
+  const discussTitle = SECTION_DISCUSS_I18N[activity.lang] || SECTION_DISCUSS_I18N.es;
+
+  if (hasQuestions) {
+    jumpLinks.push(`<a href="#seccion-${questionsNum}" class="jump-num" title="${qI18n.jumpTitle}">${questionsNum}</a>`);
+  }
+  if (hasImages) {
+    jumpLinks.push(`<a href="#seccion-${imagesNum}" class="jump-num" title="${imgI18n.jumpTitle.replace('{N}', imagesNum)}">${imagesNum}</a>`);
+  }
+  jumpLinks.push(`<a href="#seccion-${readingNum}" class="jump-num" title="Ir a Sección ${readingNum}: ${readingTitle}">${readingNum}</a>`);
+  jumpLinks.push(`<a href="#seccion-${vocabNum}" class="jump-num" title="Ir a Sección ${vocabNum}: ${vocabTitle}">${vocabNum}</a>`);
+  jumpLinks.push(`<a href="#seccion-${quizNum}" class="jump-num" title="Ir a Sección ${quizNum}: ${quizTitle}">${quizNum}</a>`);
+  jumpLinks.push(`<a href="#seccion-${discussNum}" class="jump-num" title="Ir a Sección ${discussNum}: ${discussTitle}">${discussNum}</a>`);
+
+  const jumpNavHtml = `<nav class="jump-nav" aria-label="Navegación de secciones">\n        ${jumpLinks.join('\n        ')}\n      </nav>`;
+  html = html.replace(/<nav class="jump-nav"[^>]*>[\s\S]*?<\/nav>/i, jumpNavHtml);
+
+  // 6. Build and inject Questions and Images blocks before Reading
+  let prefixBlocks = '';
+  if (hasQuestions) {
+    prefixBlocks += buildSectionQuestionsHtml(activity, questions) + '\n\n';
+  }
+  if (hasImages) {
+    prefixBlocks += buildSectionImagesHtml(activity, imageFiles, imagesNum) + '\n\n';
+  }
+
+  // Find the start of Reading section (e.g. <!-- SECTION ...: READING or <h2 class="section-title" id="seccion-...)
+  const readingMarkerRegex = /(<!-- (?:SECTION|Section) \d+: (?:READING|Reading)[\s\S]*?-->\s*<section>|<!-- (?:SECTION|Section) \d+: (?:READING|Reading)[\s\S]*?-->|<section>\s*<h2 class="section-title"[^>]*>|<h2 class="section-title"[^>]*>[\s\S]*?(?:Lectura|Reading|Lesetext))/i;
+  if (prefixBlocks) {
+    if (readingMarkerRegex.test(html)) {
+      html = html.replace(readingMarkerRegex, `${prefixBlocks}$1`);
+    } else {
+      html = html.replace(/(<\/header>\s*)/, `$1\n${prefixBlocks}`);
     }
   }
+
+  // 7. Update all section headings accurately
+  html = updateAllSectionHeadings(html, {
+    questionsNum,
+    imagesNum,
+    readingNum,
+    vocabNum,
+    quizNum,
+    discussNum
+  });
+
+  // 8. Update sticky jump nav logic for dynamic last section href
+  html = html.replace(
+    /stickyLinks\.some\([^)]*=== ['"]#seccion-\d+['"]\)/g,
+    `stickyLinks.some(l => l.getAttribute('href') === stickyLinks[stickyLinks.length - 1]?.getAttribute('href'))`
+  );
+  html = html.replace(
+    /activeHref = ['"]#seccion-\d+['"];/g,
+    `activeHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');`
+  );
+  html = html.replace(
+    /if \(href === '#seccion-1' \|\| href === '#seccion-\d+'\)/g,
+    `const lastHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');\n        if (href === '#seccion-1' || (lastHref && href === lastHref))`
+  );
 
   if (html !== originalHtml) {
     fs.writeFileSync(activity.indexPath, html, 'utf8');
     console.log(
-      `Updated Section 1 Images in topics/${activity.folderName}/index.html (${imageFiles.length} image${imageFiles.length === 1 ? '' : 's'}).`
+      `Updated topics/${activity.folderName}/index.html (Sections: ${totalSections}, Questions: ${hasQuestions ? questions.length : 0}, Images: ${hasImages ? imageFiles.length : 0}, Icon: ${activity.iconFile ? 'yes' : 'no'}).`
     );
   }
 }
 
+function updateCatalogHtmlForIcons(activities) {
+  const rootIndexPath = path.join(ROOT_DIR, 'index.html');
+  if (!fs.existsSync(rootIndexPath)) return;
+
+  const originalHtml = fs.readFileSync(rootIndexPath, 'utf8');
+  let html = originalHtml;
+
+  // Ensure card flex layout and icon styling exist in index.html
+  if (!html.includes('.activity-card-icon-wrap')) {
+    const catalogIconCss = `
+    .activity-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .activity-card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-card-icon-wrap {
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-bg);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .activity-card-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 680px) {
+      .activity-card {
+        padding: 16px;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .activity-card-icon-wrap {
+        width: 58px;
+        height: 58px;
+      }
+    }
+`;
+    html = html.replace('</style>', `${catalogIconCss}  </style>`);
+  }
+
+  for (const activity of activities) {
+    const cardRegex = new RegExp(
+      `(<article class="activity-card"[^>]*onclick="openCard\\('topics\\/${activity.folderName}\\/index\\.html'[^>]*>)([\\s\\S]*?)(<\\/article>)`,
+      'i'
+    );
+    const cardMatch = html.match(cardRegex);
+    if (!cardMatch) continue;
+
+    let innerContent = cardMatch[2];
+
+    if (activity.iconFile) {
+      const iconPath = `topics/${activity.folderName}/${activity.iconFile}`;
+      const iconWrap = `\n        <div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${activity.title}" class="activity-card-icon" loading="lazy">\n        </div>`;
+
+      // Check if already has .activity-card-body and .activity-card-icon-wrap
+      if (innerContent.includes('class="activity-card-icon-wrap"')) {
+        innerContent = innerContent.replace(
+          /<div class="activity-card-icon-wrap"[^>]*>[\s\S]*?<\/div>/,
+          iconWrap.trim()
+        );
+      } else if (innerContent.includes('class="activity-card-body"')) {
+        innerContent = innerContent + iconWrap;
+      } else {
+        innerContent = `\n        <div class="activity-card-body">${innerContent}\n        </div>${iconWrap}\n      `;
+      }
+    } else {
+      // Remove icon-wrap if no icon
+      innerContent = innerContent.replace(/\s*<div class="activity-card-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
+    }
+
+    html = html.replace(cardRegex, `$1${innerContent}$3`);
+  }
+
+  if (html !== originalHtml) {
+    fs.writeFileSync(rootIndexPath, html, 'utf8');
+    console.log('Updated topic icons in root index.html.');
+  }
+}
+
+function getTopicImageFiles(activity) {
+  const imagesDir = path.join(activity.folderPath, 'images');
+  if (!fs.existsSync(imagesDir)) return [];
+
+  const rawFiles = fs
+    .readdirSync(imagesDir)
+    .filter(f => SUPPORTED_EXTS.has(path.extname(f).toLowerCase()));
+
+  const prefix = `${activity.lang}-${activity.folderName}-`;
+  const imageFiles = [];
+
+  for (const file of rawFiles) {
+    const ext = path.extname(file);
+    const base = file.slice(0, file.length - ext.length);
+    if (base.startsWith(prefix)) {
+      const rawSlug = base.slice(prefix.length);
+      const cleanedSlug = cleanImageSlug(rawSlug);
+      if (cleanedSlug && (cleanedSlug !== rawSlug || file !== `${prefix}${cleanedSlug}${ext.toLowerCase()}`)) {
+        const newFile = `${prefix}${cleanedSlug}${ext}`.toLowerCase();
+        const oldPath = path.join(imagesDir, file);
+        const newPath = path.join(imagesDir, newFile);
+        if (oldPath.toLowerCase() === newPath.toLowerCase() || !fs.existsSync(newPath)) {
+          fs.renameSync(oldPath, newPath);
+        } else {
+          fs.unlinkSync(oldPath);
+        }
+        if (!activity.recordedTitles[newFile]) {
+          activity.recordedTitles[newFile] = formatImageTitle(rawSlug);
+        }
+        imageFiles.push(newFile);
+        continue;
+      }
+    }
+    imageFiles.push(file);
+  }
+
+  imageFiles.sort((a, b) => a.localeCompare(b));
+  return imageFiles;
+}
+
 function main() {
   ensureNoHyphenTopicDirs();
+  ensureImportImagesDir();
+
   const activities = loadActivities();
-  processImageParseFolder(activities);
+  processImportImagesFolder(activities);
+
+  const topicQuestions = parseAndSyncImportTextDpod(activities);
+
   for (const activity of activities) {
-    updateActivityHtmlForImages(activity);
+    const imageFiles = getTopicImageFiles(activity);
+    const questions = topicQuestions[activity.folderName] || [];
+    updateActivityHtml(activity, questions, imageFiles);
   }
+
+  updateCatalogHtmlForIcons(activities);
 }
 
 main();

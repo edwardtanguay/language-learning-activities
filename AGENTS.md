@@ -6,8 +6,9 @@ A platform for generating self-contained language learning activities and worksh
 
 - `index.html`: Root landing page and catalog listing all available activities.
 - `topics/<foldername>/index.html`: Individual self-contained activity pages (directory names use lowercase alphanumeric words without hyphens, e.g., `topics/colombia/`, `topics/regionsofecuador/`).
-- `imageparse/`: Staging folder where bulk images (e.g., `col-andes.jpg`, `ecu-beach.jpg`) are dropped before running `npm run pd`.
-- `scripts/parse-data.js`: Node script executed via `npm run pd` ("parse data") to match, rename, and move images from `imageparse/` into `topics/<foldername>/images/` and update Section 5 (`Imágenes`) on the activity pages.
+- `imageparse/` / `import-images/`: Staging folder where bulk images (e.g., `col-andes.jpg`, `volcanesecuador.jpg`) are dropped before running `npm run pd`.
+- `import-text/import.dpod.txt`: Text file where custom questions for the teacher are noted under `## <topic-code>` before running `npm run pd`.
+- `scripts/parse-data.js`: Node script executed via `npm run pd` ("parse data") to match, rename, and move images from `import-images/` into `topics/<foldername>/images/`, set topic icons (`icon-<topic>.<ext>`), sync questions from `import-text/import.dpod.txt`, and update section numbering on the activity pages and catalog.
 - `README.md`: Guide for language students and creators on using, personalizing, and publishing activities.
 - `.agents/skills/`: Agent skills defining specific creation workflows (e.g., `/create-text-and-multiple-choice`).
 
@@ -53,8 +54,9 @@ Each activity lives in `topics/<foldername>/index.html`:
   - Desktop retains standard instant navigation without sliding transitions.
 - **Section Numbering, Title Link to Top & Right-Side Action Hints**:
   - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, etc.):
-    - **When images exist**: Section 1 is Imágenes (`clic para ampliar`), Section 2 is Lectura (`leer en voz alta`), Section 3 is Vocabulario (`arrastrar y soltar`), Section 4 is Comprensión (`opción múltiple`), Section 5 is Preguntas abiertas (`responder y debatir`).
-    - **When no images exist**: Section 1 is Lectura (`leer en voz alta`), Section 2 is Vocabulario (`arrastrar y soltar`), Section 3 is Comprensión (`opción múltiple`), Section 4 is Preguntas abiertas (`responder y debatir`).
+    - **When teacher questions exist**: Section 1 is Preguntas para el profesor (`revisar en clase`), followed by Section 2 Imágenes (`clic para ampliar`, if present), Section 3 Lectura (`leer en voz alta`), Section 4 Vocabulario (`arrastrar y soltar`), Section 5 Comprensión (`opción múltiple`), Section 6 Preguntas abiertas (`responder y debatir`).
+    - **When images exist (without teacher questions)**: Section 1 is Imágenes (`clic para ampliar`), Section 2 is Lectura (`leer en voz alta`), Section 3 is Vocabulario (`arrastrar y soltar`), Section 4 is Comprensión (`opción múltiple`), Section 5 is Preguntas abiertas (`responder y debatir`).
+    - **When neither images nor teacher questions exist**: Section 1 is Lectura (`leer en voz alta`), Section 2 is Vocabulario (`arrastrar y soltar`), Section 3 is Comprensión (`opción múltiple`), Section 4 is Preguntas abiertas (`responder y debatir`).
   - Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside the comprehension quiz are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page without adding `#top` to the URL bar.
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language.

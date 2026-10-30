@@ -1788,6 +1788,67 @@
       opacity: 0;
       pointer-events: none;
     }
+  
+    /* Topic Header Icon */
+    .topic-header-icon-wrap {
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-sheet);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    .topic-header-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 680px) {
+      .topic-header-icon-wrap {
+        margin: 8px auto 4px auto;
+        width: 60px;
+        height: 60px;
+      }
+    }
+  
+    /* =========================================================
+       SECTION 1: QUESTIONS FOR TEACHER
+       ========================================================= */
+    .teacher-questions-section {
+      margin-top: 14px;
+      margin-bottom: 28px;
+    }
+
+    .teacher-questions-card {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      padding: 18px 24px;
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.04);
+    }
+
+    .teacher-questions-list {
+      list-style-type: disc;
+      padding-left: 22px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .teacher-questions-list li {
+      font-family: var(--font-body);
+      font-size: 16.5px;
+      line-height: 1.6;
+      color: var(--ink-main);
+    }
   </style>
 </head>
 <body>
@@ -1823,6 +1884,9 @@
         <div class="handout-title-group">
           <h1>Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina</h1>
         </div>
+        <div class="topic-header-icon-wrap">
+          <img src="icon-volcanesecuador.jpg" alt="Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina" class="topic-header-icon">
+        </div>
         <div class="stamp-badge">Español B1</div>
       </div>
       <p class="handout-subtitle">
@@ -1830,12 +1894,13 @@
       </p>
 
       <!-- Centered Jump Links -->
-      <nav class="jump-nav" aria-label="Enlaces rápidos de sección">
-        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Vocabulario">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
+      <nav class="jump-nav" aria-label="Navegación de secciones">
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Preguntas para el profesor">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Imágenes">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Vocabulario">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
 
       <!-- Roll-out / Roll-up Instructions Callout -->
@@ -1879,10 +1944,27 @@
       </div>
     </header>
 
-    <!-- SECTION 1: IMAGES -->
+    <!-- SECTION 1: QUESTIONS FOR TEACHER -->
     <h2 class="section-title" id="seccion-1">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
+        <span class="section-num">1</span> Preguntas para el profesor
+      </a>
+      <span class="section-action-hint">revisar en clase</span>
+    </h2>
+
+    <section class="teacher-questions-section" id="teacher-questions-section">
+      <div class="teacher-questions-card">
+        <ul class="teacher-questions-list">
+          <li>¿Es este un término que usarías? "su entrañable parce de Colombia"</li>
+          <li>¿Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha? ¿Y puedes verlo desde la ciudad de Quito?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION 2: IMAGES -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">2</span> Imágenes
       </a>
       <span class="section-action-hint">clic para ampliar</span>
     </h2>
@@ -1918,9 +2000,9 @@
 
 <!-- SECTION 2: READING PASSAGE -->
     <section>
-      <h2 class="section-title" id="seccion-2">
+      <h2 class="section-title" id="seccion-3">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">2</span> Lectura
+          <span class="section-num">3</span> Lectura
         </a>
         <span class="section-action-hint">leer en voz alta</span>
       </h2>
@@ -1951,9 +2033,9 @@
 
     <!-- SECTION 3: VOCABULARY -->
     <section class="vocab-section">
-      <h2 class="section-title" id="seccion-3">
+      <h2 class="section-title" id="seccion-4">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">3</span> Vocabulario
+          <span class="section-num">4</span> Vocabulario
         </a>
         <span class="section-action-hint">arrastrar y soltar</span>
       </h2>
@@ -1977,9 +2059,9 @@
 
     <!-- SECTION 4: COMPREHENSION QUIZ -->
     <section>
-      <h2 class="section-title" id="seccion-4">
+      <h2 class="section-title" id="seccion-5">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">4</span> Comprensión
+          <span class="section-num">5</span> Comprensión
         </a>
         <span class="section-action-hint">opción múltiple</span>
       </h2>
@@ -2179,9 +2261,9 @@
 
     <!-- SECTION 5: OPEN DISCUSSION QUESTIONS -->
     <section>
-      <h2 class="section-title" id="seccion-5">
+      <h2 class="section-title" id="seccion-6">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+          <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
         </a>
         <span class="section-action-hint">responder y debatir</span>
       </h2>
