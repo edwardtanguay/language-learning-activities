@@ -6,74 +6,75 @@ const TOPICS_DIR = path.join(ROOT_DIR, 'topics');
 const IMAGEPARSE_DIR = path.join(ROOT_DIR, 'imageparse');
 const SUPPORTED_EXTS = new Set(['.jpg', '.png', '.gif']);
 
-const SECTION_5_I18N = {
+const SECTION_IMAGES_I18N = {
   es: {
     sectionTitle: 'Imágenes',
     actionHint: 'clic para ampliar',
-    jumpTitle: 'Ir a Sección 5: Imágenes',
+    jumpTitle: 'Ir a Sección 1: Imágenes',
     topTitle: 'Volver al inicio'
   },
   en: {
     sectionTitle: 'Images',
     actionHint: 'click to enlarge',
-    jumpTitle: 'Go to Section 5: Images',
+    jumpTitle: 'Go to Section 1: Images',
     topTitle: 'Back to top'
   },
   de: {
     sectionTitle: 'Bilder',
     actionHint: 'zum Vergrößern klicken',
-    jumpTitle: 'Zu Abschnitt 5: Bilder',
+    jumpTitle: 'Zu Abschnitt 1: Bilder',
     topTitle: 'Nach oben'
   },
   fr: {
     sectionTitle: 'Images',
     actionHint: 'cliquer pour agrandir',
-    jumpTitle: 'Aller à la section 5 : Images',
+    jumpTitle: 'Aller à la section 1 : Images',
     topTitle: 'Retour en haut'
   },
   it: {
     sectionTitle: 'Immagini',
     actionHint: 'clicca per ingrandire',
-    jumpTitle: 'Vai alla sezione 5: Immagini',
+    jumpTitle: 'Vai alla sezione 1: Immagini',
     topTitle: 'Torna su'
   },
   nl: {
     sectionTitle: 'Afbeeldingen',
     actionHint: 'klik om te vergroten',
-    jumpTitle: 'Ga naar sectie 5: Afbeeldingen',
+    jumpTitle: 'Ga naar sectie 1: Afbeeldingen',
     topTitle: 'Terug naar boven'
   },
   pl: {
     sectionTitle: 'Obrazy',
     actionHint: 'kliknij, aby powiększyć',
-    jumpTitle: 'Przejdź do sekcji 5: Obrazy',
+    jumpTitle: 'Przejdź do sekcji 1: Obrazy',
     topTitle: 'Powrót na górę'
   },
   ru: {
     sectionTitle: 'Изображения',
     actionHint: 'нажмите для увеличения',
-    jumpTitle: 'Перейти к разделу 5: Изображения',
+    jumpTitle: 'Перейти к разделу 1: Изображения',
     topTitle: 'Наверх'
   },
   el: {
     sectionTitle: 'Εικόνες',
     actionHint: 'κλικ για μεγέθυνση',
-    jumpTitle: 'Μετάβαση στην ενότητα 5: Εικόνες',
+    jumpTitle: 'Μετάβαση στην ενότητα 1: Εικόνες',
     topTitle: 'Επιστροφή στην κορυφή'
   },
   is: {
     sectionTitle: 'Myndir',
     actionHint: 'smelltu til að stækka',
-    jumpTitle: 'Fara í kafla 5: Myndir',
+    jumpTitle: 'Fara í kafla 1: Myndir',
     topTitle: 'Fara efst'
   },
   da: {
     sectionTitle: 'Billeder',
     actionHint: 'klik for at forstørre',
-    jumpTitle: 'Gå til afsnit 5: Billeder',
+    jumpTitle: 'Gå til afsnit 1: Billeder',
     topTitle: 'Tilbage til toppen'
   }
 };
+const SECTION_5_I18N = SECTION_IMAGES_I18N;
 
 function normalize(str) {
   return String(str || '')
@@ -315,8 +316,8 @@ function processImageParseFolder(activities) {
   }
 }
 
-function buildSection5Html(activity, imageFiles) {
-  const i18n = SECTION_5_I18N[activity.lang] || SECTION_5_I18N.es;
+function buildSection1Html(activity, imageFiles) {
+  const i18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
   const thumbsHtml = imageFiles
     .map(file => {
       const ext = path.extname(file);
@@ -331,9 +332,11 @@ function buildSection5Html(activity, imageFiles) {
     })
     .join('\n');
 
-  return `    <!-- Section 5: Images -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}"><span class="section-num">5</span> ${i18n.sectionTitle}</a>
+  return `    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
+        <span class="section-num">1</span> ${i18n.sectionTitle}
+      </a>
       <span class="section-action-hint">${i18n.actionHint}</span>
     </h2>
 
@@ -343,6 +346,7 @@ ${thumbsHtml}
       </div>
     </section>`;
 }
+const buildSection5Html = buildSection1Html;
 
 const SECTION_5_CSS = `
     /* =========================================================
@@ -831,45 +835,81 @@ function updateActivityHtmlForImages(activity) {
     }
   }
 
-  const section5Regex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/;
-  const jump5Regex = /\s*<a href="#seccion-5"[^>]*>5<\/a>/g;
+  const legacySection5Regex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/i;
+  html = html.replace(legacySection5Regex, '');
+
+  const section1Regex = /[ \t]*<!-- SECTION 1: IMAGES -->[\s\S]*?<\/section>\s*/i;
+  const existingSection1Regex = /([ \t]*<h2[^>]*id="seccion-1"[^>]*>[\s\S]*?<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*)/i;
 
   if (imageFiles.length > 0) {
     html = ensureLightboxAssets(html);
+    const imagesBlock = buildSection1Html(activity, imageFiles) + '\n\n';
 
-    // 1. Ensure jump link 5 is in .jump-nav
-    if (!html.includes('href="#seccion-5"')) {
-      html = html.replace(
-        /(<a href="#seccion-4"[^>]*>4<\/a>)/,
-        `$1\n        <a href="#seccion-5" class="jump-num" title="${i18n.jumpTitle}">5</a>`
-      );
-    }
-
-    // 2. Insert or update Section 5 HTML
-    const section5Block = buildSection5Html(activity, imageFiles) + '\n\n';
-    if (section5Regex.test(html)) {
-      html = html.replace(section5Regex, section5Block);
+    if (section1Regex.test(html)) {
+      html = html.replace(section1Regex, imagesBlock);
+    } else if (existingSection1Regex.test(html)) {
+      html = html.replace(existingSection1Regex, imagesBlock);
     } else {
-      const bottomBarMarker = '    <!-- Bottom Actions / Navigation -->';
-      if (html.includes(bottomBarMarker)) {
-        html = html.replace(bottomBarMarker, `${section5Block}${bottomBarMarker}`);
+      // First time adding images: renumber existing sections 1..4 to 2..5
+      html = html.replace(/<span class="section-num">4<\/span>/g, '<span class="section-num">5</span>');
+      html = html.replace(/id="seccion-4"/g, 'id="seccion-5"');
+      html = html.replace(/href="#seccion-4"/g, 'href="#seccion-5"');
+
+      html = html.replace(/<span class="section-num">3<\/span>/g, '<span class="section-num">4</span>');
+      html = html.replace(/id="seccion-3"/g, 'id="seccion-4"');
+      html = html.replace(/href="#seccion-3"/g, 'href="#seccion-4"');
+
+      html = html.replace(/<span class="section-num">2<\/span>/g, '<span class="section-num">3</span>');
+      html = html.replace(/id="seccion-2"/g, 'id="seccion-3"');
+      html = html.replace(/href="#seccion-2"/g, 'href="#seccion-3"');
+
+      html = html.replace(/<span class="section-num">1<\/span>/g, '<span class="section-num">2</span>');
+      html = html.replace(/id="seccion-1"/g, 'id="seccion-2"');
+      html = html.replace(/href="#seccion-1"/g, 'href="#seccion-2"');
+
+      // Update jump-nav
+      html = html.replace(
+        /(<nav class="jump-nav"[^>]*>[\s\S]*?)(<a href="#seccion-2")/,
+        `$1<a href="#seccion-1" class="jump-num" title="${i18n.jumpTitle}">1</a>\n        $2`
+      );
+
+      // Insert images section before Section 2
+      const seccion2Marker = /(<!-- (?:SECTION 2|Section 2):|<h2 class="section-title" id="seccion-2">|<section>\s*<h2 class="section-title" id="seccion-2">)/;
+      if (seccion2Marker.test(html)) {
+        html = html.replace(seccion2Marker, `${imagesBlock}$1`);
       } else {
-        html = html.replace(
-          /([ \t]*<div class="bottom-actions-bar">)/,
-          `${section5Block}$1`
-        );
+        html = html.replace(/(<\/header>\s*)/, `$1\n${imagesBlock}`);
       }
     }
   } else {
-    // Remove jump link 5 and Section 5 if no images exist
-    html = html.replace(jump5Regex, '');
-    html = html.replace(section5Regex, '');
+    // If no images exist, clean up Section 1 images if present
+    if (section1Regex.test(html) || existingSection1Regex.test(html)) {
+      html = html.replace(section1Regex, '');
+      html = html.replace(existingSection1Regex, '');
+      html = html.replace(/\s*<a href="#seccion-1"[^>]*>1<\/a>/g, '');
+
+      html = html.replace(/<span class="section-num">2<\/span>/g, '<span class="section-num">1</span>');
+      html = html.replace(/id="seccion-2"/g, 'id="seccion-1"');
+      html = html.replace(/href="#seccion-2"/g, 'href="#seccion-1"');
+
+      html = html.replace(/<span class="section-num">3<\/span>/g, '<span class="section-num">2</span>');
+      html = html.replace(/id="seccion-3"/g, 'id="seccion-2"');
+      html = html.replace(/href="#seccion-3"/g, 'href="#seccion-2"');
+
+      html = html.replace(/<span class="section-num">4<\/span>/g, '<span class="section-num">3</span>');
+      html = html.replace(/id="seccion-4"/g, 'id="seccion-3"');
+      html = html.replace(/href="#seccion-4"/g, 'href="#seccion-3"');
+
+      html = html.replace(/<span class="section-num">5<\/span>/g, '<span class="section-num">4</span>');
+      html = html.replace(/id="seccion-5"/g, 'id="seccion-4"');
+      html = html.replace(/href="#seccion-5"/g, 'href="#seccion-4"');
+    }
   }
 
   if (html !== originalHtml) {
     fs.writeFileSync(activity.indexPath, html, 'utf8');
     console.log(
-      `Updated Section 5 in topics/${activity.folderName}/index.html (${imageFiles.length} image${imageFiles.length === 1 ? '' : 's'}).`
+      `Updated Section 1 Images in topics/${activity.folderName}/index.html (${imageFiles.length} image${imageFiles.length === 1 ? '' : 's'}).`
     );
   }
 }

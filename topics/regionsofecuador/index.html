@@ -408,16 +408,63 @@
       overflow: hidden;
     }
 
-    .instructions-block {
-      margin-bottom: 4px;
+    .instructions-intro {
+      margin: 10px 0 16px 0;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-main);
+      text-align: left;
     }
 
-    .instructions-block:last-child {
+    .instructions-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    .instructions-col {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink-main);
+    }
+
+    .instructions-col-title {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      color: var(--stamp-blue);
+      border-bottom: 1px dashed var(--ink-rule);
+      padding-bottom: 4px;
+    }
+
+    .instructions-col ul {
+      padding-left: 18px;
+      margin: 0;
+      list-style-type: disc;
+    }
+
+    .instructions-col li {
+      margin-bottom: 10px;
+    }
+
+    .instructions-col li:last-child {
       margin-bottom: 0;
     }
 
-    .instructions-label {
-      font-weight: 700;
+    .instructions-col a {
+      color: var(--ink-main);
+      text-decoration: underline;
+    }
+
+    .instructions-col a:hover {
+      color: var(--stamp-blue);
     }
 
     /* Reading Passage */
@@ -1276,18 +1323,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
       margin-top: 0;
       padding-top: 20px;
       border-top: none;
       font-family: var(--font-typewriter);
       font-size: 13px;
       color: var(--ink-muted);
+    }
+
+    .handout-footer .footer-line-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .footer-dot {
-      display: inline;
+    .handout-footer .footer-dot {
+      color: var(--ink-muted);
+      opacity: 0.5;
     }
 
     .handout-footer a {
@@ -1453,14 +1507,19 @@
       .bottom-actions-bar .reset-answers-btn {
         padding: 0 10px;
       }
+      .instructions-columns {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
       .handout-footer {
         flex-direction: column;
         align-items: center;
         gap: 4px;
         text-align: center;
       }
-      .handout-footer .footer-brand {
-        display: none;
+      .handout-footer .footer-line-top {
+        flex-direction: column;
+        gap: 6px;
       }
       .handout-footer .footer-dot {
         display: none;
@@ -1531,32 +1590,121 @@
 
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Lectura">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Preguntas">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Imágenes">5</a>
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Vocabulario">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
       </nav>
     </header>
 
     <!-- Instructions (Roll-out / Roll-up) -->
-    <div class="instructions-box" id="instructions-box" onclick="toggleInstructions(event)" title="Clic para desplegar o cerrar las instrucciones" role="button" aria-expanded="false" tabindex="0">
+    <div class="instructions-box" id="instructions-box" onclick="toggleInstructions(event)" title="Clic para desplegar o cerrar las instrucciones" role="region" aria-expanded="false" tabindex="0">
       <div class="instructions-heading">INSTRUCCIONES</div>
       <div class="instructions-content">
         <div class="instructions-inner">
-          <div class="instructions-block">
-            <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
-          </div>
-          <div class="instructions-block">
-            <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+          <p class="instructions-intro">
+            Este método de aprendizaje de idiomas está sumamente centrado en el estudiante, lo que significa que como profesor no se requiere ninguna preparación previa. Esto es perfecto para intercambios lingüísticos (tándem) o plataformas como Preply o italki, donde los profesores a menudo enseñan como una actividad secundaria y pueden tener decenas de estudiantes. El estudiante utiliza la IA para crear actividades interactivas en las que trabaja por su cuenta antes de la clase y luego junto con el profesor durante la sesión, donde el enfoque principal es la conversación. El estudiante y el profesor eligen juntos los temas de las actividades en función de intereses compartidos que resulten enriquecedores para ambos.
+          </p>
+          <div class="instructions-columns">
+            <div class="instructions-col">
+              <div class="instructions-col-title">Profesor</div>
+              <ul>
+                <li>Aunque no se necesita ninguna preparación por tu parte, puedes ayudar al estudiante durante la clase de muchas maneras.</li>
+                <li>Lleva una lista de los errores que comete el estudiante durante la clase y envíasela después. Puede ser útil corregirle de vez en cuando durante la conversación en vivo, pero contar con una lista de errores después de clase, cuando tiene tiempo para investigar, organizar y reflexionar sobre ellos, es mucho más útil para ayudarle a superarlos con el tiempo.</li>
+                <li>Interactúa constantemente con el estudiante: pídele que aclare lo que no esté claro, comparte tus propias historias y opiniones, interrúmpele, hazle preguntas, desafía sus respuestas y debate los temas a fondo. Prefiere preguntas con «cómo» y «por qué» sobre preguntas con «qué», «cuándo» o de «sí/no», las cuales obligan al estudiante a dar respuestas más largas y profundas.</li>
+                <li>El objetivo es mantener el porcentaje de habla de estudiante/profesor en un 50%/50%. La plataforma de video de Preply reporta esta estadística hacia el final de la clase, lo cual es muy útil.</li>
+                <li>El objetivo no es terminar la actividad a toda costa, sino mantener una interacción constante con el estudiante a un nivel que le suponga un reto y le ayude a mejorar, pero sin abrumarle.</li>
+                <li>Hoy en día, gracias a la IA y los recursos en línea, los estudiantes tienen todo lo necesario para aprender idiomas por su cuenta. Lo que necesitan de ti en clase es el desafío constante de la interacción en tiempo real en la conversación, y después una lista de los errores cometidos durante la clase.</li>
+              </ul>
+            </div>
+            <div class="instructions-col">
+              <div class="instructions-col-title">Estudiante</div>
+              <ul>
+                <li>Crea una actividad para tu próxima clase en tu editor con la habilidad, ej.: «/create-learning-activity on Argentina in Spanish B1».</li>
+                <li>Con la mayoría de los modelos de IA, esto tardará entre 5 y 10 minutos en crearse.</li>
+                <li>Una vez lista, lee el texto con la ayuda de Google Traductor hasta el punto de poder leerlo de nuevo en el idioma meta y comprenderlo en general.</li>
+                <li>Realiza todos los ejercicios para que tengas una comprensión general tanto de las preguntas como de las respuestas, hasta el punto de poder responderlas en vivo en clase.</li>
+                <li>Prepara el vocabulario y las estructuras que necesitarás para debatir el texto y los ejercicios con tu profesor en clase.</li>
+                <li>Vuelve a leer el texto, esta vez investigando detalles y añadiendo capturas de imágenes de Internet (consulta las <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">instrucciones</a> para una guía técnica).</li>
+                <li>Haz commit de la actividad y las imágenes a tu repositorio de GitHub, lo cual la publicará en tu sitio de Vercel.</li>
+                <li>En clase, trabaja en cada sección con tu profesor, debatiendo los temas a medida que surjan de manera natural.</li>
+                <li>El objetivo no es terminar la actividad en clase, sino mantener una conversación abierta e interesante con tu profesor durante toda la sesión con un 50%/50% de participación para una práctica sólida tanto de expresión oral como de comprensión auditiva.</li>
+                <li>Antes de que termine la clase, acuerda con tu profesor el tema de la actividad para tu próxima clase.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Section 1: Reading Text -->
+    <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">1</span> Lectura</a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="images-grid">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil')">
+          <img src="images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg" alt="Blick auf den Berg Santa Ana Guayaquil" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde')">
+          <img src="images/es-regionsofecuador-bolondeverde.jpg" alt="Bolón de Verde" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito')">
+          <img src="images/es-regionsofecuador-centrohistoricocolonialdequito.jpg" alt="Centro historico colonial de quito" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi')">
+          <img src="images/es-regionsofecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-encebollado.jpg', 'Encebollado')">
+          <img src="images/es-regionsofecuador-encebollado.jpg" alt="Encebollado" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil')">
+          <img src="images/es-regionsofecuador-guayaquil.jpg" alt="Guayaquil" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar')">
+          <img src="images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg" alt="iguanas marinas capaces de nadar" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa')">
+          <img src="images/es-regionsofecuador-lalagunadequilotoa.jpg" alt="La Laguna de Quilotoa" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza')">
+          <img src="images/es-regionsofecuador-losriosnapoypastaza.jpg" alt="los ríos Napo y Pastaza" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades')">
+          <img src="images/es-regionsofecuador-mapadelecuadorconciudades.jpg" alt="Mapa del Ecuador con ciudades" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo')">
+          <img src="images/es-regionsofecuador-mercadodeotavalo.jpg" alt="mercado de Otavalo" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules')">
+          <img src="images/es-regionsofecuador-piquerosdepatasazules.jpg" alt="piqueros de patas azules" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-plantain.jpg', 'plantain')">
+          <img src="images/es-regionsofecuador-plantain.jpg" alt="plantain" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-quito.jpg', 'Quito')">
+          <img src="images/es-regionsofecuador-quito.jpg" alt="Quito" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador')">
+          <img src="images/es-regionsofecuador-regionesdelecuador.jpg" alt="Regiones del Ecuador" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres')">
+          <img src="images/es-regionsofecuador-tortugasgigantesterrestres.jpg" alt="tortugas gigantes terrestres" class="image-thumb" loading="lazy">
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde')">
+          <img src="images/es-regionsofecuador-tostonesdeplatanoverde.jpg" alt="Tostones de plátano verde" class="image-thumb" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+<!-- Section 2: Reading Text -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
       <span class="section-action-hint">leer en voz alta</span>
     </h2>
 
@@ -1594,9 +1742,9 @@
       </div>
     </article>
 
-    <!-- Section 2: Vocabulary Drag & Drop -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
+    <!-- Section 3: Vocabulary Drag & Drop -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Vocabulario</a>
       <span class="section-action-hint">arrastrar y soltar</span>
     </h2>
 
@@ -1620,9 +1768,9 @@
       </div>
     </section>
 
-    <!-- Section 3: Interactive Comprehension Questions -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión</a>
+    <!-- Section 4: Interactive Comprehension Questions -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
 
@@ -1820,9 +1968,9 @@
 
     </div>
 
-    <!-- Section 4: Discussion Questions Section -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+    <!-- Section 5: Discussion Questions Section -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
 
@@ -1846,68 +1994,6 @@
       </ol>
     </section>
 
-    <!-- Section 5: Images -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Imágenes</a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="images-grid">
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil')">
-          <img src="images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg" alt="Blick auf den Berg Santa Ana Guayaquil" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde')">
-          <img src="images/es-regionsofecuador-bolondeverde.jpg" alt="Bolón de Verde" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito')">
-          <img src="images/es-regionsofecuador-centrohistoricocolonialdequito.jpg" alt="Centro historico colonial de quito" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi')">
-          <img src="images/es-regionsofecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-encebollado.jpg', 'Encebollado')">
-          <img src="images/es-regionsofecuador-encebollado.jpg" alt="Encebollado" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil')">
-          <img src="images/es-regionsofecuador-guayaquil.jpg" alt="Guayaquil" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar')">
-          <img src="images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg" alt="iguanas marinas capaces de nadar" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa')">
-          <img src="images/es-regionsofecuador-lalagunadequilotoa.jpg" alt="La Laguna de Quilotoa" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza')">
-          <img src="images/es-regionsofecuador-losriosnapoypastaza.jpg" alt="los ríos Napo y Pastaza" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades')">
-          <img src="images/es-regionsofecuador-mapadelecuadorconciudades.jpg" alt="Mapa del Ecuador con ciudades" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo')">
-          <img src="images/es-regionsofecuador-mercadodeotavalo.jpg" alt="mercado de Otavalo" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules')">
-          <img src="images/es-regionsofecuador-piquerosdepatasazules.jpg" alt="piqueros de patas azules" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-plantain.jpg', 'plantain')">
-          <img src="images/es-regionsofecuador-plantain.jpg" alt="plantain" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-quito.jpg', 'Quito')">
-          <img src="images/es-regionsofecuador-quito.jpg" alt="Quito" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador')">
-          <img src="images/es-regionsofecuador-regionesdelecuador.jpg" alt="Regiones del Ecuador" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres')">
-          <img src="images/es-regionsofecuador-tortugasgigantesterrestres.jpg" alt="tortugas gigantes terrestres" class="image-thumb" loading="lazy">
-        </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde')">
-          <img src="images/es-regionsofecuador-tostonesdeplatanoverde.jpg" alt="Tostones de plátano verde" class="image-thumb" loading="lazy">
-        </div>
-      </div>
-    </section>
-
 <!-- Bottom Actions / Navigation -->
     <div class="bottom-actions-bar">
       <div class="reset-container" id="reset-container">
@@ -1929,7 +2015,11 @@
 
     <!-- Footer -->
     <footer class="handout-footer">
-      <span class="footer-author">See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+      <div class="footer-line-top">
+        <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">Crea tus propias actividades</a>
+        <span class="footer-dot">•</span>
+        <span>See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+      </div>
     </footer>
 
   </main>
@@ -2336,6 +2426,7 @@
     // =========================================================
     function toggleInstructions(e) {
       if (e && e.shiftKey) return;
+      if (e && e.target && (e.target.tagName === 'A' || e.target.closest('a'))) return;
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       const box = document.getElementById('instructions-box');
       if (!box) return;
@@ -3605,8 +3696,8 @@
 
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
 
-        // If tapping 5 again while already at Section 5 and a return spot exists, go back!
-        if (targetId === 'seccion-5' && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
+        // If tapping 1 or 5 again while already there and a return spot exists, go back!
+        if ((targetId === 'seccion-1' || targetId === 'seccion-5') && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
           returnToPreviousSpot();
           return;
         }

@@ -408,16 +408,63 @@
       overflow: hidden;
     }
 
-    .instructions-block {
-      margin-bottom: 4px;
+    .instructions-intro {
+      margin: 10px 0 16px 0;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-main);
+      text-align: left;
     }
 
-    .instructions-block:last-child {
+    .instructions-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    .instructions-col {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink-main);
+    }
+
+    .instructions-col-title {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      color: var(--stamp-blue);
+      border-bottom: 1px dashed var(--ink-rule);
+      padding-bottom: 4px;
+    }
+
+    .instructions-col ul {
+      padding-left: 18px;
+      margin: 0;
+      list-style-type: disc;
+    }
+
+    .instructions-col li {
+      margin-bottom: 10px;
+    }
+
+    .instructions-col li:last-child {
       margin-bottom: 0;
     }
 
-    .instructions-label {
-      font-weight: 700;
+    .instructions-col a {
+      color: var(--ink-main);
+      text-decoration: underline;
+    }
+
+    .instructions-col a:hover {
+      color: var(--stamp-blue);
     }
 
     /* Reading Passage */
@@ -1269,14 +1316,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
       margin-top: 0;
       padding-top: 20px;
       border-top: none;
       font-family: var(--font-typewriter);
       font-size: 13px;
       color: var(--ink-muted);
+    }
+
+    .handout-footer .footer-line-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
+    }
+
+    .handout-footer .footer-dot {
+      color: var(--ink-muted);
+      opacity: 0.5;
     }
 
     .handout-footer a {
@@ -1439,10 +1497,22 @@
         width: 100%;
         justify-content: center;
       }
+      .instructions-columns {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
       .handout-footer {
         flex-direction: column;
+        align-items: center;
         gap: 4px;
         text-align: center;
+      }
+      .handout-footer .footer-line-top {
+        flex-direction: column;
+        gap: 6px;
+      }
+      .handout-footer .footer-dot {
+        display: none;
       }
     }
   </style>
@@ -1488,11 +1558,36 @@
         <div class="instructions-heading">INSTRUCCIONES</div>
         <div class="instructions-content">
           <div class="instructions-inner">
-            <div class="instructions-block">
-              <span class="instructions-label">Antes de la clase:</span> estudiante y profesor se familiarizan con el texto lo que deseen
-            </div>
-            <div class="instructions-block">
-              <span class="instructions-label">En clase:</span> (1) lectura en voz alta con corrección, (2) ejercicios juntos, (3) preguntas de discusión juntos
+            <p class="instructions-intro">
+              Este método de aprendizaje de idiomas está sumamente centrado en el estudiante, lo que significa que como profesor no se requiere ninguna preparación previa. Esto es perfecto para intercambios lingüísticos (tándem) o plataformas como Preply o italki, donde los profesores a menudo enseñan como una actividad secundaria y pueden tener decenas de estudiantes. El estudiante utiliza la IA para crear actividades interactivas en las que trabaja por su cuenta antes de la clase y luego junto con el profesor durante la sesión, donde el enfoque principal es la conversación. El estudiante y el profesor eligen juntos los temas de las actividades en función de intereses compartidos que resulten enriquecedores para ambos.
+            </p>
+            <div class="instructions-columns">
+              <div class="instructions-col">
+                <div class="instructions-col-title">Profesor</div>
+                <ul>
+                  <li>Aunque no se necesita ninguna preparación por tu parte, puedes ayudar al estudiante durante la clase de muchas maneras.</li>
+                  <li>Lleva una lista de los errores que comete el estudiante durante la clase y envíasela después. Puede ser útil corregirle de vez en cuando durante la conversación en vivo, pero contar con una lista de errores después de clase, cuando tiene tiempo para investigar, organizar y reflexionar sobre ellos, es mucho más útil para ayudarle a superarlos con el tiempo.</li>
+                  <li>Interactúa constantemente con el estudiante: pídele que aclare lo que no esté claro, comparte tus propias historias y opiniones, interrúmpele, hazle preguntas, desafía sus respuestas y debate los temas a fondo. Prefiere preguntas con «cómo» y «por qué» sobre preguntas con «qué», «cuándo» o de «sí/no», las cuales obligan al estudiante a dar respuestas más largas y profundas.</li>
+                  <li>El objetivo es mantener el porcentaje de habla de estudiante/profesor en un 50%/50%. La plataforma de video de Preply reporta esta estadística hacia el final de la clase, lo cual es muy útil.</li>
+                  <li>El objetivo no es terminar la actividad a toda costa, sino mantener una interacción constante con el estudiante a un nivel que le suponga un reto y le ayude a mejorar, pero sin abrumarle.</li>
+                  <li>Hoy en día, gracias a la IA y los recursos en línea, los estudiantes tienen todo lo necesario para aprender idiomas por su cuenta. Lo que necesitan de ti en clase es el desafío constante de la interacción en tiempo real en la conversación, y después una lista de los errores cometidos durante la clase.</li>
+                </ul>
+              </div>
+              <div class="instructions-col">
+                <div class="instructions-col-title">Estudiante</div>
+                <ul>
+                  <li>Crea una actividad para tu próxima clase en tu editor con la habilidad, ej.: «/create-learning-activity on Argentina in Spanish B1».</li>
+                  <li>Con la mayoría de los modelos de IA, esto tardará entre 5 y 10 minutos en crearse.</li>
+                  <li>Una vez lista, lee el texto con la ayuda de Google Traductor hasta el punto de poder leerlo de nuevo en el idioma meta y comprenderlo en general.</li>
+                  <li>Realiza todos los ejercicios para que tengas una comprensión general tanto de las preguntas como de las respuestas, hasta el punto de poder responderlas en vivo en clase.</li>
+                  <li>Prepara el vocabulario y las estructuras que necesitarás para debatir el texto y los ejercicios con tu profesor en clase.</li>
+                  <li>Vuelve a leer el texto, esta vez investigando detalles y añadiendo capturas de imágenes de Internet (consulta las <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">instrucciones</a> para una guía técnica).</li>
+                  <li>Haz commit de la actividad y las imágenes a tu repositorio de GitHub, lo cual la publicará en tu sitio de Vercel.</li>
+                  <li>En clase, trabaja en cada sección con tu profesor, debatiendo los temas a medida que surjan de manera natural.</li>
+                  <li>El objetivo no es terminar la actividad en clase, sino mantener una conversación abierta e interesante con tu profesor durante toda la sesión con un 50%/50% de participación para una práctica sólida tanto de expresión oral como de comprensión auditiva.</li>
+                  <li>Antes de que termine la clase, acuerda con tu profesor el tema de la actividad para tu próxima clase.</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -1809,7 +1904,11 @@
 
     <!-- Standardized Worksheet Footer -->
     <footer class="handout-footer">
-      <span>See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+      <div class="footer-line-top">
+        <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">Crea tus propias actividades</a>
+        <span class="footer-dot">•</span>
+        <span>See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+      </div>
     </footer>
 
   </main>
@@ -2424,6 +2523,7 @@
     // =========================================================
     function toggleInstructions(e) {
       if (e && e.shiftKey) return;
+      if (e && e.target && (e.target.tagName === 'A' || e.target.closest('a'))) return;
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
       const box = document.getElementById('instructions-box');
       if (!box) return;
