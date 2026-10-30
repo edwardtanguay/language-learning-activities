@@ -1227,19 +1227,22 @@ ${thumbsHtml}
 function ensureLightboxAssets(html) {
   let out = html;
   if (!out.includes('.image-thumb-q-badge')) {
-    if (!out.includes('.image-lightbox-overlay')) {
+    const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?\.image-lightbox-overlay\.is-zoomed\s+\.image-lightbox-caption\s*\{[^}]*pointer-events:\s*none;\s*\}/;
+    if (imagesCssRegex.test(out)) {
+      out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
+    } else if (!out.includes('.image-lightbox-overlay')) {
       out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
     } else {
-      out = out.replace(
-        /\/\* =========================================================\s*IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?pointer-events:\s*none;\s*\}/,
-        SECTION_IMAGES_CSS.trim()
-      );
+      out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
     }
   }
-  if (!out.includes('id="image-lightbox-questions"')) {
-    if (out.includes('id="image-lightbox"')) {
+  if (!out.includes('id="image-lightbox-questions"') || out.includes('id="image-lightbox-caption"></div>\n    </div>\n  </div>\n  </div>') || out.includes('<!-- Fullscreen Image Lightbox -->\n  <!-- Fullscreen Image Lightbox -->')) {
+    const lightboxHtmlRegex = /(?:[ \t]*<!-- Fullscreen Image Lightbox -->\s*)+<div class="image-lightbox-overlay" id="image-lightbox"[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/;
+    if (lightboxHtmlRegex.test(out)) {
+      out = out.replace(lightboxHtmlRegex, SECTION_LIGHTBOX_HTML.trim());
+    } else if (out.includes('id="image-lightbox"')) {
       out = out.replace(
-        /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?<\/div>\s*<\/div>/,
+        /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/,
         SECTION_LIGHTBOX_HTML.trim()
       );
     } else {
@@ -1250,11 +1253,9 @@ function ensureLightboxAssets(html) {
     }
   }
   if (!out.includes('questionsJson')) {
-    if (out.includes('function openImageLightbox')) {
-      out = out.replace(
-        /\/\/\s*=========================================================\s*\/\/\s*IMAGE LIGHTBOX[\s\S]*?closeImageLightbox\(\);\s*\}/,
-        SECTION_LIGHTBOX_JS.trim()
-      );
+    const lightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?setupLightboxTouchZoom\(\)[\s\S]*?\}\)\(\);/;
+    if (lightboxJsRegex.test(out)) {
+      out = out.replace(lightboxJsRegex, SECTION_LIGHTBOX_JS.trim());
     } else {
       out = out.replace('</script>', `${SECTION_LIGHTBOX_JS}\n  </script>`);
     }
