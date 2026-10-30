@@ -572,7 +572,6 @@ const TOPIC_HEADER_ICON_CSS = `
       overflow: hidden;
       background: var(--paper-sheet);
       box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
-      margin-left: auto;
       margin-right: 0;
     }
 
@@ -584,10 +583,29 @@ const TOPIC_HEADER_ICON_CSS = `
     }
 
     @media (max-width: 680px) {
+      .header-top {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
       .topic-header-icon-wrap {
-        margin: 8px auto 4px auto;
-        width: 60px;
-        height: 60px;
+        width: 56px;
+        height: 56px;
+        margin: 0;
+      }
+      .handout-title-group {
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+      }
+      .handout-title-group h1 {
+        text-align: left;
+      }
+      .stamp-badge {
+        margin: 4px auto 0 auto;
+        order: 3;
       }
     }
 `;
@@ -1077,16 +1095,17 @@ function updateActivityHtml(activity, questions, imageFiles) {
   if (activity.iconFile) {
     if (!html.includes('.topic-header-icon-wrap')) {
       html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
+    } else {
+      html = html.replace(/\/\* Topic Header Icon \*\/[\s\S]*?\.stamp-badge \{[\s\S]*?\}\s*\}/, TOPIC_HEADER_ICON_CSS.trim());
     }
     const iconTag = `<div class="topic-header-icon-wrap">\n          <img src="${activity.iconFile}" alt="${activity.title}" class="topic-header-icon">\n        </div>`;
-    if (html.includes('class="topic-header-icon-wrap"')) {
-      html = html.replace(/<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/, iconTag.trim());
-    } else {
-      html = html.replace(
-        /(<div class="stamp-badge")/,
-        `${iconTag}\n        $1`
-      );
-    }
+    // Clean out existing icon
+    html = html.replace(/\s*<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
+    // Insert icon on far left right after <div class="header-top">
+    html = html.replace(
+      /(<div class="header-top"[^>]*>)/,
+      `$1\n        ${iconTag}`
+    );
   } else {
     html = html.replace(/\s*<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
   }
@@ -1207,88 +1226,39 @@ function updateCatalogHtmlForIcons(activities) {
   const originalHtml = fs.readFileSync(rootIndexPath, 'utf8');
   let html = originalHtml;
 
-  // Ensure card flex layout and icon styling exist in index.html
-  if (!html.includes('.activity-card-icon-wrap')) {
-    const catalogIconCss = `
-    .activity-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .activity-card-body {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .activity-card-icon-wrap {
-      flex-shrink: 0;
-      width: 68px;
-      height: 68px;
-      border: 1px solid var(--ink-rule);
-      border-radius: 3px;
-      overflow: hidden;
-      background: var(--paper-bg);
-      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .activity-card-icon {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    @media (max-width: 680px) {
-      .activity-card {
-        padding: 16px;
-        gap: 14px;
-        align-items: flex-start;
-      }
-      .activity-card-icon-wrap {
-        width: 58px;
-        height: 58px;
-      }
-    }
-`;
-    html = html.replace('</style>', `${catalogIconCss}  </style>`);
-  }
-
   for (const activity of activities) {
     const cardRegex = new RegExp(
-      `(<article class="activity-card"[^>]*onclick="openCard\\('topics\\/${activity.folderName}\\/index\\.html'[^>]*>)([\\s\\S]*?)(<\\/article>)`,
+      `(<article class="activity-card(?:\\s+has-icon)?"[^>]*onclick="openCard\\('topics\\/${activity.folderName}\\/index\\.html'[^>]*>)([\\s\\S]*?)(<\\/article>)`,
       'i'
     );
     const cardMatch = html.match(cardRegex);
     if (!cardMatch) continue;
 
+    let openingTag = cardMatch[1];
     let innerContent = cardMatch[2];
 
-    if (activity.iconFile) {
-      const iconPath = `topics/${activity.folderName}/${activity.iconFile}`;
-      const iconWrap = `\n        <div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${activity.title}" class="activity-card-icon" loading="lazy">\n        </div>`;
+    // Strip any existing .activity-card-icon-wrap
+    let cleanBody = innerContent.replace(/\s*<div class="activity-card-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '').trim();
 
-      // Check if already has .activity-card-body and .activity-card-icon-wrap
-      if (innerContent.includes('class="activity-card-icon-wrap"')) {
-        innerContent = innerContent.replace(
-          /<div class="activity-card-icon-wrap"[^>]*>[\s\S]*?<\/div>/,
-          iconWrap.trim()
-        );
-      } else if (innerContent.includes('class="activity-card-body"')) {
-        innerContent = innerContent + iconWrap;
-      } else {
-        innerContent = `\n        <div class="activity-card-body">${innerContent}\n        </div>${iconWrap}\n      `;
-      }
-    } else {
-      // Remove icon-wrap if no icon
-      innerContent = innerContent.replace(/\s*<div class="activity-card-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
+    // If wrapped in <div class="activity-card-body"> ... </div>, unwrap it cleanly
+    if (cleanBody.startsWith('<div class="activity-card-body">') && cleanBody.endsWith('</div>')) {
+      cleanBody = cleanBody.slice('<div class="activity-card-body">'.length, -'</div>'.length).trim();
     }
 
-    html = html.replace(cardRegex, `$1${innerContent}$3`);
+    if (activity.iconFile) {
+      if (!openingTag.includes('has-icon')) {
+        openingTag = openingTag.replace('class="activity-card', 'class="activity-card has-icon');
+      }
+      const iconPath = `topics/${activity.folderName}/${activity.iconFile}`;
+      const iconWrap = `<div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${activity.title}" class="activity-card-icon" loading="lazy">\n        </div>`;
+
+      innerContent = `\n        ${iconWrap}\n        <div class="activity-card-body">\n          ${cleanBody}\n        </div>\n      `;
+    } else {
+      openingTag = openingTag.replace(' has-icon', '');
+      innerContent = `\n        ${cleanBody}\n      `;
+    }
+
+    html = html.replace(cardRegex, `${openingTag}${innerContent}$3`);
   }
 
   if (html !== originalHtml) {
