@@ -225,6 +225,7 @@ Each activity file should include the following sections:
 7. **Interactive Comprehension Questions (Comprensión)**:
    - Heading standardized to "Comprehension" in the target language without period (e.g., `<span class="section-num">4</span> Comprensión` when images exist, or `<span class="section-num">3</span> Comprensión` without images), with right-aligned action hint "multiple choice" in the target language.
    - 4–6 questions (numbered 1, 2, 3...) testing reading comprehension, grammar in context, and vocabulary.
+   - **Randomized and Balanced Correct Answers**: The correct answer position must NEVER always be `A` or follow a predictable pattern. Across the 4–6 questions, distribute correct answer letters evenly across choices (`A`, `B`, `C`, `D`) so each letter is represented at least once, no single letter dominates, and no consecutive questions share the same correct letter (e.g., a mix like `B`, `D`, `A`, `C`, `B` or `C`, `A`, `D`, `B`, `C`).
    - Large plain question numbers (no background boxes).
    - Borderless question cards.
    - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".

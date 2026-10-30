@@ -122,6 +122,7 @@ Each activity lives in `topics/<foldername>/index.html`:
   - On modal and popup cards, clicking or selecting text inside the card must NEVER accidentally dismiss or close it. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons.
 - **Section 3: Comprehension Questions & Neutral Radio-Free Option Styling**:
   - Heading standardized to "Comprehension" in the target language (e.g., `<span class="section-num">3</span> Comprensión` in Spanish), paired with right-aligned action hint "multiple choice" in the target language.
+  - **Randomized and Balanced Correct Answers**: The correct answer position must NEVER always be A or follow a predictable pattern. Across the 4–6 questions, distribute correct answer letters evenly across choices (A, B, C, D) so each letter is represented at least once, no single letter dominates, and no consecutive questions share the same correct letter (e.g., a mix like B, D, A, C, B or C, A, D, B, C).
   - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
   - NO radio buttons (`<input type="radio">` removed completely).
   - Indented Option Alignment: The options list (`.options-list`) is indented (`padding-left: 28px;`, on mobile: `24px;`) so that the option letters (`A.`, `B.`, `C.`, `D.`) and feedback box align cleanly under the start of the question prompt text above.
