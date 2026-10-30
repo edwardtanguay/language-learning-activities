@@ -128,14 +128,62 @@
       if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
         return;
       }
+      const isImgClick = e && e.target && (e.target.id === 'image-lightbox-img' || e.target.closest('#image-lightbox-img'));
+      if (isImgClick) {
+        const questionsContainer = document.getElementById('image-lightbox-questions');
+        const hasQuestions = questionsContainer && questionsContainer.children.length > 0;
+        if (hasQuestions) {
+          questionsContainer.style.display = questionsContainer.style.display === 'none' ? 'flex' : 'none';
+        } else {
+          closeImageLightbox();
+        }
+        return;
+      }
       closeImageLightbox();
     }
 
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' || e.key === 'Esc') {
         const overlay = document.getElementById('image-lightbox');
         if (overlay && overlay.classList.contains('active')) {
           closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
         }
       }
     });
@@ -2040,10 +2088,10 @@
 
       <!-- Centered Jump Links -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Preguntas para el profesor">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Imágenes">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Vocabulario">4</a>
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Preguntas para el profesor">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Lectura">4</a>
         <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
@@ -2089,40 +2137,27 @@
       </div>
     </header>
 
-    <!-- SECTION 1: QUESTIONS FOR TEACHER -->
+    <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Preguntas para el profesor
-      </a>
-      <span class="section-action-hint">revisar en clase</span>
-    </h2>
-
-    <section class="teacher-questions-section" id="teacher-questions-section">
-      <div class="teacher-questions-card">
-        <ul class="teacher-questions-list">
-          <li>Es este un término que usarías? "su entrañable parce de Colombia"</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- SECTION 2: IMAGES -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">2</span> Imágenes
+        <span class="section-num">1</span> Imágenes
       </a>
       <span class="section-action-hint">clic para ampliar</span>
     </h2>
 
     <section class="images-section" id="images-section">
       <div class="images-grid">
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa', '[&quot;¿Qué tipo de río es el Pastaza?&quot;]')">
           <img src="images/es-volcanesecuador-banosdeaguasanta.jpg" alt="Baños de Agua Santa" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo', '[&quot;Esta montaña parece casi irreal. ¿Alguna vez has intentado escalarla?&quot;]')">
           <img src="images/es-volcanesecuador-chimborazo.jpg" alt="Chimborazo" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi', '[&quot;Desde este punto de vista, escalar esta montaña parece relativamente sencillo. ¿Lo has intentado alguna vez?&quot;]')">
           <img src="images/es-volcanesecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-elaltarenlapartesuperior.jpg', 'El Altar en la parte superior', '[]')">
           <img src="images/es-volcanesecuador-elaltarenlapartesuperior.jpg" alt="El Altar en la parte superior" class="image-thumb" loading="lazy">
@@ -2135,10 +2170,11 @@
           <img src="images/es-volcanesecuador-elvolcanrucupichincha.jpg" alt="El Volcán Rucu Pichincha" class="image-thumb" loading="lazy">
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[&quot;¿Es peligrosa esta agua si te bañas en ella o la bebes?&quot;]')">
           <img src="images/es-volcanesecuador-lagoquilotoa.jpg" alt="Lago Quilotoa" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Cómo es Machachi?&quot;]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Qué tipo de ciudad es Machachi?&quot;]')">
           <img src="images/es-volcanesecuador-machachi.jpg" alt="Machachi" class="image-thumb" loading="lazy">
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
@@ -2146,23 +2182,70 @@
           <img src="images/es-volcanesecuador-parquenacionalllanganates.jpg" alt="Parque Nacional Llanganates" class="image-thumb" loading="lazy">
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[&quot;¿Es esta una ruta habitual que siguen los excursionistas?&quot;]')">
           <img src="images/es-volcanesecuador-quitoylosvolcanes.jpg" alt="Quito y los volcanes" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg', 'resumendeloslugaresmencionadosenelarticulo', '[]')">
+          <img src="images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg" alt="resumendeloslugaresmencionadosenelarticulo" class="image-thumb" loading="lazy">
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-riobamba.jpg', 'Riobamba', '[]')">
           <img src="images/es-volcanesecuador-riobamba.jpg" alt="Riobamba" class="image-thumb" loading="lazy">
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-volcantungurahua.jpg', 'Volcán Tungurahua', '[]')">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-volcanesecuador-volcantungurahua.jpg', 'Volcán Tungurahua', '[&quot;¿Recuerdas cuándo entró en erupción este volcán?&quot;]')">
           <img src="images/es-volcanesecuador-volcantungurahua.jpg" alt="Volcán Tungurahua" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
+      </div>
+    </section>
+
+<!-- SECTION 3: VOCABULARY -->
+    <section class="vocab-section">
+      <h2 class="section-title" id="seccion-2">
+        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+          <span class="section-num">2</span> Vocabulario
+        </a>
+        <span class="section-action-hint">arrastrar y soltar</span>
+      </h2>
+
+      <div class="vocab-container">
+        <!-- Top Waiting Words Pool -->
+        <div class="vocab-pool" id="vocab-pool" aria-label="Palabras disponibles para emparejar"></div>
+
+        <!-- Middle Target Definition Cards (Shuffled Order) -->
+        <div class="vocab-targets" id="vocab-targets" aria-label="Definiciones"></div>
+
+        <!-- Detail Preview Area for Completed Words -->
+        <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+        <!-- Bottom Completed Words Pool -->
+        <div class="vocab-completed-section">
+          <div class="vocab-completed-pool" id="vocab-completed-pool" aria-label="Palabras emparejadas con éxito"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: QUESTIONS FOR TEACHER -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">3</span> Preguntas para el profesor
+      </a>
+      <span class="section-action-hint">revisar en clase</span>
+    </h2>
+
+    <section class="teacher-questions-section" id="teacher-questions-section">
+      <div class="teacher-questions-card">
+        <ul class="teacher-questions-list">
+          <li>Es este un término jerga colombiana o ecuatoriana? "su entrañable parce de Colombia" (dear buddy)</li>
+        </ul>
       </div>
     </section>
 
 <!-- SECTION 2: READING PASSAGE -->
     <section>
-      <h2 class="section-title" id="seccion-3">
+      <h2 class="section-title" id="seccion-4">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">3</span> Lectura
+          <span class="section-num">4</span> Lectura
         </a>
         <span class="section-action-hint">leer en voz alta</span>
       </h2>
@@ -2191,33 +2274,7 @@
       </div>
     </section>
 
-    <!-- SECTION 3: VOCABULARY -->
-    <section class="vocab-section">
-      <h2 class="section-title" id="seccion-4">
-        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-          <span class="section-num">4</span> Vocabulario
-        </a>
-        <span class="section-action-hint">arrastrar y soltar</span>
-      </h2>
-
-      <div class="vocab-container">
-        <!-- Top Waiting Words Pool -->
-        <div class="vocab-pool" id="vocab-pool" aria-label="Palabras disponibles para emparejar"></div>
-
-        <!-- Middle Target Definition Cards (Shuffled Order) -->
-        <div class="vocab-targets" id="vocab-targets" aria-label="Definiciones"></div>
-
-        <!-- Detail Preview Area for Completed Words -->
-        <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-        <!-- Bottom Completed Words Pool -->
-        <div class="vocab-completed-section">
-          <div class="vocab-completed-pool" id="vocab-completed-pool" aria-label="Palabras emparejadas con éxito"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4: COMPREHENSION QUIZ -->
+<!-- SECTION 4: COMPREHENSION QUIZ -->
     <section>
       <h2 class="section-title" id="seccion-5">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">

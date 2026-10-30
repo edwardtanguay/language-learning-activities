@@ -13,67 +13,67 @@ const SECTION_QUESTIONS_I18N = {
   es: {
     sectionTitle: 'Preguntas para el profesor',
     actionHint: 'revisar en clase',
-    jumpTitle: 'Ir a Sección 1: Preguntas para el profesor',
+    jumpTitle: 'Ir a Sección {N}: Preguntas para el profesor',
     topTitle: 'Volver al inicio'
   },
   en: {
     sectionTitle: 'Questions for the Teacher',
     actionHint: 'discuss in class',
-    jumpTitle: 'Go to Section 1: Questions for the Teacher',
+    jumpTitle: 'Go to Section {N}: Questions for the Teacher',
     topTitle: 'Back to top'
   },
   de: {
     sectionTitle: 'Fragen an die Lehrkraft',
     actionHint: 'im Unterricht besprechen',
-    jumpTitle: 'Zu Abschnitt 1: Fragen an die Lehrkraft',
+    jumpTitle: 'Zu Abschnitt {N}: Fragen an die Lehrkraft',
     topTitle: 'Nach oben'
   },
   fr: {
     sectionTitle: 'Questions pour le professeur',
     actionHint: 'à aborder en cours',
-    jumpTitle: 'Aller à la section 1 : Questions pour le professeur',
+    jumpTitle: 'Aller à la section {N} : Questions pour le professeur',
     topTitle: 'Retour en haut'
   },
   it: {
     sectionTitle: "Domande per l'insegnante",
     actionHint: 'da discutere a lezione',
-    jumpTitle: "Vai alla sezione 1: Domande per l'insegnante",
+    jumpTitle: "Vai alla sezione {N}: Domande per l'insegnante",
     topTitle: 'Torna su'
   },
   nl: {
     sectionTitle: 'Vragen voor de docent',
     actionHint: 'bespreken in de les',
-    jumpTitle: 'Ga naar sectie 1: Vragen voor de docent',
+    jumpTitle: 'Ga naar sectie {N}: Vragen voor de docent',
     topTitle: 'Terug naar boven'
   },
   pl: {
     sectionTitle: 'Pytania do nauczyciela',
     actionHint: 'do omówienia na lekcji',
-    jumpTitle: 'Przejdź do sekcji 1: Pytania do nauczyciela',
+    jumpTitle: 'Przejdź do sekcji {N}: Pytania do nauczyciela',
     topTitle: 'Powrót na górę'
   },
   ru: {
     sectionTitle: 'Вопросы к преподавателю',
     actionHint: 'обсудить на уроке',
-    jumpTitle: 'Перейти к разделу 1: Вопросы к преподавателю',
+    jumpTitle: 'Перейти к разделу {N}: Вопросы к преподавателю',
     topTitle: 'Наверх'
   },
   el: {
     sectionTitle: 'Ερωτήσεις για τον καθηγητή',
     actionHint: 'συζήτηση στο μάθημα',
-    jumpTitle: 'Μετάβαση στην ενότητα 1: Ερωτήσεις για τον καθηγητή',
+    jumpTitle: 'Μετάβαση στην ενότητα {N}: Ερωτήσεις για τον καθηγητή',
     topTitle: 'Επιστροφή στην κορυφή'
   },
   is: {
     sectionTitle: 'Spurningar til kennarans',
     actionHint: 'ræða í tíma',
-    jumpTitle: 'Fara í kafla 1: Spurningar til kennarans',
+    jumpTitle: 'Fara í kafla {N}: Spurningar til kennarans',
     topTitle: 'Fara efst'
   },
   da: {
     sectionTitle: 'Spørgsmål til læreren',
     actionHint: 'gennemgås i timen',
-    jumpTitle: 'Gå til afsnit 1: Spørgsmål til læreren',
+    jumpTitle: 'Gå til afsnit {N}: Spørgsmål til læreren',
     topTitle: 'Tilbage til toppen'
   }
 };
@@ -789,6 +789,7 @@ const SECTION_IMAGES_CSS = `
       user-select: none;
       -webkit-user-drag: none;
       display: block;
+      cursor: pointer;
     }
 
     /* Lightbox Questions List Overlay in lower-left */
@@ -1024,14 +1025,62 @@ const SECTION_LIGHTBOX_JS = `
       if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
         return;
       }
+      const isImgClick = e && e.target && (e.target.id === 'image-lightbox-img' || e.target.closest('#image-lightbox-img'));
+      if (isImgClick) {
+        const questionsContainer = document.getElementById('image-lightbox-questions');
+        const hasQuestions = questionsContainer && questionsContainer.children.length > 0;
+        if (hasQuestions) {
+          questionsContainer.style.display = questionsContainer.style.display === 'none' ? 'flex' : 'none';
+        } else {
+          closeImageLightbox();
+        }
+        return;
+      }
       closeImageLightbox();
     }
 
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' || e.key === 'Esc') {
         const overlay = document.getElementById('image-lightbox');
         if (overlay && overlay.classList.contains('active')) {
           closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
         }
       }
     });
@@ -1148,8 +1197,9 @@ const SECTION_LIGHTBOX_JS = `
     })();
 `;
 
-function buildSectionQuestionsHtml(activity, questions) {
+function buildSectionQuestionsHtml(activity, questions, sectionNum) {
   const i18n = SECTION_QUESTIONS_I18N[activity.lang] || SECTION_QUESTIONS_I18N.es;
+  const num = sectionNum || 1;
   const listItems = questions
     .map(q => {
       const safeQ = q.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -1157,10 +1207,10 @@ function buildSectionQuestionsHtml(activity, questions) {
     })
     .join('\n');
 
-  return `    <!-- SECTION 1: QUESTIONS FOR TEACHER -->
-    <h2 class="section-title" id="seccion-1">
+  return `    <!-- SECTION ${num}: QUESTIONS FOR TEACHER -->
+    <h2 class="section-title" id="seccion-${num}">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
-        <span class="section-num">1</span> ${i18n.sectionTitle}
+        <span class="section-num">${num}</span> ${i18n.sectionTitle}
       </a>
       <span class="section-action-hint">${i18n.actionHint}</span>
     </h2>
@@ -1262,7 +1312,7 @@ ${thumbsHtml}
 
 function ensureLightboxAssets(html) {
   let out = html;
-  if (!out.includes('.image-lightbox-q-icon')) {
+  if (!out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
     const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?\.image-lightbox-overlay\.is-zoomed\s+\.image-lightbox-caption\s*\{[^}]*pointer-events:\s*none;\s*\}/;
     if (imagesCssRegex.test(out)) {
       out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
@@ -1288,7 +1338,7 @@ function ensureLightboxAssets(html) {
       );
     }
   }
-  if (!out.includes('pillBubbleSvg')) {
+  if (!out.includes('isImgClick')) {
     const lightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?setupLightboxTouchZoom\(\)[\s\S]*?\}\)\(\);/;
     if (lightboxJsRegex.test(out)) {
       out = out.replace(lightboxJsRegex, SECTION_LIGHTBOX_JS.trim());
@@ -1397,28 +1447,52 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   }
 
   // 3. Strip any existing Questions and Images sections so core sections (Reading, Vocab, Quiz, Discuss) can be cleanly placed
-  const questionsSectionRegex = /[ \t]*(?:<!-- SECTION \d+: QUESTIONS FOR TEACHER -->\s*)?<h2 class="section-title" id="seccion-\d+">[\s\S]*?<section class="teacher-questions-section" id="teacher-questions-section">[\s\S]*?<\/section>\s*/i;
+  const questionsSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*<section class="teacher-questions-section"[^>]*>[\s\S]*?<\/section>\s*/i;
   html = html.replace(questionsSectionRegex, '');
 
-  const imagesSectionRegex = /[ \t]*(?:<!-- SECTION \d+: IMAGES -->\s*)?<h2 class="section-title" id="seccion-\d+">[\s\S]*?<section class="images-section" id="images-section">[\s\S]*?<\/section>\s*/i;
+  const imagesSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*IMAGES[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/i;
   const legacyImagesRegex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/i;
   html = html.replace(imagesSectionRegex, '');
   html = html.replace(legacyImagesRegex, '');
 
-  // 4. Calculate section numbering
-  let currentNum = 1;
-  let questionsNum = null;
-  let imagesNum = null;
+  // Extract vocab section if present
+  let vocabBlock = '';
+  const wrappedVocabRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*Vocab[^\r\n]*-->\s*)?<section class="vocab-section">[\s\S]*?<\/section>\s*/i;
+  const unwrappedVocabRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*Vocab[^\r\n]*-->\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Vocabulario|Vocabulary|Wortschatz)[\s\S]*?<\/h2>\s*<section class="vocab-container"[^>]*>[\s\S]*?<\/section>\s*/i;
 
-  if (hasQuestions) {
-    questionsNum = currentNum++;
+  let vocabMatch = html.match(wrappedVocabRegex);
+  if (vocabMatch) {
+    vocabBlock = vocabMatch[0].trim();
+    html = html.replace(wrappedVocabRegex, '');
+  } else {
+    vocabMatch = html.match(unwrappedVocabRegex);
+    if (vocabMatch) {
+      vocabBlock = vocabMatch[0].trim();
+      html = html.replace(unwrappedVocabRegex, '');
+    }
   }
+
+  // 4. Calculate section numbering according to new order:
+  // 1. Imágenes (if present)
+  // 2. Vocabulario
+  // 3. Preguntas para el profesor (if present)
+  // 4. Lectura
+  // 5. Comprensión
+  // 6. Preguntas abiertas
+  let currentNum = 1;
+  let imagesNum = null;
+  let vocabNum = null;
+  let questionsNum = null;
+
   if (hasImages) {
     imagesNum = currentNum++;
   }
+  vocabNum = currentNum++;
+  if (hasQuestions) {
+    questionsNum = currentNum++;
+  }
 
   const readingNum = currentNum++;
-  const vocabNum = currentNum++;
   const quizNum = currentNum++;
   const discussNum = currentNum++;
   const totalSections = discussNum;
@@ -1432,34 +1506,40 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   const quizTitle = SECTION_QUIZ_I18N[activity.lang] || SECTION_QUIZ_I18N.es;
   const discussTitle = SECTION_DISCUSS_I18N[activity.lang] || SECTION_DISCUSS_I18N.es;
 
-  if (hasQuestions) {
-    jumpLinks.push(`<a href="#seccion-${questionsNum}" class="jump-num" title="${qI18n.jumpTitle}">${questionsNum}</a>`);
-  }
   if (hasImages) {
     jumpLinks.push(`<a href="#seccion-${imagesNum}" class="jump-num" title="${imgI18n.jumpTitle.replace('{N}', imagesNum)}">${imagesNum}</a>`);
   }
-  jumpLinks.push(`<a href="#seccion-${readingNum}" class="jump-num" title="Ir a Sección ${readingNum}: ${readingTitle}">${readingNum}</a>`);
   jumpLinks.push(`<a href="#seccion-${vocabNum}" class="jump-num" title="Ir a Sección ${vocabNum}: ${vocabTitle}">${vocabNum}</a>`);
+  if (hasQuestions) {
+    jumpLinks.push(`<a href="#seccion-${questionsNum}" class="jump-num" title="${qI18n.jumpTitle.replace('{N}', questionsNum)}">${questionsNum}</a>`);
+  }
+  jumpLinks.push(`<a href="#seccion-${readingNum}" class="jump-num" title="Ir a Sección ${readingNum}: ${readingTitle}">${readingNum}</a>`);
   jumpLinks.push(`<a href="#seccion-${quizNum}" class="jump-num" title="Ir a Sección ${quizNum}: ${quizTitle}">${quizNum}</a>`);
   jumpLinks.push(`<a href="#seccion-${discussNum}" class="jump-num" title="Ir a Sección ${discussNum}: ${discussTitle}">${discussNum}</a>`);
 
   const jumpNavHtml = `<nav class="jump-nav" aria-label="Navegación de secciones">\n        ${jumpLinks.join('\n        ')}\n      </nav>`;
   html = html.replace(/<nav class="jump-nav"[^>]*>[\s\S]*?<\/nav>/i, jumpNavHtml);
 
-  // 6. Build and inject Questions and Images blocks before Reading
+  // 6. Build and inject prefix blocks before Reading:
+  // Order: Images -> Vocab -> Questions
   let prefixBlocks = '';
-  if (hasQuestions) {
-    prefixBlocks += buildSectionQuestionsHtml(activity, questions) + '\n\n';
-  }
   if (hasImages) {
     prefixBlocks += buildSectionImagesHtml(activity, imageFiles, imageQuestions, imagesNum) + '\n\n';
   }
+  if (vocabBlock) {
+    prefixBlocks += vocabBlock + '\n\n';
+  }
+  if (hasQuestions) {
+    prefixBlocks += buildSectionQuestionsHtml(activity, questions, questionsNum) + '\n\n';
+  }
 
   // Find the start of Reading section (e.g. <!-- SECTION ...: READING or <h2 class="section-title" id="seccion-...)
-  const readingMarkerRegex = /(<!-- (?:SECTION|Section) \d+: (?:READING|Reading)[\s\S]*?-->\s*<section>|<!-- (?:SECTION|Section) \d+: (?:READING|Reading)[\s\S]*?-->|<section>\s*<h2 class="section-title"[^>]*>|<h2 class="section-title"[^>]*>[\s\S]*?(?:Lectura|Reading|Lesetext))/i;
+  const readingMarkerRegex = /(?:<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:READING|Reading)[^\r\n]*-->\s*)?(?:<section[^>]*>\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Lectura|Reading|Lesetext)[\s\S]*?<\/h2>/i;
   if (prefixBlocks) {
-    if (readingMarkerRegex.test(html)) {
-      html = html.replace(readingMarkerRegex, `${prefixBlocks}$1`);
+    const match = html.match(readingMarkerRegex);
+    if (match) {
+      const idx = match.index;
+      html = html.slice(0, idx) + prefixBlocks + html.slice(idx);
     } else {
       html = html.replace(/(<\/header>\s*)/, `$1\n${prefixBlocks}`);
     }
@@ -1474,6 +1554,58 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     quizNum,
     discussNum
   });
+
+  // Ensure dismissActiveVocabModal and Escape listener are in every activity script
+  if (!html.includes('dismissActiveVocabModal')) {
+    const dismissVocabJs = `
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          if (typeof closeImageLightbox === 'function') closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+`;
+    html = html.replace('</script>', `${dismissVocabJs}\n  </script>`);
+  }
 
   // 8. Update sticky jump nav logic for dynamic last section href
   html = html.replace(

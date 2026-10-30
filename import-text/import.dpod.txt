@@ -1,13 +1,19 @@
 ## volcanesecuador
 
-Es este un término que usarías? "su entrañable parce de Colombia"
+Es este un término jerga colombiana o ecuatoriana? "su entrañable parce de Colombia" (dear buddy)
 rucu: Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?
 rucu: Y puedes verlo desde la ciudad de Quito?
-macha: ¿Cómo es Machachi?
+macha: ¿Qué tipo de ciudad es Machachi?
 rucu: ¿Es realmente así de fácil llegar a la cima? El hombre vestido de rojo, a la derecha, parece estar muy relajado.
 llang: ¿Has estado alguna vez aquí? Parece un paisaje místico.
 riob: Entonces, ¿desde Riobamba es posible ver tanto el Chimborazo como El Altar?
 riob: El conjunto de cimas de esta montaña es hermoso.
+quiloto: ¿Es peligrosa esta agua si te bañas en ella o la bebes?
+quito: ¿Es esta una ruta habitual que siguen los excursionistas?
+chim: Esta montaña parece casi irreal. ¿Alguna vez has intentado escalarla?
+cotopax: Desde este punto de vista, escalar esta montaña parece relativamente sencillo. ¿Lo has intentado alguna vez?
+agua: ¿Qué tipo de río es el Pastaza?
+tung: ¿Recuerdas cuándo entró en erupción este volcán?
 
 ## porypara
 

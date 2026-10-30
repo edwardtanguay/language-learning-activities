@@ -91,10 +91,18 @@ Follow the project design philosophy defined in `AGENTS.md`:
     - Positioned directly under the subtitle and before the Instructions toggle, a centered navigation bar (`.jump-nav`) displays round numbers `1`, `2`, `3`, `4` (and `5` when an activity has 5 sections) inside circular badges (~32px diameter, background `#e6e0d2`, dark charcoal number centered) that smoothly scroll to `#seccion-1`, `#seccion-2`, `#seccion-3`, `#seccion-4`, and `#seccion-5`.
     - **Sticky Section Pill & Return Navigation**: Once the learner scrolls past the header `.jump-nav`, a compact centered floating pill (`.sticky-jump-nav`) appears at the top of the viewport displaying the section badges `1 2 3 4 [5]` (with the active section highlighted in a warm darker beige `#c8beaa` with dark charcoal text `var(--ink-main)`). When jumping to any section from the sticky nav on mobile, scroll with a 62px top offset (`scroll-margin-top: 62px;`) so the section title and badge are never hidden behind the floating pill, leaving ~18–22px of clear breathing room below it. Jumping to a section records the learner's previous scroll position (`savedReturnScrollY`) and reveals a centered SVG return arrow button (`.jump-return-btn`) inside the pill to smoothly scroll right back to their previous spot.
     - **Sticky Bookmark Jump Button (`.jump-bookmark-btn`)**: When one or more bookmarks exist, a circular bookmark jump button (`.jump-bookmark-btn`, ~27px diameter, `#e6e0d2`, bookmark ribbon SVG colored in `var(--lang-color)`) appears at the right end of `.sticky-jump-nav`. Each click smoothly scrolls down to the next bookmark relative to current scroll position (wrapping around to the top bookmark if already past the last one).
-  - **Section Numbering Scheme**:
-    - **When teacher questions exist**: Section 1 is Preguntas para el profesor (`#seccion-1`, action hint `revisar en clase`), followed by Images (Section 2, if present), Reading, Vocabulary, Comprehension, and Open Questions.
-    - **When images exist (without teacher questions)**: Section 1 is Imágenes (`#seccion-1`, action hint `clic para ampliar`), Section 2 is Lectura (`#seccion-2`, action hint `leer en voz alta`), Section 3 is Vocabulario (`#seccion-3`, action hint `arrastrar y soltar`), Section 4 is Comprensión (`#seccion-4`, action hint `opción múltiple`), and Section 5 is Preguntas abiertas (`#seccion-5`, action hint `responder y debatir`).
-    - **When neither images nor teacher questions exist**: Section 1 is Lectura (`leer en voz alta`), Section 2 is Vocabulario (`arrastrar y soltar`), Section 3 is Comprensión (`opción múltiple`), and Section 4 is Preguntas abiertas (`responder y debatir`).
+  - **Canonical Section Ordering & Numbering Scheme**:
+    - **Canonical Section Order**:
+      1. **Imágenes** (`#seccion-1` if present, action hint `clic para ampliar`)
+      2. **Vocabulario** (`arrastrar y soltar`)
+      3. **Preguntas para el profesor** (`revisar en clase`, if present)
+      4. **Lectura** (`leer en voz alta`)
+      5. **Comprensión** (`opción múltiple`)
+      6. **Preguntas abiertas** (`responder y debatir`)
+    - **When images and teacher questions exist**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Preguntas para el profesor, Section 4 is Lectura, Section 5 is Comprensión, Section 6 is Preguntas abiertas.
+    - **When images exist (without teacher questions)**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Lectura, Section 4 is Comprensión, Section 5 is Preguntas abiertas.
+    - **When teacher questions exist (without images)**: Section 1 is Vocabulario, Section 2 is Preguntas para el profesor, Section 3 is Lectura, Section 4 is Comprensión, Section 5 is Preguntas abiertas.
+    - **When neither images nor teacher questions exist**: Section 1 is Vocabulario, Section 2 is Lectura, Section 3 is Comprensión, Section 4 is Preguntas abiertas.
   - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`, `5`). Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Comprensión are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page so the top utility bar and "Índice de Actividades" link remain fully visible, without adding `#top` to the URL bar (`text-decoration: none; color: inherit; cursor: pointer;`).
   - On the right side of each section heading line, include an action hint written in small letters with subtle opacity (`.section-action-hint`, e.g. `font-size: 13px; color: var(--ink-muted); opacity: 0.65; font-family: var(--font-typewriter);`) translated into the worksheet's target language:
@@ -151,16 +159,23 @@ Each activity file should include the following sections:
        - **Profesor**: Advice and role in class (no preparation needed, keep list of errors during class to send afterwards, constant live interaction with clarifying questions, stories, opinions, challenging answers, prefer "how" and "why" questions over "what/when/yes-no", aim for 50%/50% speaking time, focus is constant interactive challenge rather than rushing to finish the activity).
        - **Estudiante**: Step-by-step workflow before and during class (create activity with AI skill, read through text and understand it, work through exercises beforehand, prepare speaking topics, research details and add screenshots of web images with link to instructions, commit and publish to Vercel, work through sections in class naturally aiming for 50%/50% speaking/listening, decide on next topic before class ends).
    - Clicking anywhere on the instructions box rolls it back up into the compact initial bar with centered **INSTRUCCIONES** (while clicks on links or text selections are ignored).
-4. **Section Structure**:
-   - **When images exist**:
-     - **Section 1: Images (Imágenes)**: Titled `<span class="section-num">1</span> Imágenes` with right-aligned hint `clic para ampliar`. Grid of responsive image cards with title and caption, lightbox modal on click (`openImageModal`).
-     - **Section 2: Reading Passage (Lectura)**: Titled `<span class="section-num">2</span> Lectura` with right-aligned hint `leer en voz alta`.
-     - **Section 3: Vocabulary (Vocabulario)**: Titled `<span class="section-num">3</span> Vocabulario` with right-aligned hint `arrastrar y soltar`.
+4. **Section Structure & Canonical Ordering**:
+   - **Canonical Section Order**:
+     1. **Imágenes** (`clic para ampliar`, if present)
+     2. **Vocabulario** (`arrastrar y soltar`)
+     3. **Preguntas para el profesor** (`revisar en clase`, if present)
+     4. **Lectura** (`leer en voz alta`)
+     5. **Comprensión** (`opción múltiple`)
+     6. **Preguntas abiertas** (`responder y debatir`)
+   - **When images exist (without teacher questions)**:
+     - **Section 1: Images (Imágenes)**: Titled `<span class="section-num">1</span> Imágenes` with right-aligned hint `clic para ampliar`. Grid of responsive image cards with title and caption, lightbox modal on click (`openImageLightbox`).
+     - **Section 2: Vocabulary (Vocabulario)**: Titled `<span class="section-num">2</span> Vocabulario` with right-aligned hint `arrastrar y soltar`.
+     - **Section 3: Reading Passage (Lectura)**: Titled `<span class="section-num">3</span> Lectura` with right-aligned hint `leer en voz alta`.
      - **Section 4: Comprehension Questions (Comprensión)**: Titled `<span class="section-num">4</span> Comprensión` with right-aligned hint `opción múltiple`.
      - **Section 5: Open Questions (Preguntas abiertas)**: Titled `<span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>` with right-aligned hint `responder y debatir`.
-   - **When images do NOT exist**:
-     - **Section 1: Reading Passage (Lectura)**: Titled `<span class="section-num">1</span> Lectura` with right-aligned hint `leer en voz alta`.
-     - **Section 2: Vocabulary (Vocabulario)**: Titled `<span class="section-num">2</span> Vocabulario` with right-aligned hint `arrastrar y soltar`.
+   - **When neither images nor teacher questions exist**:
+     - **Section 1: Vocabulary (Vocabulario)**: Titled `<span class="section-num">1</span> Vocabulario` with right-aligned hint `arrastrar y soltar`.
+     - **Section 2: Reading Passage (Lectura)**: Titled `<span class="section-num">2</span> Lectura` with right-aligned hint `leer en voz alta`.
      - **Section 3: Comprehension Questions (Comprensión)**: Titled `<span class="section-num">3</span> Comprensión` with right-aligned hint `opción múltiple`.
      - **Section 4: Open Questions (Preguntas abiertas)**: Titled `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>` with right-aligned hint `responder y debatir`.
 5. **Reading Passage (Lectura)**:
