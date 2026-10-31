@@ -185,6 +185,7 @@
       align-items: center;
       gap: 14px;
       margin: 18px auto 22px auto;
+      flex-wrap: wrap;
     }
 
     .jump-num {
@@ -208,6 +209,79 @@
       background-color: #dacfb8;
       transform: translateY(-1px);
       box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-num.active {
+      background-color: #c8beaa;
+      color: var(--ink-main);
+    }
+
+    .jump-top-btn,
+    .jump-return-btn {
+      background: var(--highlight);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+      flex-shrink: 0;
+    }
+
+    .jump-return-btn {
+      display: none;
+    }
+
+    .jump-return-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-top-btn:hover,
+    .jump-return-btn:hover {
+      background-color: #e6dbb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-bookmark-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #e6e0d2;
+      color: var(--lang-color);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      padding: 0;
+      transition: background-color 0.15s, transform 0.15s, opacity 0.2s, box-shadow 0.15s;
+      flex-shrink: 0;
+    }
+
+    .jump-bookmark-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-bookmark-btn:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-bookmark-btn svg,
+    .jump-top-btn svg,
+    .jump-return-btn svg {
+      width: 15px;
+      height: 15px;
+      display: block;
     }
 
     /* Sticky Section Jump Pill & Return to Reading */
@@ -237,75 +311,24 @@
       pointer-events: auto;
     }
 
-    .sticky-jump-nav .jump-num {
+    .sticky-jump-nav .jump-num,
+    .sticky-jump-nav .jump-top-btn,
+    .sticky-jump-nav .jump-return-btn,
+    .sticky-jump-nav .jump-bookmark-btn {
       width: 27px;
       height: 27px;
+    }
+
+    .sticky-jump-nav .jump-num {
       font-size: 14px;
     }
 
-    .sticky-jump-nav .jump-num.active {
-      background-color: #c8beaa;
-      color: var(--ink-main);
-    }
-
-    .jump-top-btn,
-    .jump-return-btn {
-      background: var(--highlight);
-      color: var(--ink-main);
-      border: 1px solid var(--ink-rule);
-      border-radius: 50%;
-      width: 27px;
-      height: 27px;
-      padding: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      text-decoration: none;
-      line-height: 1;
-      transition: background-color 0.15s, transform 0.15s;
-      flex-shrink: 0;
-    }
-
-    .jump-return-btn.show {
-      display: inline-flex;
-    }
-
-    .jump-return-btn:hover {
-      background-color: #e6dbb8;
-      transform: translateY(-1px);
-    }
-
-    .jump-bookmark-btn {
-      width: 27px;
-      height: 27px;
-      border-radius: 50%;
-      background-color: #e6e0d2;
-      color: var(--lang-color);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border: 1px solid transparent;
-      padding: 0;
-      transition: background-color 0.15s, transform 0.15s, opacity 0.2s;
-    }
-
-    .jump-bookmark-btn.show {
-      display: inline-flex;
-    }
-
-    .jump-bookmark-btn:hover {
-      background-color: #dacfb8;
-      transform: translateY(-1px);
-    }
-
-    .jump-bookmark-btn svg {
+    .sticky-jump-nav .jump-bookmark-btn svg,
+    .sticky-jump-nav .jump-top-btn svg,
+    .sticky-jump-nav .jump-return-btn svg {
       width: 14px;
       height: 14px;
-      display: block;
     }
-
     /* Handout Sections */
     .section-title {
       font-family: var(--font-typewriter);
@@ -1548,14 +1571,25 @@
         margin-bottom: 14px;
         text-align: center;
       }
-      .jump-nav {
-        gap: 12px;
+            .jump-nav {
+        gap: 8px;
         margin: 14px auto 18px auto;
       }
-      .jump-num {
+      .jump-nav .jump-num,
+      .jump-nav .jump-top-btn,
+      .jump-nav .jump-return-btn,
+      .jump-nav .jump-bookmark-btn {
         width: 28px;
         height: 28px;
+      }
+      .jump-nav .jump-num {
         font-size: 15px;
+      }
+      .jump-nav .jump-bookmark-btn svg,
+      .jump-nav .jump-top-btn svg,
+      .jump-nav .jump-return-btn svg {
+        width: 14px;
+        height: 14px;
       }
       .instructions-heading {
         text-align: center;
@@ -2691,24 +2725,20 @@
     }
 
     function updateStickyBookmarkState() {
-      const bmBtn = document.getElementById('jump-bookmark-btn');
-      if (!bmBtn) return;
+      const bmBtns = document.querySelectorAll('.jump-bookmark-btn');
+      if (bmBtns.length === 0) return;
       const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
       if (bookmarkEls.length === 0) {
-        bmBtn.classList.remove('show');
+        bmBtns.forEach(btn => btn.classList.remove('show'));
         return;
       }
       if (bookmarkEls.length === 1) {
         const rect = bookmarkEls[0].getBoundingClientRect();
         const isVisible = (rect.top >= 40 && rect.bottom <= window.innerHeight - 40);
-        if (isVisible) {
-          bmBtn.classList.remove('show');
-        } else {
-          bmBtn.classList.add('show');
-        }
+        bmBtns.forEach(btn => btn.classList.toggle('show', !isVisible));
         return;
       }
-      bmBtn.classList.add('show');
+      bmBtns.forEach(btn => btn.classList.add('show'));
     }
 
     function renderReadingBookmarks() {
@@ -3658,6 +3688,8 @@
     }
 
     function executeReset() {
+      savedReturnScrollY = null;
+      document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
       userAnswers = {};
       completedVocab = [];
       readingBookmarks = [];
@@ -3990,7 +4022,7 @@
     })();
 
     // =========================================================
-    // STICKY FLOATING SECTION JUMP NAV & "GO TO IMAGES & COME BACK"
+    // SECTION JUMP NAVIGATION (STATIONARY & STICKY PILL PARITY)
     // =========================================================
     let savedReturnScrollY = null;
 
@@ -3999,49 +4031,46 @@
       const stickyNav = document.getElementById('sticky-jump-nav');
       if (!headerJumpNav || !stickyNav) return;
 
-      const buildStickyLinks = () => {
-        stickyNav.innerHTML = '';
+      const createTopBtn = () => {
+        const topBtn = document.createElement('button');
+        topBtn.type = 'button';
+        topBtn.className = 'jump-top-btn';
+        topBtn.title = 'Ir al inicio';
+        topBtn.setAttribute('aria-label', 'Ir al inicio');
+        topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="7"></line><polyline points="6 13 12 7 18 13"></polyline><line x1="4" y1="3" x2="20" y2="3"></line></svg>';
+        topBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (window.scrollY > 40) {
+            savedReturnScrollY = window.scrollY;
+            document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
+          }
+          snappyScrollTo(0, 280);
+        });
+        return topBtn;
+      };
+
+      const returnToPreviousSpot = () => {
+        if (savedReturnScrollY !== null) {
+          const targetY = savedReturnScrollY;
+          savedReturnScrollY = null;
+          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
+          snappyScrollTo(targetY, 280);
+        }
+      };
+
+      const createReturnBtn = () => {
         const returnBtn = document.createElement('button');
         returnBtn.type = 'button';
-        returnBtn.className = 'jump-return-btn';
-        returnBtn.id = 'jump-return-btn';
+        returnBtn.className = 'jump-return-btn' + (savedReturnScrollY !== null ? ' show' : '');
         returnBtn.title = 'Volver al punto anterior';
         returnBtn.setAttribute('aria-label', 'Volver al punto anterior');
-        returnBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
+        returnBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
         returnBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (savedReturnScrollY !== null) {
-            const targetY = savedReturnScrollY;
-            savedReturnScrollY = null;
-            returnBtn.classList.remove('show');
-            snappyScrollTo(targetY, 280);
-          }
+          e.stopPropagation();
+          returnToPreviousSpot();
         });
-        stickyNav.appendChild(returnBtn);
-
-        const links = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
-        links.forEach(origLink => {
-          const clone = origLink.cloneNode(true);
-          clone.addEventListener('click', (e) => handleJumpClick(e, clone.getAttribute('href')));
-          stickyNav.appendChild(clone);
-        });
-
-        links.forEach(origLink => {
-          origLink.addEventListener('click', (e) => handleJumpClick(e, origLink.getAttribute('href')));
-        });
-
-        const bmBtn = document.createElement('button');
-        bmBtn.type = 'button';
-        bmBtn.className = 'jump-bookmark-btn';
-        bmBtn.id = 'jump-bookmark-btn';
-        bmBtn.title = 'Ir al siguiente marcador';
-        bmBtn.setAttribute('aria-label', 'Ir al siguiente marcador');
-        bmBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>';
-        bmBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          handleBookmarkJump();
-        });
-        stickyNav.appendChild(bmBtn);
+        return returnBtn;
       };
 
       const handleBookmarkJump = () => {
@@ -4060,70 +4089,112 @@
         snappyScrollTo(Math.max(0, targetY), 280);
       };
 
-      const handleJumpClick = (e, href) => {
-        if (!href || !href.startsWith('#')) return;
-        const targetEl = document.querySelector(href);
+      const createBookmarkBtn = () => {
+        const bmBtn = document.createElement('button');
+        bmBtn.type = 'button';
+        bmBtn.className = 'jump-bookmark-btn';
+        bmBtn.title = 'Ir al siguiente marcador';
+        bmBtn.setAttribute('aria-label', 'Ir al siguiente marcador');
+        bmBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>';
+        bmBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          handleBookmarkJump();
+        });
+        return bmBtn;
+      };
+
+      const headerLinks = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
+      const sectionIds = [];
+      headerLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('#')) {
+          sectionIds.push(href.slice(1));
+        }
+      });
+
+      // Populate stationary nav extra buttons if not already present
+      if (!headerJumpNav.querySelector('.jump-top-btn')) {
+        const topBtnHeader = createTopBtn();
+        const returnBtnHeader = createReturnBtn();
+        headerJumpNav.insertBefore(returnBtnHeader, headerLinks[0] || null);
+        headerJumpNav.insertBefore(topBtnHeader, returnBtnHeader);
+      }
+      if (!headerJumpNav.querySelector('.jump-bookmark-btn')) {
+        headerJumpNav.appendChild(createBookmarkBtn());
+      }
+
+      // Populate sticky nav with 1:1 button parity
+      stickyNav.innerHTML = '';
+      stickyNav.appendChild(createTopBtn());
+      stickyNav.appendChild(createReturnBtn());
+
+      headerLinks.forEach(link => {
+        const clone = link.cloneNode(true);
+        stickyNav.appendChild(clone);
+      });
+      stickyNav.appendChild(createBookmarkBtn());
+
+      const handleJumpClick = function(e) {
+        const href = this.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        const targetId = href.slice(1);
+        const targetEl = document.getElementById(targetId);
         if (!targetEl) return;
         e.preventDefault();
 
-        const returnBtn = document.getElementById('jump-return-btn');
-
-        // If clicking '1' (Images) or '5' while already there and a return scroll position exists, toggle back!
-        const lastHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');
-        if (href === '#seccion-1' || (lastHref && href === lastHref)) {
-          const rectTarget = targetEl.getBoundingClientRect();
-          const alreadyAtTarget = Math.abs(rectTarget.top) < 160 && savedReturnScrollY !== null;
-          if (alreadyAtTarget) {
-            const targetY = savedReturnScrollY;
-            savedReturnScrollY = null;
-            if (returnBtn) returnBtn.classList.remove('show');
-            snappyScrollTo(targetY, 280);
-            return;
-          }
-        }
-
-        // Save current scroll position so learner can jump to Images (or another section) and come right back
-        savedReturnScrollY = window.scrollY;
-        if (returnBtn) {
-          returnBtn.classList.add('show');
-        }
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
+
+        // If tapping 1 or last section while already there and a return spot exists, toggle back!
+        if ((targetId === sectionIds[0] || targetId === sectionIds[sectionIds.length - 1]) && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
+          returnToPreviousSpot();
+          return;
+        }
+
+        if (Math.abs(window.scrollY - targetTop) > 100) {
+          savedReturnScrollY = window.scrollY;
+          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
+        }
+
         snappyScrollTo(Math.max(0, targetTop), 280);
       };
 
-      buildStickyLinks();
+      headerJumpNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
+      stickyNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
 
-      const updateStickyState = () => {
-        const shouldShow = window.scrollY > 20;
+      const updateStickyNavState = () => {
+        // Sticky button menu appears ONLY when stationary menu is no longer visible on screen
+        const headerRect = headerJumpNav.getBoundingClientRect();
+        const shouldShow = headerRect.bottom <= 0;
         stickyNav.classList.toggle('visible', shouldShow);
 
-        const stickyLinks = Array.from(stickyNav.querySelectorAll('.jump-num'));
-        let activeHref = null;
-        for (const link of stickyLinks) {
-          const href = link.getAttribute('href');
-          const sec = href ? document.querySelector(href) : null;
-          if (sec) {
-            const r = sec.getBoundingClientRect();
-            if (r.top <= 140) {
-              activeHref = href;
+        let currentSectionId = sectionIds[0] || '';
+        const threshold = 130;
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const top = el.getBoundingClientRect().top;
+            if (top <= threshold) {
+              currentSectionId = id;
             }
           }
         }
-        if (
-          stickyLinks.some(l => l.getAttribute('href') === '#seccion-5') &&
-          (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 40)
-        ) {
-          activeHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');
+        if (sectionIds.length > 0 && (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 40)) {
+          currentSectionId = sectionIds[sectionIds.length - 1];
         }
-        stickyLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === activeHref);
+
+        // Active section highlight on BOTH stationary and sticky menus
+        headerJumpNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
+        });
+        stickyNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
         });
 
         updateStickyBookmarkState();
       };
 
-      window.addEventListener('scroll', updateStickyState, { passive: true });
-      updateStickyState();
+      window.addEventListener('scroll', updateStickyNavState, { passive: true });
+      updateStickyNavState();
     }
 
     let cachedActivityStyles = '';
