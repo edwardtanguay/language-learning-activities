@@ -599,24 +599,23 @@
       color: var(--ink-main);
     }
 
+    .jump-top-btn,
     .jump-return-btn {
       background: var(--highlight);
       color: var(--ink-main);
       border: 1px solid var(--ink-rule);
-      border-radius: 999px;
+      border-radius: 50%;
+      width: 27px;
       height: 27px;
-      padding: 0 9px;
-      font-family: var(--font-typewriter);
-      font-size: 12px;
-      font-weight: 700;
-      display: none;
+      padding: 0;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
       cursor: pointer;
       text-decoration: none;
       line-height: 1;
       transition: background-color 0.15s, transform 0.15s;
+      flex-shrink: 0;
     }
 
     .jump-return-btn.show {
@@ -687,6 +686,65 @@
       opacity: 0.8;
     }
 
+    
+    .section-instructions-tab {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      border-top: none;
+      border-right: none;
+      border-bottom: none;
+      padding: 5px 12px;
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--ink-main);
+      cursor: pointer;
+      line-height: 1.2;
+      display: inline-flex;
+      align-items: center;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .section-instructions-tab:hover,
+    .section-instructions-tab.active {
+      background-color: #ebdcb2;
+    }
+
+    .section-instructions-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--ink-main);
+      cursor: pointer;
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      padding: 0 16px;
+      margin: 0;
+      transition: grid-template-rows 0.3s ease, opacity 0.25s ease, padding 0.25s ease, margin 0.25s ease;
+    }
+
+    .section-instructions-box.expanded {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      padding: 10px 16px;
+      margin: -6px 0 18px 0;
+    }
+
+    .section-instructions-content {
+      overflow: hidden;
+    }
+
+    .section-instructions-inner p {
+      margin: 0;
+      text-align: left;
+    }
     .section-action-hint {
       font-family: var(--font-typewriter);
       font-size: 13px;
@@ -2181,10 +2239,11 @@
 
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Vocabulario">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Preguntas">4</a>
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
       </nav>
     </header>
 
@@ -2194,32 +2253,32 @@
       <div class="instructions-content">
         <div class="instructions-inner">
           <p class="instructions-intro">
-            Este método de aprendizaje de idiomas está sumamente centrado en el estudiante, lo que significa que como profesor no se requiere ninguna preparación previa. Esto es perfecto para intercambios lingüísticos (tándem) o plataformas como Preply o italki, donde los profesores a menudo enseñan como una actividad secundaria y pueden tener decenas de estudiantes. El estudiante utiliza la IA para crear actividades interactivas en las que trabaja por su cuenta antes de la clase y luego junto con el profesor durante la sesión, donde el enfoque principal es la conversación. El estudiante y el profesor eligen juntos los temas de las actividades en función de intereses compartidos que resulten enriquecedores para ambos.
+            Este método de aprendizaje de idiomas está sumamente centrado en ti como estudiante, lo que significa que para ti como profesor no se requiere ninguna preparación previa. Esto es perfecto para intercambios lingüísticos (tándem) o plataformas como Preply o italki, donde a menudo enseñas como una actividad secundaria y puedes tener decenas de estudiantes. Tú como estudiante utilizas la IA para crear actividades interactivas en las que trabajas por tu cuenta antes de la clase y luego junto con tu profesor durante la sesión, donde el enfoque principal es la conversación. Ambos eligen juntos los temas de las actividades en función de intereses compartidos que resulten enriquecedores para los dos.
           </p>
           <div class="instructions-columns">
             <div class="instructions-col">
               <div class="instructions-col-title">Profesor</div>
               <ul>
-                <li>Aunque no se necesita ninguna preparación por tu parte, puedes ayudar al estudiante durante la clase de muchas maneras.</li>
-                <li>Lleva una lista de los errores que comete el estudiante durante la clase y envíasela después. Puede ser útil corregirle de vez en cuando durante la conversación en vivo, pero contar con una lista de errores después de clase, cuando tiene tiempo para investigar, organizar y reflexionar sobre ellos, también puede ser de gran utilidad para ayudarle a superarlos con el paso del tiempo.</li>
-                <li>Interactúa constantemente con el estudiante: pídele que aclare lo que no esté claro, comparte tus propias historias y opiniones, interrúmpele, hazle preguntas, desafía sus respuestas y debate los temas a fondo. Prefiere preguntas con «cómo» y «por qué» sobre preguntas con «qué», «cuándo» o de «sí/no», las cuales obligan al estudiante a dar respuestas más largas y profundas.</li>
+                <li>Aunque no necesitas ninguna preparación previa por tu parte, puedes ayudar a tu estudiante durante la clase de muchas maneras.</li>
+                <li>Lleva una lista de los errores que cometa tu estudiante durante la clase y envíasela después. Puede ser útil corregirle de vez en cuando durante la conversación en vivo, pero contar con una lista de errores después de clase, cuando tiene tiempo para investigar, organizar y reflexionar sobre ellos, le será de gran utilidad para superarlos con el tiempo.</li>
+                <li>Interactúa constantemente con tu estudiante: pídele que aclare lo que no esté claro, comparte tus propias historias y opiniones, interrúmpele, hazle preguntas, desafía sus respuestas y debate los temas a fondo. Prefiere preguntas con «cómo» y «por qué» sobre preguntas con «qué», «cuándo» o de «sí/no», las cuales obligan a dar respuestas más largas y profundas.</li>
                 <li>El objetivo es mantener el porcentaje de habla de estudiante/profesor en un 50%/50%. La plataforma de video de Preply reporta esta estadística hacia el final de la clase, lo cual es muy útil.</li>
-                <li>El objetivo no es terminar la actividad a toda costa, sino mantener una interacción constante con el estudiante a un nivel que le suponga un reto y le ayude a mejorar, pero sin abrumarle.</li>
-                <li>Hoy en día, gracias a la IA y los recursos en línea, los estudiantes tienen casi todo lo necesario para aprender idiomas por su cuenta. Lo que necesitan de ti en clase es el desafío constante de la interacción en tiempo real en la conversación, y después una lista de los errores cometidos durante la clase.</li>
+                <li>Tu meta no es terminar la actividad a toda costa, sino mantener una interacción constante con tu estudiante a un nivel que le suponga un reto y le ayude a mejorar, pero sin abrumarle.</li>
+                <li>Hoy en día, gracias a la IA y los recursos en línea, los estudiantes tienen casi todo lo necesario para aprender idiomas por su cuenta. Lo que tu estudiante necesita de ti en clase es el desafío constante de la interacción en tiempo real en la conversación, y después una lista de los errores cometidos durante la clase.</li>
               </ul>
             </div>
             <div class="instructions-col">
               <div class="instructions-col-title">Estudiante</div>
               <ul>
                 <li>Crea una actividad para tu próxima clase en tu editor con la habilidad, ej.: «/create-learning-activity on Ecuador in Spanish B1».</li>
-                <li>Con la mayoría de los modelos de IA, esto tardará entre 5 y 10 minutos en crearse.</li>
+                <li>Con la mayoría de los modelos de IA, tardarás entre 5 y 10 minutos en crearla.</li>
                 <li>Una vez lista, lee el texto con la ayuda de Google Traductor hasta el punto de poder leerlo de nuevo en el idioma meta y comprenderlo en general.</li>
-                <li>Realiza todos los ejercicios para que tengas una comprensión general tanto de las preguntas como de las respuestas, hasta el punto de poder responderlas en vivo en clase.</li>
+                <li>Realiza todos los ejercicios para que tengas una comprensión general tanto de las preguntas como de las respuestas, hasta el punto de poder responderlas en vivo en clase con tu profesor.</li>
                 <li>Prepara el vocabulario y las estructuras que necesitarás para debatir el texto y los ejercicios con tu profesor en clase.</li>
                 <li>Vuelve a leer el texto, esta vez investigando detalles y añadiendo capturas de imágenes de Internet (consulta las <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">instrucciones</a> para una guía técnica).</li>
                 <li>Haz commit de la actividad y las imágenes a tu repositorio de GitHub, lo cual la publicará en tu sitio de Vercel.</li>
                 <li>En clase, trabaja en cada sección con tu profesor, debatiendo los temas a medida que surjan de manera natural.</li>
-                <li>El objetivo no es terminar la actividad en clase, sino mantener una conversación abierta e interesante con tu profesor durante toda la sesión con un 50%/50% de participación para una práctica sólida tanto de expresión oral como de comprensión auditiva.</li>
+                <li>Tu objetivo no es terminar la actividad en clase, sino mantener una conversación abierta e interesante con tu profesor durante toda la sesión con un 50%/50% de participación para una práctica sólida tanto de expresión oral como de comprensión auditiva.</li>
                 <li>Antes de que termine la clase, acuerda con tu profesor el tema de la actividad para tu próxima clase.</li>
               </ul>
             </div>
@@ -2228,12 +2287,59 @@
       </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+    </h2>
+    <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>Estas son imágenes sobre conceptos que aparecen en el texto. Míralas junto con tu profesor: hazle preguntas sobre lo que ves y él te explicará cada detalle y contexto.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="images-section" id="images-section">
+      <div class="images-grid">
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-amigosecuador-laciudaddeibarra.jpg', 'laciudaddeibarra', '[&quot;Este parece un paisaje hermoso, ¿has estado alguna vez aquí?&quot;]')">
+          <img src="images/es-amigosecuador-laciudaddeibarra.jpg" alt="laciudaddeibarra" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-amigosecuador-laprovinciadeimbabura.jpg', 'laprovinciadeimbabura', '[&quot;¿Es esta una zona a la que otros ecuatorianos van de vacaciones?&quot;]')">
+          <img src="images/es-amigosecuador-laprovinciadeimbabura.jpg" alt="laprovinciadeimbabura" class="image-thumb" loading="lazy">
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+      </div>
+    </section>
+
 <!-- SECTION 1: VOCABULARY -->
     <section class="vocab-section">
-      <h2 class="section-title" id="seccion-1">
-        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">1</span> Vocabulario</a>
-        <span class="section-action-hint">arrastrar y soltar</span>
+      <h2 class="section-title" id="seccion-2">
+        <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
+        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
       </h2>
+      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+        <div class="section-instructions-content">
+          <div class="section-instructions-inner">
+            <p>Estas son las diez palabras más desafiantes del texto. Resuelve el ejercicio arrastrando y emparejando cada palabra con su significado, mientras tu profesor te ayuda y resuelve tus dudas según lo necesites.</p>
+          </div>
+        </div>
+      </div>
 
       <div class="vocab-container" id="vocab-container">
         <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
@@ -2257,10 +2363,17 @@
     </section>
 
 <!-- SECTION 2: READING TEXT -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
-      <span class="section-action-hint">leer en voz alta</span>
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
+        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
+      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+        <div class="section-instructions-content">
+          <div class="section-instructions-inner">
+            <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real y anotará las palabras que pronuncies o escribas incorrectamente, junto con indicaciones de cómo pronunciarlas, para enviártelas al final de la clase junto con otras notas lingüísticas útiles.</p>
+          </div>
+        </div>
+      </div>
 
     <article class="reading-content">
       <p>
@@ -2290,10 +2403,17 @@
     </article>
 
     <!-- SECTION 3: COMPREHENSION QUESTIONS -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión</a>
-      <span class="section-action-hint">opción múltiple</span>
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión</a>
+        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
+      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+        <div class="section-instructions-content">
+          <div class="section-instructions-inner">
+            <p>Responde a cada una de estas preguntas eligiendo la respuesta correcta, mientras tu profesor te guía y te apoya con cualquier duda.</p>
+          </div>
+        </div>
+      </div>
 
     <div class="quiz-container" id="quiz-container">
 
@@ -2490,10 +2610,17 @@
     </div>
 
     <!-- SECTION 4: OPEN QUESTIONS -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
-      <span class="section-action-hint">responder y debatir</span>
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
+      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+        <div class="section-instructions-content">
+          <div class="section-instructions-inner">
+            <p>Lee cada pregunta en voz alta. Tu profesor responderá primero y luego responderás tú; conversen y debatan abiertamente sobre el tema antes de pasar a la siguiente pregunta.</p>
+          </div>
+        </div>
+      </div>
 
     <section class="discussion-container">
       <ol class="discussion-questions">
@@ -2955,6 +3082,36 @@
       const isExpanded = box.classList.toggle('expanded');
       box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
     }
+
+    function toggleSectionInstructions(el) {
+      if (!el) return;
+      let box, tab;
+      if (el.classList.contains('section-instructions-tab')) {
+        tab = el;
+        const sectionTitle = el.closest('.section-title');
+        box = sectionTitle ? sectionTitle.nextElementSibling : null;
+        while (box && !box.classList.contains('section-instructions-box')) {
+          box = box.nextElementSibling;
+        }
+      } else if (el.classList.contains('section-instructions-box')) {
+        box = el;
+        const prev = box.previousElementSibling;
+        tab = prev ? prev.querySelector('.section-instructions-tab') : null;
+      }
+
+      if (!box) return;
+
+      const sel = window.getSelection();
+      if (sel && sel.toString().trim().length > 0) return;
+
+      const isExpanded = box.classList.toggle('expanded');
+      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      if (tab) {
+        tab.classList.toggle('active', isExpanded);
+        tab.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      }
+    }
+
 
     document.addEventListener('DOMContentLoaded', () => {
       const box = document.getElementById('instructions-box');
@@ -3835,6 +3992,15 @@
         c.classList.remove('answered', 'correct', 'incorrect');
       });
 
+      document.querySelectorAll('.section-instructions-box.expanded').forEach(box => {
+        box.classList.remove('expanded');
+        box.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelectorAll('.section-instructions-tab.active').forEach(tab => {
+        tab.classList.remove('active');
+        tab.setAttribute('aria-expanded', 'false');
+      });
+
       const feedbacks = document.querySelectorAll('.feedback-box');
       feedbacks.forEach(f => {
         f.textContent = '';
@@ -3950,8 +4116,7 @@
       buildStickyLinks();
 
       const updateStickyState = () => {
-        const navRect = headerJumpNav.getBoundingClientRect();
-        const shouldShow = navRect.bottom < 0;
+        const shouldShow = window.scrollY > 20;
         stickyNav.classList.toggle('visible', shouldShow);
 
         const stickyLinks = Array.from(stickyNav.querySelectorAll('.jump-num'));

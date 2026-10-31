@@ -189,6 +189,34 @@ const SECTION_QUIZ_I18N = {
   da: 'Forståelse'
 };
 
+
+const SECTION_INSTRUCTIONS_LABEL_I18N = {
+  es: 'INSTRUCCIONES',
+  en: 'INSTRUCTIONS',
+  de: 'ANLEITUNG',
+  fr: 'CONSIGNES',
+  it: 'ISTRUZIONI',
+  nl: 'INSTRUCTIES',
+  pl: 'INSTRUKCJE',
+  ru: 'ИНСТРУКЦИИ',
+  el: 'ΟΔΗΓΙΕΣ',
+  is: 'LEIÐBEININGAR',
+  da: 'INSTRUKTIONER'
+};
+
+const SECTION_INSTRUCTIONS_TEXT_I18N = {
+  questions: {
+    es: 'Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.',
+    en: 'These are general questions about the text that the student has which can be cleared up here before reading the text aloud.',
+    de: 'Dies sind allgemeine Fragen zum Text, die vor dem lauten Vorlesen mit der Lehrkraft geklärt werden können.'
+  },
+  images: {
+    es: 'Estas son imágenes sobre conceptos que aparecen en el texto. Míralas junto con tu profesor: hazle preguntas sobre lo que ves y él te explicará cada detalle y contexto.',
+    en: 'These are images of concepts that come up in the text. Look through them with your tutor, ask questions, and your tutor will explain the details and context.',
+    de: 'Dies sind Bilder zu Konzepten aus dem Text. Schau sie dir mit deiner Lehrkraft an, stelle Fragen dazu und lasse dir die Hintergründe erklären.'
+  }
+};
+
 const SECTION_DISCUSS_I18N = {
   es: 'Preguntas',
   en: 'Questions',
@@ -1276,13 +1304,23 @@ function buildSectionQuestionsHtml(activity, questions, sectionNum) {
     })
     .join('\n');
 
+  const instructionsLabel = SECTION_INSTRUCTIONS_LABEL_I18N[activity.lang] || SECTION_INSTRUCTIONS_LABEL_I18N.es;
+  const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.questions && SECTION_INSTRUCTIONS_TEXT_I18N.questions[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.questions.es;
+
   return `    <!-- SECTION ${num}: QUESTIONS FOR TEACHER -->
     <h2 class="section-title" id="seccion-${num}">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${num}</span> ${i18n.sectionTitle}
       </a>
-      <span class="section-action-hint">${i18n.actionHint}</span>
+      <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
     </h2>
+    <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>${instructionsText}</p>
+        </div>
+      </div>
+    </div>
 
     <section class="teacher-questions-section" id="teacher-questions-section">
       <div class="teacher-questions-card">
@@ -1364,13 +1402,23 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
     })
     .join('\n');
 
+  const instructionsLabel = SECTION_INSTRUCTIONS_LABEL_I18N[activity.lang] || SECTION_INSTRUCTIONS_LABEL_I18N.es;
+  const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.images && SECTION_INSTRUCTIONS_TEXT_I18N.images[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.images.es;
+
   return `    <!-- SECTION ${sectionNum}: IMAGES -->
     <h2 class="section-title" id="seccion-${sectionNum}">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${sectionNum}</span> ${i18n.sectionTitle}
       </a>
-      <span class="section-action-hint">${i18n.actionHint}</span>
+      <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
     </h2>
+    <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>${instructionsText}</p>
+        </div>
+      </div>
+    </div>
 
     <section class="images-section" id="images-section">
       <div class="images-grid">
@@ -1518,29 +1566,22 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   }
 
   // 3. Strip any existing Questions and Images sections so core sections (Reading, Vocab, Quiz, Discuss) can be cleanly placed
-  const questionsSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*<section class="teacher-questions-section"[^>]*>[\s\S]*?<\/section>\s*/i;
+  const questionsSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*(?:<div class="section-instructions-box"[^>]*>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*)?<section class="teacher-questions-section"[^>]*>[\s\S]*?<\/section>\s*/i;
   html = html.replace(questionsSectionRegex, '');
 
-  const imagesSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*IMAGES[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/i;
+  const imagesSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*IMAGES[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*(?:<div class="section-instructions-box"[^>]*>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*)?<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/i;
   const legacyImagesRegex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/i;
   html = html.replace(imagesSectionRegex, '');
   html = html.replace(legacyImagesRegex, '');
 
   // Extract vocab section if present
   let vocabBlock = '';
-  const wrappedVocabRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*Vocab[^\r\n]*-->\s*)?<section class="vocab-section">[\s\S]*?<\/section>\s*/i;
-  const unwrappedVocabRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*Vocab[^\r\n]*-->\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Vocabulario|Vocabulary|Wortschatz)[\s\S]*?<\/h2>\s*<section class="vocab-container"[^>]*>[\s\S]*?<\/section>\s*/i;
+  const vocabRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*Vocab[^\r\n]*-->\s*)?(?:<section class="vocab-section">[\s\S]*?<\/section>|<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Vocabulario|Vocabulary|Wortschatz)[\s\S]*?(?=(?:<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:READING|Reading)|<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Lectura|Reading|Lesetext))))/i;
 
-  let vocabMatch = html.match(wrappedVocabRegex);
+  const vocabMatch = html.match(vocabRegex);
   if (vocabMatch) {
     vocabBlock = vocabMatch[0].trim();
-    html = html.replace(wrappedVocabRegex, '');
-  } else {
-    vocabMatch = html.match(unwrappedVocabRegex);
-    if (vocabMatch) {
-      vocabBlock = vocabMatch[0].trim();
-      html = html.replace(unwrappedVocabRegex, '');
-    }
+    html = html.replace(vocabRegex, '');
   }
 
   // 4. Calculate section numbering according to new order:

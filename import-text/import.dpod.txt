@@ -1,5 +1,7 @@
 ## amigosecuador
 
+ibar: Este parece un paisaje hermoso, ¿has estado alguna vez aquí?
+prov: ¿Es esta una zona a la que otros ecuatorianos van de vacaciones?
 
 ## volcanesecuador
 
