@@ -4,6 +4,11 @@ ibar: Este parece un paisaje hermoso, ¿has estado alguna vez aquí?
 prov: ¿Es Imbabura una provincia a la que otros ecuatorianos van de vacaciones?
 ncias: ¿Qué provincias conoces mejor?
 manab: Cuando comes tonga manabita, ¿también te comes las hojas de plátano?
+rodeo: ¿Has estado alguna vez en uno de estos rodeos? ¿Cómo son?
+charr: Este plato parece basarse mucho en la carne. ¿Con qué más se come el chicharrón?
+fiesta: ¿Qué otra festividad celebran en Ecuador?
+montubios: ¿Qué sabes sobre Montuvio? Resultó difícil encontrar información sobre qué es esto exactamente.
+puyo: ¿Es Puyo el punto de entrada a la Amazonía? ¿Qué otros puntos de entrada existen?
 
 ## volcanesecuador
 

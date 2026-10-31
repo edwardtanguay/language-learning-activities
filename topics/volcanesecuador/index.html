@@ -5,615 +5,6 @@
     if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
       window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
     }
-  
-    // =========================================================
-    // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
-    // =========================================================
-    let lbScale = 1;
-    let lbTranslateX = 0;
-    let lbTranslateY = 0;
-    let lbPinchStartDist = 0;
-    let lbPinchStartScale = 1;
-    let lbPanStartX = 0;
-    let lbPanStartY = 0;
-    let lbLastTouchX = 0;
-    let lbLastTouchY = 0;
-    let lbMouseDown = false;
-    let lbSelectingCaption = false;
-    let lbLastMouseX = 0;
-    let lbLastMouseY = 0;
-    let lbGestureMoved = false;
-    let lbIgnoreNextClick = false;
-    const LB_MAX_SCALE = 50;
-
-    function applyLightboxTransform() {
-      const overlay = document.getElementById('image-lightbox');
-      const img = document.getElementById('image-lightbox-img');
-      if (img) {
-        img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
-      }
-      if (overlay) {
-        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
-      }
-    }
-
-    function openImageLightbox(src, alt, questionsJson) {
-      const overlay = document.getElementById('image-lightbox');
-      const img = document.getElementById('image-lightbox-img');
-      const caption = document.getElementById('image-lightbox-caption');
-      const questionsContainer = document.getElementById('image-lightbox-questions');
-      if (!overlay || !img) return;
-      img.src = src;
-      img.alt = alt || '';
-      if (caption) {
-        caption.textContent = alt || '';
-      }
-      if (questionsContainer) {
-        questionsContainer.innerHTML = '';
-        let qList = [];
-        try {
-          if (Array.isArray(questionsJson)) qList = questionsJson;
-          else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
-        } catch (e) {}
-        if (qList && qList.length > 0) {
-          const pillBubbleSvg = '<svg viewBox="0 0 20 20" width="16" height="16" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
-          qList.forEach(q => {
-            const pill = document.createElement('div');
-            pill.className = 'image-lightbox-q-pill';
-
-            const iconSpan = document.createElement('span');
-            iconSpan.className = 'image-lightbox-q-icon';
-            iconSpan.innerHTML = pillBubbleSvg;
-
-            const textSpan = document.createElement('span');
-            textSpan.className = 'image-lightbox-q-text';
-            textSpan.textContent = q;
-
-            pill.appendChild(iconSpan);
-            pill.appendChild(textSpan);
-            questionsContainer.appendChild(pill);
-          });
-          questionsContainer.style.display = 'flex';
-        } else {
-          questionsContainer.style.display = 'none';
-        }
-      }
-      lbScale = 1;
-      lbTranslateX = 0;
-      lbTranslateY = 0;
-      lbMouseDown = false;
-      lbSelectingCaption = false;
-      lbGestureMoved = false;
-      lbIgnoreNextClick = false;
-      overlay.classList.remove('is-zoomed', 'is-panning');
-      applyLightboxTransform();
-      overlay.classList.add('active');
-    }
-
-    function closeImageLightbox() {
-      const overlay = document.getElementById('image-lightbox');
-      const img = document.getElementById('image-lightbox-img');
-      const caption = document.getElementById('image-lightbox-caption');
-      const questionsContainer = document.getElementById('image-lightbox-questions');
-      if (!overlay) return;
-      if (window.getSelection) {
-        const sel = window.getSelection();
-        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
-          sel.removeAllRanges();
-        }
-      }
-      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
-      if (img) {
-        img.src = '';
-        img.style.transform = '';
-      }
-      if (caption) {
-        caption.textContent = '';
-      }
-      if (questionsContainer) {
-        questionsContainer.innerHTML = '';
-      }
-      lbScale = 1;
-      lbTranslateX = 0;
-      lbTranslateY = 0;
-      lbMouseDown = false;
-      lbSelectingCaption = false;
-    }
-
-    function handleLightboxClick(e) {
-      if (lbIgnoreNextClick) {
-        lbIgnoreNextClick = false;
-        return;
-      }
-      if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
-        return;
-      }
-      const isImgClick = e && e.target && (e.target.id === 'image-lightbox-img' || e.target.closest('#image-lightbox-img'));
-      if (isImgClick) {
-        const questionsContainer = document.getElementById('image-lightbox-questions');
-        const hasQuestions = questionsContainer && questionsContainer.children.length > 0;
-        if (hasQuestions) {
-          questionsContainer.style.display = questionsContainer.style.display === 'none' ? 'flex' : 'none';
-        } else {
-          closeImageLightbox();
-        }
-        return;
-      }
-      closeImageLightbox();
-    }
-
-    function dismissActiveVocabModal() {
-      const detailArea = document.getElementById('vocab-completed-detail');
-      if (detailArea && detailArea.getAttribute('data-active-word')) {
-        detailArea.innerHTML = '';
-        detailArea.removeAttribute('data-active-word');
-        return true;
-      }
-      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
-        if (activeModalCard.id === 'active-hint-modal') {
-          hideModal();
-          return true;
-        } else if (activeModalCard.classList.contains('state-wrong')) {
-          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
-          else hideModal();
-          return true;
-        } else if (activeModalCard.classList.contains('state-correct')) {
-          const targetKey = activeModalCard.getAttribute('data-target-key');
-          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
-          else hideModal();
-          return true;
-        } else {
-          hideModal();
-          return true;
-        }
-      }
-      const existingHint = document.getElementById('active-hint-modal');
-      if (existingHint) {
-        hideModal();
-        return true;
-      }
-      return false;
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        const overlay = document.getElementById('image-lightbox');
-        if (overlay && overlay.classList.contains('active')) {
-          closeImageLightbox();
-          return;
-        }
-        if (typeof dismissActiveVocabModal === 'function') {
-          dismissActiveVocabModal();
-        }
-      }
-    });
-
-    (function setupLightboxTouchZoom() {
-      document.addEventListener('DOMContentLoaded', () => {
-        const overlay = document.getElementById('image-lightbox');
-        if (!overlay) return;
-
-        overlay.addEventListener('wheel', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          e.preventDefault();
-          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
-          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
-
-          if (newScale > 1.005) {
-            const cx = window.innerWidth / 2;
-            const cy = window.innerHeight / 2;
-            const offsetX = e.clientX - cx;
-            const offsetY = e.clientY - cy;
-            const ratio = newScale / lbScale;
-            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
-            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
-            lbScale = newScale;
-          } else {
-            lbScale = 1;
-            lbTranslateX = 0;
-            lbTranslateY = 0;
-          }
-          applyLightboxTransform();
-        }, { passive: false });
-
-        overlay.addEventListener('touchstart', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          if (e.touches.length === 2) {
-            e.preventDefault();
-            lbGestureMoved = false;
-            const dx = e.touches[0].clientX - e.touches[1].clientX;
-            const dy = e.touches[0].clientY - e.touches[1].clientY;
-            lbPinchStartDist = Math.hypot(dx, dy);
-            lbPinchStartScale = lbScale;
-            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-          } else if (e.touches.length === 1) {
-            lbPanStartX = e.touches[0].clientX;
-            lbPanStartY = e.touches[0].clientY;
-            lbLastTouchX = e.touches[0].clientX;
-            lbLastTouchY = e.touches[0].clientY;
-            lbGestureMoved = false;
-          }
-        }, { passive: false });
-
-        overlay.addEventListener('touchmove', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          if (e.touches.length === 2 && lbPinchStartDist > 0) {
-            e.preventDefault();
-            lbGestureMoved = true;
-            const dx = e.touches[0].clientX - e.touches[1].clientX;
-            const dy = e.touches[0].clientY - e.touches[1].clientY;
-            const dist = Math.hypot(dx, dy);
-            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
-
-            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-            if (lbScale > 1) {
-              lbTranslateX += (midX - lbLastTouchX);
-              lbTranslateY += (midY - lbLastTouchY);
-            } else {
-              lbTranslateX = 0;
-              lbTranslateY = 0;
-            }
-            lbLastTouchX = midX;
-            lbLastTouchY = midY;
-            applyLightboxTransform();
-          } else if (e.touches.length === 1) {
-            const curX = e.touches[0].clientX;
-            const curY = e.touches[0].clientY;
-            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
-              lbGestureMoved = true;
-            }
-            if (lbScale > 1 && lbGestureMoved) {
-              e.preventDefault();
-              lbTranslateX += (curX - lbLastTouchX);
-              lbTranslateY += (curY - lbLastTouchY);
-              lbLastTouchX = curX;
-              lbLastTouchY = curY;
-              applyLightboxTransform();
-            }
-          }
-        }, { passive: false });
-
-        overlay.addEventListener('touchend', (e) => {
-          if (e.touches.length < 2) {
-            lbPinchStartDist = 0;
-          }
-          if (e.touches.length === 1) {
-            lbLastTouchX = e.touches[0].clientX;
-            lbLastTouchY = e.touches[0].clientY;
-          }
-          if (e.touches.length === 0) {
-            if (lbScale <= 1.02) {
-              lbScale = 1;
-              lbTranslateX = 0;
-              lbTranslateY = 0;
-              applyLightboxTransform();
-            }
-            if (lbGestureMoved) {
-              lbIgnoreNextClick = true;
-              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
-            }
-          }
-        });
-      });
-    })();
-
-    // =========================================================
-    // IMAGE LABELS DRAG & DROP GAME (DESKTOP)
-    // =========================================================
-    let solvedImageIds = [];
-    let draggedImageId = null;
-    let selectedImageLabelChip = null;
-
-    function handleImageLabelDragStart(e, chip) {
-      if (window.innerWidth <= 680) {
-        e.preventDefault();
-        return;
-      }
-      draggedImageId = chip.getAttribute('data-image-id');
-      try {
-        e.dataTransfer.setData('text/plain', draggedImageId);
-        e.dataTransfer.effectAllowed = 'move';
-      } catch (err) {}
-      chip.classList.add('is-dragging');
-      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
-        selectedImageLabelChip.classList.remove('is-selected');
-        selectedImageLabelChip = null;
-      }
-    }
-
-    function handleImageLabelDragEnd(e, chip) {
-      chip.classList.remove('is-dragging');
-      draggedImageId = null;
-      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
-    }
-
-    function handleImageLabelClick(chip) {
-      if (window.innerWidth <= 680) return;
-      if (selectedImageLabelChip === chip) {
-        chip.classList.remove('is-selected');
-        selectedImageLabelChip = null;
-      } else {
-        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
-        chip.classList.add('is-selected');
-        selectedImageLabelChip = chip;
-      }
-    }
-
-    function handleImageCardDragOver(e, card) {
-      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
-      e.preventDefault();
-      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-      card.classList.add('image-drop-hover');
-    }
-
-    function handleImageCardDragLeave(e, card) {
-      if (!card.contains(e.relatedTarget)) {
-        card.classList.remove('image-drop-hover');
-      }
-    }
-
-    function handleImageCardDrop(e, card, src, alt, questionsJson) {
-      e.preventDefault();
-      card.classList.remove('image-drop-hover');
-      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
-      let droppedId = '';
-      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
-      if (!droppedId) droppedId = draggedImageId;
-      const cardId = card.getAttribute('data-image-id');
-      if (droppedId && droppedId === cardId) {
-        const pool = document.getElementById('image-labels-pool');
-        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
-        solveImage(card, chip, src, alt, questionsJson);
-      }
-    }
-
-    function handleImageCardClick(card, src, alt, questionsJson) {
-      if (selectedImageLabelChip && window.innerWidth > 680 && !card.classList.contains('is-solved')) {
-        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
-        const cardId = card.getAttribute('data-image-id');
-        if (selectedId === cardId) {
-          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
-          return;
-        } else {
-          selectedImageLabelChip.classList.remove('is-selected');
-          selectedImageLabelChip = null;
-        }
-      }
-      openImageLightbox(src, alt, questionsJson);
-    }
-
-    function solveImage(card, chip, src, alt, questionsJson) {
-      if (!card) return;
-      const imageId = card.getAttribute('data-image-id');
-      card.classList.add('is-solved');
-      if (chip) {
-        chip.classList.remove('is-selected', 'is-dragging');
-        chip.classList.add('is-hidden');
-      }
-      if (selectedImageLabelChip === chip) {
-        selectedImageLabelChip = null;
-      }
-      if (imageId && !solvedImageIds.includes(imageId)) {
-        solvedImageIds.push(imageId);
-        if (typeof saveState === 'function') {
-          saveState();
-        }
-      }
-      openImageLightbox(src, alt, questionsJson);
-    }
-
-    function initImageLabelsGame() {
-      const pool = document.getElementById('image-labels-pool');
-      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
-      if (!pool || cards.length === 0) return;
-
-      const items = [];
-      cards.forEach(card => {
-        const id = card.getAttribute('data-image-id');
-        const title = card.getAttribute('data-image-title');
-        if (id && title) {
-          items.push({ id, title });
-        }
-      });
-
-      // Fisher-Yates shuffle
-      for (let i = items.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = items[i];
-        items[i] = items[j];
-        items[j] = temp;
-      }
-
-      pool.innerHTML = '';
-      items.forEach(item => {
-        const isSolved = solvedImageIds.includes(item.id);
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'image-label-chip' + (isSolved ? ' is-hidden' : '');
-        chip.setAttribute('data-image-id', item.id);
-        chip.setAttribute('draggable', 'true');
-        chip.textContent = item.title;
-        chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
-        chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
-        chip.addEventListener('click', () => handleImageLabelClick(chip));
-        pool.appendChild(chip);
-      });
-
-      cards.forEach(card => {
-        const id = card.getAttribute('data-image-id');
-        if (id && solvedImageIds.includes(id)) {
-          card.classList.add('is-solved');
-        } else {
-          card.classList.remove('is-solved');
-        }
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      initImageLabelsGame();
-    });
-
-
-
-    function dismissActiveVocabModal() {
-      const detailArea = document.getElementById('vocab-completed-detail');
-      if (detailArea && detailArea.getAttribute('data-active-word')) {
-        detailArea.innerHTML = '';
-        detailArea.removeAttribute('data-active-word');
-        return true;
-      }
-      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
-        if (activeModalCard.id === 'active-hint-modal') {
-          hideModal();
-          return true;
-        } else if (activeModalCard.classList.contains('state-wrong')) {
-          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
-          else hideModal();
-          return true;
-        } else if (activeModalCard.classList.contains('state-correct')) {
-          const targetKey = activeModalCard.getAttribute('data-target-key');
-          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
-          else hideModal();
-          return true;
-        } else {
-          hideModal();
-          return true;
-        }
-      }
-      const existingHint = document.getElementById('active-hint-modal');
-      if (existingHint) {
-        hideModal();
-        return true;
-      }
-      return false;
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        const overlay = document.getElementById('image-lightbox');
-        if (overlay && overlay.classList.contains('active')) {
-          closeImageLightbox();
-          return;
-        }
-        if (typeof dismissActiveVocabModal === 'function') {
-          dismissActiveVocabModal();
-        }
-      }
-    });
-
-    (function setupLightboxTouchZoom() {
-      document.addEventListener('DOMContentLoaded', () => {
-        const overlay = document.getElementById('image-lightbox');
-        if (!overlay) return;
-
-        overlay.addEventListener('wheel', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          e.preventDefault();
-          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
-          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
-
-          if (newScale > 1.005) {
-            const cx = window.innerWidth / 2;
-            const cy = window.innerHeight / 2;
-            const offsetX = e.clientX - cx;
-            const offsetY = e.clientY - cy;
-            const ratio = newScale / lbScale;
-            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
-            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
-            lbScale = newScale;
-          } else {
-            lbScale = 1;
-            lbTranslateX = 0;
-            lbTranslateY = 0;
-          }
-          applyLightboxTransform();
-        }, { passive: false });
-
-        overlay.addEventListener('touchstart', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          if (e.touches.length === 2) {
-            e.preventDefault();
-            lbGestureMoved = false;
-            const dx = e.touches[0].clientX - e.touches[1].clientX;
-            const dy = e.touches[0].clientY - e.touches[1].clientY;
-            lbPinchStartDist = Math.hypot(dx, dy);
-            lbPinchStartScale = lbScale;
-            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-          } else if (e.touches.length === 1) {
-            lbPanStartX = e.touches[0].clientX;
-            lbPanStartY = e.touches[0].clientY;
-            lbLastTouchX = e.touches[0].clientX;
-            lbLastTouchY = e.touches[0].clientY;
-            lbGestureMoved = false;
-          }
-        }, { passive: false });
-
-        overlay.addEventListener('touchmove', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          if (e.touches.length === 2 && lbPinchStartDist > 0) {
-            e.preventDefault();
-            lbGestureMoved = true;
-            const dx = e.touches[0].clientX - e.touches[1].clientX;
-            const dy = e.touches[0].clientY - e.touches[1].clientY;
-            const dist = Math.hypot(dx, dy);
-            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
-
-            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-            if (lbScale > 1) {
-              lbTranslateX += (midX - lbLastTouchX);
-              lbTranslateY += (midY - lbLastTouchY);
-            } else {
-              lbTranslateX = 0;
-              lbTranslateY = 0;
-            }
-            lbLastTouchX = midX;
-            lbLastTouchY = midY;
-            applyLightboxTransform();
-          } else if (e.touches.length === 1) {
-            const curX = e.touches[0].clientX;
-            const curY = e.touches[0].clientY;
-            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
-              lbGestureMoved = true;
-            }
-            if (lbScale > 1 && lbGestureMoved) {
-              e.preventDefault();
-              lbTranslateX += (curX - lbLastTouchX);
-              lbTranslateY += (curY - lbLastTouchY);
-              lbLastTouchX = curX;
-              lbLastTouchY = curY;
-              applyLightboxTransform();
-            }
-          }
-        }, { passive: false });
-
-        overlay.addEventListener('touchend', (e) => {
-          if (e.touches.length < 2) {
-            lbPinchStartDist = 0;
-          }
-          if (e.touches.length === 1) {
-            lbLastTouchX = e.touches[0].clientX;
-            lbLastTouchY = e.touches[0].clientY;
-          }
-          if (e.touches.length === 0) {
-            if (lbScale <= 1.02) {
-              lbScale = 1;
-              lbTranslateX = 0;
-              lbTranslateY = 0;
-              applyLightboxTransform();
-            }
-            if (lbGestureMoved) {
-              lbIgnoreNextClick = true;
-              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
-            }
-          }
-        });
-      });
-    })();
-
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2159,7 +1550,7 @@
       font-family: var(--font-typewriter);
       font-size: 12.5px;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 5px 10px 3px 10px;
       cursor: grab;
       user-select: none;
       -webkit-user-select: none;
@@ -2169,7 +1560,19 @@
       align-items: center;
       justify-content: center;
       border-radius: 0;
-      line-height: 1.3;
+      line-height: 1.15;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      touch-action: manipulation;
+    }
+
+    .image-label-chip:focus {
+      outline: none;
+    }
+
+    .image-label-chip:focus-visible {
+      outline: 1px dashed var(--ink-rule);
+      outline-offset: 1px;
     }
 
     .image-label-chip:hover {
@@ -2178,7 +1581,6 @@
       border-color: var(--stamp-blue, #1d4ed8);
     }
 
-    .image-label-chip:active,
     .image-label-chip.is-dragging {
       cursor: grabbing;
       opacity: 0.4;
@@ -2259,52 +1661,12 @@
       backdrop-filter: blur(2px);
     }
 
-    .image-thumb-drop-slot {
-      position: absolute;
-      bottom: 4px;
-      left: 4px;
-      right: 4px;
-      height: 25px;
-      background: rgba(244, 239, 228, 0.7);
-      border: 1px dashed var(--ink-rule);
-      box-sizing: border-box;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
+    .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+      display: none !important;
     }
 
-    @media (min-width: 681px) {
-      .images-instructions-desktop {
-        display: inline !important;
-      }
-      .images-instructions-mobile {
-        display: none !important;
-      }
-      .image-thumb-wrap:not(.is-solved) .image-thumb-title {
-        display: none;
-      }
-      .image-thumb-wrap:not(.is-solved) .image-thumb-drop-slot {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .images-instructions-desktop {
-        display: none !important;
-      }
-      .images-instructions-mobile {
-        display: inline !important;
-      }
-      .image-labels-pool {
-        display: none !important;
-      }
-      .image-thumb-title {
-        display: block !important;
-      }
-      .image-thumb-drop-slot {
-        display: none !important;
-      }
+    .image-thumb-wrap.is-solved .image-thumb-title {
+      display: block !important;
     }
 
     /* Thumbnail Question/Statement Badges */
@@ -2489,6 +1851,27 @@
     .image-lightbox-caption::selection {
       background: var(--highlight);
       color: var(--ink-main);
+    }
+
+    @keyframes label-sparkle {
+      0% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+      35% {
+        box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 0 0 6px rgba(234, 179, 8, 0.9);
+        border-color: rgba(250, 204, 21, 0.85);
+        background: rgba(254, 249, 215, 0.98);
+        transform: scale(1.03);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+    }
+
+    .image-lightbox-caption.sparkle {
+      animation: label-sparkle 0.85s ease-out;
     }
 
     .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
@@ -2796,6 +2179,15 @@
 
 
 
+
+
+
+
+
+    
+
+
+    
     <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
@@ -2806,206 +2198,88 @@
     <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p><span class="images-instructions-desktop">Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="images-instructions-mobile">Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.</span></p>
+          <p>Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</p>
         </div>
       </div>
     </div>
 
     <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool"></div>
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="banosdeaguasanta" draggable="true">Baños de Agua Santa</button>
+        <button type="button" class="image-label-chip" data-image-id="chimborazo" draggable="true">Chimborazo</button>
+        <button type="button" class="image-label-chip" data-image-id="cotopaxi" draggable="true">Cotopaxi</button>
+        <button type="button" class="image-label-chip" data-image-id="elaltarenlapartesuperior" draggable="true">El Altar en la parte superior</button>
+        <button type="button" class="image-label-chip" data-image-id="elaltertalcomosevedesdelaciudadderiobamba" draggable="true">El Alter tal como se ve desde la ciudad de Riobamba</button>
+        <button type="button" class="image-label-chip" data-image-id="elvolcanrucupichincha" draggable="true">El Volcán Rucu Pichincha</button>
+        <button type="button" class="image-label-chip" data-image-id="lagoquilotoa" draggable="true">Lago Quilotoa</button>
+        <button type="button" class="image-label-chip" data-image-id="machachi" draggable="true">Machachi</button>
+        <button type="button" class="image-label-chip" data-image-id="parquenacionalllanganates" draggable="true">Parque Nacional Llanganates</button>
+        <button type="button" class="image-label-chip" data-image-id="quitoylosvolcanes" draggable="true">Quito y los volcanes</button>
+        <button type="button" class="image-label-chip" data-image-id="resumendeloslugaresmencionadosenelarticulo" draggable="true">Resumen de los lugares mencionados en el artículo</button>
+        <button type="button" class="image-label-chip" data-image-id="riobamba" draggable="true">Riobamba</button>
+        <button type="button" class="image-label-chip" data-image-id="volcantungurahua" draggable="true">Volcán Tungurahua</button>
+      </div>
       <div class="images-grid">
         <div class="image-thumb-wrap" data-image-id="banosdeaguasanta" data-image-title="Baños de Agua Santa" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa', '[&quot;¿Qué tipo de río es el Pastaza?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa', '[&quot;¿Qué tipo de río es el Pastaza?&quot;]')">
           <img src="images/es-volcanesecuador-banosdeaguasanta.jpg" alt="Baños de Agua Santa" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Baños de Agua Santa</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="chimborazo" data-image-title="Chimborazo" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo', '[&quot;Esta montaña parece casi irreal. ¿Alguna vez has intentado escalarla?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo', '[&quot;Esta montaña parece casi irreal. ¿Alguna vez has intentado escalarla?&quot;]')">
           <img src="images/es-volcanesecuador-chimborazo.jpg" alt="Chimborazo" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Chimborazo</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="cotopaxi" data-image-title="Cotopaxi" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi', '[&quot;Desde este punto de vista, escalar esta montaña parece relativamente sencillo. ¿Lo has intentado alguna vez?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi', '[&quot;Desde este punto de vista, escalar esta montaña parece relativamente sencillo. ¿Lo has intentado alguna vez?&quot;]')">
           <img src="images/es-volcanesecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Cotopaxi</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="elaltarenlapartesuperior" data-image-title="El Altar en la parte superior" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-elaltarenlapartesuperior.jpg', 'El Altar en la parte superior', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-elaltarenlapartesuperior.jpg', 'El Altar en la parte superior', '[]')">
           <img src="images/es-volcanesecuador-elaltarenlapartesuperior.jpg" alt="El Altar en la parte superior" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">El Altar en la parte superior</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="elaltertalcomosevedesdelaciudadderiobamba" data-image-title="El Alter tal como se ve desde la ciudad de Riobamba" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg', 'El Alter tal como se ve desde la ciudad de Riobamba', '[&quot;Entonces, ¿desde Riobamba es posible ver tanto el Chimborazo como El Altar?&quot;,&quot;El conjunto de cimas de esta montaña es hermoso.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg', 'El Alter tal como se ve desde la ciudad de Riobamba', '[&quot;Entonces, ¿desde Riobamba es posible ver tanto el Chimborazo como El Altar?&quot;,&quot;El conjunto de cimas de esta montaña es hermoso.&quot;]')">
           <img src="images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg" alt="El Alter tal como se ve desde la ciudad de Riobamba" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">El Alter tal como se ve desde la ciudad de Riobamba</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="elvolcanrucupichincha" data-image-title="El Volcán Rucu Pichincha" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha', '[&quot;Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?&quot;,&quot;Y puedes verlo desde la ciudad de Quito?&quot;,&quot;¿Es realmente así de fácil llegar a la cima? El hombre vestido de rojo, a la derecha, parece estar muy relajado.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha', '[&quot;Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?&quot;,&quot;Y puedes verlo desde la ciudad de Quito?&quot;,&quot;¿Es realmente así de fácil llegar a la cima? El hombre vestido de rojo, a la derecha, parece estar muy relajado.&quot;]')">
           <img src="images/es-volcanesecuador-elvolcanrucupichincha.jpg" alt="El Volcán Rucu Pichincha" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">El Volcán Rucu Pichincha</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="lagoquilotoa" data-image-title="Lago Quilotoa" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[&quot;¿Es peligrosa esta agua si te bañas en ella o la bebes?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[&quot;¿Es peligrosa esta agua si te bañas en ella o la bebes?&quot;]')">
           <img src="images/es-volcanesecuador-lagoquilotoa.jpg" alt="Lago Quilotoa" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Lago Quilotoa</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="machachi" data-image-title="Machachi" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Qué tipo de ciudad es Machachi?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Qué tipo de ciudad es Machachi?&quot;]')">
           <img src="images/es-volcanesecuador-machachi.jpg" alt="Machachi" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Machachi</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="parquenacionalllanganates" data-image-title="Parque Nacional Llanganates" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[&quot;¿Has estado alguna vez aquí? Parece un paisaje místico.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[&quot;¿Has estado alguna vez aquí? Parece un paisaje místico.&quot;]')">
           <img src="images/es-volcanesecuador-parquenacionalllanganates.jpg" alt="Parque Nacional Llanganates" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Parque Nacional Llanganates</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="quitoylosvolcanes" data-image-title="Quito y los volcanes" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[&quot;¿Es esta una ruta habitual que siguen los excursionistas?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[&quot;¿Es esta una ruta habitual que siguen los excursionistas?&quot;]')">
           <img src="images/es-volcanesecuador-quitoylosvolcanes.jpg" alt="Quito y los volcanes" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Quito y los volcanes</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="resumendeloslugaresmencionadosenelarticulo" data-image-title="Resumen de los lugares mencionados en el artículo" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg', 'Resumen de los lugares mencionados en el artículo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg', 'Resumen de los lugares mencionados en el artículo', '[]')">
           <img src="images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg" alt="Resumen de los lugares mencionados en el artículo" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Resumen de los lugares mencionados en el artículo</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="riobamba" data-image-title="Riobamba" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-riobamba.jpg', 'Riobamba', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-riobamba.jpg', 'Riobamba', '[]')">
           <img src="images/es-volcanesecuador-riobamba.jpg" alt="Riobamba" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Riobamba</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="volcantungurahua" data-image-title="Volcán Tungurahua" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-volcantungurahua.jpg', 'Volcán Tungurahua', '[&quot;¿Recuerdas cuándo entró en erupción este volcán?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-volcantungurahua.jpg', 'Volcán Tungurahua', '[&quot;¿Recuerdas cuándo entró en erupción este volcán?&quot;]')">
           <img src="images/es-volcanesecuador-volcantungurahua.jpg" alt="Volcán Tungurahua" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Volcán Tungurahua</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: QUESTIONS FOR TEACHER -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">3</span> Preguntas para el profesor
-      </a>
-      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-    </h2>
-    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
-      <div class="section-instructions-content">
-        <div class="section-instructions-inner">
-          <p>Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.</p>
-        </div>
-      </div>
-    </div>
-
-    <section class="teacher-questions-section" id="teacher-questions-section">
-      <div class="teacher-questions-card">
-        <ul class="teacher-questions-list">
-          <li>Es este un término jerga colombiana o ecuatoriana? "su entrañable parce de Colombia" (dear buddy)</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-    </h2>
-    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
-      <div class="section-instructions-content">
-        <div class="section-instructions-inner">
-          <p><span class="images-instructions-desktop">Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="images-instructions-mobile">Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.</span></p>
-        </div>
-      </div>
-    </div>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool"></div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="banosdeaguasanta" data-image-title="Baños de Agua Santa" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa', '[&quot;¿Qué tipo de río es el Pastaza?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-banosdeaguasanta.jpg', 'Baños de Agua Santa', '[&quot;¿Qué tipo de río es el Pastaza?&quot;]')">
-          <img src="images/es-volcanesecuador-banosdeaguasanta.jpg" alt="Baños de Agua Santa" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Baños de Agua Santa</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="chimborazo" data-image-title="Chimborazo" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo', '[&quot;Esta montaña parece casi irreal. ¿Alguna vez has intentado escalarla?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-chimborazo.jpg', 'Chimborazo', '[&quot;Esta montaña parece casi irreal. ¿Alguna vez has intentado escalarla?&quot;]')">
-          <img src="images/es-volcanesecuador-chimborazo.jpg" alt="Chimborazo" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Chimborazo</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="cotopaxi" data-image-title="Cotopaxi" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi', '[&quot;Desde este punto de vista, escalar esta montaña parece relativamente sencillo. ¿Lo has intentado alguna vez?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-cotopaxi.jpg', 'Cotopaxi', '[&quot;Desde este punto de vista, escalar esta montaña parece relativamente sencillo. ¿Lo has intentado alguna vez?&quot;]')">
-          <img src="images/es-volcanesecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Cotopaxi</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="elaltarenlapartesuperior" data-image-title="El Altar en la parte superior" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-elaltarenlapartesuperior.jpg', 'El Altar en la parte superior', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-elaltarenlapartesuperior.jpg', 'El Altar en la parte superior', '[]')">
-          <img src="images/es-volcanesecuador-elaltarenlapartesuperior.jpg" alt="El Altar en la parte superior" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">El Altar en la parte superior</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="elaltertalcomosevedesdelaciudadderiobamba" data-image-title="El Alter tal como se ve desde la ciudad de Riobamba" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg', 'El Alter tal como se ve desde la ciudad de Riobamba', '[&quot;Entonces, ¿desde Riobamba es posible ver tanto el Chimborazo como El Altar?&quot;,&quot;El conjunto de cimas de esta montaña es hermoso.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg', 'El Alter tal como se ve desde la ciudad de Riobamba', '[&quot;Entonces, ¿desde Riobamba es posible ver tanto el Chimborazo como El Altar?&quot;,&quot;El conjunto de cimas de esta montaña es hermoso.&quot;]')">
-          <img src="images/es-volcanesecuador-elaltertalcomosevedesdelaciudadderiobamba.jpg" alt="El Alter tal como se ve desde la ciudad de Riobamba" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">El Alter tal como se ve desde la ciudad de Riobamba</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="elvolcanrucupichincha" data-image-title="El Volcán Rucu Pichincha" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha', '[&quot;Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?&quot;,&quot;Y puedes verlo desde la ciudad de Quito?&quot;,&quot;¿Es realmente así de fácil llegar a la cima? El hombre vestido de rojo, a la derecha, parece estar muy relajado.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-elvolcanrucupichincha.jpg', 'El Volcán Rucu Pichincha', '[&quot;Qué nivel de preparación física necesitas para subir al volcán Rucu Pichincha?&quot;,&quot;Y puedes verlo desde la ciudad de Quito?&quot;,&quot;¿Es realmente así de fácil llegar a la cima? El hombre vestido de rojo, a la derecha, parece estar muy relajado.&quot;]')">
-          <img src="images/es-volcanesecuador-elvolcanrucupichincha.jpg" alt="El Volcán Rucu Pichincha" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">El Volcán Rucu Pichincha</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="lagoquilotoa" data-image-title="Lago Quilotoa" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[&quot;¿Es peligrosa esta agua si te bañas en ella o la bebes?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-lagoquilotoa.jpg', 'Lago Quilotoa', '[&quot;¿Es peligrosa esta agua si te bañas en ella o la bebes?&quot;]')">
-          <img src="images/es-volcanesecuador-lagoquilotoa.jpg" alt="Lago Quilotoa" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Lago Quilotoa</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="machachi" data-image-title="Machachi" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Qué tipo de ciudad es Machachi?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-machachi.jpg', 'Machachi', '[&quot;¿Qué tipo de ciudad es Machachi?&quot;]')">
-          <img src="images/es-volcanesecuador-machachi.jpg" alt="Machachi" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Machachi</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="parquenacionalllanganates" data-image-title="Parque Nacional Llanganates" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[&quot;¿Has estado alguna vez aquí? Parece un paisaje místico.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-parquenacionalllanganates.jpg', 'Parque Nacional Llanganates', '[&quot;¿Has estado alguna vez aquí? Parece un paisaje místico.&quot;]')">
-          <img src="images/es-volcanesecuador-parquenacionalllanganates.jpg" alt="Parque Nacional Llanganates" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Parque Nacional Llanganates</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="quitoylosvolcanes" data-image-title="Quito y los volcanes" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[&quot;¿Es esta una ruta habitual que siguen los excursionistas?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-quitoylosvolcanes.jpg', 'Quito y los volcanes', '[&quot;¿Es esta una ruta habitual que siguen los excursionistas?&quot;]')">
-          <img src="images/es-volcanesecuador-quitoylosvolcanes.jpg" alt="Quito y los volcanes" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Quito y los volcanes</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="resumendeloslugaresmencionadosenelarticulo" data-image-title="Resumen de los lugares mencionados en el artículo" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg', 'Resumen de los lugares mencionados en el artículo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg', 'Resumen de los lugares mencionados en el artículo', '[]')">
-          <img src="images/es-volcanesecuador-resumendeloslugaresmencionadosenelarticulo.jpg" alt="Resumen de los lugares mencionados en el artículo" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Resumen de los lugares mencionados en el artículo</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="riobamba" data-image-title="Riobamba" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-riobamba.jpg', 'Riobamba', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-riobamba.jpg', 'Riobamba', '[]')">
-          <img src="images/es-volcanesecuador-riobamba.jpg" alt="Riobamba" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Riobamba</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="volcantungurahua" data-image-title="Volcán Tungurahua" onclick="handleImageCardClick(this, 'images/es-volcanesecuador-volcantungurahua.jpg', 'Volcán Tungurahua', '[&quot;¿Recuerdas cuándo entró en erupción este volcán?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-volcanesecuador-volcantungurahua.jpg', 'Volcán Tungurahua', '[&quot;¿Recuerdas cuándo entró en erupción este volcán?&quot;]')">
-          <img src="images/es-volcanesecuador-volcantungurahua.jpg" alt="Volcán Tungurahua" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Volcán Tungurahua</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
           <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
       </div>
@@ -3019,55 +2293,7 @@
         </a>
         <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
       </h2>
-      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
-        <div class="section-instructions-content">
-          <div class="section-instructions-inner">
-            <p>Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="vocab-container">
-        <!-- Top Waiting Words Pool -->
-        <div class="vocab-pool" id="vocab-pool" aria-label="Palabras disponibles para emparejar"></div>
-
-        <!-- Middle Target Definition Cards (Shuffled Order) -->
-        <div class="vocab-targets" id="vocab-targets" aria-label="Definiciones"></div>
-
-        <!-- Detail Preview Area for Completed Words -->
-        <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-        <!-- Bottom Completed Words Pool -->
-        <div class="vocab-completed-section">
-          <div class="vocab-completed-pool" id="vocab-completed-pool" aria-label="Palabras emparejadas con éxito"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: QUESTIONS FOR TEACHER -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">3</span> Preguntas para el profesor
-      </a>
-      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-    </h2>
-    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
-      <div class="section-instructions-content">
-        <div class="section-instructions-inner">
-          <p>Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.</p>
-        </div>
-      </div>
-    </div>
-
-    <section class="teacher-questions-section" id="teacher-questions-section">
-      <div class="teacher-questions-card">
-        <ul class="teacher-questions-list">
-          <li>Es este un término jerga colombiana o ecuatoriana? "su entrañable parce de Colombia" (dear buddy)</li>
-        </ul>
-      </div>
-    </section>
-
-<!-- SECTION 2: READING PASSAGE -->
+      <!-- SECTION 2: READING PASSAGE -->
     <section>
       <h2 class="section-title" id="seccion-4">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
@@ -3075,39 +2301,7 @@
         </a>
         <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
       </h2>
-      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
-        <div class="section-instructions-content">
-          <div class="section-instructions-inner">
-            <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real y anotará las palabras que pronuncies o escribas incorrectamente, junto con indicaciones de cómo pronunciarlas, para enviártelas al final de la clase junto con otras notas lingüísticas útiles.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="reading-content" id="reading-passage">
-        <div class="story-card">
-          <h3>Cumbres y valles del norte</h3>
-          <p>
-            Antes de coronar los techos andinos, Mateo, un experimentado guía de la ciudad colonial de Quito, y Camilo, su entrañable parce de Colombia, realizaron una ruta previa en el volcán Rucu Pichincha. A más de cuatro mil metros de altitud, a Camilo le faltaba el <span class="vocab-in-text" data-key="aliento">aliento</span> debido a la menor presión de oxígeno, pero Mateo le recomendó subir con paso firme y regular para no sufrir soroche. Tras recuperar fuerzas con comida casera en el pintoresco pueblo de Machachi, ambos viajaron hacia el majestuoso Cotopaxi. Desde la <span class="vocab-in-text" data-key="falda">falda</span> arenosa del volcán contemplaron la inmensidad del páramo andino antes de iniciar la aproximación. Su empinado <span class="vocab-in-text" data-key="sendero">sendero</span> asciende entre cenizas y rocas volcánicas hacia un albergue <span class="vocab-in-text" data-key="acogedor">acogedor</span> donde los excursionistas descansan y beben infusiones calientes. Para alcanzar el cono blanco resulta indispensable <span class="vocab-in-text" data-key="madrugar">madrugar</span> a medianoche, asegurarse a la cuerda y sortear con cautela cualquier <span class="vocab-in-text" data-key="grieta">grieta</span> profunda que corte el glaciar.
-          </p>
-        </div>
-
-        <div class="story-card">
-          <h3>El callejón central y aguas termales</h3>
-          <p>
-            La travesía continuó hacia el suroeste para bordear el espectacular cráter de la Laguna de Quilotoa, cuyas aguas de color verde esmeralda deslumbraron por completo a los dos viajeros. Desde allí descendieron por el valle rumbo a Baños de Agua Santa, una animada localidad conocida en toda la región por sus cascadas y piscinas de aguas termales. En este enclave subtropical, las corrientes turbulentas del Río Pastaza serpentean con fuerza junto a la escarpada <span class="vocab-in-text" data-key="ladera">ladera</span> del volcán Tungurahua, un coloso activo que suele despedir columnas de ceniza y vapor sobre las colinas boscosas. Al internarse por los cañones del río, una densa <span class="vocab-in-text" data-key="niebla">niebla</span> vespertina cubrió los miradores de piedra, recordando a los montañistas lo rápido que puede transformarse el clima en los Andes.
-          </p>
-        </div>
-
-        <div class="story-card">
-          <h3>Gigantes del sur y camaradería andina</h3>
-          <p>
-            Finalmente, los dos amigos hicieron una parada estratégica en la histórica ciudad andina de Riobamba para alistar provisiones y organizar el ascenso al coloso definitivo: el Chimborazo. Con sus amplios glaciares de nieve perpetua, su mítica <span class="vocab-in-text" data-key="cumbre">cumbre</span> representa el punto más distante del centro de la Tierra y el más cercano al sol. Las ráfagas de viento polar borraban con implacable rapidez cada <span class="vocab-in-text" data-key="huella">huella</span> fresca sobre los campos de nieve virgen, exigiendo máxima concentración. «¡Achachay con este ventarrón helado!», exclamó Mateo ajustando su poncho mientras contemplaban a lo lejos las afiladas agujas rocosas de El Altar. Para aligerar el esfuerzo de la marcha, Mateo se ofreció a acolitar con el peso de la carpa, a lo que Camilo respondió sonriendo que escalar semejantes moles requería una berraquera de admirar. Entre bromas, anécdotas compartidas y un mate humeante, ambos celebraron una aventura bacana que selló su hermandad en las alturas.
-          </p>
-        </div>
-      </div>
-    </section>
-
-<!-- SECTION 4: COMPREHENSION QUIZ -->
+      <!-- SECTION 4: COMPREHENSION QUIZ -->
     <section>
       <h2 class="section-title" id="seccion-5">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
@@ -3115,208 +2309,7 @@
         </a>
         <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
       </h2>
-      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
-        <div class="section-instructions-content">
-          <div class="section-instructions-inner">
-            <p>Responde a cada una de estas preguntas eligiendo la respuesta correcta, mientras tu profesor te guía y te apoya con cualquier duda.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="quiz-container">
-        <!-- Question 1 -->
-        <article class="question-card" data-q="1" data-correct="A">
-          <div class="question-prompt">
-            <span class="q-number">1.</span>
-            <span>¿Por qué Mateo y Camilo decidieron caminar en el Rucu Pichincha y hacer una pausa en Machachi antes de subir al Cotopaxi?</span>
-          </div>
-          <ul class="options-list">
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(1, 'A')">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Para aclimatarse gradualmente a la altitud, prevenir el soroche y recuperar energía antes de encarar el glaciar.</span>
-              </button>
-              <div class="feedback-box" id="feedback-1-A"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(1, 'B')">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Para tramitar permisos de pesca deportiva en los páramos del norte ecuatoriano.</span>
-              </button>
-              <div class="feedback-box" id="feedback-1-B"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(1, 'C')">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Porque las carreteras entre Quito y Cotopaxi solo se pueden cruzar a pie.</span>
-              </button>
-              <div class="feedback-box" id="feedback-1-C"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(1, 'D')">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Para comprar artesanías de madera y ropa de verano en el mercado de Machachi.</span>
-              </button>
-              <div class="feedback-box" id="feedback-1-D"></div>
-            </li>
-          </ul>
-        </article>
-
-        <!-- Question 2 -->
-        <article class="question-card" data-q="2" data-correct="A">
-          <div class="question-prompt">
-            <span class="q-number">2.</span>
-            <span>¿Qué contraste geográfico y natural encuentran los protagonistas al visitar Baños de Agua Santa y el Río Pastaza tras ver la Laguna de Quilotoa?</span>
-          </div>
-          <ul class="options-list">
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(2, 'A')">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Pasan de una laguna volcánica de altura a un entorno subtropical con ríos caudalosos, aguas termales y la presencia activa del Tungurahua.</span>
-              </button>
-              <div class="feedback-box" id="feedback-2-A"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(2, 'B')">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Descubren un desierto seco y frío sin vegetación ni fuentes de agua dulce.</span>
-              </button>
-              <div class="feedback-box" id="feedback-2-B"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(2, 'C')">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Encuentran que el río Pastaza está completamente congelado debido a la nieve del Tungurahua.</span>
-              </button>
-              <div class="feedback-box" id="feedback-2-C"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(2, 'D')">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Comprueban que en Baños no llueve nunca ni se forman bancos de niebla.</span>
-              </button>
-              <div class="feedback-box" id="feedback-2-D"></div>
-            </li>
-          </ul>
-        </article>
-
-        <!-- Question 3 -->
-        <article class="question-card" data-q="3" data-correct="A">
-          <div class="question-prompt">
-            <span class="q-number">3.</span>
-            <span>¿Por qué la cumbre del volcán Chimborazo, avistada desde la zona de Riobamba, es considerada un lugar geográficamente extraordinario?</span>
-          </div>
-          <ul class="options-list">
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(3, 'A')">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Porque debido al abultamiento ecuatorial de la Tierra, su cima nevada es el punto más cercano al sol y más alejado del centro del planeta.</span>
-              </button>
-              <div class="feedback-box" id="feedback-3-A"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(3, 'B')">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Porque es el único volcán de los Andes que carece de nieve durante todo el año.</span>
-              </button>
-              <div class="feedback-box" id="feedback-3-B"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(3, 'C')">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Porque alberga en su interior una ciudad subterránea construida por antiguos exploradores.</span>
-              </button>
-              <div class="feedback-box" id="feedback-3-C"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(3, 'D')">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Porque sus paredes rocosas son exactamente iguales a las agujas colapsadas de El Altar.</span>
-              </button>
-              <div class="feedback-box" id="feedback-3-D"></div>
-            </li>
-          </ul>
-        </article>
-
-        <!-- Question 4 -->
-        <article class="question-card" data-q="4" data-correct="A">
-          <div class="question-prompt">
-            <span class="q-number">4.</span>
-            <span>En el diálogo entre los montañistas, ¿qué significa el término coloquial ecuatoriano «acolitar»?</span>
-          </div>
-          <ul class="options-list">
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(4, 'A')">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Brindar ayuda solidaria, acompañar o apoyar a un compañero en una tarea o esfuerzo.</span>
-              </button>
-              <div class="feedback-box" id="feedback-4-A"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(4, 'B')">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Exigir dinero a cambio de guiar una expedición a la cumbre.</span>
-              </button>
-              <div class="feedback-box" id="feedback-4-B"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(4, 'C')">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Descender de la montaña de manera apresurada por miedo al frío.</span>
-              </button>
-              <div class="feedback-box" id="feedback-4-C"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(4, 'D')">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Preparar una sopa caliente con ingredientes típicos de la sierra.</span>
-              </button>
-              <div class="feedback-box" id="feedback-4-D"></div>
-            </li>
-          </ul>
-        </article>
-
-        <!-- Question 5 -->
-        <article class="question-card" data-q="5" data-correct="A">
-          <div class="question-prompt">
-            <span class="q-number">5.</span>
-            <span>¿Qué cualidad resalta el colombiano Camilo cuando afirma que subir esas paredes exige una auténtica «berraquera»?</span>
-          </div>
-          <ul class="options-list">
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(5, 'A')">
-                <span class="opt-letter">A.</span>
-                <span class="opt-text">Fuerza interior, coraje, tenacidad y determinación para enfrentar un reto difícil.</span>
-              </button>
-              <div class="feedback-box" id="feedback-5-A"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(5, 'B')">
-                <span class="opt-letter">B.</span>
-                <span class="opt-text">Miedo excesivo a las alturas y a los vientos polares.</span>
-              </button>
-              <div class="feedback-box" id="feedback-5-B"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(5, 'C')">
-                <span class="opt-letter">C.</span>
-                <span class="opt-text">Prisa por regresar a la ciudad antes de que anochezca.</span>
-              </button>
-              <div class="feedback-box" id="feedback-5-C"></div>
-            </li>
-            <li class="option-wrapper">
-              <button type="button" class="option-item" onclick="selectOption(5, 'D')">
-                <span class="opt-letter">D.</span>
-                <span class="opt-text">Falta de experiencia técnica en el manejo de cuerdas y crampones.</span>
-              </button>
-              <div class="feedback-box" id="feedback-5-D"></div>
-            </li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- SECTION 5: OPEN DISCUSSION QUESTIONS -->
+      <!-- SECTION 5: OPEN DISCUSSION QUESTIONS -->
     <section>
       <h2 class="section-title" id="seccion-6">
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
@@ -3327,7 +2320,7 @@
       <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
-            <p>Lee cada pregunta en voz alta. Tu profesor responderá primero y luego responderás tú; conversen y debatan abiertamente sobre el tema antes de pasar a la siguiente pregunta.</p>
+            <p>El profesor y el estudiante se turnan para responder a las preguntas.</p>
           </div>
         </div>
       </div>
@@ -3353,7 +2346,30 @@
       </div>
     </section>
 
-    <!-- Bottom Actions Bar -->
+    <!-- SECTION 3: QUESTIONS FOR TEACHER -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">3</span> Preguntas para el profesor
+      </a>
+      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+    </h2>
+    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="teacher-questions-section" id="teacher-questions-section">
+      <div class="teacher-questions-card">
+        <ul class="teacher-questions-list">
+          <li>Es este un término jerga colombiana o ecuatoriana? "su entrañable parce de Colombia" (dear buddy)</li>
+        </ul>
+      </div>
+    </section>
+
+<!-- Bottom Actions Bar -->
     <div class="bottom-actions-bar">
       <div class="reset-container" id="reset-container">
         <button type="button" class="reset-answers-btn" id="reset-btn" onclick="requestReset()" title="Reiniciar respuestas de esta actividad">
@@ -3523,6 +2539,556 @@
     };
 
     // =========================================================
+
+    // =========================================================
+    // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // =========================================================
+    let lbScale = 1;
+    let lbTranslateX = 0;
+    let lbTranslateY = 0;
+    let lbPinchStartDist = 0;
+    let lbPinchStartScale = 1;
+    let lbPanStartX = 0;
+    let lbPanStartY = 0;
+    let lbLastTouchX = 0;
+    let lbLastTouchY = 0;
+    let lbMouseDown = false;
+    let lbSelectingCaption = false;
+    let lbLastMouseX = 0;
+    let lbLastMouseY = 0;
+    let lbGestureMoved = false;
+    let lbIgnoreNextClick = false;
+    const LB_MAX_SCALE = 50;
+
+    function applyLightboxTransform() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      if (img) {
+        img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
+      }
+      if (overlay) {
+        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
+      }
+    }
+
+    function openImageLightbox(src, alt, questionsJson, isSparkle) {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay || !img) return;
+      img.src = src;
+      img.alt = alt || '';
+      if (caption) {
+        caption.textContent = alt || '';
+        caption.classList.remove('sparkle');
+        if (isSparkle) {
+          void caption.offsetWidth;
+          caption.classList.add('sparkle');
+        }
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+        let qList = [];
+        try {
+          if (Array.isArray(questionsJson)) qList = questionsJson;
+          else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
+        } catch (e) {}
+        if (qList && qList.length > 0) {
+          const pillBubbleSvg = '<svg viewBox="0 0 20 20" width="16" height="16" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
+          qList.forEach(q => {
+            const pill = document.createElement('div');
+            pill.className = 'image-lightbox-q-pill';
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'image-lightbox-q-icon';
+            iconSpan.innerHTML = pillBubbleSvg;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'image-lightbox-q-text';
+            textSpan.textContent = q;
+
+            pill.appendChild(iconSpan);
+            pill.appendChild(textSpan);
+            questionsContainer.appendChild(pill);
+          });
+          questionsContainer.style.display = 'flex';
+        } else {
+          questionsContainer.style.display = 'none';
+        }
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+      lbGestureMoved = false;
+      lbIgnoreNextClick = false;
+      overlay.classList.remove('is-zoomed', 'is-panning');
+      applyLightboxTransform();
+      overlay.classList.add('active');
+    }
+
+    function closeImageLightbox() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay) return;
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
+          sel.removeAllRanges();
+        }
+      }
+      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
+      if (img) {
+        img.src = '';
+        img.style.transform = '';
+      }
+      if (caption) {
+        caption.textContent = '';
+        caption.classList.remove('sparkle');
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+    }
+
+    function handleLightboxClick(e) {
+      if (lbIgnoreNextClick) {
+        lbIgnoreNextClick = false;
+        return;
+      }
+      if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
+        return;
+      }
+      const isImgClick = e && e.target && (e.target.id === 'image-lightbox-img' || e.target.closest('#image-lightbox-img'));
+      if (isImgClick) {
+        const questionsContainer = document.getElementById('image-lightbox-questions');
+        const hasQuestions = questionsContainer && questionsContainer.children.length > 0;
+        if (hasQuestions) {
+          questionsContainer.style.display = questionsContainer.style.display === 'none' ? 'flex' : 'none';
+        } else {
+          closeImageLightbox();
+        }
+        return;
+      }
+      closeImageLightbox();
+    }
+
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
+
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
+
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2) {
+            e.preventDefault();
+            lbGestureMoved = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
+    // =========================================================
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
+    // =========================================================
+    let solvedImageIds = [];
+    let draggedImageId = null;
+    let selectedImageLabelChip = null;
+
+    function handleImageLabelDragStart(e, chip) {
+      draggedImageId = chip.getAttribute('data-image-id');
+      try {
+        e.dataTransfer.setData('text/plain', draggedImageId);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+      chip.classList.add('is-dragging');
+      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
+        selectedImageLabelChip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      }
+    }
+
+    function handleImageLabelDragEnd(e, chip) {
+      chip.classList.remove('is-dragging');
+      draggedImageId = null;
+      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
+    }
+
+    function handleImageLabelClick(chip) {
+      if (selectedImageLabelChip === chip) {
+        chip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      } else {
+        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
+        chip.classList.add('is-selected');
+        selectedImageLabelChip = chip;
+      }
+    }
+
+    function setupImageTouchDrag(chip) {
+      let touchMoved = false;
+      let ghost = null;
+      let startX = 0;
+      let startY = 0;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedImageId = chip.getAttribute('data-image-id');
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1 || !draggedImageId) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+        if (dist > 8) {
+          touchMoved = true;
+          if (!ghost) {
+            ghost = chip.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.zIndex = '9999';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.opacity = '0.85';
+            ghost.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ghost);
+            chip.classList.add('is-dragging');
+          }
+          ghost.style.left = touch.clientX + 'px';
+          ghost.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
+            if (c !== card) c.classList.remove('image-drop-hover');
+          });
+          if (card && !card.classList.contains('is-solved')) {
+            card.classList.add('image-drop-hover');
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (ghost) {
+          ghost.remove();
+          ghost = null;
+        }
+        chip.classList.remove('is-dragging');
+        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
+
+        if (touchMoved && draggedImageId) {
+          const changedTouch = e.changedTouches[0];
+          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          if (card && !card.classList.contains('is-solved')) {
+            const cardId = card.getAttribute('data-image-id');
+            if (cardId === draggedImageId) {
+              const img = card.querySelector('img');
+              const src = img ? img.getAttribute('src') : '';
+              const alt = card.getAttribute('data-image-title') || '';
+              solveImage(card, chip, src, alt);
+            }
+          }
+          draggedImageId = null;
+        }
+      });
+    }
+
+    function handleImageCardDragOver(e, card) {
+      if (card.classList.contains('is-solved')) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      card.classList.add('image-drop-hover');
+    }
+
+    function handleImageCardDragLeave(e, card) {
+      if (!card.contains(e.relatedTarget)) {
+        card.classList.remove('image-drop-hover');
+      }
+    }
+
+    function handleImageCardDrop(e, card, src, alt, questionsJson) {
+      e.preventDefault();
+      card.classList.remove('image-drop-hover');
+      if (card.classList.contains('is-solved')) return;
+      let droppedId = '';
+      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
+      if (!droppedId) droppedId = draggedImageId;
+      const cardId = card.getAttribute('data-image-id');
+      if (droppedId && droppedId === cardId) {
+        const pool = document.getElementById('image-labels-pool');
+        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
+        solveImage(card, chip, src, alt, questionsJson);
+      }
+    }
+
+    function handleImageCardClick(card, src, alt, questionsJson) {
+      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
+        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
+        const cardId = card.getAttribute('data-image-id');
+        if (selectedId === cardId) {
+          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
+          return;
+        } else {
+          selectedImageLabelChip.classList.remove('is-selected');
+          selectedImageLabelChip = null;
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function solveImage(card, chip, src, alt, questionsJson) {
+      if (!card) return;
+      const imageId = card.getAttribute('data-image-id');
+      card.classList.add('is-solved');
+      if (chip) {
+        chip.classList.remove('is-selected', 'is-dragging');
+        chip.classList.add('is-hidden');
+      }
+      if (selectedImageLabelChip === chip) {
+        selectedImageLabelChip = null;
+      }
+      if (imageId && !solvedImageIds.includes(imageId)) {
+        solvedImageIds.push(imageId);
+        if (typeof saveState === 'function') {
+          saveState();
+        }
+      }
+      openImageLightbox(src, alt, questionsJson, true);
+    }
+
+    function initImageLabelsGame() {
+      const pool = document.getElementById('image-labels-pool');
+      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
+      if (!pool || cards.length === 0) return;
+
+      // 1. Gather existing chips in pool and deduplicate
+      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
+      const seenIds = new Set();
+      const validChips = [];
+
+      chips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          validChips.push(chip);
+        } else {
+          chip.remove();
+        }
+      });
+
+      // 2. If pool was empty, generate from cards
+      if (validChips.length === 0) {
+        cards.forEach(card => {
+          const id = card.getAttribute('data-image-id');
+          const title = card.getAttribute('data-image-title');
+          if (id && title && !seenIds.has(id)) {
+            seenIds.add(id);
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'image-label-chip';
+            chip.setAttribute('data-image-id', id);
+            chip.setAttribute('draggable', 'true');
+            chip.textContent = title;
+            pool.appendChild(chip);
+            validChips.push(chip);
+          }
+        });
+      }
+
+      // 3. Fisher-Yates shuffle order in pool
+      for (let i = validChips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = validChips[i];
+        validChips[i] = validChips[j];
+        validChips[j] = temp;
+      }
+      validChips.forEach(chip => pool.appendChild(chip));
+
+      // 4. Attach event listeners and sync solved state
+      validChips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        const isSolved = solvedImageIds.includes(id);
+        chip.classList.toggle('is-hidden', isSolved);
+        chip.classList.remove('is-selected', 'is-dragging');
+
+        if (!chip.dataset.bound) {
+          chip.dataset.bound = 'true';
+          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+          chip.addEventListener('click', () => handleImageLabelClick(chip));
+          setupImageTouchDrag(chip);
+        }
+      });
+
+      // 5. Update cards solved state
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        if (id && solvedImageIds.includes(id)) {
+          card.classList.add('is-solved');
+        } else {
+          card.classList.remove('is-solved');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initImageLabelsGame();
+    });
+
     // STATE MANAGEMENT (PERSISTENCE)
     // =========================================================
     function loadSavedState() {

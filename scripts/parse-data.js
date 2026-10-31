@@ -229,6 +229,21 @@ const SECTION_INSTRUCTIONS_TEXT_I18N = {
     es: 'Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.',
     en: 'Drag and drop the words to their correct definitions and read the text. Your professor will correct your pronunciation and help you understand the words.',
     de: 'Ziehe die Wörter zu ihren passenden Definitionen und lies den Text. Deine Lehrkraft korrigiert deine Aussprache und hilft dir, die Wörter zu verstehen.'
+  },
+  reading: {
+    es: 'Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.',
+    en: 'Read this text aloud. Your tutor will correct you in real time.',
+    de: 'Lies diesen Text laut vor. Deine Lehrkraft korrigiert dich in Echtzeit.'
+  },
+  comprehension: {
+    es: 'Comenta las preguntas con tu profesor y encuentra la respuesta correcta.',
+    en: 'Discuss the questions with your teacher and find the correct answer.',
+    de: 'Besprich die Fragen mit deiner Lehrkraft und finde die richtige Antwort.'
+  },
+  discuss: {
+    es: 'El profesor y el estudiante se turnan para responder a las preguntas.',
+    en: 'Professor and student take turns answering the questions.',
+    de: 'Lehrkraft und Lernende beantworten die Fragen abwechselnd.'
   }
 };
 
@@ -804,7 +819,7 @@ const SECTION_IMAGES_CSS = `
       font-family: var(--font-typewriter);
       font-size: 12.5px;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 5px 10px 3px 10px;
       cursor: grab;
       user-select: none;
       -webkit-user-select: none;
@@ -814,7 +829,19 @@ const SECTION_IMAGES_CSS = `
       align-items: center;
       justify-content: center;
       border-radius: 0;
-      line-height: 1.3;
+      line-height: 1.15;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      touch-action: manipulation;
+    }
+
+    .image-label-chip:focus {
+      outline: none;
+    }
+
+    .image-label-chip:focus-visible {
+      outline: 1px dashed var(--ink-rule);
+      outline-offset: 1px;
     }
 
     .image-label-chip:hover {
@@ -823,7 +850,6 @@ const SECTION_IMAGES_CSS = `
       border-color: var(--stamp-blue, #1d4ed8);
     }
 
-    .image-label-chip:active,
     .image-label-chip.is-dragging {
       cursor: grabbing;
       opacity: 0.4;
@@ -904,52 +930,12 @@ const SECTION_IMAGES_CSS = `
       backdrop-filter: blur(2px);
     }
 
-    .image-thumb-drop-slot {
-      position: absolute;
-      bottom: 4px;
-      left: 4px;
-      right: 4px;
-      height: 25px;
-      background: rgba(244, 239, 228, 0.7);
-      border: 1px dashed var(--ink-rule);
-      box-sizing: border-box;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
+    .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+      display: none !important;
     }
 
-    @media (min-width: 681px) {
-      .images-instructions-desktop {
-        display: inline !important;
-      }
-      .images-instructions-mobile {
-        display: none !important;
-      }
-      .image-thumb-wrap:not(.is-solved) .image-thumb-title {
-        display: none;
-      }
-      .image-thumb-wrap:not(.is-solved) .image-thumb-drop-slot {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .images-instructions-desktop {
-        display: none !important;
-      }
-      .images-instructions-mobile {
-        display: inline !important;
-      }
-      .image-labels-pool {
-        display: none !important;
-      }
-      .image-thumb-title {
-        display: block !important;
-      }
-      .image-thumb-drop-slot {
-        display: none !important;
-      }
+    .image-thumb-wrap.is-solved .image-thumb-title {
+      display: block !important;
     }
 
     /* Thumbnail Question/Statement Badges */
@@ -1136,6 +1122,27 @@ const SECTION_IMAGES_CSS = `
       color: var(--ink-main);
     }
 
+    @keyframes label-sparkle {
+      0% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+      35% {
+        box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 0 0 6px rgba(234, 179, 8, 0.9);
+        border-color: rgba(250, 204, 21, 0.85);
+        background: rgba(254, 249, 215, 0.98);
+        transform: scale(1.03);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+    }
+
+    .image-lightbox-caption.sparkle {
+      animation: label-sparkle 0.85s ease-out;
+    }
+
     .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
       opacity: 0;
       pointer-events: none;
@@ -1186,7 +1193,7 @@ const SECTION_LIGHTBOX_JS = `
       }
     }
 
-    function openImageLightbox(src, alt, questionsJson) {
+    function openImageLightbox(src, alt, questionsJson, isSparkle) {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       const caption = document.getElementById('image-lightbox-caption');
@@ -1196,6 +1203,11 @@ const SECTION_LIGHTBOX_JS = `
       img.alt = alt || '';
       if (caption) {
         caption.textContent = alt || '';
+        caption.classList.remove('sparkle');
+        if (isSparkle) {
+          void caption.offsetWidth;
+          caption.classList.add('sparkle');
+        }
       }
       if (questionsContainer) {
         questionsContainer.innerHTML = '';
@@ -1258,6 +1270,7 @@ const SECTION_LIGHTBOX_JS = `
       }
       if (caption) {
         caption.textContent = '';
+        caption.classList.remove('sparkle');
       }
       if (questionsContainer) {
         questionsContainer.innerHTML = '';
@@ -1449,17 +1462,13 @@ const SECTION_LIGHTBOX_JS = `
     })();
 
     // =========================================================
-    // IMAGE LABELS DRAG & DROP GAME (DESKTOP)
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
     // =========================================================
     let solvedImageIds = [];
     let draggedImageId = null;
     let selectedImageLabelChip = null;
 
     function handleImageLabelDragStart(e, chip) {
-      if (window.innerWidth <= 680) {
-        e.preventDefault();
-        return;
-      }
       draggedImageId = chip.getAttribute('data-image-id');
       try {
         e.dataTransfer.setData('text/plain', draggedImageId);
@@ -1479,7 +1488,6 @@ const SECTION_LIGHTBOX_JS = `
     }
 
     function handleImageLabelClick(chip) {
-      if (window.innerWidth <= 680) return;
       if (selectedImageLabelChip === chip) {
         chip.classList.remove('is-selected');
         selectedImageLabelChip = null;
@@ -1490,8 +1498,79 @@ const SECTION_LIGHTBOX_JS = `
       }
     }
 
+    function setupImageTouchDrag(chip) {
+      let touchMoved = false;
+      let ghost = null;
+      let startX = 0;
+      let startY = 0;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedImageId = chip.getAttribute('data-image-id');
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1 || !draggedImageId) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+        if (dist > 8) {
+          touchMoved = true;
+          if (!ghost) {
+            ghost = chip.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.zIndex = '9999';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.opacity = '0.85';
+            ghost.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ghost);
+            chip.classList.add('is-dragging');
+          }
+          ghost.style.left = touch.clientX + 'px';
+          ghost.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
+            if (c !== card) c.classList.remove('image-drop-hover');
+          });
+          if (card && !card.classList.contains('is-solved')) {
+            card.classList.add('image-drop-hover');
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (ghost) {
+          ghost.remove();
+          ghost = null;
+        }
+        chip.classList.remove('is-dragging');
+        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
+
+        if (touchMoved && draggedImageId) {
+          const changedTouch = e.changedTouches[0];
+          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          if (card && !card.classList.contains('is-solved')) {
+            const cardId = card.getAttribute('data-image-id');
+            if (cardId === draggedImageId) {
+              const img = card.querySelector('img');
+              const src = img ? img.getAttribute('src') : '';
+              const alt = card.getAttribute('data-image-title') || '';
+              solveImage(card, chip, src, alt);
+            }
+          }
+          draggedImageId = null;
+        }
+      });
+    }
+
     function handleImageCardDragOver(e, card) {
-      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      if (card.classList.contains('is-solved')) return;
       e.preventDefault();
       try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
       card.classList.add('image-drop-hover');
@@ -1506,7 +1585,7 @@ const SECTION_LIGHTBOX_JS = `
     function handleImageCardDrop(e, card, src, alt, questionsJson) {
       e.preventDefault();
       card.classList.remove('image-drop-hover');
-      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      if (card.classList.contains('is-solved')) return;
       let droppedId = '';
       try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
       if (!droppedId) droppedId = draggedImageId;
@@ -1519,7 +1598,7 @@ const SECTION_LIGHTBOX_JS = `
     }
 
     function handleImageCardClick(card, src, alt, questionsJson) {
-      if (selectedImageLabelChip && window.innerWidth > 680 && !card.classList.contains('is-solved')) {
+      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
         const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
         const cardId = card.getAttribute('data-image-id');
         if (selectedId === cardId) {
@@ -1550,7 +1629,7 @@ const SECTION_LIGHTBOX_JS = `
           saveState();
         }
       }
-      openImageLightbox(src, alt, questionsJson);
+      openImageLightbox(src, alt, questionsJson, true);
     }
 
     function initImageLabelsGame() {
@@ -1558,38 +1637,66 @@ const SECTION_LIGHTBOX_JS = `
       const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
       if (!pool || cards.length === 0) return;
 
-      const items = [];
-      cards.forEach(card => {
-        const id = card.getAttribute('data-image-id');
-        const title = card.getAttribute('data-image-title');
-        if (id && title) {
-          items.push({ id, title });
+      // 1. Gather existing chips in pool and deduplicate
+      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
+      const seenIds = new Set();
+      const validChips = [];
+
+      chips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          validChips.push(chip);
+        } else {
+          chip.remove();
         }
       });
 
-      // Fisher-Yates shuffle
-      for (let i = items.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = items[i];
-        items[i] = items[j];
-        items[j] = temp;
+      // 2. If pool was empty, generate from cards
+      if (validChips.length === 0) {
+        cards.forEach(card => {
+          const id = card.getAttribute('data-image-id');
+          const title = card.getAttribute('data-image-title');
+          if (id && title && !seenIds.has(id)) {
+            seenIds.add(id);
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'image-label-chip';
+            chip.setAttribute('data-image-id', id);
+            chip.setAttribute('draggable', 'true');
+            chip.textContent = title;
+            pool.appendChild(chip);
+            validChips.push(chip);
+          }
+        });
       }
 
-      pool.innerHTML = '';
-      items.forEach(item => {
-        const isSolved = solvedImageIds.includes(item.id);
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'image-label-chip' + (isSolved ? ' is-hidden' : '');
-        chip.setAttribute('data-image-id', item.id);
-        chip.setAttribute('draggable', 'true');
-        chip.textContent = item.title;
-        chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
-        chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
-        chip.addEventListener('click', () => handleImageLabelClick(chip));
-        pool.appendChild(chip);
+      // 3. Fisher-Yates shuffle order in pool
+      for (let i = validChips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = validChips[i];
+        validChips[i] = validChips[j];
+        validChips[j] = temp;
+      }
+      validChips.forEach(chip => pool.appendChild(chip));
+
+      // 4. Attach event listeners and sync solved state
+      validChips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        const isSolved = solvedImageIds.includes(id);
+        chip.classList.toggle('is-hidden', isSolved);
+        chip.classList.remove('is-selected', 'is-dragging');
+
+        if (!chip.dataset.bound) {
+          chip.dataset.bound = 'true';
+          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+          chip.addEventListener('click', () => handleImageLabelClick(chip));
+          setupImageTouchDrag(chip);
+        }
       });
 
+      // 5. Update cards solved state
       cards.forEach(card => {
         const id = card.getAttribute('data-image-id');
         if (id && solvedImageIds.includes(id)) {
@@ -1688,6 +1795,9 @@ function matchQuestionsToImages(rawQuestions, imageFiles, activity) {
 
 function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, sectionNum) {
   const i18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
+  const labelChips = [];
+  const seenSlugs = new Set();
+
   const thumbsHtml = imageFiles
     .map(file => {
       const ext = path.extname(file);
@@ -1699,6 +1809,11 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         formatImageTitle(rawSlug);
       const safeAlt = recordedTitle.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
+      if (!seenSlugs.has(rawSlug)) {
+        seenSlugs.add(rawSlug);
+        labelChips.push({ slug: rawSlug, title: safeAlt });
+      }
+
       const qList = (imageQuestionsMap && imageQuestionsMap[file]) || [];
       const safeQuestionsJson = JSON.stringify(qList).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
@@ -1709,13 +1824,16 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
       }
 
-      return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>\n          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>${qBadgesHtml}\n        </div>`;
+      return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
     })
     .join('\n');
 
+  const chipsHtml = labelChips
+    .map(c => `        <button type="button" class="image-label-chip" data-image-id="${c.slug}" draggable="true">${c.title}</button>`)
+    .join('\n');
+
   const instructionsLabel = SECTION_INSTRUCTIONS_LABEL_I18N[activity.lang] || SECTION_INSTRUCTIONS_LABEL_I18N.es;
-  const instructionsDesktop = (SECTION_INSTRUCTIONS_TEXT_I18N.imagesDesktop && SECTION_INSTRUCTIONS_TEXT_I18N.imagesDesktop[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.imagesDesktop.es;
-  const instructionsMobile = (SECTION_INSTRUCTIONS_TEXT_I18N.imagesMobile && SECTION_INSTRUCTIONS_TEXT_I18N.imagesMobile[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.imagesMobile.es;
+  const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.images && SECTION_INSTRUCTIONS_TEXT_I18N.images[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.images.es;
 
   return `    <!-- SECTION ${sectionNum}: IMAGES -->
     <h2 class="section-title" id="seccion-${sectionNum}">
@@ -1727,13 +1845,15 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
     <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p><span class="images-instructions-desktop">${instructionsDesktop}</span><span class="images-instructions-mobile">${instructionsMobile}</span></p>
+          <p>${instructionsText}</p>
         </div>
       </div>
     </div>
 
     <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool"></div>
+      <div class="image-labels-pool" id="image-labels-pool">
+${chipsHtml}
+      </div>
       <div class="images-grid">
 ${thumbsHtml}
       </div>
@@ -1742,40 +1862,62 @@ ${thumbsHtml}
 
 function ensureLightboxAssets(html) {
   let out = html;
-  if (!out.includes('.image-labels-pool') || !out.includes('rgba(244, 239, 228, 0.92)') || !out.includes('.image-lightbox-caption {\n      margin-top: 10px;\n      font-family: var(--font-typewriter);\n      font-size: 15px;\n      font-weight: 700;\n      text-transform: none;\n      letter-spacing: 0.5px;\n      color: var(--ink-main);') || !out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
-    const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===)/;
-    if (imagesCssRegex.test(out)) {
-      out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
-    } else if (!out.includes('.image-lightbox-overlay')) {
-      out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
-    } else {
-      out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
+
+  // 1. Ensure <head> script ONLY contains the early redirect script
+  const redirectScript = `<script>
+    if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    }
+  </script>`;
+  out = out.replace(/<head>\s*<script>[\s\S]*?<\/script>/i, `<head>\n  ${redirectScript}`);
+
+  // 2. Ensure CSS contains the latest images & lightbox CSS
+  const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===)/;
+  if (imagesCssRegex.test(out)) {
+    out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
+  } else if (!out.includes('.image-lightbox-overlay')) {
+    out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
+  }
+
+  // 3. Ensure HTML lightbox overlay
+  const lightboxHtmlRegex = /(?:[ \t]*<!-- Fullscreen Image Lightbox -->\s*)+<div class="image-lightbox-overlay" id="image-lightbox"[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/;
+  if (lightboxHtmlRegex.test(out)) {
+    out = out.replace(lightboxHtmlRegex, SECTION_LIGHTBOX_HTML.trim());
+  } else if (out.includes('id="image-lightbox"')) {
+    out = out.replace(
+      /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/,
+      SECTION_LIGHTBOX_HTML.trim()
+    );
+  } else {
+    out = out.replace(
+      /(<div class="vocab-dim-overlay"[^>]*><\/div>)/,
+      `$1\n${SECTION_LIGHTBOX_HTML}`
+    );
+  }
+
+  // 4. Clean out any previous/duplicate copies of SECTION_LIGHTBOX_JS and drag & drop game
+  const anyLightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?(?:initImageLabelsGame\(\);\s*\}\);|setupLightboxTouchZoom\(\);\s*\}\)\(\);?)/gi;
+  out = out.replace(anyLightboxJsRegex, '');
+
+  const anyDragDropJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*IMAGE LABELS DRAG & DROP GAME[\s\S]*?initImageLabelsGame\(\);\s*\}\);?/gi;
+  out = out.replace(anyDragDropJsRegex, '');
+
+  // Strip duplicate declarations of solvedImageIds or lbScale
+  out = out.replace(/(?:[ \t]*let solvedImageIds\s*=\s*\[\];\s*)+/g, '');
+  out = out.replace(/(?:[ \t]*let lbScale\s*=\s*1;\s*)+/g, '');
+
+  // 5. Inject exactly ONE copy of SECTION_LIGHTBOX_JS in the main script at the bottom of the page
+  if (out.includes('function dismissActiveVocabModal')) {
+    out = out.replace('function dismissActiveVocabModal', `${SECTION_LIGHTBOX_JS.trim()}\n\n    function dismissActiveVocabModal`);
+  } else if (out.includes('// STATE MANAGEMENT')) {
+    out = out.replace('// STATE MANAGEMENT', `${SECTION_LIGHTBOX_JS.trim()}\n\n    // STATE MANAGEMENT`);
+  } else {
+    const lastScriptIdx = out.lastIndexOf('</script>');
+    if (lastScriptIdx !== -1) {
+      out = out.slice(0, lastScriptIdx) + SECTION_LIGHTBOX_JS.trim() + '\n  ' + out.slice(lastScriptIdx);
     }
   }
-  if (!out.includes('id="image-lightbox-questions"') || out.includes('id="image-lightbox-caption"></div>\n    </div>\n  </div>\n  </div>') || out.includes('<!-- Fullscreen Image Lightbox -->\n  <!-- Fullscreen Image Lightbox -->')) {
-    const lightboxHtmlRegex = /(?:[ \t]*<!-- Fullscreen Image Lightbox -->\s*)+<div class="image-lightbox-overlay" id="image-lightbox"[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/;
-    if (lightboxHtmlRegex.test(out)) {
-      out = out.replace(lightboxHtmlRegex, SECTION_LIGHTBOX_HTML.trim());
-    } else if (out.includes('id="image-lightbox"')) {
-      out = out.replace(
-        /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/,
-        SECTION_LIGHTBOX_HTML.trim()
-      );
-    } else {
-      out = out.replace(
-        /(<div class="vocab-dim-overlay"[^>]*><\/div>)/,
-        `$1\n${SECTION_LIGHTBOX_HTML}`
-      );
-    }
-  }
-  if (!out.includes('initImageLabelsGame')) {
-    const lightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?(?=\s*<\/script>|\s*function dismissActiveVocabModal|\s*\/\/ STATE)/;
-    if (lightboxJsRegex.test(out)) {
-      out = out.replace(lightboxJsRegex, SECTION_LIGHTBOX_JS.trim() + '\n\n');
-    } else {
-      out = out.replace('</script>', `${SECTION_LIGHTBOX_JS}\n  </script>`);
-    }
-  }
+
   return out;
 }
 
@@ -1879,13 +2021,14 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   }
 
   // 3. Strip any existing Questions and Images sections so core sections (Reading, Vocab, Quiz, Discuss) can be cleanly placed
-  const questionsSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*(?:<div class="section-instructions-box"[^>]*>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*)?<section class="teacher-questions-section"[^>]*>[\s\S]*?<\/section>\s*/i;
-  html = html.replace(questionsSectionRegex, '');
-
-  const imagesSectionRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*IMAGES[^\r\n]*-->\s*)*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*(?:<div class="section-instructions-box"[^>]*>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*)?<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/i;
-  const legacyImagesRegex = /[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/i;
-  html = html.replace(imagesSectionRegex, '');
-  html = html.replace(legacyImagesRegex, '');
+  html = html.replace(/[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:IMAGES|QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*/gi, '');
+  html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*/gi, '');
+  html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*/gi, '');
+  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|lugares y cosas mencionados en el texto)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
+  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:preguntas generales sobre el texto|general questions about the text)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
+  html = html.replace(/[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/gi, '');
+  html = html.replace(/<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/gi, '');
+  html = html.replace(/<section class="teacher-questions-section"[^>]*>[\s\S]*?<\/section>\s*/gi, '');
 
   // Extract vocab section if present
   let vocabBlock = '';
@@ -2032,7 +2175,10 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
       }
     });
 `;
-    html = html.replace('</script>', `${dismissVocabJs}\n  </script>`);
+    const lastScriptIdx = html.lastIndexOf('</script>');
+    if (lastScriptIdx !== -1) {
+      html = html.slice(0, lastScriptIdx) + `${dismissVocabJs}\n  ` + html.slice(lastScriptIdx);
+    }
   }
 
   // 8. Update sticky jump nav logic for dynamic last section href
@@ -2051,13 +2197,22 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
 
   // 9. Ensure handleBackNavigation navigates to main menu on desktop as well
   html = html.replace(
-    /function handleBackNavigation\(e,\s*url\)\s*\{[\s\S]*?return true;\s*\}/,
+    /function handleBackNavigation\(e,\s*url\)\s*\{[\s\S]*?\n    \}/,
     `function handleBackNavigation(e, url) {\n      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;\n      const targetUrl = url || '../../index.html';\n      if (window.innerWidth <= 680) {\n        if (e) e.preventDefault();\n        captureOutgoingActivity('backward');\n        window.location.href = targetUrl;\n        return false;\n      }\n      window.location.href = targetUrl;\n      return false;\n    }`
   );
 
-  // 10. Update vocabulary instruction text
+  // 10. Update instruction texts
   const oldVocabRegex = /<p>\s*Estas son las diez palabras más desafiantes del texto[\s\S]*?según lo necesites\.\s*<\/p>/gi;
-  html = html.replace(oldVocabRegex, `<p>Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.</p>`);
+  html = html.replace(oldVocabRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.vocab[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.vocab.es}</p>`);
+
+  const oldReadingRegex = /<p>\s*Lee este texto en voz alta\.\s*Tu profesor te corregir[áa] en tiempo real y anotar[áa] las palabras[\s\S]*?notas ling[üu][íi]sticas [úu]tiles\.\s*<\/p>/gi;
+  html = html.replace(oldReadingRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.reading[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.reading.es}</p>`);
+
+  const oldQuizRegex = /<p>\s*Responde a cada una de estas preguntas eligiendo la respuesta correcta[\s\S]*?cualquier duda\.\s*<\/p>/gi;
+  html = html.replace(oldQuizRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.comprehension[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.comprehension.es}</p>`);
+
+  const oldDiscussRegex = /<p>\s*Lee cada pregunta en voz alta\.\s*Tu profesor responder[áa] primero[\s\S]*?siguiente pregunta\.\s*<\/p>/gi;
+  html = html.replace(oldDiscussRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.discuss[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.discuss.es}</p>`);
 
   // 11. Ensure all numbered section instructions are default open
   html = html.replace(/<button type="button" class="section-instructions-tab"(?!\s+active)/g, '<button type="button" class="section-instructions-tab active"');
@@ -2089,11 +2244,14 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
       /(readingBookmarks = \[\];)(?=\s*\})/,
       `$1\n              solvedImageIds = [];`
     );
+  }
+  if (!html.includes('renderReadingBookmarks();\n      if (typeof initImageLabelsGame === \'function\') initImageLabelsGame();')) {
     html = html.replace(
       /(renderReadingBookmarks\(\);)/,
       `$1\n      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();`
     );
   }
+  html = html.replace(/(?:[ \t]*if \(typeof initImageLabelsGame === 'function'\) initImageLabelsGame\(\);[\r\n]*){2,}/g, "      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();\n");
 
   if (html !== originalHtml) {
     fs.writeFileSync(activity.indexPath, html, 'utf8');

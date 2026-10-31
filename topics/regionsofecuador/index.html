@@ -1231,7 +1231,7 @@
       font-family: var(--font-typewriter);
       font-size: 12.5px;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 5px 10px 3px 10px;
       cursor: grab;
       user-select: none;
       -webkit-user-select: none;
@@ -1241,7 +1241,19 @@
       align-items: center;
       justify-content: center;
       border-radius: 0;
-      line-height: 1.3;
+      line-height: 1.15;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      touch-action: manipulation;
+    }
+
+    .image-label-chip:focus {
+      outline: none;
+    }
+
+    .image-label-chip:focus-visible {
+      outline: 1px dashed var(--ink-rule);
+      outline-offset: 1px;
     }
 
     .image-label-chip:hover {
@@ -1250,7 +1262,6 @@
       border-color: var(--stamp-blue, #1d4ed8);
     }
 
-    .image-label-chip:active,
     .image-label-chip.is-dragging {
       cursor: grabbing;
       opacity: 0.4;
@@ -1331,52 +1342,12 @@
       backdrop-filter: blur(2px);
     }
 
-    .image-thumb-drop-slot {
-      position: absolute;
-      bottom: 4px;
-      left: 4px;
-      right: 4px;
-      height: 25px;
-      background: rgba(244, 239, 228, 0.7);
-      border: 1px dashed var(--ink-rule);
-      box-sizing: border-box;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
+    .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+      display: none !important;
     }
 
-    @media (min-width: 681px) {
-      .images-instructions-desktop {
-        display: inline !important;
-      }
-      .images-instructions-mobile {
-        display: none !important;
-      }
-      .image-thumb-wrap:not(.is-solved) .image-thumb-title {
-        display: none;
-      }
-      .image-thumb-wrap:not(.is-solved) .image-thumb-drop-slot {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .images-instructions-desktop {
-        display: none !important;
-      }
-      .images-instructions-mobile {
-        display: inline !important;
-      }
-      .image-labels-pool {
-        display: none !important;
-      }
-      .image-thumb-title {
-        display: block !important;
-      }
-      .image-thumb-drop-slot {
-        display: none !important;
-      }
+    .image-thumb-wrap.is-solved .image-thumb-title {
+      display: block !important;
     }
 
     /* Thumbnail Question/Statement Badges */
@@ -1561,6 +1532,27 @@
     .image-lightbox-caption::selection {
       background: var(--highlight);
       color: var(--ink-main);
+    }
+
+    @keyframes label-sparkle {
+      0% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+      35% {
+        box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 0 0 6px rgba(234, 179, 8, 0.9);
+        border-color: rgba(250, 204, 21, 0.85);
+        background: rgba(254, 249, 215, 0.98);
+        transform: scale(1.03);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+    }
+
+    .image-lightbox-caption.sparkle {
+      animation: label-sparkle 0.85s ease-out;
     }
 
     .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
@@ -2094,8 +2086,7 @@
   <!-- Fullscreen Dimming Overlay -->
   <div class="vocab-dim-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
 
-  <!-- Fullscreen Image Lightbox -->
-  <!-- Fullscreen Image Lightbox -->
+<!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
     <div class="image-lightbox-stage" id="image-lightbox-stage">
       <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
@@ -2104,7 +2095,6 @@
       </div>
       <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
     </div>
-  </div>
   </div>
 
   <!-- Utility Nav -->
@@ -2198,204 +2188,99 @@
     <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p><span class="images-instructions-desktop">Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="images-instructions-mobile">Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.</span></p>
+          <p>Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</p>
         </div>
       </div>
     </div>
 
     <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool"></div>
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="blickaufdenbergsantaanaguayaquil" draggable="true">Blick auf den Berg Santa Ana Guayaquil</button>
+        <button type="button" class="image-label-chip" data-image-id="bolondeverde" draggable="true">Bolón de Verde</button>
+        <button type="button" class="image-label-chip" data-image-id="centrohistoricocolonialdequito" draggable="true">Centro historico colonial de quito</button>
+        <button type="button" class="image-label-chip" data-image-id="cotopaxi" draggable="true">Cotopaxi</button>
+        <button type="button" class="image-label-chip" data-image-id="encebollado" draggable="true">Encebollado</button>
+        <button type="button" class="image-label-chip" data-image-id="guayaquil" draggable="true">Guayaquil</button>
+        <button type="button" class="image-label-chip" data-image-id="iguanasmarinascapacesdenadar" draggable="true">iguanas marinas capaces de nadar</button>
+        <button type="button" class="image-label-chip" data-image-id="lalagunadequilotoa" draggable="true">La Laguna de Quilotoa</button>
+        <button type="button" class="image-label-chip" data-image-id="losriosnapoypastaza" draggable="true">los ríos Napo y Pastaza</button>
+        <button type="button" class="image-label-chip" data-image-id="mapadelecuadorconciudades" draggable="true">Mapa del Ecuador con ciudades</button>
+        <button type="button" class="image-label-chip" data-image-id="mercadodeotavalo" draggable="true">mercado de Otavalo</button>
+        <button type="button" class="image-label-chip" data-image-id="piquerosdepatasazules" draggable="true">piqueros de patas azules</button>
+        <button type="button" class="image-label-chip" data-image-id="plantain" draggable="true">plantain</button>
+        <button type="button" class="image-label-chip" data-image-id="quito" draggable="true">Quito</button>
+        <button type="button" class="image-label-chip" data-image-id="regionesdelecuador" draggable="true">Regiones del Ecuador</button>
+        <button type="button" class="image-label-chip" data-image-id="tortugasgigantesterrestres" draggable="true">tortugas gigantes terrestres</button>
+        <button type="button" class="image-label-chip" data-image-id="tostonesdeplatanoverde" draggable="true">Tostones de plátano verde</button>
+      </div>
       <div class="images-grid">
         <div class="image-thumb-wrap" data-image-id="blickaufdenbergsantaanaguayaquil" data-image-title="Blick auf den Berg Santa Ana Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')">
           <img src="images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg" alt="Blick auf den Berg Santa Ana Guayaquil" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Blick auf den Berg Santa Ana Guayaquil</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="bolondeverde" data-image-title="Bolón de Verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')">
           <img src="images/es-regionsofecuador-bolondeverde.jpg" alt="Bolón de Verde" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Bolón de Verde</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="centrohistoricocolonialdequito" data-image-title="Centro historico colonial de quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')">
           <img src="images/es-regionsofecuador-centrohistoricocolonialdequito.jpg" alt="Centro historico colonial de quito" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Centro historico colonial de quito</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="cotopaxi" data-image-title="Cotopaxi" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')">
           <img src="images/es-regionsofecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Cotopaxi</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="encebollado" data-image-title="Encebollado" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')">
           <img src="images/es-regionsofecuador-encebollado.jpg" alt="Encebollado" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Encebollado</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="guayaquil" data-image-title="Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')">
           <img src="images/es-regionsofecuador-guayaquil.jpg" alt="Guayaquil" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Guayaquil</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="iguanasmarinascapacesdenadar" data-image-title="iguanas marinas capaces de nadar" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')">
           <img src="images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg" alt="iguanas marinas capaces de nadar" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">iguanas marinas capaces de nadar</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="lalagunadequilotoa" data-image-title="La Laguna de Quilotoa" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')">
           <img src="images/es-regionsofecuador-lalagunadequilotoa.jpg" alt="La Laguna de Quilotoa" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">La Laguna de Quilotoa</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="losriosnapoypastaza" data-image-title="los ríos Napo y Pastaza" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')">
           <img src="images/es-regionsofecuador-losriosnapoypastaza.jpg" alt="los ríos Napo y Pastaza" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">los ríos Napo y Pastaza</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="mapadelecuadorconciudades" data-image-title="Mapa del Ecuador con ciudades" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')">
           <img src="images/es-regionsofecuador-mapadelecuadorconciudades.jpg" alt="Mapa del Ecuador con ciudades" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Mapa del Ecuador con ciudades</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="mercadodeotavalo" data-image-title="mercado de Otavalo" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')">
           <img src="images/es-regionsofecuador-mercadodeotavalo.jpg" alt="mercado de Otavalo" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">mercado de Otavalo</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="piquerosdepatasazules" data-image-title="piqueros de patas azules" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')">
           <img src="images/es-regionsofecuador-piquerosdepatasazules.jpg" alt="piqueros de patas azules" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">piqueros de patas azules</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="plantain" data-image-title="plantain" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')">
           <img src="images/es-regionsofecuador-plantain.jpg" alt="plantain" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">plantain</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="quito" data-image-title="Quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')">
           <img src="images/es-regionsofecuador-quito.jpg" alt="Quito" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Quito</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="regionesdelecuador" data-image-title="Regiones del Ecuador" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')">
           <img src="images/es-regionsofecuador-regionesdelecuador.jpg" alt="Regiones del Ecuador" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Regiones del Ecuador</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="tortugasgigantesterrestres" data-image-title="tortugas gigantes terrestres" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')">
           <img src="images/es-regionsofecuador-tortugasgigantesterrestres.jpg" alt="tortugas gigantes terrestres" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">tortugas gigantes terrestres</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="tostonesdeplatanoverde" data-image-title="Tostones de plátano verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')">
           <img src="images/es-regionsofecuador-tostonesdeplatanoverde.jpg" alt="Tostones de plátano verde" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Tostones de plátano verde</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-    </h2>
-    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
-      <div class="section-instructions-content">
-        <div class="section-instructions-inner">
-          <p><span class="images-instructions-desktop">Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="images-instructions-mobile">Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.</span></p>
-        </div>
-      </div>
-    </div>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool"></div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="blickaufdenbergsantaanaguayaquil" data-image-title="Blick auf den Berg Santa Ana Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')">
-          <img src="images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg" alt="Blick auf den Berg Santa Ana Guayaquil" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Blick auf den Berg Santa Ana Guayaquil</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="bolondeverde" data-image-title="Bolón de Verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')">
-          <img src="images/es-regionsofecuador-bolondeverde.jpg" alt="Bolón de Verde" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Bolón de Verde</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="centrohistoricocolonialdequito" data-image-title="Centro historico colonial de quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')">
-          <img src="images/es-regionsofecuador-centrohistoricocolonialdequito.jpg" alt="Centro historico colonial de quito" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Centro historico colonial de quito</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="cotopaxi" data-image-title="Cotopaxi" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')">
-          <img src="images/es-regionsofecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Cotopaxi</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="encebollado" data-image-title="Encebollado" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')">
-          <img src="images/es-regionsofecuador-encebollado.jpg" alt="Encebollado" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Encebollado</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="guayaquil" data-image-title="Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')">
-          <img src="images/es-regionsofecuador-guayaquil.jpg" alt="Guayaquil" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Guayaquil</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="iguanasmarinascapacesdenadar" data-image-title="iguanas marinas capaces de nadar" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')">
-          <img src="images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg" alt="iguanas marinas capaces de nadar" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">iguanas marinas capaces de nadar</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="lalagunadequilotoa" data-image-title="La Laguna de Quilotoa" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')">
-          <img src="images/es-regionsofecuador-lalagunadequilotoa.jpg" alt="La Laguna de Quilotoa" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">La Laguna de Quilotoa</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="losriosnapoypastaza" data-image-title="los ríos Napo y Pastaza" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')">
-          <img src="images/es-regionsofecuador-losriosnapoypastaza.jpg" alt="los ríos Napo y Pastaza" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">los ríos Napo y Pastaza</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="mapadelecuadorconciudades" data-image-title="Mapa del Ecuador con ciudades" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')">
-          <img src="images/es-regionsofecuador-mapadelecuadorconciudades.jpg" alt="Mapa del Ecuador con ciudades" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Mapa del Ecuador con ciudades</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="mercadodeotavalo" data-image-title="mercado de Otavalo" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')">
-          <img src="images/es-regionsofecuador-mercadodeotavalo.jpg" alt="mercado de Otavalo" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">mercado de Otavalo</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="piquerosdepatasazules" data-image-title="piqueros de patas azules" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')">
-          <img src="images/es-regionsofecuador-piquerosdepatasazules.jpg" alt="piqueros de patas azules" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">piqueros de patas azules</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="plantain" data-image-title="plantain" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')">
-          <img src="images/es-regionsofecuador-plantain.jpg" alt="plantain" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">plantain</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="quito" data-image-title="Quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')">
-          <img src="images/es-regionsofecuador-quito.jpg" alt="Quito" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Quito</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="regionesdelecuador" data-image-title="Regiones del Ecuador" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')">
-          <img src="images/es-regionsofecuador-regionesdelecuador.jpg" alt="Regiones del Ecuador" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Regiones del Ecuador</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="tortugasgigantesterrestres" data-image-title="tortugas gigantes terrestres" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')">
-          <img src="images/es-regionsofecuador-tortugasgigantesterrestres.jpg" alt="tortugas gigantes terrestres" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">tortugas gigantes terrestres</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="tostonesdeplatanoverde" data-image-title="Tostones de plátano verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')">
-          <img src="images/es-regionsofecuador-tostonesdeplatanoverde.jpg" alt="Tostones de plátano verde" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Tostones de plátano verde</div>
-          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
       </div>
     </section>
@@ -2441,7 +2326,7 @@
       <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
-            <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real y anotará las palabras que pronuncies o escribas incorrectamente, junto con indicaciones de cómo pronunciarlas, para enviártelas al final de la clase junto con otras notas lingüísticas útiles.</p>
+            <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.</p>
           </div>
         </div>
       </div>
@@ -2488,7 +2373,7 @@
       <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
-            <p>Responde a cada una de estas preguntas eligiendo la respuesta correcta, mientras tu profesor te guía y te apoya con cualquier duda.</p>
+            <p>Comenta las preguntas con tu profesor y encuentra la respuesta correcta.</p>
           </div>
         </div>
       </div>
@@ -2695,7 +2580,7 @@
       <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
-            <p>Lee cada pregunta en voz alta. Tu profesor responderá primero y luego responderás tú; conversen y debatan abiertamente sobre el tema antes de pasar a la siguiente pregunta.</p>
+            <p>El profesor y el estudiante se turnan para responder a las preguntas.</p>
           </div>
         </div>
       </div>
@@ -4103,6 +3988,11 @@
       renderReadingBookmarks();
     }
 
+    
+
+
+
+
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
     // =========================================================
@@ -4134,7 +4024,7 @@
       }
     }
 
-    function openImageLightbox(src, alt, questionsJson) {
+    function openImageLightbox(src, alt, questionsJson, isSparkle) {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
       const caption = document.getElementById('image-lightbox-caption');
@@ -4144,6 +4034,11 @@
       img.alt = alt || '';
       if (caption) {
         caption.textContent = alt || '';
+        caption.classList.remove('sparkle');
+        if (isSparkle) {
+          void caption.offsetWidth;
+          caption.classList.add('sparkle');
+        }
       }
       if (questionsContainer) {
         questionsContainer.innerHTML = '';
@@ -4206,6 +4101,7 @@
       }
       if (caption) {
         caption.textContent = '';
+        caption.classList.remove('sparkle');
       }
       if (questionsContainer) {
         questionsContainer.innerHTML = '';
@@ -4397,17 +4293,13 @@
     })();
 
     // =========================================================
-    // IMAGE LABELS DRAG & DROP GAME (DESKTOP)
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
     // =========================================================
     let solvedImageIds = [];
     let draggedImageId = null;
     let selectedImageLabelChip = null;
 
     function handleImageLabelDragStart(e, chip) {
-      if (window.innerWidth <= 680) {
-        e.preventDefault();
-        return;
-      }
       draggedImageId = chip.getAttribute('data-image-id');
       try {
         e.dataTransfer.setData('text/plain', draggedImageId);
@@ -4427,7 +4319,6 @@
     }
 
     function handleImageLabelClick(chip) {
-      if (window.innerWidth <= 680) return;
       if (selectedImageLabelChip === chip) {
         chip.classList.remove('is-selected');
         selectedImageLabelChip = null;
@@ -4438,8 +4329,79 @@
       }
     }
 
+    function setupImageTouchDrag(chip) {
+      let touchMoved = false;
+      let ghost = null;
+      let startX = 0;
+      let startY = 0;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedImageId = chip.getAttribute('data-image-id');
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1 || !draggedImageId) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+        if (dist > 8) {
+          touchMoved = true;
+          if (!ghost) {
+            ghost = chip.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.zIndex = '9999';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.opacity = '0.85';
+            ghost.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ghost);
+            chip.classList.add('is-dragging');
+          }
+          ghost.style.left = touch.clientX + 'px';
+          ghost.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
+            if (c !== card) c.classList.remove('image-drop-hover');
+          });
+          if (card && !card.classList.contains('is-solved')) {
+            card.classList.add('image-drop-hover');
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (ghost) {
+          ghost.remove();
+          ghost = null;
+        }
+        chip.classList.remove('is-dragging');
+        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
+
+        if (touchMoved && draggedImageId) {
+          const changedTouch = e.changedTouches[0];
+          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          if (card && !card.classList.contains('is-solved')) {
+            const cardId = card.getAttribute('data-image-id');
+            if (cardId === draggedImageId) {
+              const img = card.querySelector('img');
+              const src = img ? img.getAttribute('src') : '';
+              const alt = card.getAttribute('data-image-title') || '';
+              solveImage(card, chip, src, alt);
+            }
+          }
+          draggedImageId = null;
+        }
+      });
+    }
+
     function handleImageCardDragOver(e, card) {
-      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      if (card.classList.contains('is-solved')) return;
       e.preventDefault();
       try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
       card.classList.add('image-drop-hover');
@@ -4454,7 +4416,7 @@
     function handleImageCardDrop(e, card, src, alt, questionsJson) {
       e.preventDefault();
       card.classList.remove('image-drop-hover');
-      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      if (card.classList.contains('is-solved')) return;
       let droppedId = '';
       try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
       if (!droppedId) droppedId = draggedImageId;
@@ -4467,7 +4429,7 @@
     }
 
     function handleImageCardClick(card, src, alt, questionsJson) {
-      if (selectedImageLabelChip && window.innerWidth > 680 && !card.classList.contains('is-solved')) {
+      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
         const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
         const cardId = card.getAttribute('data-image-id');
         if (selectedId === cardId) {
@@ -4498,7 +4460,7 @@
           saveState();
         }
       }
-      openImageLightbox(src, alt, questionsJson);
+      openImageLightbox(src, alt, questionsJson, true);
     }
 
     function initImageLabelsGame() {
@@ -4506,38 +4468,66 @@
       const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
       if (!pool || cards.length === 0) return;
 
-      const items = [];
-      cards.forEach(card => {
-        const id = card.getAttribute('data-image-id');
-        const title = card.getAttribute('data-image-title');
-        if (id && title) {
-          items.push({ id, title });
+      // 1. Gather existing chips in pool and deduplicate
+      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
+      const seenIds = new Set();
+      const validChips = [];
+
+      chips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          validChips.push(chip);
+        } else {
+          chip.remove();
         }
       });
 
-      // Fisher-Yates shuffle
-      for (let i = items.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = items[i];
-        items[i] = items[j];
-        items[j] = temp;
+      // 2. If pool was empty, generate from cards
+      if (validChips.length === 0) {
+        cards.forEach(card => {
+          const id = card.getAttribute('data-image-id');
+          const title = card.getAttribute('data-image-title');
+          if (id && title && !seenIds.has(id)) {
+            seenIds.add(id);
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'image-label-chip';
+            chip.setAttribute('data-image-id', id);
+            chip.setAttribute('draggable', 'true');
+            chip.textContent = title;
+            pool.appendChild(chip);
+            validChips.push(chip);
+          }
+        });
       }
 
-      pool.innerHTML = '';
-      items.forEach(item => {
-        const isSolved = solvedImageIds.includes(item.id);
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'image-label-chip' + (isSolved ? ' is-hidden' : '');
-        chip.setAttribute('data-image-id', item.id);
-        chip.setAttribute('draggable', 'true');
-        chip.textContent = item.title;
-        chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
-        chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
-        chip.addEventListener('click', () => handleImageLabelClick(chip));
-        pool.appendChild(chip);
+      // 3. Fisher-Yates shuffle order in pool
+      for (let i = validChips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = validChips[i];
+        validChips[i] = validChips[j];
+        validChips[j] = temp;
+      }
+      validChips.forEach(chip => pool.appendChild(chip));
+
+      // 4. Attach event listeners and sync solved state
+      validChips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        const isSolved = solvedImageIds.includes(id);
+        chip.classList.toggle('is-hidden', isSolved);
+        chip.classList.remove('is-selected', 'is-dragging');
+
+        if (!chip.dataset.bound) {
+          chip.dataset.bound = 'true';
+          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+          chip.addEventListener('click', () => handleImageLabelClick(chip));
+          setupImageTouchDrag(chip);
+        }
       });
 
+      // 5. Update cards solved state
       cards.forEach(card => {
         const id = card.getAttribute('data-image-id');
         if (id && solvedImageIds.includes(id)) {
@@ -4551,8 +4541,6 @@
     document.addEventListener('DOMContentLoaded', () => {
       initImageLabelsGame();
     });
-
-
 
     function dismissActiveVocabModal() {
       const detailArea = document.getElementById('vocab-completed-detail');
