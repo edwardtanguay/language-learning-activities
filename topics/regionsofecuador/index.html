@@ -235,6 +235,32 @@
       flex-shrink: 0;
     }
 
+    /* Stationary Top button smooth collapse/expand based on scrollY > 30 */
+    .jump-nav .jump-top-btn {
+      width: 0;
+      height: 32px;
+      opacity: 0;
+      transform: scale(0.6);
+      pointer-events: none;
+      overflow: hidden;
+      margin-right: -14px;
+      border: 0 solid var(--ink-rule);
+      transition: width 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.18s ease,
+                  transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  margin-right 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-width 0.18s ease;
+    }
+
+    .jump-nav .jump-top-btn.show {
+      width: 32px;
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      margin-right: 0;
+      border-width: 1px;
+    }
+
     .jump-return-btn {
       display: none;
     }
@@ -317,6 +343,11 @@
     .sticky-jump-nav .jump-bookmark-btn {
       width: 27px;
       height: 27px;
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      margin-right: 0;
+      border-width: 1px;
     }
 
     .sticky-jump-nav .jump-num {
@@ -1601,16 +1632,23 @@
         margin-bottom: 14px;
         text-align: center;
       }
-            .jump-nav {
+      .jump-nav {
         gap: 8px;
         margin: 14px auto 18px auto;
       }
       .jump-nav .jump-num,
-      .jump-nav .jump-top-btn,
+      .jump-nav .jump-top-btn.show,
       .jump-nav .jump-return-btn,
       .jump-nav .jump-bookmark-btn {
         width: 28px;
         height: 28px;
+      }
+      .jump-nav .jump-top-btn {
+        height: 28px;
+        margin-right: -8px;
+      }
+      .jump-nav .jump-top-btn.show {
+        margin-right: 0;
       }
       .jump-nav .jump-num {
         font-size: 15px;
@@ -4217,6 +4255,12 @@
         const headerRect = headerJumpNav.getBoundingClientRect();
         const shouldShow = headerRect.bottom <= 0;
         stickyNav.classList.toggle('visible', shouldShow);
+
+        // Stationary Top button only shows when scrolled down past 30px
+        const headerTopBtn = headerJumpNav.querySelector('.jump-top-btn');
+        if (headerTopBtn) {
+          headerTopBtn.classList.toggle('show', window.scrollY > 30);
+        }
 
         let currentSectionId = sectionIds[0] || '';
         const threshold = 130;
