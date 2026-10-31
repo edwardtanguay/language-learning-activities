@@ -1657,6 +1657,9 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     }
   }
 
+  // Collapse excessive consecutive blank lines
+  html = html.replace(/\n([ \t]*\n){2,}/g, '\n\n');
+
   // 7. Update all section headings accurately
   html = updateAllSectionHeadings(html, {
     questionsNum,

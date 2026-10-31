@@ -1,7 +1,8 @@
 ## amigosecuador
 
 ibar: Este parece un paisaje hermoso, ¿has estado alguna vez aquí?
-prov: ¿Es esta una zona a la que otros ecuatorianos van de vacaciones?
+prov: ¿Es Imbabura una provincia a la que otros ecuatorianos van de vacaciones?
+ncias: ¿Qué provincias conoces mejor?
 
 ## volcanesecuador
 
