@@ -1198,6 +1198,7 @@
       transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
       display: inline-flex;
       position: relative;
+      overflow: hidden;
     }
 
     .image-thumb-wrap:hover {
@@ -1215,11 +1216,33 @@
       border-radius: 1px;
     }
 
+    .image-thumb-title {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      background: rgba(244, 239, 228, 0.92);
+      border-top: 1px solid rgba(138, 128, 112, 0.3);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px 6px;
+      line-height: 1.2;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      backdrop-filter: blur(2px);
+    }
+
     /* Thumbnail Question/Statement Badges */
     .image-thumb-questions {
       position: absolute;
-      bottom: 8px;
-      left: 8px;
+      top: 8px;
+      right: 8px;
       display: flex;
       align-items: center;
       gap: 4px;
@@ -1300,6 +1323,7 @@
       user-select: none;
       -webkit-user-drag: none;
       display: block;
+      cursor: pointer;
     }
 
     /* Lightbox Questions List Overlay in lower-left */
@@ -1370,23 +1394,26 @@
     }
 
     .image-lightbox-caption {
-      margin-top: 8px;
+      margin-top: 10px;
       font-family: var(--font-typewriter);
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       text-transform: none;
-      letter-spacing: 1.2px;
-      color: rgba(255, 253, 249, 0.88);
+      letter-spacing: 0.5px;
+      color: rgba(255, 253, 249, 0.95);
+      background: rgba(20, 18, 16, 0.85);
+      border: 1px solid rgba(255, 253, 249, 0.2);
+      border-radius: 3px;
+      padding: 6px 14px;
       text-align: right;
       align-self: flex-end;
       line-height: 1.2;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
       transition: opacity 0.2s ease;
       pointer-events: auto;
       cursor: text;
       user-select: text;
       -webkit-user-select: text;
-      padding: 2px 4px;
-      border-radius: 2px;
     }
 
     .image-lightbox-caption::selection {
@@ -2038,45 +2065,59 @@
       <div class="images-grid">
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')">
           <img src="images/es-colombia-cabosanjuanenelparquetayrona.jpg" alt="Cabo San Juan en el Parque Tayrona" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cabo San Juan en el Parque Tayrona</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cafetero.jpg', 'Cafetero', '[]')">
           <img src="images/es-colombia-cafetero.jpg" alt="Cafetero" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cafetero</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')">
           <img src="images/es-colombia-cartagenaciudadamurallada.jpg" alt="Cartagena Ciudad Amurallada" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cartagena Ciudad Amurallada</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-guatape.jpg', 'Guatapé', '[]')">
           <img src="images/es-colombia-guatape.jpg" alt="Guatapé" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Guatapé</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')">
           <img src="images/es-colombia-laamazoniacolombiana.jpg" alt="La Amazonía Colombiana" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">La Amazonía Colombiana</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')">
           <img src="images/es-colombia-losbalconesfloridosdecartagena.jpg" alt="Los Balcones Floridos De Cartagena" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Los Balcones Floridos De Cartagena</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')">
           <img src="images/es-colombia-losllanos.jpg" alt="Los Llanos" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Los Llanos</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')">
           <img src="images/es-colombia-mapwithnatureareas.jpg" alt="Map With Nature Areas" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Map With Nature Areas</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')">
           <img src="images/es-colombia-parquetayrona.jpg" alt="Parque Tayrona" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Parque Tayrona</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')">
           <img src="images/es-colombia-regionesdecolumbia.jpg" alt="Regiones de Columbia" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Regiones de Columbia</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')">
           <img src="images/es-colombia-tatacoadesert.jpg" alt="Tatacoadesert" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Tatacoadesert</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomap.jpg', 'Topomap', '[]')">
           <img src="images/es-colombia-topomap.jpg" alt="Topomap" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Topomap</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')">
           <img src="images/es-colombia-topomapclear.jpg" alt="Topomapclear" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Topomapclear</div>
         </div>
         <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')">
           <img src="images/es-colombia-valledecocora.jpg" alt="Valle de Cocora" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Valle de Cocora</div>
         </div>
       </div>
     </section>
@@ -4078,7 +4119,7 @@
         topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="7"></line><polyline points="6 13 12 7 18 13"></polyline><line x1="4" y1="3" x2="20" y2="3"></line></svg>';
         topBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (window.scrollY > 40) {
+          if (window.scrollY >= window.innerHeight * 0.85) {
             savedReturnScrollY = window.scrollY;
             document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
           }
@@ -4188,7 +4229,7 @@
           return;
         }
 
-        if (Math.abs(window.scrollY - targetTop) > 100) {
+        if (Math.abs(window.scrollY - targetTop) > 100 && window.scrollY >= window.innerHeight * 0.85) {
           savedReturnScrollY = window.scrollY;
           document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
         }

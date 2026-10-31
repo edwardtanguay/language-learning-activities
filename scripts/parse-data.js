@@ -244,6 +244,7 @@ function stripTags(html) {
 
 function formatImageTitle(rawName) {
   return String(rawName || '')
+    .normalize('NFC')
     .split(/[_\s-]+/)
     .filter(Boolean)
     .join(' ');
@@ -348,6 +349,7 @@ function loadActivities() {
       const existingAlt = m[2]
         .replace(/&quot;/g, '"')
         .replace(/&#39;/g, "'")
+        .normalize('NFC')
         .trim();
       if (existingAlt) {
         recordedTitles[imgFile] = existingAlt;
@@ -472,7 +474,7 @@ function processImportImagesFolder(activities) {
 
     if (matchSep) {
       identifier = matchSep[1];
-      imageNameWithoutId = matchSep[2];
+      imageNameWithoutId = matchSep[2].normalize('NFC');
     } else {
       const dashIndex = baseName.indexOf('-');
       if (dashIndex <= 0 || dashIndex === baseName.length - 1) {
@@ -480,7 +482,7 @@ function processImportImagesFolder(activities) {
         continue;
       }
       identifier = baseName.slice(0, dashIndex);
-      imageNameWithoutId = baseName.slice(dashIndex + 1);
+      imageNameWithoutId = baseName.slice(dashIndex + 1).normalize('NFC');
     }
 
     const matchedActivity = findMatchingActivity(identifier, activities);
@@ -784,6 +786,7 @@ const SECTION_IMAGES_CSS = `
       transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
       display: inline-flex;
       position: relative;
+      overflow: hidden;
     }
 
     .image-thumb-wrap:hover {
@@ -801,11 +804,33 @@ const SECTION_IMAGES_CSS = `
       border-radius: 1px;
     }
 
+    .image-thumb-title {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      background: rgba(244, 239, 228, 0.92);
+      border-top: 1px solid rgba(138, 128, 112, 0.3);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px 6px;
+      line-height: 1.2;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      backdrop-filter: blur(2px);
+    }
+
     /* Thumbnail Question/Statement Badges */
     .image-thumb-questions {
       position: absolute;
-      bottom: 8px;
-      left: 8px;
+      top: 8px;
+      right: 8px;
       display: flex;
       align-items: center;
       gap: 4px;
@@ -957,23 +982,26 @@ const SECTION_IMAGES_CSS = `
     }
 
     .image-lightbox-caption {
-      margin-top: 8px;
+      margin-top: 10px;
       font-family: var(--font-typewriter);
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       text-transform: none;
-      letter-spacing: 1.2px;
-      color: rgba(255, 253, 249, 0.88);
+      letter-spacing: 0.5px;
+      color: rgba(255, 253, 249, 0.95);
+      background: rgba(20, 18, 16, 0.85);
+      border: 1px solid rgba(255, 253, 249, 0.2);
+      border-radius: 3px;
+      padding: 6px 14px;
       text-align: right;
       align-self: flex-end;
       line-height: 1.2;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
       transition: opacity 0.2s ease;
       pointer-events: auto;
       cursor: text;
       user-select: text;
       -webkit-user-select: text;
-      padding: 2px 4px;
-      border-radius: 2px;
     }
 
     .image-lightbox-caption::selection {
@@ -1398,7 +1426,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
       }
 
-      return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">${qBadgesHtml}\n        </div>`;
+      return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
     })
     .join('\n');
 
@@ -1429,7 +1457,7 @@ ${thumbsHtml}
 
 function ensureLightboxAssets(html) {
   let out = html;
-  if (!out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
+  if (!out.includes('.image-thumb-title') || !out.includes('rgba(20, 18, 16, 0.85)') || !out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
     const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?\.image-lightbox-overlay\.is-zoomed\s+\.image-lightbox-caption\s*\{[^}]*pointer-events:\s*none;\s*\}/;
     if (imagesCssRegex.test(out)) {
       out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
@@ -1815,7 +1843,7 @@ function getTopicImageFiles(activity) {
     const ext = path.extname(file);
     const base = file.slice(0, file.length - ext.length);
     if (base.startsWith(prefix)) {
-      const rawSlug = base.slice(prefix.length);
+      const rawSlug = base.slice(prefix.length).normalize('NFC');
       const cleanedSlug = cleanImageSlug(rawSlug);
       if (cleanedSlug && (cleanedSlug !== rawSlug || file !== `${prefix}${cleanedSlug}${ext.toLowerCase()}`)) {
         const newFile = `${prefix}${cleanedSlug}${ext}`.toLowerCase();
@@ -1826,7 +1854,7 @@ function getTopicImageFiles(activity) {
         } else {
           fs.unlinkSync(oldPath);
         }
-        if (!activity.recordedTitles[newFile]) {
+        if (!activity.recordedTitles[newFile] || (/[^\u0000-\u007F]/.test(rawSlug) && !/[^\u0000-\u007F]/.test(activity.recordedTitles[newFile]))) {
           activity.recordedTitles[newFile] = formatImageTitle(rawSlug);
         }
         imageFiles.push(newFile);
