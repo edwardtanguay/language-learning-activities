@@ -988,15 +988,16 @@ const SECTION_IMAGES_CSS = `
       font-weight: 700;
       text-transform: none;
       letter-spacing: 0.5px;
-      color: rgba(255, 253, 249, 0.95);
-      background: rgba(20, 18, 16, 0.85);
-      border: 1px solid rgba(255, 253, 249, 0.2);
+      color: var(--ink-main);
+      background: rgba(244, 239, 228, 0.92);
+      border: 1px solid rgba(138, 128, 112, 0.3);
       border-radius: 3px;
       padding: 6px 14px;
       text-align: right;
       align-self: flex-end;
       line-height: 1.2;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
       transition: opacity 0.2s ease;
       pointer-events: auto;
       cursor: text;
@@ -1457,7 +1458,7 @@ ${thumbsHtml}
 
 function ensureLightboxAssets(html) {
   let out = html;
-  if (!out.includes('.image-thumb-title') || !out.includes('rgba(20, 18, 16, 0.85)') || !out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
+  if (!out.includes('.image-thumb-title') || !out.includes('rgba(244, 239, 228, 0.92)') || !out.includes('.image-lightbox-caption {\n      margin-top: 10px;\n      font-family: var(--font-typewriter);\n      font-size: 15px;\n      font-weight: 700;\n      text-transform: none;\n      letter-spacing: 0.5px;\n      color: var(--ink-main);') || !out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
     const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?\.image-lightbox-overlay\.is-zoomed\s+\.image-lightbox-caption\s*\{[^}]*pointer-events:\s*none;\s*\}/;
     if (imagesCssRegex.test(out)) {
       out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
