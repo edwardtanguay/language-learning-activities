@@ -1180,6 +1180,62 @@
       margin-bottom: 24px;
     }
 
+    .image-labels-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin: 4px 0 16px 0;
+      padding: 10px;
+      background: rgba(230, 224, 210, 0.4);
+      border: 1px dashed var(--ink-rule);
+      box-sizing: border-box;
+      min-height: 44px;
+    }
+
+    .image-label-chip {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      box-shadow: 0 1px 3px rgba(45, 40, 35, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      line-height: 1.3;
+    }
+
+    .image-label-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue, #1d4ed8);
+    }
+
+    .image-label-chip:active,
+    .image-label-chip.is-dragging {
+      cursor: grabbing;
+      opacity: 0.4;
+    }
+
+    .image-label-chip.is-selected {
+      background-color: var(--highlight);
+      border-color: var(--stamp-blue, #1d4ed8);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.25);
+    }
+
+    .image-label-chip.is-hidden {
+      display: none !important;
+    }
+
     .images-grid {
       display: flex;
       flex-wrap: wrap;
@@ -1195,7 +1251,7 @@
       border-radius: 2px;
       box-shadow: 0 2px 6px rgba(45, 40, 35, 0.06);
       cursor: zoom-in;
-      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
       display: inline-flex;
       position: relative;
       overflow: hidden;
@@ -1207,6 +1263,12 @@
       border-color: var(--stamp-blue);
     }
 
+    .image-thumb-wrap.image-drop-hover {
+      background-color: #e4dfd5 !important;
+      border-color: var(--stamp-blue, #1d4ed8) !important;
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.3) !important;
+    }
+
     .image-thumb {
       height: 150px;
       width: auto;
@@ -1214,6 +1276,7 @@
       object-fit: cover;
       display: block;
       border-radius: 1px;
+      pointer-events: none;
     }
 
     .image-thumb-title {
@@ -1236,6 +1299,54 @@
       text-overflow: ellipsis;
       box-sizing: border-box;
       backdrop-filter: blur(2px);
+    }
+
+    .image-thumb-drop-slot {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      height: 25px;
+      background: rgba(244, 239, 228, 0.7);
+      border: 1px dashed var(--ink-rule);
+      box-sizing: border-box;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    @media (min-width: 681px) {
+      .images-instructions-desktop {
+        display: inline !important;
+      }
+      .images-instructions-mobile {
+        display: none !important;
+      }
+      .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+        display: none;
+      }
+      .image-thumb-wrap:not(.is-solved) .image-thumb-drop-slot {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .images-instructions-desktop {
+        display: none !important;
+      }
+      .images-instructions-mobile {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-title {
+        display: block !important;
+      }
+      .image-thumb-drop-slot {
+        display: none !important;
+      }
     }
 
     /* Thumbnail Question/Statement Badges */
@@ -2052,73 +2163,179 @@
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
         <span class="section-num">1</span> Imágenes
       </a>
-      <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
-    <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p>Estas son imágenes sobre conceptos que aparecen en el texto. Míralas junto con tu profesor: hazle preguntas sobre lo que ves y él te explicará cada detalle y contexto.</p>
+          <p><span class="images-instructions-desktop">Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="images-instructions-mobile">Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.</span></p>
         </div>
       </div>
     </div>
 
     <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool"></div>
       <div class="images-grid">
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')">
+        <div class="image-thumb-wrap" data-image-id="cabosanjuanenelparquetayrona" data-image-title="Cabo San Juan en el Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')">
           <img src="images/es-colombia-cabosanjuanenelparquetayrona.jpg" alt="Cabo San Juan en el Parque Tayrona" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Cabo San Juan en el Parque Tayrona</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cafetero.jpg', 'Cafetero', '[]')">
+        <div class="image-thumb-wrap" data-image-id="cafetero" data-image-title="Cafetero" onclick="handleImageCardClick(this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')">
           <img src="images/es-colombia-cafetero.jpg" alt="Cafetero" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Cafetero</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')">
+        <div class="image-thumb-wrap" data-image-id="cartagenaciudadamurallada" data-image-title="Cartagena Ciudad Amurallada" onclick="handleImageCardClick(this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')">
           <img src="images/es-colombia-cartagenaciudadamurallada.jpg" alt="Cartagena Ciudad Amurallada" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Cartagena Ciudad Amurallada</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-guatape.jpg', 'Guatapé', '[]')">
+        <div class="image-thumb-wrap" data-image-id="guatape" data-image-title="Guatapé" onclick="handleImageCardClick(this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')">
           <img src="images/es-colombia-guatape.jpg" alt="Guatapé" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Guatapé</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')">
+        <div class="image-thumb-wrap" data-image-id="laamazoniacolombiana" data-image-title="La Amazonía Colombiana" onclick="handleImageCardClick(this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')">
           <img src="images/es-colombia-laamazoniacolombiana.jpg" alt="La Amazonía Colombiana" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">La Amazonía Colombiana</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')">
+        <div class="image-thumb-wrap" data-image-id="losbalconesfloridosdecartagena" data-image-title="Los Balcones Floridos De Cartagena" onclick="handleImageCardClick(this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')">
           <img src="images/es-colombia-losbalconesfloridosdecartagena.jpg" alt="Los Balcones Floridos De Cartagena" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Los Balcones Floridos De Cartagena</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')">
+        <div class="image-thumb-wrap" data-image-id="losllanos" data-image-title="Los Llanos" onclick="handleImageCardClick(this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')">
           <img src="images/es-colombia-losllanos.jpg" alt="Los Llanos" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Los Llanos</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')">
+        <div class="image-thumb-wrap" data-image-id="mapwithnatureareas" data-image-title="Map With Nature Areas" onclick="handleImageCardClick(this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')">
           <img src="images/es-colombia-mapwithnatureareas.jpg" alt="Map With Nature Areas" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Map With Nature Areas</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')">
+        <div class="image-thumb-wrap" data-image-id="parquetayrona" data-image-title="Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')">
           <img src="images/es-colombia-parquetayrona.jpg" alt="Parque Tayrona" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Parque Tayrona</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')">
+        <div class="image-thumb-wrap" data-image-id="regionesdecolumbia" data-image-title="Regiones de Columbia" onclick="handleImageCardClick(this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')">
           <img src="images/es-colombia-regionesdecolumbia.jpg" alt="Regiones de Columbia" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Regiones de Columbia</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')">
+        <div class="image-thumb-wrap" data-image-id="tatacoadesert" data-image-title="Tatacoadesert" onclick="handleImageCardClick(this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')">
           <img src="images/es-colombia-tatacoadesert.jpg" alt="Tatacoadesert" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Tatacoadesert</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomap.jpg', 'Topomap', '[]')">
+        <div class="image-thumb-wrap" data-image-id="topomap" data-image-title="Topomap" onclick="handleImageCardClick(this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')">
           <img src="images/es-colombia-topomap.jpg" alt="Topomap" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Topomap</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')">
+        <div class="image-thumb-wrap" data-image-id="topomapclear" data-image-title="Topomapclear" onclick="handleImageCardClick(this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')">
           <img src="images/es-colombia-topomapclear.jpg" alt="Topomapclear" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Topomapclear</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
-        <div class="image-thumb-wrap" onclick="openImageLightbox('images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')">
+        <div class="image-thumb-wrap" data-image-id="valledecocora" data-image-title="Valle de Cocora" onclick="handleImageCardClick(this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')">
           <img src="images/es-colombia-valledecocora.jpg" alt="Valle de Cocora" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Valle de Cocora</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+    </h2>
+    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p><span class="images-instructions-desktop">Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="images-instructions-mobile">Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool"></div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="cabosanjuanenelparquetayrona" data-image-title="Cabo San Juan en el Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')">
+          <img src="images/es-colombia-cabosanjuanenelparquetayrona.jpg" alt="Cabo San Juan en el Parque Tayrona" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cabo San Juan en el Parque Tayrona</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="cafetero" data-image-title="Cafetero" onclick="handleImageCardClick(this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')">
+          <img src="images/es-colombia-cafetero.jpg" alt="Cafetero" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cafetero</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="cartagenaciudadamurallada" data-image-title="Cartagena Ciudad Amurallada" onclick="handleImageCardClick(this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')">
+          <img src="images/es-colombia-cartagenaciudadamurallada.jpg" alt="Cartagena Ciudad Amurallada" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cartagena Ciudad Amurallada</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="guatape" data-image-title="Guatapé" onclick="handleImageCardClick(this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')">
+          <img src="images/es-colombia-guatape.jpg" alt="Guatapé" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Guatapé</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="laamazoniacolombiana" data-image-title="La Amazonía Colombiana" onclick="handleImageCardClick(this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')">
+          <img src="images/es-colombia-laamazoniacolombiana.jpg" alt="La Amazonía Colombiana" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">La Amazonía Colombiana</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="losbalconesfloridosdecartagena" data-image-title="Los Balcones Floridos De Cartagena" onclick="handleImageCardClick(this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')">
+          <img src="images/es-colombia-losbalconesfloridosdecartagena.jpg" alt="Los Balcones Floridos De Cartagena" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Los Balcones Floridos De Cartagena</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="losllanos" data-image-title="Los Llanos" onclick="handleImageCardClick(this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')">
+          <img src="images/es-colombia-losllanos.jpg" alt="Los Llanos" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Los Llanos</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="mapwithnatureareas" data-image-title="Map With Nature Areas" onclick="handleImageCardClick(this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')">
+          <img src="images/es-colombia-mapwithnatureareas.jpg" alt="Map With Nature Areas" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Map With Nature Areas</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="parquetayrona" data-image-title="Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')">
+          <img src="images/es-colombia-parquetayrona.jpg" alt="Parque Tayrona" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Parque Tayrona</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="regionesdecolumbia" data-image-title="Regiones de Columbia" onclick="handleImageCardClick(this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')">
+          <img src="images/es-colombia-regionesdecolumbia.jpg" alt="Regiones de Columbia" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Regiones de Columbia</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="tatacoadesert" data-image-title="Tatacoadesert" onclick="handleImageCardClick(this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')">
+          <img src="images/es-colombia-tatacoadesert.jpg" alt="Tatacoadesert" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Tatacoadesert</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="topomap" data-image-title="Topomap" onclick="handleImageCardClick(this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')">
+          <img src="images/es-colombia-topomap.jpg" alt="Topomap" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Topomap</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="topomapclear" data-image-title="Topomapclear" onclick="handleImageCardClick(this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')">
+          <img src="images/es-colombia-topomapclear.jpg" alt="Topomapclear" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Topomapclear</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="valledecocora" data-image-title="Valle de Cocora" onclick="handleImageCardClick(this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')">
+          <img src="images/es-colombia-valledecocora.jpg" alt="Valle de Cocora" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Valle de Cocora</div>
+          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>
         </div>
       </div>
     </section>
@@ -2126,12 +2343,12 @@
 <!-- Section 3: Vocabulary Drag & Drop -->
     <h2 class="section-title" id="seccion-2">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
-        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
-      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
-            <p>Estas son las diez palabras más desafiantes del texto. Resuelve el ejercicio arrastrando y emparejando cada palabra con su significado, mientras tu profesor te ayuda y resuelve tus dudas según lo necesites.</p>
+            <p>Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.</p>
           </div>
         </div>
       </div>
@@ -2159,9 +2376,9 @@
 <!-- Section 2: Reading Text -->
     <h2 class="section-title" id="seccion-3">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
-        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
-      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
             <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real y anotará las palabras que pronuncies o escribas incorrectamente, junto con indicaciones de cómo pronunciarlas, para enviártelas al final de la clase junto con otras notas lingüísticas útiles.</p>
@@ -2199,9 +2416,9 @@
 <!-- Section 4: Interactive Comprehension Questions -->
     <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión</a>
-        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
-      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
             <p>Responde a cada una de estas preguntas eligiendo la respuesta correcta, mientras tu profesor te guía y te apoya con cualquier duda.</p>
@@ -2406,9 +2623,9 @@
     <!-- Section 5: Open Questions Section -->
     <h2 class="section-title" id="seccion-5">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
-        <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
+        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
-      <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
             <p>Lee cada pregunta en voz alta. Tu profesor responderá primero y luego responderás tú; conversen y debatan abiertamente sobre el tema antes de pasar a la siguiente pregunta.</p>
@@ -2630,10 +2847,12 @@
               readingBookmarks = Array.isArray(parsed.bookmarks)
                 ? parsed.bookmarks.filter(idx => Number.isInteger(idx) && idx >= 0)
                 : [];
+              solvedImageIds = Array.isArray(parsed.images) ? parsed.images : [];
             } else {
               userAnswers = parsed;
               completedVocab = [];
               readingBookmarks = [];
+              solvedImageIds = [];
             }
           }
         }
@@ -2650,6 +2869,7 @@
       // Render Vocabulary & Reading Bookmarks
       renderVocabulary();
       renderReadingBookmarks();
+      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
     }
 
     function saveState() {
@@ -2657,7 +2877,8 @@
         const state = {
           mc: userAnswers,
           vocab: completedVocab,
-          bookmarks: readingBookmarks
+          bookmarks: readingBookmarks,
+          images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (e) {
@@ -3788,14 +4009,16 @@
         c.classList.remove('answered', 'correct', 'incorrect');
       });
 
-      document.querySelectorAll('.section-instructions-box.expanded').forEach(box => {
-        box.classList.remove('expanded');
-        box.setAttribute('aria-expanded', 'false');
+      document.querySelectorAll('.section-instructions-box').forEach(box => {
+        box.classList.add('expanded');
+        box.setAttribute('aria-expanded', 'true');
       });
-      document.querySelectorAll('.section-instructions-tab.active').forEach(tab => {
-        tab.classList.remove('active');
-        tab.setAttribute('aria-expanded', 'false');
+      document.querySelectorAll('.section-instructions-tab').forEach(tab => {
+        tab.classList.add('active');
+        tab.setAttribute('aria-expanded', 'true');
       });
+      solvedImageIds = [];
+      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
 
       const feedbacks = document.querySelectorAll('.feedback-box');
       feedbacks.forEach(f => {
@@ -3943,6 +4166,321 @@
       }
       closeImageLightbox();
     }
+
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
+
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
+
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2) {
+            e.preventDefault();
+            lbGestureMoved = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
+    // =========================================================
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP)
+    // =========================================================
+    let solvedImageIds = [];
+    let draggedImageId = null;
+    let selectedImageLabelChip = null;
+
+    function handleImageLabelDragStart(e, chip) {
+      if (window.innerWidth <= 680) {
+        e.preventDefault();
+        return;
+      }
+      draggedImageId = chip.getAttribute('data-image-id');
+      try {
+        e.dataTransfer.setData('text/plain', draggedImageId);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+      chip.classList.add('is-dragging');
+      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
+        selectedImageLabelChip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      }
+    }
+
+    function handleImageLabelDragEnd(e, chip) {
+      chip.classList.remove('is-dragging');
+      draggedImageId = null;
+      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
+    }
+
+    function handleImageLabelClick(chip) {
+      if (window.innerWidth <= 680) return;
+      if (selectedImageLabelChip === chip) {
+        chip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      } else {
+        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
+        chip.classList.add('is-selected');
+        selectedImageLabelChip = chip;
+      }
+    }
+
+    function handleImageCardDragOver(e, card) {
+      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      card.classList.add('image-drop-hover');
+    }
+
+    function handleImageCardDragLeave(e, card) {
+      if (!card.contains(e.relatedTarget)) {
+        card.classList.remove('image-drop-hover');
+      }
+    }
+
+    function handleImageCardDrop(e, card, src, alt, questionsJson) {
+      e.preventDefault();
+      card.classList.remove('image-drop-hover');
+      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      let droppedId = '';
+      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
+      if (!droppedId) droppedId = draggedImageId;
+      const cardId = card.getAttribute('data-image-id');
+      if (droppedId && droppedId === cardId) {
+        const pool = document.getElementById('image-labels-pool');
+        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
+        solveImage(card, chip, src, alt, questionsJson);
+      }
+    }
+
+    function handleImageCardClick(card, src, alt, questionsJson) {
+      if (selectedImageLabelChip && window.innerWidth > 680 && !card.classList.contains('is-solved')) {
+        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
+        const cardId = card.getAttribute('data-image-id');
+        if (selectedId === cardId) {
+          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
+          return;
+        } else {
+          selectedImageLabelChip.classList.remove('is-selected');
+          selectedImageLabelChip = null;
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function solveImage(card, chip, src, alt, questionsJson) {
+      if (!card) return;
+      const imageId = card.getAttribute('data-image-id');
+      card.classList.add('is-solved');
+      if (chip) {
+        chip.classList.remove('is-selected', 'is-dragging');
+        chip.classList.add('is-hidden');
+      }
+      if (selectedImageLabelChip === chip) {
+        selectedImageLabelChip = null;
+      }
+      if (imageId && !solvedImageIds.includes(imageId)) {
+        solvedImageIds.push(imageId);
+        if (typeof saveState === 'function') {
+          saveState();
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function initImageLabelsGame() {
+      const pool = document.getElementById('image-labels-pool');
+      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
+      if (!pool || cards.length === 0) return;
+
+      const items = [];
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        const title = card.getAttribute('data-image-title');
+        if (id && title) {
+          items.push({ id, title });
+        }
+      });
+
+      // Fisher-Yates shuffle
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = items[i];
+        items[i] = items[j];
+        items[j] = temp;
+      }
+
+      pool.innerHTML = '';
+      items.forEach(item => {
+        const isSolved = solvedImageIds.includes(item.id);
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'image-label-chip' + (isSolved ? ' is-hidden' : '');
+        chip.setAttribute('data-image-id', item.id);
+        chip.setAttribute('draggable', 'true');
+        chip.textContent = item.title;
+        chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+        chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+        chip.addEventListener('click', () => handleImageLabelClick(chip));
+        pool.appendChild(chip);
+      });
+
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        if (id && solvedImageIds.includes(id)) {
+          card.classList.add('is-solved');
+        } else {
+          card.classList.remove('is-solved');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initImageLabelsGame();
+    });
+
+
 
     function dismissActiveVocabModal() {
       const detailArea = document.getElementById('vocab-completed-detail');

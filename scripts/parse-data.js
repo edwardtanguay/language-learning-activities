@@ -211,9 +211,24 @@ const SECTION_INSTRUCTIONS_TEXT_I18N = {
     de: 'Dies sind allgemeine Fragen zum Text, die vor dem lauten Vorlesen mit der Lehrkraft geklärt werden können.'
   },
   images: {
-    es: 'Estas son imágenes sobre conceptos que aparecen en el texto. Míralas junto con tu profesor: hazle preguntas sobre lo que ves y él te explicará cada detalle y contexto.',
-    en: 'These are images of concepts that come up in the text. Look through them with your tutor, ask questions, and your tutor will explain the details and context.',
-    de: 'Dies sind Bilder zu Konzepten aus dem Text. Schau sie dir mit deiner Lehrkraft an, stelle Fragen dazu und lasse dir die Hintergründe erklären.'
+    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.',
+    en: 'These are images of places and things mentioned in the text. Drag and drop the labels onto the correct photos as you discuss them with your professor.',
+    de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.'
+  },
+  imagesDesktop: {
+    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.',
+    en: 'These are images of places and things mentioned in the text. Drag and drop the labels onto the correct photos as you discuss them with your professor.',
+    de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.'
+  },
+  imagesMobile: {
+    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.',
+    en: 'These are images of places and things mentioned in the text. Discuss them with your professor.',
+    de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Schau sie dir an und besprich sie mit deiner Lehrkraft.'
+  },
+  vocab: {
+    es: 'Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.',
+    en: 'Drag and drop the words to their correct definitions and read the text. Your professor will correct your pronunciation and help you understand the words.',
+    de: 'Ziehe die Wörter zu ihren passenden Definitionen und lies den Text. Deine Lehrkraft korrigiert deine Aussprache und hilft dir, die Wörter zu verstehen.'
   }
 };
 
@@ -768,6 +783,62 @@ const SECTION_IMAGES_CSS = `
       margin-bottom: 24px;
     }
 
+    .image-labels-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin: 4px 0 16px 0;
+      padding: 10px;
+      background: rgba(230, 224, 210, 0.4);
+      border: 1px dashed var(--ink-rule);
+      box-sizing: border-box;
+      min-height: 44px;
+    }
+
+    .image-label-chip {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      box-shadow: 0 1px 3px rgba(45, 40, 35, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      line-height: 1.3;
+    }
+
+    .image-label-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue, #1d4ed8);
+    }
+
+    .image-label-chip:active,
+    .image-label-chip.is-dragging {
+      cursor: grabbing;
+      opacity: 0.4;
+    }
+
+    .image-label-chip.is-selected {
+      background-color: var(--highlight);
+      border-color: var(--stamp-blue, #1d4ed8);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.25);
+    }
+
+    .image-label-chip.is-hidden {
+      display: none !important;
+    }
+
     .images-grid {
       display: flex;
       flex-wrap: wrap;
@@ -783,7 +854,7 @@ const SECTION_IMAGES_CSS = `
       border-radius: 2px;
       box-shadow: 0 2px 6px rgba(45, 40, 35, 0.06);
       cursor: zoom-in;
-      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
       display: inline-flex;
       position: relative;
       overflow: hidden;
@@ -795,6 +866,12 @@ const SECTION_IMAGES_CSS = `
       border-color: var(--stamp-blue);
     }
 
+    .image-thumb-wrap.image-drop-hover {
+      background-color: #e4dfd5 !important;
+      border-color: var(--stamp-blue, #1d4ed8) !important;
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.3) !important;
+    }
+
     .image-thumb {
       height: 150px;
       width: auto;
@@ -802,6 +879,7 @@ const SECTION_IMAGES_CSS = `
       object-fit: cover;
       display: block;
       border-radius: 1px;
+      pointer-events: none;
     }
 
     .image-thumb-title {
@@ -824,6 +902,54 @@ const SECTION_IMAGES_CSS = `
       text-overflow: ellipsis;
       box-sizing: border-box;
       backdrop-filter: blur(2px);
+    }
+
+    .image-thumb-drop-slot {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      height: 25px;
+      background: rgba(244, 239, 228, 0.7);
+      border: 1px dashed var(--ink-rule);
+      box-sizing: border-box;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    @media (min-width: 681px) {
+      .images-instructions-desktop {
+        display: inline !important;
+      }
+      .images-instructions-mobile {
+        display: none !important;
+      }
+      .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+        display: none;
+      }
+      .image-thumb-wrap:not(.is-solved) .image-thumb-drop-slot {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .images-instructions-desktop {
+        display: none !important;
+      }
+      .images-instructions-mobile {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-title {
+        display: block !important;
+      }
+      .image-thumb-drop-slot {
+        display: none !important;
+      }
     }
 
     /* Thumbnail Question/Statement Badges */
@@ -1321,6 +1447,162 @@ const SECTION_LIGHTBOX_JS = `
         });
       });
     })();
+
+    // =========================================================
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP)
+    // =========================================================
+    let solvedImageIds = [];
+    let draggedImageId = null;
+    let selectedImageLabelChip = null;
+
+    function handleImageLabelDragStart(e, chip) {
+      if (window.innerWidth <= 680) {
+        e.preventDefault();
+        return;
+      }
+      draggedImageId = chip.getAttribute('data-image-id');
+      try {
+        e.dataTransfer.setData('text/plain', draggedImageId);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+      chip.classList.add('is-dragging');
+      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
+        selectedImageLabelChip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      }
+    }
+
+    function handleImageLabelDragEnd(e, chip) {
+      chip.classList.remove('is-dragging');
+      draggedImageId = null;
+      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
+    }
+
+    function handleImageLabelClick(chip) {
+      if (window.innerWidth <= 680) return;
+      if (selectedImageLabelChip === chip) {
+        chip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      } else {
+        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
+        chip.classList.add('is-selected');
+        selectedImageLabelChip = chip;
+      }
+    }
+
+    function handleImageCardDragOver(e, card) {
+      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      card.classList.add('image-drop-hover');
+    }
+
+    function handleImageCardDragLeave(e, card) {
+      if (!card.contains(e.relatedTarget)) {
+        card.classList.remove('image-drop-hover');
+      }
+    }
+
+    function handleImageCardDrop(e, card, src, alt, questionsJson) {
+      e.preventDefault();
+      card.classList.remove('image-drop-hover');
+      if (window.innerWidth <= 680 || card.classList.contains('is-solved')) return;
+      let droppedId = '';
+      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
+      if (!droppedId) droppedId = draggedImageId;
+      const cardId = card.getAttribute('data-image-id');
+      if (droppedId && droppedId === cardId) {
+        const pool = document.getElementById('image-labels-pool');
+        const chip = pool ? pool.querySelector(\`.image-label-chip[data-image-id="\${droppedId}"]\`) : null;
+        solveImage(card, chip, src, alt, questionsJson);
+      }
+    }
+
+    function handleImageCardClick(card, src, alt, questionsJson) {
+      if (selectedImageLabelChip && window.innerWidth > 680 && !card.classList.contains('is-solved')) {
+        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
+        const cardId = card.getAttribute('data-image-id');
+        if (selectedId === cardId) {
+          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
+          return;
+        } else {
+          selectedImageLabelChip.classList.remove('is-selected');
+          selectedImageLabelChip = null;
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function solveImage(card, chip, src, alt, questionsJson) {
+      if (!card) return;
+      const imageId = card.getAttribute('data-image-id');
+      card.classList.add('is-solved');
+      if (chip) {
+        chip.classList.remove('is-selected', 'is-dragging');
+        chip.classList.add('is-hidden');
+      }
+      if (selectedImageLabelChip === chip) {
+        selectedImageLabelChip = null;
+      }
+      if (imageId && !solvedImageIds.includes(imageId)) {
+        solvedImageIds.push(imageId);
+        if (typeof saveState === 'function') {
+          saveState();
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function initImageLabelsGame() {
+      const pool = document.getElementById('image-labels-pool');
+      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
+      if (!pool || cards.length === 0) return;
+
+      const items = [];
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        const title = card.getAttribute('data-image-title');
+        if (id && title) {
+          items.push({ id, title });
+        }
+      });
+
+      // Fisher-Yates shuffle
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = items[i];
+        items[i] = items[j];
+        items[j] = temp;
+      }
+
+      pool.innerHTML = '';
+      items.forEach(item => {
+        const isSolved = solvedImageIds.includes(item.id);
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'image-label-chip' + (isSolved ? ' is-hidden' : '');
+        chip.setAttribute('data-image-id', item.id);
+        chip.setAttribute('draggable', 'true');
+        chip.textContent = item.title;
+        chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+        chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+        chip.addEventListener('click', () => handleImageLabelClick(chip));
+        pool.appendChild(chip);
+      });
+
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        if (id && solvedImageIds.includes(id)) {
+          card.classList.add('is-solved');
+        } else {
+          card.classList.remove('is-solved');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initImageLabelsGame();
+    });
 `;
 
 function buildSectionQuestionsHtml(activity, questions, sectionNum) {
@@ -1341,9 +1623,9 @@ function buildSectionQuestionsHtml(activity, questions, sectionNum) {
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${num}</span> ${i18n.sectionTitle}
       </a>
-      <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
+      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
     </h2>
-    <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
           <p>${instructionsText}</p>
@@ -1427,29 +1709,31 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
       }
 
-      return `        <div class="image-thumb-wrap" onclick="openImageLightbox('images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
+      return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>\n          <div class="image-thumb-drop-slot"><span class="image-thumb-drop-placeholder"></span></div>${qBadgesHtml}\n        </div>`;
     })
     .join('\n');
 
   const instructionsLabel = SECTION_INSTRUCTIONS_LABEL_I18N[activity.lang] || SECTION_INSTRUCTIONS_LABEL_I18N.es;
-  const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.images && SECTION_INSTRUCTIONS_TEXT_I18N.images[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.images.es;
+  const instructionsDesktop = (SECTION_INSTRUCTIONS_TEXT_I18N.imagesDesktop && SECTION_INSTRUCTIONS_TEXT_I18N.imagesDesktop[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.imagesDesktop.es;
+  const instructionsMobile = (SECTION_INSTRUCTIONS_TEXT_I18N.imagesMobile && SECTION_INSTRUCTIONS_TEXT_I18N.imagesMobile[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.imagesMobile.es;
 
   return `    <!-- SECTION ${sectionNum}: IMAGES -->
     <h2 class="section-title" id="seccion-${sectionNum}">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${sectionNum}</span> ${i18n.sectionTitle}
       </a>
-      <button type="button" class="section-instructions-tab" onclick="toggleSectionInstructions(this)" aria-expanded="false" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
+      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
     </h2>
-    <div class="section-instructions-box" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="false" tabindex="0">
+    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p>${instructionsText}</p>
+          <p><span class="images-instructions-desktop">${instructionsDesktop}</span><span class="images-instructions-mobile">${instructionsMobile}</span></p>
         </div>
       </div>
     </div>
 
     <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool"></div>
       <div class="images-grid">
 ${thumbsHtml}
       </div>
@@ -1458,8 +1742,8 @@ ${thumbsHtml}
 
 function ensureLightboxAssets(html) {
   let out = html;
-  if (!out.includes('.image-thumb-title') || !out.includes('rgba(244, 239, 228, 0.92)') || !out.includes('.image-lightbox-caption {\n      margin-top: 10px;\n      font-family: var(--font-typewriter);\n      font-size: 15px;\n      font-weight: 700;\n      text-transform: none;\n      letter-spacing: 0.5px;\n      color: var(--ink-main);') || !out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
-    const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?\.image-lightbox-overlay\.is-zoomed\s+\.image-lightbox-caption\s*\{[^}]*pointer-events:\s*none;\s*\}/;
+  if (!out.includes('.image-labels-pool') || !out.includes('rgba(244, 239, 228, 0.92)') || !out.includes('.image-lightbox-caption {\n      margin-top: 10px;\n      font-family: var(--font-typewriter);\n      font-size: 15px;\n      font-weight: 700;\n      text-transform: none;\n      letter-spacing: 0.5px;\n      color: var(--ink-main);') || !out.includes('.image-lightbox-q-icon') || !out.includes('cursor: pointer;')) {
+    const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===)/;
     if (imagesCssRegex.test(out)) {
       out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
     } else if (!out.includes('.image-lightbox-overlay')) {
@@ -1484,10 +1768,10 @@ function ensureLightboxAssets(html) {
       );
     }
   }
-  if (!out.includes('isImgClick')) {
-    const lightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?setupLightboxTouchZoom\(\)[\s\S]*?\}\)\(\);/;
+  if (!out.includes('initImageLabelsGame')) {
+    const lightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?(?=\s*<\/script>|\s*function dismissActiveVocabModal|\s*\/\/ STATE)/;
     if (lightboxJsRegex.test(out)) {
-      out = out.replace(lightboxJsRegex, SECTION_LIGHTBOX_JS.trim());
+      out = out.replace(lightboxJsRegex, SECTION_LIGHTBOX_JS.trim() + '\n\n');
     } else {
       out = out.replace('</script>', `${SECTION_LIGHTBOX_JS}\n  </script>`);
     }
@@ -1770,6 +2054,46 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     /function handleBackNavigation\(e,\s*url\)\s*\{[\s\S]*?return true;\s*\}/,
     `function handleBackNavigation(e, url) {\n      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;\n      const targetUrl = url || '../../index.html';\n      if (window.innerWidth <= 680) {\n        if (e) e.preventDefault();\n        captureOutgoingActivity('backward');\n        window.location.href = targetUrl;\n        return false;\n      }\n      window.location.href = targetUrl;\n      return false;\n    }`
   );
+
+  // 10. Update vocabulary instruction text
+  const oldVocabRegex = /<p>\s*Estas son las diez palabras más desafiantes del texto[\s\S]*?según lo necesites\.\s*<\/p>/gi;
+  html = html.replace(oldVocabRegex, `<p>Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.</p>`);
+
+  // 11. Ensure all numbered section instructions are default open
+  html = html.replace(/<button type="button" class="section-instructions-tab"(?!\s+active)/g, '<button type="button" class="section-instructions-tab active"');
+  html = html.replace(/(<button type="button" class="section-instructions-tab active"[^>]*?)aria-expanded="false"/g, '$1aria-expanded="true"');
+  html = html.replace(/<div class="section-instructions-box"(?!\s+expanded)/g, '<div class="section-instructions-box expanded"');
+  html = html.replace(/(<div class="section-instructions-box expanded"[^>]*?)aria-expanded="false"/g, '$1aria-expanded="true"');
+
+  // 12. Update confirmReset() to restore section instructions to open and reset image labels game
+  html = html.replace(
+    /document\.querySelectorAll\('\.section-instructions-box\.expanded'\)\.forEach\(box => \{\s*box\.classList\.remove\('expanded'\);\s*box\.setAttribute\('aria-expanded',\s*'false'\);\s*\}\);[\s\S]*?document\.querySelectorAll\('\.section-instructions-tab\.active'\)\.forEach\(tab => \{\s*tab\.classList\.remove\('active'\);\s*tab\.setAttribute\('aria-expanded',\s*'false'\);\s*\}\);/,
+    `document.querySelectorAll('.section-instructions-box').forEach(box => {\n        box.classList.add('expanded');\n        box.setAttribute('aria-expanded', 'true');\n      });\n      document.querySelectorAll('.section-instructions-tab').forEach(tab => {\n        tab.classList.add('active');\n        tab.setAttribute('aria-expanded', 'true');\n      });\n      solvedImageIds = [];\n      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();`
+  );
+
+  // 13. Ensure saveState saves images
+  if (!html.includes('images: (typeof solvedImageIds')) {
+    html = html.replace(
+      /(const state = \{\s*mc: userAnswers,\s*vocab: completedVocab,\s*bookmarks: readingBookmarks)(\s*\};)/,
+      `$1,\n          images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])$2`
+    );
+  }
+
+  // 14. Ensure loadSavedState restores images
+  if (!html.includes('solvedImageIds = Array.isArray(parsed.images)')) {
+    html = html.replace(
+      /(readingBookmarks = Array\.isArray\(parsed\.bookmarks\)[\s\S]*?: \[\];)/,
+      `$1\n              solvedImageIds = Array.isArray(parsed.images) ? parsed.images : [];`
+    );
+    html = html.replace(
+      /(readingBookmarks = \[\];)(?=\s*\})/,
+      `$1\n              solvedImageIds = [];`
+    );
+    html = html.replace(
+      /(renderReadingBookmarks\(\);)/,
+      `$1\n      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();`
+    );
+  }
 
   if (html !== originalHtml) {
     fs.writeFileSync(activity.indexPath, html, 'utf8');

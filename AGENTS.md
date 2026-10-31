@@ -71,16 +71,25 @@ Each activity lives in `topics/<foldername>/index.html`:
     - **When neither images nor teacher questions exist**: Section 1 is Vocabulario, Section 2 is Lectura, Section 3 is Comprensión, Section 4 is Preguntas abiertas.
   - Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside the comprehension quiz are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page without adding `#top` to the URL bar.
-  - **Section Instructions Tabs & Roll-Out Areas**:
-    - On the right side of each section heading line, include an interactive button tab labeled **INSTRUCCIONES** (`.section-instructions-tab`) in typewriter font with `background-color: var(--highlight)` and `border-left: 4px solid var(--ink-rule)`.
-    - Directly below the section header line across the full width, include a collapsible instructions box (`.section-instructions-box`) that smoothly rolls open when the tab is clicked (`grid-template-rows: 0fr -> 1fr`, CSS transition) and rolls up when clicked anywhere inside.
+  - **Section Instructions Tabs & Roll-Out Areas (Default Open)**:
+    - On the right side of each section heading line, include an interactive button tab labeled **INSTRUCCIONES** (`.section-instructions-tab`) in typewriter font with `background-color: var(--highlight)` and `border-left: 4px solid var(--ink-rule)`. All numbered section instruction tabs start **active** (`.active`, `aria-expanded="true"`) on initial load.
+    - Directly below the section header line across the full width, include a collapsible instructions box (`.section-instructions-box`) that starts **expanded by default** on initial load (`.expanded`, `aria-expanded="true"`, `grid-template-rows: 1fr; opacity: 1; padding: 10px 16px; margin: -6px 0 18px 0;`). Clicking the tab or anywhere inside smoothly toggles it closed (`grid-template-rows: 0fr`, CSS transition) or open. On activity reset ("Reiniciar respuestas"), all numbered section instruction boxes return to their default open state.
     - Each section displays concise instructions in the target language addressing both learner and tutor in the familiar (*tú*) tone:
-      - **Imágenes**: *Estas son imágenes sobre conceptos que aparecen en el texto. Míralas junto con tu profesor: hazle preguntas sobre lo que ves y él te explicará cada detalle y contexto.*
-      - **Vocabulario**: *Estas son las diez palabras más desafiantes del texto. Resuelve el ejercicio arrastrando y emparejando cada palabra con su significado, mientras tu profesor te ayuda y resuelve tus dudas según lo necesites.*
+      - **Imágenes**:
+        - Desktop: *Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.*
+        - Mobile (`max-width: 680px`): *Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.*
+      - **Vocabulario**: *Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.*
       - **Preguntas para el profesor**: *Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.*
       - **Lectura**: *Lee este texto en voz alta. Tu profesor te corregirá en tiempo real y anotará las palabras que pronuncies o escribas incorrectamente, junto con indicaciones de cómo pronunciarlas, para enviártelas al final de la clase junto con otras notas lingüísticas útiles.*
       - **Comprensión**: *Responde a cada una de estas preguntas eligiendo la respuesta correcta, mientras tu profesor te guía y te apoya con cualquier duda.*
       - **Preguntas abiertas**: *Lee cada pregunta en voz alta. Tu profesor responderá primero y luego responderás tú; conversen y debatan abiertamente sobre el tema antes de pasar a la siguiente pregunta.*
+  - **Images Section Drag & Drop Game**:
+    - Above the images grid on desktop, a flex-flow pool (`.image-labels-pool`) displays shuffled beige label chips matching the `.vocab-chip` styling (typewriter font, warm parchment background, clean 1px ink border).
+    - Unsolved image cards display an empty drop-target slot (`.image-thumb-drop-slot`) at the bottom. Clicking an image directly (solved or unsolved) opens the full image lightbox popup with zoom, caption, and discussion questions.
+    - Dragging a label onto the correct photo (or clicking a label to select it, then clicking the photo) matches it: the image lightbox popup opens immediately. When closed, the label is displayed inside the card (`.is-solved`), and the chip is removed from the waiting pool.
+    - Dropping onto an incorrect photo silently returns the label to the pool with no error popup or disruptive error styling.
+    - Solved image IDs are saved in `localStorage` under `activity_<topic>` (`images` key) and reset back to unsolved on "Reiniciar respuestas".
+    - On mobile (`max-width: 680px`), the drag-and-drop game is disabled: the label pool is hidden, all images always display their labels, and instructions show the mobile wording without drag-and-drop.
   - On mobile (`max-width: 680px`), `.section-title` uses `flex-wrap: nowrap;` and the open questions section hides the word "abiertas" (`<span class="hide-mobile"> abiertas</span>`, or equivalent modifier in other languages) so it displays just "Preguntas" and keeps the instructions tab on the same single line.
 - **Section 1: Reading Passage (Lectura)**:
   - Titled "Lectura" in the target language (without "Texto de" or period), paired with right-aligned action hint "read aloud" in the target language.
