@@ -390,33 +390,6 @@
     }
 
     
-    .section-instructions-tab {
-      background-color: var(--highlight);
-      border-left: 4px solid var(--ink-rule);
-      border-top: none;
-      border-right: none;
-      border-bottom: none;
-      padding: 5px 12px;
-      font-family: var(--font-typewriter);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: var(--ink-main);
-      cursor: pointer;
-      line-height: 1.2;
-      display: inline-flex;
-      align-items: center;
-      transition: background-color 0.2s ease, opacity 0.2s ease;
-      user-select: none;
-      -webkit-user-select: none;
-      border-radius: 3px 3px 0 0;
-    }
-
-    .section-instructions-tab:hover,
-    .section-instructions-tab.active {
-      background-color: #ebdcb2;
-    }
-
     .section-instructions-box {
       background-color: var(--highlight);
       border-left: 4px solid var(--ink-rule);
@@ -424,18 +397,6 @@
       font-size: 13.5px;
       line-height: 1.45;
       color: var(--ink-main);
-      cursor: pointer;
-      display: grid;
-      grid-template-rows: 0fr;
-      opacity: 0;
-      padding: 0 16px;
-      margin: 0;
-      transition: grid-template-rows 0.3s ease, opacity 0.25s ease, padding 0.25s ease, margin 0.25s ease;
-    }
-
-    .section-instructions-box.expanded {
-      grid-template-rows: 1fr;
-      opacity: 1;
       padding: 10px 16px;
       margin: -6px 0 18px 0;
     }
@@ -2097,14 +2058,16 @@
 
 
 
+
+
+
     <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
         <span class="section-num">1</span> Imágenes
       </a>
-      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
     </h2>
-    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+    <div class="section-instructions-box">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
           <p>Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</p>
@@ -2130,9 +2093,8 @@
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
           <span class="section-num">2</span> Vocabulario
         </a>
-        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-      </h2>
-      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+        </h2>
+      <div class="section-instructions-box">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
             <p>Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.</p>
@@ -2163,9 +2125,8 @@
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
           <span class="section-num">3</span> Lectura
         </a>
-        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-      </h2>
-      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+        </h2>
+      <div class="section-instructions-box">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
             <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.</p>
@@ -2203,9 +2164,8 @@
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
           <span class="section-num">4</span> Comprensión
         </a>
-        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-      </h2>
-      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+        </h2>
+      <div class="section-instructions-box">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
             <p>Comenta las preguntas con tu profesor y encuentra la respuesta correcta.</p>
@@ -2412,9 +2372,8 @@
         <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
           <span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
         </a>
-        <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">INSTRUCCIONES</button>
-      </h2>
-      <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+        </h2>
+      <div class="section-instructions-box">
         <div class="section-instructions-content">
           <div class="section-instructions-inner">
             <p>El profesor y el estudiante se turnan para responder a las preguntas.</p>
@@ -3098,34 +3057,7 @@
       box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
     }
 
-    function toggleSectionInstructions(el) {
-      if (!el) return;
-      let box, tab;
-      if (el.classList.contains('section-instructions-tab')) {
-        tab = el;
-        const sectionTitle = el.closest('.section-title');
-        box = sectionTitle ? sectionTitle.nextElementSibling : null;
-        while (box && !box.classList.contains('section-instructions-box')) {
-          box = box.nextElementSibling;
-        }
-      } else if (el.classList.contains('section-instructions-box')) {
-        box = el;
-        const prev = box.previousElementSibling;
-        tab = prev ? prev.querySelector('.section-instructions-tab') : null;
-      }
-
-      if (!box) return;
-
-      const sel = window.getSelection();
-      if (sel && sel.toString().trim().length > 0) return;
-
-      const isExpanded = box.classList.toggle('expanded');
-      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-      if (tab) {
-        tab.classList.toggle('active', isExpanded);
-        tab.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-      }
-    }
+    function toggleSectionInstructions() {}
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -4055,14 +3987,6 @@
         c.classList.remove('answered', 'correct', 'incorrect');
       });
 
-      document.querySelectorAll('.section-instructions-box').forEach(box => {
-        box.classList.add('expanded');
-        box.setAttribute('aria-expanded', 'true');
-      });
-      document.querySelectorAll('.section-instructions-tab').forEach(tab => {
-        tab.classList.add('active');
-        tab.setAttribute('aria-expanded', 'true');
-      });
       solvedImageIds = [];
       if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
 
@@ -4309,6 +4233,9 @@
       window.location.href = targetUrl;
       return false;
     }
+
+    
+
 
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)

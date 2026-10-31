@@ -1722,7 +1722,6 @@ function buildSectionQuestionsHtml(activity, questions, sectionNum) {
     })
     .join('\n');
 
-  const instructionsLabel = SECTION_INSTRUCTIONS_LABEL_I18N[activity.lang] || SECTION_INSTRUCTIONS_LABEL_I18N.es;
   const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.questions && SECTION_INSTRUCTIONS_TEXT_I18N.questions[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.questions.es;
 
   return `    <!-- SECTION ${num}: QUESTIONS FOR TEACHER -->
@@ -1730,9 +1729,8 @@ function buildSectionQuestionsHtml(activity, questions, sectionNum) {
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${num}</span> ${i18n.sectionTitle}
       </a>
-      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
     </h2>
-    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+    <div class="section-instructions-box">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
           <p>${instructionsText}</p>
@@ -1832,7 +1830,6 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
     .map(c => `        <button type="button" class="image-label-chip" data-image-id="${c.slug}" draggable="true">${c.title}</button>`)
     .join('\n');
 
-  const instructionsLabel = SECTION_INSTRUCTIONS_LABEL_I18N[activity.lang] || SECTION_INSTRUCTIONS_LABEL_I18N.es;
   const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.images && SECTION_INSTRUCTIONS_TEXT_I18N.images[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.images.es;
 
   return `    <!-- SECTION ${sectionNum}: IMAGES -->
@@ -1840,9 +1837,8 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${sectionNum}</span> ${i18n.sectionTitle}
       </a>
-      <button type="button" class="section-instructions-tab active" onclick="toggleSectionInstructions(this)" aria-expanded="true" title="Clic para ver o cerrar las instrucciones">${instructionsLabel}</button>
     </h2>
-    <div class="section-instructions-box expanded" onclick="toggleSectionInstructions(this)" role="region" aria-expanded="true" tabindex="0">
+    <div class="section-instructions-box">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
           <p>${instructionsText}</p>
@@ -2214,16 +2210,29 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   const oldDiscussRegex = /<p>\s*Lee cada pregunta en voz alta\.\s*Tu profesor responder[áa] primero[\s\S]*?siguiente pregunta\.\s*<\/p>/gi;
   html = html.replace(oldDiscussRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.discuss[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.discuss.es}</p>`);
 
-  // 11. Ensure all numbered section instructions are default open
-  html = html.replace(/<button type="button" class="section-instructions-tab"(?!\s+active)/g, '<button type="button" class="section-instructions-tab active"');
-  html = html.replace(/(<button type="button" class="section-instructions-tab active"[^>]*?)aria-expanded="false"/g, '$1aria-expanded="true"');
-  html = html.replace(/<div class="section-instructions-box"(?!\s+expanded)/g, '<div class="section-instructions-box expanded"');
-  html = html.replace(/(<div class="section-instructions-box expanded"[^>]*?)aria-expanded="false"/g, '$1aria-expanded="true"');
+  // 11. Remove all section instructions tab buttons and make boxes clean and always visible
+  html = html.replace(/<button type="button" class="section-instructions-tab[^>]*>[\s\S]*?<\/button>\s*/gi, '');
+  html = html.replace(/<div class="section-instructions-box[^>]*>/gi, '<div class="section-instructions-box">');
 
-  // 12. Update confirmReset() to restore section instructions to open and reset image labels game
+  // 12. Update CSS for section instructions: remove tab styles, make box permanently visible
+  const oldInstructionsCssRegex = /\.section-instructions-tab\s*\{[\s\S]*?\.section-instructions-box\.expanded\s*\{[\s\S]*?\}/;
+  if (oldInstructionsCssRegex.test(html)) {
+    html = html.replace(
+      oldInstructionsCssRegex,
+      `.section-instructions-box {\n      background-color: var(--highlight);\n      border-left: 4px solid var(--ink-rule);\n      font-family: var(--font-typewriter);\n      font-size: 13.5px;\n      line-height: 1.45;\n      color: var(--ink-main);\n      padding: 10px 16px;\n      margin: -6px 0 18px 0;\n    }`
+    );
+  }
+
+  // 13. Make toggleSectionInstructions a no-op
   html = html.replace(
-    /document\.querySelectorAll\('\.section-instructions-box\.expanded'\)\.forEach\(box => \{\s*box\.classList\.remove\('expanded'\);\s*box\.setAttribute\('aria-expanded',\s*'false'\);\s*\}\);[\s\S]*?document\.querySelectorAll\('\.section-instructions-tab\.active'\)\.forEach\(tab => \{\s*tab\.classList\.remove\('active'\);\s*tab\.setAttribute\('aria-expanded',\s*'false'\);\s*\}\);/,
-    `document.querySelectorAll('.section-instructions-box').forEach(box => {\n        box.classList.add('expanded');\n        box.setAttribute('aria-expanded', 'true');\n      });\n      document.querySelectorAll('.section-instructions-tab').forEach(tab => {\n        tab.classList.add('active');\n        tab.setAttribute('aria-expanded', 'true');\n      });\n      solvedImageIds = [];\n      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();`
+    /function toggleSectionInstructions\(el\)\s*\{[\s\S]*?\n    \}/,
+    `function toggleSectionInstructions() {}`
+  );
+
+  // 14. Update confirmReset() / executeReset()
+  html = html.replace(
+    /(?:document\.querySelectorAll\('\.section-instructions-box[\s\S]*?\}\);\s*)*(?:document\.querySelectorAll\('\.section-instructions-tab[\s\S]*?\}\);\s*)*(?:tab\.setAttribute\('aria-expanded',\s*'true'\);\s*\}\);\s*)+/,
+    ''
   );
 
   // 13. Ensure saveState saves images
