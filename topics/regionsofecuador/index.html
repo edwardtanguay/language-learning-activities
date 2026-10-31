@@ -2144,6 +2144,7 @@
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
         <span class="section-num">1</span> Imágenes
       </a>
+      <span class="section-action-hint">clic para ampliar</span>
     </h2>
     <div class="section-instructions-box">
       <div class="section-instructions-content">
@@ -2563,6 +2564,10 @@
 
 <!-- Bottom Actions / Navigation -->
     <div class="bottom-actions-bar">
+      <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
+        <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Índice de Actividades</span>
+      </a>
       <div class="reset-container" id="reset-container">
         <button class="reset-answers-btn" id="reset-btn" onclick="requestReset()" title="Reiniciar respuestas de esta actividad">
           <svg class="reset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
@@ -2574,10 +2579,6 @@
           <button class="reset-confirm-btn" onclick="confirmReset()">Sí, reiniciar</button>
         </div>
       </div>
-      <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
-        <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        <span>Índice de Actividades</span>
-      </a>
     </div>
 
     <!-- Footer -->

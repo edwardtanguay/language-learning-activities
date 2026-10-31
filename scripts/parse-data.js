@@ -1822,9 +1822,29 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
       }
 
+      if (activity.folderName === 'porypara') {
+        return `        <div class="image-thumb-wrap is-solved" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="openImageLightbox('images/${file}', '${safeAlt}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
+      }
+
       return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
     })
     .join('\n');
+
+  if (activity.folderName === 'porypara') {
+    return `    <!-- SECTION ${sectionNum}: IMAGES -->
+    <h2 class="section-title" id="seccion-${sectionNum}">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
+        <span class="section-num">${sectionNum}</span> ${i18n.sectionTitle}
+      </a>
+      <span class="section-action-hint">${i18n.actionHint}</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="images-grid">
+${thumbsHtml}
+      </div>
+    </section>`;
+  }
 
   const chipsHtml = labelChips
     .map(c => `        <button type="button" class="image-label-chip" data-image-id="${c.slug}" draggable="true">${c.title}</button>`)
@@ -1837,6 +1857,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${sectionNum}</span> ${i18n.sectionTitle}
       </a>
+      <span class="section-action-hint">${i18n.actionHint}</span>
     </h2>
     <div class="section-instructions-box">
       <div class="section-instructions-content">
@@ -2020,7 +2041,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   html = html.replace(/[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:IMAGES|QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*/gi, '');
   html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*/gi, '');
   html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*/gi, '');
-  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|lugares y cosas mencionados en el texto)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
+  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|lugares y cosas mencionados en el texto|usos y contrastes de por y para)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
   html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:preguntas generales sobre el texto|general questions about the text)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
   html = html.replace(/[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/gi, '');
   html = html.replace(/<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/gi, '');
