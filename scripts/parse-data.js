@@ -1822,7 +1822,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         qBadgesHtml = `\n          <div class="image-thumb-questions">${badges}</div>`;
       }
 
-      if (activity.folderName === 'porypara') {
+      if (activity.folderName === 'porypara' || activity.folderName === 'subjuntivo') {
         return `        <div class="image-thumb-wrap is-solved" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="openImageLightbox('images/${file}', '${safeAlt}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
       }
 
@@ -1830,7 +1830,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
     })
     .join('\n');
 
-  if (activity.folderName === 'porypara') {
+  if (activity.folderName === 'porypara' || activity.folderName === 'subjuntivo') {
     return `    <!-- SECTION ${sectionNum}: IMAGES -->
     <h2 class="section-title" id="seccion-${sectionNum}">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
