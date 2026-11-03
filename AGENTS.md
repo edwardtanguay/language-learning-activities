@@ -10,7 +10,7 @@ A platform for generating self-contained language learning activities and worksh
 - `import-text/import.dpod.txt`: Text file where custom questions for the teacher are noted under `## <topic-code>` before running `npm run pd`.
 - `scripts/parse-data.js`: Node script executed via `npm run pd` ("parse data") to match, rename, and move images from `import-images/` into `topics/<foldername>/images/`, set topic icons (`icon-<topic>.<ext>`), sync questions from `import-text/import.dpod.txt`, and update section numbering on the activity pages and catalog.
 - `README.md`: Guide for language students and creators on using, personalizing, and publishing activities.
-- `.agents/skills/`: Agent skills defining specific creation workflows (e.g., `/create-text-and-multiple-choice`).
+- `.agents/skills/`: Agent skills defining specific creation workflows (e.g., `/create-activity`).
 
 ## Activity Architecture & Technical Rules
 

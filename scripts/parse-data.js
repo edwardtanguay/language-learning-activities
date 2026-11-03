@@ -1629,6 +1629,13 @@ const SECTION_LIGHTBOX_JS = `
           saveState();
         }
       }
+      const pool = document.getElementById('image-labels-pool');
+      if (pool) {
+        const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+        if (remainingChips.length === 0) {
+          pool.style.display = 'none';
+        }
+      }
       openImageLightbox(src, alt, questionsJson, true);
     }
 
@@ -1696,7 +1703,7 @@ const SECTION_LIGHTBOX_JS = `
         }
       });
 
-      // 5. Update cards solved state
+      // 5. Update cards solved state and pool visibility
       cards.forEach(card => {
         const id = card.getAttribute('data-image-id');
         if (id && solvedImageIds.includes(id)) {
@@ -1705,6 +1712,9 @@ const SECTION_LIGHTBOX_JS = `
           card.classList.remove('is-solved');
         }
       });
+
+      const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+      pool.style.display = (validChips.length > 0 && remainingChips.length === 0) ? 'none' : 'flex';
     }
 
     document.addEventListener('DOMContentLoaded', () => {

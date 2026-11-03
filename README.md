@@ -49,7 +49,7 @@ Traditional language lessons often require hours of unpaid preparation from tuto
 In your AI assistant's chat window, trigger the activity creation skill:
 
 ```text
-/create-learning-activity on Argentina in Spanish B1
+/create-activity on Argentina in Spanish B1
 ```
 
 #### Personalize & Customize Your Prompts
@@ -58,21 +58,21 @@ You can steer the AI to focus on specific grammar, regional dialects, or unique 
 
 - **Targeted Grammar Focus:**
   ```text
-  /create-learning-activity on A Road Trip Across Patagonia in Spanish B1, and use the imperfect and preterite tenses as much as possible to contrast past actions
+  /create-activity on A Road Trip Across Patagonia in Spanish B1, and use the imperfect and preterite tenses as much as possible to contrast past actions
   ```
 - **Regional Slang & Culture:**
   ```text
-  /create-learning-activity on Café Culture in Buenos Aires in Spanish B2, and incorporate authentic Argentine lunfardo slang and expressions
+  /create-activity on Café Culture in Buenos Aires in Spanish B2, and incorporate authentic Argentine lunfardo slang and expressions
   ```
 - **Professional or Academic Registers:**
   ```text
-  /create-learning-activity on Renewable Energy Innovations in Germany in German B2, with formal vocabulary and passive voice constructions
+  /create-activity on Renewable Energy Innovations in Germany in German B2, with formal vocabulary and passive voice constructions
   ```
 - **Any Language & Level:**
   ```text
-  /create-learning-activity on Visiting Montmartre in French A2
-  /create-learning-activity on Tuscan Winemaking in Italian B1
-  /create-learning-activity on Tokyo Street Food in Japanese B1
+  /create-activity on Visiting Montmartre in French A2
+  /create-activity on Tuscan Winemaking in Italian B1
+  /create-activity on Tokyo Street Food in Japanese B1
   ```
 
 The AI will generate a complete, self-contained directory under `topics/<topicname>/index.html` and register it in the root `index.html` catalog.

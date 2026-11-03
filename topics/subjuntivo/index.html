@@ -2088,7 +2088,7 @@
             <div class="instructions-col">
               <div class="instructions-col-title">Estudiante</div>
               <ul>
-                <li>Crea una actividad para tu próxima clase en tu editor con la habilidad, ej.: «/create-learning-activity on Ecuador in Spanish B1».</li>
+                <li>Crea una actividad para tu próxima clase en tu editor con la habilidad, ej.: «/create-activity on Ecuador in Spanish B1».</li>
                 <li>Con la mayoría de los modelos de IA, tardarás entre 5 y 10 minutos en crearla.</li>
                 <li>Una vez lista, lee el texto con la ayuda de Google Traductor hasta el punto de poder leerlo de nuevo en el idioma meta y comprenderlo en general.</li>
                 <li>Realiza todos los ejercicios para que tengas una comprensión general tanto de las preguntas como de las respuestas, hasta el punto de poder responderlas en vivo en clase con tu profesor.</li>
@@ -4448,6 +4448,13 @@
           saveState();
         }
       }
+      const pool = document.getElementById('image-labels-pool');
+      if (pool) {
+        const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+        if (remainingChips.length === 0) {
+          pool.style.display = 'none';
+        }
+      }
       openImageLightbox(src, alt, questionsJson, true);
     }
 
@@ -4515,7 +4522,7 @@
         }
       });
 
-      // 5. Update cards solved state
+      // 5. Update cards solved state and pool visibility
       cards.forEach(card => {
         const id = card.getAttribute('data-image-id');
         if (id && solvedImageIds.includes(id)) {
@@ -4524,6 +4531,9 @@
           card.classList.remove('is-solved');
         }
       });
+
+      const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+      pool.style.display = (validChips.length > 0 && remainingChips.length === 0) ? 'none' : 'flex';
     }
 
     document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,9 @@
 ## historiaweb
 
+html: Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.
+php: Creé mis primeros sitios web basados ​​en bases de datos en los años 90 con ASP/ODBC/Access; más tarde, pasé a utilizar PHP/MySQL.
+php: ¿Has programado alguna vez con PHP?
+php: Siempre decíamos: Lo mejor de PHP es que paga mi alquiler.
 
 ## subjuntivo
 

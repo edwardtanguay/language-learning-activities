@@ -1,9 +1,9 @@
 ---
-name: create-text-and-multiple-choice
+name: create-activity
 description: Create a self-contained language learning activity with a reading text, vocabulary notes, interactive multiple-choice questions, and tutor/tandem prompts in the 1970s school handout style.
 ---
 
-# Create Text and Multiple-Choice Activity
+# Create Language Learning Activity
 
 This skill creates a self-contained language learning activity page inside `topics/<topic-slug>/index.html` and registers it in the main catalog (`index.html`).
 
