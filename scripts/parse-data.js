@@ -750,13 +750,14 @@ const TOPIC_HEADER_ICON_CSS = `
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         flex-wrap: wrap;
         gap: 12px;
       }
       .topic-header-icon-wrap {
         width: 56px;
         height: 56px;
+        flex: 0 0 56px;
         margin: 0;
       }
       .profile-zoom-btn {
@@ -770,7 +771,8 @@ const TOPIC_HEADER_ICON_CSS = `
         height: 10px;
       }
       .handout-title-group {
-        flex: 0 1 auto;
+        flex: 1 1 calc(100% - 68px);
+        width: calc(100% - 68px);
         min-width: 0;
         text-align: left;
       }

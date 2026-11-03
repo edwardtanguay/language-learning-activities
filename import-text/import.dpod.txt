@@ -1,9 +1,15 @@
 ## historiaweb
 
 html: Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.
-php: Creé mis primeros sitios web basados ​​en bases de datos en los años 90 con ASP/ODBC/Access; más tarde, pasé a utilizar PHP/MySQL.
+html: ¿Dónde aprendiste HTML, CSS y JavaScript?
+php: En los años 90, creé mis primeros sitios web basados ​​en bases de datos con ASP/ODBC/Access; más tarde, pasé a utilizar PHP/MySQL.
 php: ¿Has programado alguna vez con PHP?
 php: Siempre decíamos: Lo mejor de PHP es que paga mi alquiler.
+ajax: Recuerdo que, hacia 2001, XMLHttpRequest estaba disponible en los navegadores, lo que nos permitía contactar con un servidor mediante JavaScript para actualizar la página de forma dinámica.
+ajax: Así, podrías crear un botón que envía un texto del usuario a una URL, reciba una respuesta y la muestre en la página, sin necesidad de recargar el navegador.
+jquery: jQuery simplificó enormemente la sintaxis de JavaScript, lo que hace que sea mucho más fácil de leer y escribir.
+jquery: Hizo que AJAX, CSS y las animaciones fueran sencillos.
+jquery: Convertía los elementos HTML en objetos con propiedades y permitía encadenarlos (chaining).
 
 ## subjuntivo
 
