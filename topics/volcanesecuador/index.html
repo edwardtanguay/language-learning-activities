@@ -1833,6 +1833,25 @@
       opacity: 0;
       pointer-events: none;
     }
+
+    .mobile-only-inline {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .desktop-only-inline {
+        display: none !important;
+      }
+      .mobile-only-inline {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-wrap .image-thumb-title {
+        display: block !important;
+      }
+    }
   
     /* =========================================================
        SECTION 1: QUESTIONS FOR TEACHER
@@ -2145,7 +2164,7 @@
     <div class="section-instructions-box">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p>Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</p>
+          <p>Estas son imágenes de lugares y cosas mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span></p>
         </div>
       </div>
     </div>
@@ -2322,6 +2341,9 @@
     let readingBookmarks = [];
     let activeModalCard = null;
     let draggedWordKey = null;
+    let selectedWordKey = null;
+    let lastChipClickTime = 0;
+    let lastClickedChipKey = null;
     let activePlacedWordKey = null;
 
     // 10 Hardest Non-Cognate Vocabulary Words from the Text
@@ -3015,428 +3037,424 @@
       initImageLabelsGame();
     });
 
-    // STATE MANAGEMENT (PERSISTENCE)
-    // =========================================================
-    function loadSavedState() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (parsed && typeof parsed === 'object') {
-            if (parsed.mc || parsed.vocab || parsed.bookmarks) {
-              userAnswers = parsed.mc || {};
-              completedVocab = Array.isArray(parsed.vocab)
-                ? parsed.vocab.filter(k => vocabData[k])
-                : [];
-              readingBookmarks = Array.isArray(parsed.bookmarks)
-                ? parsed.bookmarks.filter(idx => Number.isInteger(idx) && idx >= 0)
-                : [];
-              solvedImageIds = Array.isArray(parsed.images) ? parsed.images : [];
-            } else {
-              userAnswers = parsed;
-              completedVocab = [];
-              readingBookmarks = [];
-              solvedImageIds = [];
-            }
-          }
-        }
-      } catch (e) {
-        console.warn("Could not load from localStorage:", e);
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
       }
-
-      // Restore Multiple Choice answers
-      Object.keys(userAnswers).forEach(qNum => {
-        const val = userAnswers[qNum];
-        applyQuestionFeedback(qNum, val);
-      });
-
-      // Render Vocabulary & Reading Bookmarks
-      renderVocabulary();
-      renderReadingBookmarks();
-      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
-    }
-
-    function saveState() {
-      try {
-        const state = {
-          mc: userAnswers,
-          vocab: completedVocab,
-          bookmarks: readingBookmarks,
-          images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (e) {
-        console.warn("Could not save to localStorage:", e);
-      }
-    }
-
-    // =========================================================
-    // READING BOOKMARKS (SHIFT + DOUBLE-CLICK ON ANY WORD)
-    // =========================================================
-    function initReadingWords() {
-      const sheet = document.querySelector('.handout-sheet');
-      if (!sheet || sheet.getAttribute('data-words-initialized') === 'true') return;
-      sheet.setAttribute('data-words-initialized', 'true');
-
-      let wordIndex = 0;
-
-      function processNode(node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const text = node.nodeValue;
-          if (!text || !text.trim()) return;
-          const regex = /([\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*)/gu;
-          let lastIdx = 0;
-          let match;
-          const frag = document.createDocumentFragment();
-          let found = false;
-
-          while ((match = regex.exec(text)) !== null) {
-            found = true;
-            if (match.index > lastIdx) {
-              frag.appendChild(document.createTextNode(text.slice(lastIdx, match.index)));
-            }
-            const span = document.createElement('span');
-            span.className = 'reading-word';
-            span.setAttribute('data-word-idx', String(wordIndex++));
-            span.textContent = match[0];
-            frag.appendChild(span);
-            lastIdx = regex.lastIndex;
-          }
-
-          if (found) {
-            if (lastIdx < text.length) {
-              frag.appendChild(document.createTextNode(text.slice(lastIdx)));
-            }
-            node.parentNode.replaceChild(frag, node);
-          }
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-          if (
-            node.closest('.vocab-section') ||
-            node.closest('.jump-nav') ||
-            node.closest('.sticky-jump-nav') ||
-            node.closest('.utility-bar') ||
-            node.closest('.bottom-actions-bar') ||
-            node.closest('.lookup-btn') ||
-            node.closest('button') ||
-            node.tagName === 'BUTTON' ||
-            node.tagName === 'SVG' ||
-            node.tagName === 'SCRIPT' ||
-            node.tagName === 'STYLE' ||
-            node.classList.contains('instructions-heading') ||
-            node.classList.contains('section-num') ||
-            node.classList.contains('section-action-hint') ||
-            node.classList.contains('feedback-box')
-          ) {
-            return;
-          }
-
-          if (node.classList.contains('vocab-in-text')) {
-            const wrap = document.createElement('span');
-            wrap.className = 'reading-word';
-            wrap.setAttribute('data-word-idx', String(wordIndex++));
-            node.parentNode.replaceChild(wrap, node);
-            wrap.appendChild(node);
-            return;
-          }
-
-          const children = Array.from(node.childNodes);
-          children.forEach(processNode);
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
         }
       }
-
-      const targetAreas = sheet.querySelectorAll(
-        '.instructions-inner, .reading-content, .quiz-container, .discussion-container'
-      );
-      if (targetAreas.length > 0) {
-        targetAreas.forEach(area => processNode(area));
-      } else {
-        processNode(sheet);
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
       }
+      return false;
+    }
 
-      sheet.addEventListener('dblclick', (e) => {
-        if (!e.shiftKey) return;
-        if (e.target && e.target.closest('.reading-bookmark')) return;
-
-        let wordEl = e.target && e.target.closest ? e.target.closest('.reading-word') : null;
-        if (!wordEl && window.getSelection) {
-          const sel = window.getSelection();
-          if (sel && sel.rangeCount > 0) {
-            const range = sel.getRangeAt(0);
-            const startNode = range.startContainer;
-            const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement;
-            if (startEl && sheet.contains(startEl)) {
-              wordEl = startEl.closest('.reading-word');
-            }
-          }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+          return;
         }
-
-        if (!wordEl) return;
-
-        const idx = parseInt(wordEl.getAttribute('data-word-idx'), 10);
-        if (isNaN(idx)) return;
-
-        e.preventDefault();
-        e.stopPropagation();
-        addReadingBookmark(idx);
-
-        const clearSel = () => {
-          if (window.getSelection) {
-            const sel = window.getSelection();
-            if (sel) sel.removeAllRanges();
-          }
-        };
-        clearSel();
-        requestAnimationFrame(clearSel);
-      });
-    }
-
-    function addReadingBookmark(idx) {
-      if (!readingBookmarks.includes(idx)) {
-        readingBookmarks.push(idx);
-        readingBookmarks.sort((a, b) => a - b);
-        saveState();
-      }
-      renderReadingBookmarks();
-    }
-
-    function removeReadingBookmark(idx) {
-      const next = readingBookmarks.filter(item => item !== idx);
-      if (next.length !== readingBookmarks.length) {
-        readingBookmarks = next;
-        saveState();
-      }
-      renderReadingBookmarks();
-    }
-
-    function updateStickyBookmarkState() {
-      const bmBtns = document.querySelectorAll('.jump-bookmark-btn');
-      if (bmBtns.length === 0) return;
-      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
-      if (bookmarkEls.length === 0) {
-        bmBtns.forEach(btn => btn.classList.remove('show'));
-        return;
-      }
-      if (bookmarkEls.length === 1) {
-        const rect = bookmarkEls[0].getBoundingClientRect();
-        const isVisible = (rect.top >= 40 && rect.bottom <= window.innerHeight - 40);
-        bmBtns.forEach(btn => btn.classList.toggle('show', !isVisible));
-        return;
-      }
-      bmBtns.forEach(btn => btn.classList.add('show'));
-    }
-
-    function renderReadingBookmarks() {
-      document.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
-      document.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
-
-      readingBookmarks.forEach(idx => {
-        const wordEl = document.querySelector(`.reading-word[data-word-idx="${idx}"]`);
-        if (!wordEl) return;
-        wordEl.classList.add('has-bookmark');
-
-        const bm = document.createElement('span');
-        bm.className = 'reading-bookmark';
-        bm.setAttribute('data-bookmark-idx', String(idx));
-        bm.setAttribute('title', 'Eliminar marcador');
-        bm.setAttribute('aria-label', 'Eliminar marcador');
-        bm.setAttribute('role', 'button');
-        bm.setAttribute('tabindex', '0');
-        bm.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
-
-        bm.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          removeReadingBookmark(idx);
-        });
-
-        bm.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            e.stopPropagation();
-            removeReadingBookmark(idx);
-          }
-        });
-
-        wordEl.insertBefore(bm, wordEl.firstChild);
-      });
-
-      updateStickyBookmarkState();
-    }
-
-    // =========================================================
-    // INSTRUCTIONS ROLL-OUT / ROLL-UP LOGIC
-    // =========================================================
-    function toggleInstructions(e) {
-      if (e && e.shiftKey) return;
-      if (e && e.target && (e.target.tagName === 'A' || e.target.closest('a'))) return;
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      const box = document.getElementById('instructions-box');
-      if (!box) return;
-      const isExpanded = box.classList.toggle('expanded');
-      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-    }
-
-    function toggleSectionInstructions() {}
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const box = document.getElementById('instructions-box');
-      if (box) {
-        box.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            toggleInstructions(e);
-          }
-        });
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
       }
     });
 
-    // =========================================================
-    // SNAPPY SCROLL & SCROLL TO TOP LOGIC
-    // =========================================================
-    let activeScrollRaf = null;
-    function snappyScrollTo(targetY, duration = 280) {
-      if (activeScrollRaf) {
-        cancelAnimationFrame(activeScrollRaf);
-        activeScrollRaf = null;
-      }
-      const startY = window.scrollY;
-      const docHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight
-      );
-      const clampedTarget = Math.max(0, Math.min(targetY, docHeight - window.innerHeight));
-      const diff = clampedTarget - startY;
-      if (Math.abs(diff) < 2) return;
-      const startTime = performance.now();
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
 
-      function easeOutCubic(t) {
-        return 1 - Math.pow(1 - t, 3);
-      }
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
 
-      function step(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(1, elapsed / duration);
-        window.scrollTo(0, startY + diff * easeOutCubic(progress));
-        if (progress < 1) {
-          activeScrollRaf = requestAnimationFrame(step);
-        } else {
-          activeScrollRaf = null;
-        }
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2) {
+            e.preventDefault();
+            lbGestureMoved = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
+    // =========================================================
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
+    // =========================================================
+let draggedImageId = null;
+    let selectedImageLabelChip = null;
+
+    function handleImageLabelDragStart(e, chip) {
+      draggedImageId = chip.getAttribute('data-image-id');
+      try {
+        e.dataTransfer.setData('text/plain', draggedImageId);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+      chip.classList.add('is-dragging');
+      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
+        selectedImageLabelChip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
       }
-      activeScrollRaf = requestAnimationFrame(step);
     }
 
-    window.addEventListener('wheel', () => {
-      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
-    }, { passive: true });
-    window.addEventListener('touchstart', () => {
-      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
-    }, { passive: true });
-
-    function scrollToTop(e) {
-      if (e) e.preventDefault();
-      snappyScrollTo(0, 280);
+    function handleImageLabelDragEnd(e, chip) {
+      chip.classList.remove('is-dragging');
+      draggedImageId = null;
+      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
     }
 
-    // =========================================================
-    // VOCABULARY EXERCISE LOGIC
-    // =========================================================
-    function safeDismiss(callback, e) {
-      if (e && e.target && e.target.closest('.lookup-btn')) return;
-      if (e && e.target && e.target.closest('.dict-close-btn')) {
-        callback();
-        return;
+    function handleImageLabelClick(chip) {
+      if (selectedImageLabelChip === chip) {
+        chip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      } else {
+        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
+        chip.classList.add('is-selected');
+        selectedImageLabelChip = chip;
       }
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      callback();
     }
 
-    function appendBalancedRows(container, keys, createItemFn, rowClass, maxPerRow) {
-      const total = keys.length;
-      if (total === 0) return;
+    function setupImageTouchDrag(chip) {
+      let touchMoved = false;
+      let ghost = null;
+      let startX = 0;
+      let startY = 0;
 
-      const availableWidth = container.clientWidth || 320;
-      let numRows = maxPerRow ? Math.ceil(total / maxPerRow) : (total >= 6 ? 2 : 1);
+      chip.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedImageId = chip.getAttribute('data-image-id');
+      }, { passive: true });
 
-      while (numRows <= total) {
-        container.innerHTML = '';
-        const base = Math.floor(total / numRows);
-        const remainder = total % numRows;
+      chip.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1 || !draggedImageId) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+        if (dist > 8) {
+          touchMoved = true;
+          if (!ghost) {
+            ghost = chip.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.zIndex = '9999';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.opacity = '0.85';
+            ghost.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ghost);
+            chip.classList.add('is-dragging');
+          }
+          ghost.style.left = touch.clientX + 'px';
+          ghost.style.top = touch.clientY + 'px';
 
-        let startIndex = 0;
-        let overflows = false;
-
-        for (let r = 0; r < numRows; r++) {
-          const count = base + (r < remainder ? 1 : 0);
-          const rowKeys = keys.slice(startIndex, startIndex + count);
-          startIndex += count;
-
-          const row = document.createElement('div');
-          row.className = rowClass;
-          rowKeys.forEach(k => {
-            const el = createItemFn(k);
-            if (el) row.appendChild(el);
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
+            if (c !== card) c.classList.remove('image-drop-hover');
           });
-          container.appendChild(row);
-
-          if (row.scrollWidth > availableWidth && count > 1) {
-            overflows = true;
+          if (card && !card.classList.contains('is-solved')) {
+            card.classList.add('image-drop-hover');
           }
         }
+      }, { passive: true });
 
-        if (!overflows || numRows >= total) {
-          break;
+      chip.addEventListener('touchend', (e) => {
+        if (ghost) {
+          ghost.remove();
+          ghost = null;
         }
-        numRows++;
+        chip.classList.remove('is-dragging');
+        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
+
+        if (touchMoved && draggedImageId) {
+          const changedTouch = e.changedTouches[0];
+          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          if (card && !card.classList.contains('is-solved')) {
+            const cardId = card.getAttribute('data-image-id');
+            if (cardId === draggedImageId) {
+              const img = card.querySelector('img');
+              const src = img ? img.getAttribute('src') : '';
+              const alt = card.getAttribute('data-image-title') || '';
+              solveImage(card, chip, src, alt);
+            }
+          }
+          draggedImageId = null;
+        }
+      });
+    }
+
+    function handleImageCardDragOver(e, card) {
+      if (card.classList.contains('is-solved')) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      card.classList.add('image-drop-hover');
+    }
+
+    function handleImageCardDragLeave(e, card) {
+      if (!card.contains(e.relatedTarget)) {
+        card.classList.remove('image-drop-hover');
       }
     }
 
-    function renderVocabulary(animState) {
-      const prevChipRects = animState && animState.prevChipRects ? animState.prevChipRects : animState;
-      const prevCompletedOffsets = animState && animState.prevCompletedOffsets ? animState.prevCompletedOffsets : null;
-      const newlyCompletedKey = animState && animState.newlyCompletedKey ? animState.newlyCompletedKey : null;
+    function handleImageCardDrop(e, card, src, alt, questionsJson) {
+      e.preventDefault();
+      card.classList.remove('image-drop-hover');
+      if (card.classList.contains('is-solved')) return;
+      let droppedId = '';
+      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
+      if (!droppedId) droppedId = draggedImageId;
+      const cardId = card.getAttribute('data-image-id');
+      if (droppedId && droppedId === cardId) {
+        const pool = document.getElementById('image-labels-pool');
+        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
+        solveImage(card, chip, src, alt, questionsJson);
+      }
+    }
 
-      const pool = document.getElementById('vocab-pool');
-      const targets = document.getElementById('vocab-targets');
-      const completedPool = document.getElementById('vocab-completed-pool');
-      const detailArea = document.getElementById('vocab-completed-detail');
+    function handleImageCardClick(card, src, alt, questionsJson) {
+      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
+        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
+        const cardId = card.getAttribute('data-image-id');
+        if (selectedId === cardId) {
+          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
+          return;
+        } else {
+          selectedImageLabelChip.classList.remove('is-selected');
+          selectedImageLabelChip = null;
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
 
-      if (!pool || !targets || !completedPool) return;
+    function solveImage(card, chip, src, alt, questionsJson) {
+      if (!card) return;
+      const imageId = card.getAttribute('data-image-id');
+      card.classList.add('is-solved');
+      if (chip) {
+        chip.classList.remove('is-selected', 'is-dragging');
+        chip.classList.add('is-hidden');
+      }
+      if (selectedImageLabelChip === chip) {
+        selectedImageLabelChip = null;
+      }
+      if (imageId && !solvedImageIds.includes(imageId)) {
+        solvedImageIds.push(imageId);
+        if (typeof saveState === 'function') {
+          saveState();
+        }
+      }
+      const pool = document.getElementById('image-labels-pool');
+      if (pool) {
+        const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+        if (remainingChips.length === 0) {
+          pool.style.display = 'none';
+        }
+      }
+      openImageLightbox(src, alt, questionsJson, true);
+    }
 
-      const savedScrollY = window.scrollY;
+    function initImageLabelsGame() {
+      const pool = document.getElementById('image-labels-pool');
+      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
+      if (!pool || cards.length === 0) return;
 
-      pool.innerHTML = '';
-      targets.innerHTML = '';
-      completedPool.innerHTML = '';
-      if (detailArea) detailArea.innerHTML = '';
+      // 1. Gather existing chips in pool and deduplicate
+      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
+      const seenIds = new Set();
+      const validChips = [];
 
-      const allKeys = Object.keys(vocabData);
-      const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
+      chips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          validChips.push(chip);
+        } else {
+          chip.remove();
+        }
+      });
 
-      // 1. Render Waiting Words Pool
-      if (remainingKeys.length === 0) {
-        pool.innerHTML = '';
-        pool.style.display = 'none';
-      } else {
-        pool.style.display = 'flex';
-        const createChip = (k) => {
-          const item = vocabData[k];
-          const chip = document.createElement('div');
-          chip.className = 'vocab-chip';
-          chip.setAttribute('draggable', 'true');
-          chip.setAttribute('data-key', k);
-          chip.textContent = item.word;
+      // 2. If pool was empty, generate from cards
+      if (validChips.length === 0) {
+        cards.forEach(card => {
+          const id = card.getAttribute('data-image-id');
+          const title = card.getAttribute('data-image-title');
+          if (id && title && !seenIds.has(id)) {
+            seenIds.add(id);
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'image-label-chip';
+            chip.setAttribute('data-image-id', id);
+            chip.setAttribute('draggable', 'true');
+            chip.textContent = title;
+            pool.appendChild(chip);
+            validChips.push(chip);
+          }
+        });
+      }
 
-          chip.addEventListener('dragstart', handleDragStart);
-          chip.addEventListener('dragend', handleDragEnd);
+      // 3. Fisher-Yates shuffle order in pool
+      for (let i = validChips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = validChips[i];
+        validChips[i] = validChips[j];
+        validChips[j] = temp;
+      }
+      validChips.forEach(chip => pool.appendChild(chip));
 
+      // 4. Attach event listeners and sync solved state
+      validChips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        const isSolved = solvedImageIds.includes(id);
+        chip.classList.toggle('is-hidden', isSolved);
+        chip.classList.remove('is-selected', 'is-dragging');
+
+        if (!chip.dataset.bound) {
+          chip.dataset.bound = 'true';
+          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+          // Click / tap selection and double-tap hint popup
           chip.addEventListener('click', (e) => {
             e.stopPropagation();
             if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-            showWordHintModal(k);
-          });
+            const now = Date.now();
+            if (lastClickedChipKey === k && (now - lastChipClickTime < 350)) {
+              chip.classList.remove('selected');
+              selectedWordKey = null;
+              lastClickedChipKey = null;
+              showWordHintModal(k);
+              return;
+            }
+            lastChipClickTime = now;
+            lastClickedChipKey = k;
 
-          setupTouchDrag(chip, k);
+            if (selectedWordKey === k) {
+              chip.classList.remove('selected');
+              selectedWordKey = null;
+            } else {
+              const poolEl = document.getElementById('vocab-pool');
+              if (poolEl) poolEl.querySelectorAll('.vocab-chip.selected').forEach(c => c.classList.remove('selected'));
+              chip.classList.add('selected');
+              selectedWordKey = k;
+            }
+          });
           return chip;
         };
 
@@ -3639,7 +3657,23 @@
       activeModalCard = null;
     }
 
+    
+    document.addEventListener('click', (e) => {
+      if (selectedWordKey && !e.target.closest('.vocab-chip') && !e.target.closest('.vocab-target-card')) {
+        const chip = document.querySelector(`.vocab-chip[data-key="${selectedWordKey}"]`);
+        if (chip) chip.classList.remove('selected');
+        selectedWordKey = null;
+      }
+    });
     function handleTargetCardClick(card, targetKey, e) {
+      if (selectedWordKey && !card.classList.contains('state-wrong') && !card.classList.contains('state-correct')) {
+        const wordKey = selectedWordKey;
+        const chip = document.querySelector(`.vocab-chip[data-key="${wordKey}"]`);
+        if (chip) chip.classList.remove('selected');
+        selectedWordKey = null;
+        processWordPlacement(wordKey, targetKey, card);
+        return;
+      }
       if (card.classList.contains('state-wrong')) {
         safeDismiss(() => dismissWrongState(card), e);
         return;
@@ -3932,102 +3966,7 @@
     }
 
     function setupTouchDrag(chip, key) {
-      let touchMoved = false;
-      let touchAvatar = null;
-      let lastTargetCard = null;
-
-      chip.addEventListener('touchstart', (e) => {
-        if (activeModalCard) return;
-        touchMoved = false;
-        draggedWordKey = key;
-      }, { passive: true });
-
-      chip.addEventListener('touchmove', (e) => {
-        if (activeModalCard) return;
-        const touch = e.touches[0];
-        if (!touch) return;
-
-        if (!touchMoved) {
-          touchMoved = true;
-          chip.classList.add('dragging');
-          chip.style.opacity = '0';
-          chip.style.visibility = 'hidden';
-
-          const targetsContainer = document.getElementById('vocab-targets');
-          if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
-
-          touchAvatar = document.createElement('div');
-          touchAvatar.className = 'vocab-touch-avatar';
-          touchAvatar.textContent = chip.textContent;
-          document.body.appendChild(touchAvatar);
-        }
-
-        if (touchAvatar) {
-          touchAvatar.style.left = touch.clientX + 'px';
-          touchAvatar.style.top = (touch.clientY - 35) + 'px';
-        }
-
-        const elem = document.elementFromPoint(touch.clientX, touch.clientY);
-        const card = elem ? elem.closest('.vocab-target-card') : null;
-        if (card !== lastTargetCard) {
-          if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
-          if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
-            card.classList.add('drag-over');
-          }
-          lastTargetCard = card;
-        }
-      }, { passive: true });
-
-      chip.addEventListener('touchend', (e) => {
-        if (touchAvatar) {
-          touchAvatar.remove();
-          touchAvatar = null;
-        }
-
-        const targetsContainer = document.getElementById('vocab-targets');
-        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
-
-        if (lastTargetCard) {
-          lastTargetCard.classList.remove('drag-over');
-          lastTargetCard = null;
-        }
-
-        if (!touchMoved) {
-          draggedWordKey = null;
-          return;
-        }
-
-        const touch = e.changedTouches[0];
-        const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
-        const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
-        const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
-
-        if (targetCard && targetKey && !activeModalCard) {
-          processWordPlacement(key, targetKey, targetCard);
-        } else {
-          chip.classList.remove('dragging');
-          chip.style.opacity = '';
-          chip.style.visibility = '';
-        }
-        draggedWordKey = null;
-      });
-
-      chip.addEventListener('touchcancel', () => {
-        chip.classList.remove('dragging');
-        chip.style.opacity = '';
-        chip.style.visibility = '';
-        if (touchAvatar) {
-          touchAvatar.remove();
-          touchAvatar = null;
-        }
-        const targetsContainer = document.getElementById('vocab-targets');
-        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
-        if (lastTargetCard) {
-          lastTargetCard.classList.remove('drag-over');
-          lastTargetCard = null;
-        }
-        draggedWordKey = null;
-      });
+      // Touch-drag disabled on mobile in favor of tap-to-select to preserve native scrolling
     }
 
     // =========================================================

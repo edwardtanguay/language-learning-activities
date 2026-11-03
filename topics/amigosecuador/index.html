@@ -2005,6 +2005,25 @@
       opacity: 0;
       pointer-events: none;
     }
+
+    .mobile-only-inline {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .desktop-only-inline {
+        display: none !important;
+      }
+      .mobile-only-inline {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-wrap .image-thumb-title {
+        display: block !important;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -2141,7 +2160,7 @@
     <div class="section-instructions-box">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p>Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</p>
+          <p>Estas son imágenes de lugares y cosas mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span></p>
         </div>
       </div>
     </div>
@@ -2652,6 +2671,9 @@
 
     let completedVocab = [];
     let draggedWordKey = null;
+    let selectedWordKey = null;
+    let lastChipClickTime = 0;
+    let lastClickedChipKey = null;
     let activePlacedWordKey = null;
     let activeModalCard = null;
 
@@ -3695,15 +3717,31 @@
           chip.addEventListener('dragstart', handleDragStart);
           chip.addEventListener('dragend', handleDragEnd);
 
-          // Click opens hint popup
+          // Click / tap selection and double-tap hint popup
           chip.addEventListener('click', (e) => {
             e.stopPropagation();
             if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-            showWordHintModal(k);
-          });
+            const now = Date.now();
+            if (lastClickedChipKey === k && (now - lastChipClickTime < 350)) {
+              chip.classList.remove('selected');
+              selectedWordKey = null;
+              lastClickedChipKey = null;
+              showWordHintModal(k);
+              return;
+            }
+            lastChipClickTime = now;
+            lastClickedChipKey = k;
 
-          // Touch drag support
-          setupTouchDrag(chip, k);
+            if (selectedWordKey === k) {
+              chip.classList.remove('selected');
+              selectedWordKey = null;
+            } else {
+              const poolEl = document.getElementById('vocab-pool');
+              if (poolEl) poolEl.querySelectorAll('.vocab-chip.selected').forEach(c => c.classList.remove('selected'));
+              chip.classList.add('selected');
+              selectedWordKey = k;
+            }
+          });
           return chip;
         };
 
@@ -3907,7 +3945,23 @@
       activeModalCard = null;
     }
 
+    
+    document.addEventListener('click', (e) => {
+      if (selectedWordKey && !e.target.closest('.vocab-chip') && !e.target.closest('.vocab-target-card')) {
+        const chip = document.querySelector(`.vocab-chip[data-key="${selectedWordKey}"]`);
+        if (chip) chip.classList.remove('selected');
+        selectedWordKey = null;
+      }
+    });
     function handleTargetCardClick(card, targetKey, e) {
+      if (selectedWordKey && !card.classList.contains('state-wrong') && !card.classList.contains('state-correct')) {
+        const wordKey = selectedWordKey;
+        const chip = document.querySelector(`.vocab-chip[data-key="${wordKey}"]`);
+        if (chip) chip.classList.remove('selected');
+        selectedWordKey = null;
+        processWordPlacement(wordKey, targetKey, card);
+        return;
+      }
       if (card.classList.contains('state-wrong')) {
         safeDismiss(() => dismissWrongState(card), e);
         return;
@@ -4204,102 +4258,7 @@
     }
 
     function setupTouchDrag(chip, key) {
-      let touchMoved = false;
-      let touchAvatar = null;
-      let lastTargetCard = null;
-
-      chip.addEventListener('touchstart', (e) => {
-        if (activeModalCard) return;
-        touchMoved = false;
-        draggedWordKey = key;
-      }, { passive: true });
-
-      chip.addEventListener('touchmove', (e) => {
-        if (activeModalCard) return;
-        const touch = e.touches[0];
-        if (!touch) return;
-
-        if (!touchMoved) {
-          touchMoved = true;
-          chip.classList.add('dragging');
-          chip.style.opacity = '0';
-          chip.style.visibility = 'hidden';
-
-          const targetsContainer = document.getElementById('vocab-targets');
-          if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
-
-          touchAvatar = document.createElement('div');
-          touchAvatar.className = 'vocab-touch-avatar';
-          touchAvatar.textContent = chip.textContent;
-          document.body.appendChild(touchAvatar);
-        }
-
-        if (touchAvatar) {
-          touchAvatar.style.left = touch.clientX + 'px';
-          touchAvatar.style.top = (touch.clientY - 35) + 'px';
-        }
-
-        const elem = document.elementFromPoint(touch.clientX, touch.clientY);
-        const card = elem ? elem.closest('.vocab-target-card') : null;
-        if (card !== lastTargetCard) {
-          if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
-          if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
-            card.classList.add('drag-over');
-          }
-          lastTargetCard = card;
-        }
-      }, { passive: true });
-
-      chip.addEventListener('touchend', (e) => {
-        if (touchAvatar) {
-          touchAvatar.remove();
-          touchAvatar = null;
-        }
-
-        const targetsContainer = document.getElementById('vocab-targets');
-        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
-
-        if (lastTargetCard) {
-          lastTargetCard.classList.remove('drag-over');
-          lastTargetCard = null;
-        }
-
-        if (!touchMoved) {
-          draggedWordKey = null;
-          return;
-        }
-
-        const touch = e.changedTouches[0];
-        const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
-        const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
-        const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
-
-        if (targetCard && targetKey && !activeModalCard) {
-          processWordPlacement(key, targetKey, targetCard);
-        } else {
-          chip.classList.remove('dragging');
-          chip.style.opacity = '';
-          chip.style.visibility = '';
-        }
-        draggedWordKey = null;
-      });
-
-      chip.addEventListener('touchcancel', () => {
-        chip.classList.remove('dragging');
-        chip.style.opacity = '';
-        chip.style.visibility = '';
-        if (touchAvatar) {
-          touchAvatar.remove();
-          touchAvatar = null;
-        }
-        const targetsContainer = document.getElementById('vocab-targets');
-        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
-        if (lastTargetCard) {
-          lastTargetCard.classList.remove('drag-over');
-          lastTargetCard = null;
-        }
-        draggedWordKey = null;
-      });
+      // Touch-drag disabled on mobile in favor of tap-to-select to preserve native scrolling
     }
 
     // =========================================================

@@ -1910,6 +1910,25 @@
       opacity: 0;
       pointer-events: none;
     }
+
+    .mobile-only-inline {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .desktop-only-inline {
+        display: none !important;
+      }
+      .mobile-only-inline {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-wrap .image-thumb-title {
+        display: block !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2015,7 +2034,7 @@
     <div class="section-instructions-box">
       <div class="section-instructions-content">
         <div class="section-instructions-inner">
-          <p>Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</p>
+          <p>Estas son imágenes de lugares y cosas mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span></p>
         </div>
       </div>
     </div>
@@ -2043,9 +2062,10 @@
           <img src="images/es-historiaweb-angularreactvue.jpg" alt="Angular React Vue" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Angular React Vue</div>
         </div>
-        <div class="image-thumb-wrap" data-image-id="gitgithub" data-image-title="Git GitHub" onclick="handleImageCardClick(this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[]')">
+        <div class="image-thumb-wrap" data-image-id="gitgithub" data-image-title="Git GitHub" onclick="handleImageCardClick(this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[&quot;Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[&quot;Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.&quot;]')">
           <img src="images/es-historiaweb-gitgithub.jpg" alt="Git GitHub" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Git GitHub</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="htmlcssjavascript" data-image-title="HTML CSS JavaScript" onclick="handleImageCardClick(this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[&quot;Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.&quot;,&quot;¿Dónde aprendiste HTML, CSS y JavaScript?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[&quot;Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.&quot;,&quot;¿Dónde aprendiste HTML, CSS y JavaScript?&quot;]')">
           <img src="images/es-historiaweb-htmlcssjavascript.jpg" alt="HTML CSS JavaScript" class="image-thumb" loading="lazy">
@@ -2561,6 +2581,9 @@
 
     let completedVocab = [];
     let draggedWordKey = null;
+    let selectedWordKey = null;
+    let lastChipClickTime = 0;
+    let lastClickedChipKey = null;
     let activePlacedWordKey = null;
     let activeModalCard = null;
 
@@ -3009,15 +3032,31 @@
           chip.addEventListener('dragstart', handleDragStart);
           chip.addEventListener('dragend', handleDragEnd);
 
-          // Click opens hint popup
+          // Click / tap selection and double-tap hint popup
           chip.addEventListener('click', (e) => {
             e.stopPropagation();
             if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-            showWordHintModal(k);
-          });
+            const now = Date.now();
+            if (lastClickedChipKey === k && (now - lastChipClickTime < 350)) {
+              chip.classList.remove('selected');
+              selectedWordKey = null;
+              lastClickedChipKey = null;
+              showWordHintModal(k);
+              return;
+            }
+            lastChipClickTime = now;
+            lastClickedChipKey = k;
 
-          // Touch drag support
-          setupTouchDrag(chip, k);
+            if (selectedWordKey === k) {
+              chip.classList.remove('selected');
+              selectedWordKey = null;
+            } else {
+              const poolEl = document.getElementById('vocab-pool');
+              if (poolEl) poolEl.querySelectorAll('.vocab-chip.selected').forEach(c => c.classList.remove('selected'));
+              chip.classList.add('selected');
+              selectedWordKey = k;
+            }
+          });
           return chip;
         };
 
@@ -3221,7 +3260,23 @@
       activeModalCard = null;
     }
 
+    
+    document.addEventListener('click', (e) => {
+      if (selectedWordKey && !e.target.closest('.vocab-chip') && !e.target.closest('.vocab-target-card')) {
+        const chip = document.querySelector(`.vocab-chip[data-key="${selectedWordKey}"]`);
+        if (chip) chip.classList.remove('selected');
+        selectedWordKey = null;
+      }
+    });
     function handleTargetCardClick(card, targetKey, e) {
+      if (selectedWordKey && !card.classList.contains('state-wrong') && !card.classList.contains('state-correct')) {
+        const wordKey = selectedWordKey;
+        const chip = document.querySelector(`.vocab-chip[data-key="${wordKey}"]`);
+        if (chip) chip.classList.remove('selected');
+        selectedWordKey = null;
+        processWordPlacement(wordKey, targetKey, card);
+        return;
+      }
       if (card.classList.contains('state-wrong')) {
         safeDismiss(() => dismissWrongState(card), e);
         return;
@@ -3499,110 +3554,7 @@
 
     // Touch Drag support for mobile
     function setupTouchDrag(chip, key) {
-      let touchMoved = false;
-      let touchAvatar = null;
-      let startX = 0;
-      let startY = 0;
-      let lastTargetCard = null;
-
-      chip.addEventListener('touchstart', (e) => {
-        if (activeModalCard) return;
-        if (e.touches.length !== 1) return;
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        touchMoved = false;
-        draggedWordKey = key;
-      }, { passive: true });
-
-      chip.addEventListener('touchmove', (e) => {
-        if (!draggedWordKey || activeModalCard) return;
-        if (e.touches.length !== 1) return;
-        const touch = e.touches[0];
-        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
-
-        if (dist > 8) {
-          touchMoved = true;
-          if (!touchAvatar) {
-            chip.classList.add('dragging');
-            touchAvatar = document.createElement('div');
-            touchAvatar.className = 'vocab-touch-avatar';
-            touchAvatar.textContent = vocabData[key].word;
-            document.body.appendChild(touchAvatar);
-
-            const targetsContainer = document.getElementById('vocab-targets');
-            if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
-          }
-
-          touchAvatar.style.left = touch.clientX + 'px';
-          touchAvatar.style.top = touch.clientY + 'px';
-
-          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
-          const targetCard = elem ? elem.closest('.vocab-target-card') : null;
-
-          if (lastTargetCard && lastTargetCard !== targetCard) {
-            lastTargetCard.classList.remove('drag-over');
-          }
-          if (targetCard && !targetCard.classList.contains('state-wrong') && !targetCard.classList.contains('state-correct')) {
-            targetCard.classList.add('drag-over');
-            lastTargetCard = targetCard;
-          } else {
-            lastTargetCard = null;
-          }
-        }
-      }, { passive: true });
-
-      chip.addEventListener('touchend', (e) => {
-        if (!draggedWordKey || activeModalCard) return;
-        if (touchAvatar) {
-          touchAvatar.remove();
-          touchAvatar = null;
-        }
-
-        const targetsContainer = document.getElementById('vocab-targets');
-        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
-
-        if (lastTargetCard) {
-          lastTargetCard.classList.remove('drag-over');
-          lastTargetCard = null;
-        }
-
-        if (!touchMoved) {
-          draggedWordKey = null;
-          return;
-        }
-
-        const touch = e.changedTouches[0];
-        const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
-        const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
-        const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
-
-        if (targetCard && targetKey && !activeModalCard) {
-          processWordPlacement(key, targetKey, targetCard);
-        } else {
-          chip.classList.remove('dragging');
-          chip.style.opacity = '';
-          chip.style.visibility = '';
-        }
-        draggedWordKey = null;
-      });
-
-      chip.addEventListener('touchcancel', () => {
-        chip.classList.remove('dragging');
-        chip.style.opacity = '';
-        chip.style.visibility = '';
-        if (touchAvatar) {
-          touchAvatar.remove();
-          touchAvatar = null;
-        }
-        const targetsContainer = document.getElementById('vocab-targets');
-        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
-        if (lastTargetCard) {
-          lastTargetCard.classList.remove('drag-over');
-          lastTargetCard = null;
-        }
-        draggedWordKey = null;
-      });
+      // Touch-drag disabled on mobile in favor of tap-to-select to preserve native scrolling
     }
 
     // =========================================================

@@ -211,9 +211,9 @@ const SECTION_INSTRUCTIONS_TEXT_I18N = {
     de: 'Dies sind allgemeine Fragen zum Text, die vor dem lauten Vorlesen mit der Lehrkraft geklärt werden können.'
   },
   images: {
-    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.',
-    en: 'These are images of places and things mentioned in the text. Drag and drop the labels onto the correct photos as you discuss them with your professor.',
-    de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.'
+    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span>',
+    en: 'These are images of places and things mentioned in the text. <span class="desktop-only-inline">Drag and drop the labels onto the correct photos as you discuss them with your professor.</span><span class="mobile-only-inline">Tap any image to enlarge it and discuss it with your professor.</span>',
+    de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. <span class="desktop-only-inline">Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.</span><span class="mobile-only-inline">Tippe auf ein beliebiges Bild, um es zu vergrößern und mit deiner Lehrkraft zu besprechen.</span>'
   },
   imagesDesktop: {
     es: 'Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.',
@@ -1149,6 +1149,25 @@ const SECTION_IMAGES_CSS = `
     .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
       opacity: 0;
       pointer-events: none;
+    }
+
+    .mobile-only-inline {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .desktop-only-inline {
+        display: none !important;
+      }
+      .mobile-only-inline {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-wrap .image-thumb-title {
+        display: block !important;
+      }
     }
 `;
 

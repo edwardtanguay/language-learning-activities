@@ -1,2 +1,8 @@
 ## general
 
+- on mobile, for all activitities, for images, don't show show the drag and drop at all, just show it as if the drag and drop have all been placed correctly
+
+- on mobiile for vocabulary, if the user happens to click on a word label in order to scroll the page, then don't enlarge the label at all or allow it to be dragged, it should just scroll the page
+
+- add the above two items to the agents file and skill
+

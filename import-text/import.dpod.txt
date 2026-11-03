@@ -10,6 +10,9 @@ ajax: Así, podrías crear un botón que envía un texto del usuario a una URL, 
 jquery: jQuery simplificó enormemente la sintaxis de JavaScript, lo que hace que sea mucho más fácil de leer y escribir.
 jquery: Hizo que AJAX, CSS y las animaciones fueran sencillos.
 jquery: Convertía los elementos HTML en objetos con propiedades y permitía encadenarlos (chaining).
+github: Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.
+respons: Algo que la gente olvida es que, hasta alrededor de 2008, solo creábamos sitios web para pantallas de computadora.
+
 
 ## subjuntivo
 
