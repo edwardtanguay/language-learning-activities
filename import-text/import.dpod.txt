@@ -12,7 +12,10 @@ jquery: Hizo que AJAX, CSS y las animaciones fueran sencillos.
 jquery: Convertía los elementos HTML en objetos con propiedades y permitía encadenarlos (chaining).
 github: Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.
 respons: Algo que la gente olvida es que, hasta alrededor de 2008, solo creábamos sitios web para pantallas de computadora.
-
+angular: Con qué frameworks has creado sitios web?
+node: Con Node, puedes programar en JavaScript tanto en el frontend como en el backend.
+typescript: TypeScript convirtió a JavaScript en un lenguaje profesional y de nivel empresarial.
+intel: La IA ha transformado por completo el desarrollo de software; el trabajo de un desarrollador es ahora totalmente distinto.
 
 ## subjuntivo
 
