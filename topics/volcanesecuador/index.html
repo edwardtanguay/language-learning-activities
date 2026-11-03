@@ -2028,8 +2028,9 @@
         text-align: left;
       }
       .stamp-badge {
-        width: 100%;
-        margin: 4px auto 0 auto;
+        width: auto;
+        max-width: max-content;
+        margin: 6px auto 0 auto;
         order: 3;
         text-align: center;
       }
@@ -2452,6 +2453,11 @@
     };
 
     // =========================================================
+
+    
+
+    
+
 
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
@@ -4139,26 +4145,15 @@
         localStorage.removeItem(STORAGE_KEY);
       } catch (e) {}
 
-      const optionItems = document.querySelectorAll('.option-item');
-      optionItems.forEach(item => item.classList.remove('selected'));
-
-      const cards = document.querySelectorAll('.question-card');
-      cards.forEach(c => {
-        c.classList.remove('answered', 'correct', 'incorrect');
-      });
-
-      solvedImageIds = [];
-      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
-
-      const feedbacks = document.querySelectorAll('.feedback-box');
-      feedbacks.forEach(f => {
-        f.textContent = '';
-        f.className = 'feedback-box';
-      });
-
-      hideModal();
-      renderVocabulary();
-      renderReadingBookmarks();
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+      if (window.location.hash) {
+        window.location.replace(window.location.pathname + window.location.search);
+      } else {
+        window.location.reload();
+      }
     }
 
     // =========================================================

@@ -781,8 +781,9 @@ const TOPIC_HEADER_ICON_CSS = `
         text-align: left;
       }
       .stamp-badge {
-        width: 100%;
-        margin: 4px auto 0 auto;
+        width: auto;
+        max-width: max-content;
+        margin: 6px auto 0 auto;
         order: 3;
         text-align: center;
       }
@@ -1899,7 +1900,7 @@ function ensureLightboxAssets(html) {
   out = out.replace(/<head>\s*<script>[\s\S]*?<\/script>/i, `<head>\n  ${redirectScript}`);
 
   // 2. Ensure CSS contains the latest images & lightbox CSS
-  const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===)/;
+  const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===|\s*\/\* Topic Header Icon)/;
   if (imagesCssRegex.test(out)) {
     out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
   } else if (!out.includes('.image-lightbox-overlay')) {
@@ -2022,10 +2023,15 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   // 1. Topic Header Icon synchronization & Clickable Header Navigation
   if (activity.iconFile) {
     if (!html.includes('.topic-header-icon-wrap')) {
-      html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
+      const imgPos = html.search(/\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX/);
+      if (imgPos !== -1) {
+        html = html.slice(0, imgPos) + TOPIC_HEADER_ICON_CSS + '\n    ' + html.slice(imgPos);
+      } else {
+        html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
+      }
     } else {
       html = html.replace(
-        /\/\* Topic Header Icon[\s\S]*?(?=\s*<\/style>)/,
+        /\/\* Topic Header Icon[\s\S]*?(?=\s*<\/style>|\s*\/\* ===)/,
         TOPIC_HEADER_ICON_CSS.trim()
       );
     }
