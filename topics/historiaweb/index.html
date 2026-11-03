@@ -1,0 +1,4455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>
+    if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La historia del desarrollo web: Memorias de un programador | Actividad de Español B1</title>
+  <meta name="description" content="Un recorrido testimonial y ameno por los diez hitos técnicos más trascendentales en la historia de la web, relatados por un programador veterano para estudiantes de nivel B1.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       1970s SCHOOL HANDOUT DESIGN SYSTEM
+       Simple, clean, nostalgic, paper-and-ink aesthetic
+       ========================================================= */
+    :root {
+      --paper-bg: #f9f6ef;
+      --paper-sheet: #fffdf9;
+      --ink-main: #22201e;
+      --ink-muted: #5e5953;
+      --ink-border: #d5cebf;
+      --ink-rule: #d5cebf;
+      --stamp-blue: #1d4373;
+      --lang-color: #be185d; /* Standard Spanish (es) */
+      --correct-green: #235c34;
+      --correct-bg: #eef7ee;
+      --wrong-red: #8f2a24;
+      --wrong-bg: #faeef0;
+      --highlight: #f2e9cb;
+      --font-typewriter: "Courier Prime", "Courier New", Courier, monospace;
+      --font-body: "Lora", Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    html, body {
+      touch-action: manipulation;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      color: var(--ink-main);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.65;
+      padding: 24px 16px;
+      background-image: radial-gradient(var(--ink-rule) 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    /* Top utility bar */
+    .utility-bar {
+      max-width: 860px;
+      margin: 0 auto 16px auto;
+      padding-top: 14px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+    }
+
+    .back-link {
+      color: var(--stamp-blue);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.1s ease, transform 0.1s ease;
+    }
+
+    .back-link:active {
+      opacity: 0.65;
+      transform: scale(0.97);
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .back-arrow {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.8;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Main Handout Container - Paper sheet with realistic desk drop-shadow */
+    .handout-sheet {
+      max-width: 860px;
+      margin: 0 auto;
+      background-color: var(--paper-sheet);
+      border: 1px solid #e8e2d5;
+      box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04);
+      border-radius: 3px;
+      padding: 38px 46px;
+      position: relative;
+    }
+
+    /* Worksheet Header */
+    .worksheet-header {
+      border: none;
+      padding: 0;
+      margin-bottom: 24px;
+      background: transparent;
+      font-family: var(--font-typewriter);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
+    .handout-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      font-family: var(--font-typewriter);
+      color: var(--ink-main);
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+
+    .handout-subtitle {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    .stamp-badge {
+      border: 3px solid var(--lang-color);
+      color: var(--lang-color);
+      padding: 6px 14px;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      transform: rotate(-2deg);
+      display: inline-block;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Section Jump Navigation */
+    .jump-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 18px auto 22px auto;
+      flex-wrap: wrap;
+    }
+
+    .jump-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+
+    .jump-num:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-num.active {
+      background-color: #c8beaa;
+      color: var(--ink-main);
+    }
+
+    .jump-top-btn,
+    .jump-return-btn {
+      background: var(--highlight);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+      flex-shrink: 0;
+    }
+
+    /* Stationary Top button smooth collapse/expand based on scrollY > 30 */
+    .jump-nav .jump-top-btn {
+      width: 0;
+      height: 32px;
+      opacity: 0;
+      transform: scale(0.6);
+      pointer-events: none;
+      overflow: hidden;
+      margin-right: -14px;
+      border: 0 solid var(--ink-rule);
+      transition: width 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.18s ease,
+                  transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  margin-right 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-width 0.18s ease;
+    }
+
+    .jump-nav .jump-top-btn.show {
+      width: 32px;
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      margin-right: 0;
+      border-width: 1px;
+    }
+
+    .jump-return-btn {
+      display: none;
+    }
+
+    .jump-return-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-top-btn:hover,
+    .jump-return-btn:hover {
+      background-color: #e6dbb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-bookmark-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #e6e0d2;
+      color: var(--lang-color);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      padding: 0;
+      transition: background-color 0.15s, transform 0.15s, opacity 0.2s, box-shadow 0.15s;
+      flex-shrink: 0;
+    }
+
+    .jump-bookmark-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-bookmark-btn:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-bookmark-btn svg,
+    .jump-top-btn svg,
+    .jump-return-btn svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
+    /* Sticky Section Jump Pill & Return to Reading */
+    .sticky-jump-nav {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translate3d(-50%, -150%, 0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 880;
+      background: rgba(255, 253, 249, 0.96);
+      border: 1px solid var(--ink-border);
+      box-shadow: 0 4px 16px rgba(45, 40, 35, 0.14);
+      border-radius: 999px;
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .sticky-jump-nav.visible {
+      transform: translate3d(-50%, 0, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sticky-jump-nav .jump-num,
+    .sticky-jump-nav .jump-top-btn,
+    .sticky-jump-nav .jump-return-btn,
+    .sticky-jump-nav .jump-bookmark-btn {
+      width: 27px;
+      height: 27px;
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      margin-right: 0;
+      border-width: 1px;
+    }
+
+    .sticky-jump-nav .jump-num {
+      font-size: 14px;
+    }
+
+    .sticky-jump-nav .jump-bookmark-btn svg,
+    .sticky-jump-nav .jump-top-btn svg,
+    .sticky-jump-nav .jump-return-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Handout Sections */
+    .section-title {
+      font-family: var(--font-typewriter);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--ink-rule);
+      padding-bottom: 8px;
+      margin: 36px 0 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      scroll-margin-top: 62px;
+    }
+
+    .section-title-link {
+      color: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .section-title-link:hover {
+      opacity: 0.8;
+    }
+
+    .section-instructions-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--ink-main);
+      padding: 10px 16px;
+      margin: -6px 0 18px 0;
+    }
+
+    .section-instructions-content {
+      overflow: hidden;
+    }
+
+    .section-instructions-inner p {
+      margin: 0;
+      text-align: left;
+    }
+
+    .section-action-hint {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--ink-muted);
+      opacity: 0.65;
+    }
+
+    .section-title .section-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      margin-right: 0;
+      flex-shrink: 0;
+    }
+
+    /* Instructions callout (Roll-out / Roll-up) */
+    .instructions-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      padding: 9px 16px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: padding 0.25s ease;
+    }
+
+    .instructions-box.expanded {
+      padding: 12px 16px;
+    }
+
+    .instructions-heading {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-bottom: 0;
+      color: var(--ink-main);
+      transition: margin-bottom 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-heading {
+      margin-bottom: 8px;
+    }
+
+    .instructions-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .instructions-inner {
+      overflow: hidden;
+    }
+
+    .instructions-intro {
+      margin: 10px 0 16px 0;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-main);
+      text-align: left;
+    }
+
+    .instructions-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    .instructions-col {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink-main);
+    }
+
+    .instructions-col-title {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      color: var(--stamp-blue);
+      border-bottom: 1px dashed var(--ink-rule);
+      padding-bottom: 4px;
+    }
+
+    .instructions-col ul {
+      padding-left: 18px;
+      margin: 0;
+      list-style-type: disc;
+    }
+
+    .instructions-col li {
+      margin-bottom: 10px;
+    }
+
+    .instructions-col li:last-child {
+      margin-bottom: 0;
+    }
+
+    .instructions-col a {
+      color: var(--ink-main);
+      text-decoration: underline;
+    }
+
+    .instructions-col a:hover {
+      color: var(--stamp-blue);
+    }
+
+    /* Reading Passage */
+    .reading-content p {
+      margin-bottom: 16px;
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+
+    .vocab-in-text {
+      background-color: rgba(242, 233, 203, 0.55);
+      padding: 0 2px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .reading-word.has-bookmark {
+      white-space: nowrap;
+    }
+
+    .reading-bookmark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lang-color);
+      cursor: pointer;
+      margin-right: 3px;
+      vertical-align: -2px;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .reading-bookmark:hover {
+      transform: scale(1.18);
+      opacity: 0.85;
+    }
+
+    .reading-bookmark svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .region-card {
+      margin-bottom: 22px;
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .region-card h3 {
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+      margin-bottom: 8px;
+      text-transform: none;
+    }
+
+    /* =========================================================
+       SECTION 1: VOCABULARIO (DRAG / DROP & HINT EXERCISE)
+       ========================================================= */
+    .vocab-container {
+      margin-top: 14px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .vocab-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 580px;
+      margin: 0 auto 16px auto;
+      gap: 6px;
+      min-height: 32px;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .vocab-pool-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-chip {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 3px 8px;
+      cursor: grab;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .vocab-chip:active {
+      cursor: grabbing;
+    }
+
+    .vocab-chip.selected {
+      border-color: var(--stamp-blue);
+      background-color: var(--highlight);
+      box-shadow: 0 0 0 2px var(--stamp-blue);
+    }
+
+    .vocab-chip.dragging {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    .vocab-targets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) * {
+      pointer-events: none;
+    }
+
+    .vocab-drag-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1.5px solid var(--stamp-blue);
+      box-shadow: 0 6px 18px rgba(45, 40, 35, 0.22);
+      padding: 4px 10px;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .vocab-touch-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -100%);
+      font-family: var(--font-typewriter);
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 2px solid var(--stamp-blue);
+      box-shadow: 0 10px 28px rgba(45, 40, 35, 0.25);
+      padding: 6px 14px;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .vocab-target-card {
+      background: var(--paper-bg);
+      border: 1px dashed var(--ink-rule);
+      border-radius: 0;
+      padding: 8px 12px;
+      transition: background-color 0.15s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .vocab-target-card.drag-over {
+      background-color: #e4dfd5 !important;
+      box-shadow: none !important;
+    }
+
+    .vocab-target-def {
+      font-size: 14px;
+      line-height: 1.35;
+      color: var(--ink-main);
+    }
+
+    /* Wrong Drop State */
+    .vocab-target-card.state-wrong {
+      background: #fbe4e4 !important;
+      border: 1px solid #eba8a8 !important;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
+      cursor: pointer;
+      padding: 18px 18px !important;
+    }
+
+    .wrong-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wrong-icon {
+      width: 18px;
+      height: 18px;
+      stroke: var(--wrong-red);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wrong-def-text {
+      font-size: 14px;
+      color: var(--wrong-red);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .wrong-hint-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.65);
+      padding: 8px 10px;
+      border-radius: 2px;
+    }
+
+    .wrong-hint-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wrong-hint-text {
+      font-size: 13.5px;
+      color: #92400e;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* Correct Drop Modal / Boxed Dictionary Card */
+    .vocab-target-card.state-correct {
+      background: #e3f5e5 !important;
+      border: 1px solid #a3d9a8 !important;
+      padding: 18px 18px !important;
+      cursor: pointer;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
+    }
+
+    .dict-entry-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dict-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(35, 92, 52, 0.25);
+      padding-bottom: 6px;
+    }
+
+    .dict-word-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dict-word {
+      font-family: var(--font-typewriter);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--correct-green);
+      letter-spacing: 0.3px;
+    }
+
+    .dict-pos {
+      font-size: 12.5px;
+      font-style: italic;
+      color: var(--ink-muted);
+    }
+
+    .lookup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--stamp-blue);
+      text-decoration: none;
+      padding: 2px;
+      border-radius: 2px;
+      transition: transform 0.12s, color 0.12s;
+    }
+
+    .lookup-btn:hover {
+      transform: scale(1.15);
+      color: #0c2d54;
+    }
+
+    .lookup-icon {
+      width: 15px;
+      height: 15px;
+      stroke-width: 2.3;
+    }
+
+    .dict-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .dict-check-icon {
+      width: 17px;
+      height: 17px;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .dict-def-text {
+      font-size: 14px;
+      color: var(--ink-main);
+      line-height: 1.4;
+    }
+
+    .dict-sentence {
+      font-size: 13.5px;
+      font-style: italic;
+      color: var(--ink-muted);
+      margin-top: 4px;
+      padding-left: 25px;
+      line-height: 1.4;
+      border-left: 2px solid rgba(35, 92, 52, 0.35);
+    }
+
+    /* Completed Words Pool */
+    .vocab-completed-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin: 14px auto 0 auto;
+      max-width: 580px;
+    }
+
+    .vocab-completed-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-completed-pill {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1px solid #a3d9a8;
+      border-radius: 0;
+      padding: 3px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background-color 0.12s, transform 0.12s;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .vocab-completed-pill:hover {
+      background-color: #eaf6eb;
+      transform: translateY(-1px);
+    }
+
+    .vocab-completed-pill .check-icon {
+      width: 13px;
+      height: 13px;
+      stroke: var(--correct-green);
+      stroke-width: 3.2;
+    }
+
+    .vocab-completed-detail-area {
+      max-width: 580px;
+      margin: 14px auto 10px auto;
+    }
+
+    /* Backdrop overlay for elevated popups */
+    .vocab-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(35, 30, 25, 0.32);
+      backdrop-filter: blur(1.5px);
+      z-index: 40;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .vocab-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Hint popup modal */
+    .vocab-hint-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      box-shadow: 0 12px 36px rgba(45, 40, 35, 0.25);
+      padding: 18px 18px;
+      z-index: 60;
+      max-width: 440px;
+      width: 90%;
+      border-radius: 0;
+    }
+
+    .hint-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .hint-lightbulb-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .hint-text {
+      font-size: 14px;
+      color: var(--ink-main);
+      line-height: 1.45;
+    }
+
+    /* =========================================================
+       SECTION 3: COMPRENSIÓN (MULTIPLE CHOICE)
+       ========================================================= */
+    .quiz-container {
+      margin-top: 14px;
+      margin-bottom: 24px;
+    }
+
+    .question-card {
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin-bottom: 28px;
+    }
+
+    .question-prompt {
+      font-family: var(--font-body);
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--ink-main);
+      margin-bottom: 12px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .question-prompt .q-num {
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+      margin-right: 6px;
+      color: var(--stamp-blue);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-left: 28px;
+    }
+
+    .option-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      padding: 4px 6px;
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      color: var(--ink-main);
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      border-radius: 2px;
+      transition: opacity 0.12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option-item:hover {
+      opacity: 0.82;
+    }
+
+    .option-item .opt-letter {
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+      color: var(--ink-main);
+      flex-shrink: 0;
+    }
+
+    .option-item.selected .opt-letter {
+      color: var(--stamp-blue);
+      font-weight: 800;
+    }
+
+    .option-item .opt-text {
+      text-align: left;
+      flex: 1;
+      line-height: 1.45;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      margin-left: 20px;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .feedback-box.show {
+      display: flex;
+    }
+
+    .feedback-box.correct-text {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+      color: var(--correct-green);
+    }
+
+    .feedback-box.wrong-text {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+      color: var(--wrong-red);
+    }
+
+    .feedback-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feedback-content {
+      flex: 1;
+      text-align: left;
+      font-family: var(--font-body);
+      color: var(--ink-main);
+    }
+
+    /* =========================================================
+       SECTION 4: PREGUNTAS ABIERTAS (DISCUSSION)
+       ========================================================= */
+    .discussion-container {
+      margin-top: 14px;
+      margin-bottom: 28px;
+    }
+
+    .open-questions-list {
+      list-style-type: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .open-question-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-main);
+      text-align: left;
+    }
+
+    .open-q-num {
+      font-family: var(--font-typewriter);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .open-q-text {
+      flex: 1;
+    }
+
+    .question-hint-wrap {
+      white-space: nowrap;
+    }
+
+    .question-hint-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #d97706;
+      text-decoration: none;
+      vertical-align: -2px;
+      margin-left: 2px;
+      transition: transform 0.12s;
+    }
+
+    .question-hint-btn:hover {
+      transform: scale(1.15);
+    }
+
+    .question-hint-icon {
+      width: 17px;
+      height: 17px;
+    }
+
+    /* =========================================================
+       BOTTOM ACTIONS BAR & FOOTER
+       ========================================================= */
+    .bottom-actions-bar {
+      margin-top: 36px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid var(--ink-rule);
+      border-bottom: 1px solid var(--ink-rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+    }
+
+    .reset-answers-btn {
+      background: transparent;
+      border: 1px dashed var(--ink-rule);
+      color: var(--ink-muted);
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background-color 0.12s, color 0.12s, border-color 0.12s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .reset-answers-btn:hover {
+      background: var(--paper-bg);
+      color: var(--ink-main);
+      border-color: var(--ink-muted);
+    }
+
+    .reset-confirm-box {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .reset-confirm-btn {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      padding: 6px 10px 4px 10px;
+      cursor: pointer;
+      color: var(--ink-main);
+      border-radius: 2px;
+      line-height: 1;
+    }
+
+    .reset-confirm-btn.danger {
+      border-color: #eba8a8;
+      background: #fbe4e4;
+      color: var(--wrong-red);
+      font-weight: 700;
+    }
+
+    .site-footer {
+      max-width: 860px;
+      margin: 22px auto 0 auto;
+      text-align: center;
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .site-footer a {
+      color: var(--stamp-blue);
+      text-decoration: underline;
+    }
+
+    .site-footer a:hover {
+      color: var(--ink-main);
+    }
+
+    .footer-dot {
+      color: var(--ink-rule);
+    }
+
+    /* Mobile Page Whoosh Transitions */
+    @keyframes whooshInRight {
+      from { transform: translate3d(105vw, 0, 0); }
+      to { transform: translate3d(0, 0, 0); }
+    }
+    @keyframes whooshOutRight {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(105vw, 0, 0); }
+    }
+    .page-slide-in-right {
+      animation: whooshInRight 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .page-slide-out-right {
+      animation: whooshOutRight 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 680px) {
+      body {
+        padding: 0 8px 12px 8px;
+        font-size: 16px;
+      }
+
+      .utility-bar {
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 24px 0 14px 0;
+      }
+
+      .handout-sheet {
+        padding: 22px 18px;
+      }
+
+      .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .handout-title-group h1 {
+        font-size: 21px;
+        line-height: 1.15;
+      }
+
+      .stamp-badge {
+        font-size: 15px;
+        padding: 4px 10px;
+        margin: 4px auto 0 auto;
+        order: 3;
+      }
+
+      .handout-subtitle {
+        text-align: center;
+        font-size: 14.5px;
+        margin: 12px 0 16px 0;
+      }
+
+      .instructions-heading {
+        text-align: center;
+      }
+
+      .instructions-columns {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .section-title {
+        font-size: 15px;
+        flex-wrap: nowrap;
+      }
+
+      .hide-mobile {
+        display: none;
+      }
+
+      .vocab-targets {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .vocab-target-card {
+        padding: 6px 10px;
+      }
+
+      .vocab-target-def {
+        font-size: 12.5px;
+      }
+
+      .options-list {
+        padding-left: 24px;
+      }
+
+      .bottom-actions-bar {
+        flex-direction: column;
+        gap: 14px;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .bottom-actions-bar .reset-answers-btn {
+        padding: 0 10px;
+      }
+
+      .site-footer {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .footer-dot {
+        display: none;
+      }
+    }
+  
+    /* =========================================================
+       IMAGES & FULLSCREEN LIGHTBOX
+       ========================================================= */
+    .images-section {
+      margin-top: 18px;
+      margin-bottom: 24px;
+    }
+
+    .image-labels-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin: 4px 0 16px 0;
+      padding: 10px;
+      background: rgba(230, 224, 210, 0.4);
+      border: 1px dashed var(--ink-rule);
+      box-sizing: border-box;
+      min-height: 44px;
+    }
+
+    .image-label-chip {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 5px 10px 3px 10px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      box-shadow: 0 1px 3px rgba(45, 40, 35, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      line-height: 1.15;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      touch-action: manipulation;
+    }
+
+    .image-label-chip:focus {
+      outline: none;
+    }
+
+    .image-label-chip:focus-visible {
+      outline: 1px dashed var(--ink-rule);
+      outline-offset: 1px;
+    }
+
+    .image-label-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue, #1d4ed8);
+    }
+
+    .image-label-chip.is-dragging {
+      cursor: grabbing;
+      opacity: 0.4;
+    }
+
+    .image-label-chip.is-selected {
+      background-color: var(--highlight);
+      border-color: var(--stamp-blue, #1d4ed8);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.25);
+    }
+
+    .image-label-chip.is-hidden {
+      display: none !important;
+    }
+
+    .images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-thumb-wrap {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      padding: 4px;
+      border-radius: 2px;
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.06);
+      cursor: zoom-in;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      display: inline-flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-thumb-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue);
+    }
+
+    .image-thumb-wrap.image-drop-hover {
+      background-color: #e4dfd5 !important;
+      border-color: var(--stamp-blue, #1d4ed8) !important;
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.3) !important;
+    }
+
+    .image-thumb {
+      height: 150px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 1px;
+      pointer-events: none;
+    }
+
+    .image-thumb-title {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      background: rgba(244, 239, 228, 0.92);
+      border-top: 1px solid rgba(138, 128, 112, 0.3);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px 6px;
+      line-height: 1.2;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      backdrop-filter: blur(2px);
+    }
+
+    .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+      display: none !important;
+    }
+
+    .image-thumb-wrap.is-solved .image-thumb-title {
+      display: block !important;
+    }
+
+    /* Thumbnail Question/Statement Badges */
+    .image-thumb-questions {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .image-thumb-q-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+      pointer-events: none;
+    }
+
+    .image-thumb-q-badge svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      pointer-events: none;
+    }
+
+    .image-lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(24, 22, 20, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: zoom-out;
+      touch-action: none;
+    }
+
+    .image-lightbox-overlay.active {
+      display: flex;
+    }
+
+    .image-lightbox-overlay.is-zoomed {
+      cursor: grab;
+    }
+
+    .image-lightbox-overlay.is-panning {
+      cursor: grabbing;
+    }
+
+    .image-lightbox-stage {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      max-width: 94vw;
+      max-height: 92vh;
+      position: relative;
+    }
+
+    .image-lightbox-img-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+      max-width: 94vw;
+      max-height: 86vh;
+    }
+
+    .image-lightbox-img {
+      max-width: 94vw;
+      max-height: 86vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      transform-origin: center center;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      display: block;
+      cursor: pointer;
+    }
+
+    /* Lightbox Questions List Overlay in lower-left */
+    .image-lightbox-questions {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: calc(100% - 24px);
+      z-index: 5;
+      pointer-events: auto;
+      transition: opacity 0.2s ease;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-questions {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .image-lightbox-q-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(24, 22, 20, 0.82);
+      color: #fffdf9;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: left;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+      max-width: fit-content;
+    }
+
+    .image-lightbox-q-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      line-height: 1;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .image-lightbox-q-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .image-lightbox-q-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .image-lightbox-q-pill::selection,
+    .image-lightbox-q-text::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
+    }
+
+    .image-lightbox-caption {
+      margin-top: 10px;
+      font-family: var(--font-typewriter);
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      color: var(--ink-main);
+      background: rgba(244, 239, 228, 0.92);
+      border: 1px solid rgba(138, 128, 112, 0.3);
+      border-radius: 3px;
+      padding: 6px 14px;
+      text-align: right;
+      align-self: flex-end;
+      line-height: 1.2;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      transition: opacity 0.2s ease;
+      pointer-events: auto;
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .image-lightbox-caption::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
+    }
+
+    @keyframes label-sparkle {
+      0% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+      35% {
+        box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 0 0 6px rgba(234, 179, 8, 0.9);
+        border-color: rgba(250, 204, 21, 0.85);
+        background: rgba(254, 249, 215, 0.98);
+        transform: scale(1.03);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+    }
+
+    .image-lightbox-caption.sparkle {
+      animation: label-sparkle 0.85s ease-out;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Backdrop overlay for elevated popups -->
+  <div class="vocab-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
+
+<!-- Fullscreen Image Lightbox -->
+  <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
+    <div class="image-lightbox-stage" id="image-lightbox-stage">
+      <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
+        <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+        <div class="image-lightbox-questions" id="image-lightbox-questions"></div>
+      </div>
+      <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Utility Nav -->
+  <div class="utility-bar">
+    <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
+      <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>Índice de Actividades</span>
+    </a>
+  </div>
+
+  <!-- Handout Sheet -->
+  <main class="handout-sheet">
+
+    <!-- Header -->
+    <header class="worksheet-header">
+      <div class="header-top">
+        <div class="handout-title-group">
+          <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">La historia del desarrollo web: Memorias de un programador</h1>
+        </div>
+        <div class="stamp-badge">Español B1</div>
+      </div>
+      <p class="handout-subtitle">Un recorrido en primera persona por los diez hitos técnicos que transformaron la web: desde las páginas estáticas hasta la Inteligencia Artificial</p>
+
+      <!-- Section Jump Navigation (paridad 1:1 con el menú flotante) -->
+      <nav class="jump-nav" aria-label="Navegación de secciones">
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
+      </nav>
+    </header>
+
+    <!-- Instructions (Roll-out / Roll-up) -->
+    <div class="instructions-box" id="instructions-box" onclick="toggleInstructions(event)" title="Clic para desplegar o cerrar las instrucciones" role="region" aria-expanded="false" tabindex="0">
+      <div class="instructions-heading">INSTRUCCIONES</div>
+      <div class="instructions-content">
+        <div class="instructions-inner">
+          <p class="instructions-intro">
+            Este método de aprendizaje de idiomas está sumamente centrado en ti como estudiante, lo que significa que para ti como profesor no se requiere ninguna preparación previa. Esto es perfecto para intercambios lingüísticos (tándem) o plataformas como Preply o italki, donde a menudo enseñas como una actividad secundaria y puedes tener decenas de estudiantes. Tú como estudiante utilizas la IA para crear actividades interactivas en las que trabajas por tu cuenta antes de la clase y luego junto con tu profesor durante la sesión, donde el enfoque principal es la conversación. Ambos eligen juntos los temas de las actividades en función de intereses compartidos que resulten enriquecedores para los dos.
+          </p>
+          <div class="instructions-columns">
+            <div class="instructions-col">
+              <div class="instructions-col-title">Profesor</div>
+              <ul>
+                <li>Aunque no necesitas ninguna preparación previa por tu parte, puedes ayudar a tu estudiante durante la clase de muchas maneras.</li>
+                <li>Lleva una lista de los errores que cometa tu estudiante durante la clase y envíasela después. Puede ser útil corregirle de vez en cuando durante la conversación en vivo, pero contar con una lista de errores después de clase, cuando tiene tiempo para investigar, organizar y reflexionar sobre ellos, le será de gran utilidad para superarlos con el tiempo.</li>
+                <li>Interactúa constantemente con tu estudiante: pídele que aclare lo que no esté claro, comparte tus propias historias y opiniones, interrúmpele, hazle preguntas, desafía sus respuestas y debate los temas a fondo. Prefiere preguntas con «cómo» y «por qué» sobre preguntas con «qué», «cuándo» o de «sí/no», las cuales obligan a dar respuestas más largas y profundas.</li>
+                <li>El objetivo es mantener el porcentaje de habla de estudiante/profesor en un 50%/50%. La plataforma de video de Preply reporta esta estadística hacia el final de la clase, lo cual es muy útil.</li>
+                <li>Tu meta no es terminar la actividad a toda costa, sino mantener una interacción constante con tu estudiante a un nivel que le suponga un reto y le ayude a mejorar, pero sin abrumarle.</li>
+                <li>Hoy en día, gracias a la IA y los recursos en línea, los estudiantes tienen casi todo lo necesario para aprender idiomas por su cuenta. Lo que tu estudiante necesita de ti en clase es el desafío constante de la interacción en tiempo real en la conversación, y después una lista de los errores cometidos durante la clase.</li>
+              </ul>
+            </div>
+            <div class="instructions-col">
+              <div class="instructions-col-title">Estudiante</div>
+              <ul>
+                <li>Crea una actividad para tu próxima clase en tu editor con la habilidad, ej.: «/create-learning-activity on The history of website development in Spanish B1».</li>
+                <li>Con la mayoría de los modelos de IA, tardarás entre 5 y 10 minutos en crearla.</li>
+                <li>Una vez lista, lee el texto con la ayuda de Google Traductor hasta el punto de poder leerlo de nuevo en el idioma meta y comprenderlo en general.</li>
+                <li>Realiza todos los ejercicios para que tengas una comprensión general tanto de las preguntas como de las respuestas, hasta el punto de poder responderlas en vivo en clase con tu profesor.</li>
+                <li>Prepara el vocabulario y las estructuras que necesitarás para debatir el texto y los ejercicios con tu profesor en clase.</li>
+                <li>Vuelve a leer el texto, esta vez investigando detalles y añadiendo capturas de imágenes de Internet (consulta las <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">instrucciones</a> para una guía técnica).</li>
+                <li>Haz commit de la actividad y las imágenes a tu repositorio de GitHub, lo cual la publicará en tu sitio de Vercel.</li>
+                <li>En clase, trabaja en cada sección con tu profesor, debatiendo los temas a medida que surjan de manera natural.</li>
+                <li>Tu objetivo no es terminar la actividad en clase, sino mantener una conversación abierta e interesante con tu profesor durante toda la sesión con un 50%/50% de participación para una práctica sólida tanto de expresión oral como de comprensión auditiva.</li>
+                <li>Antes de que termine la clase, acuerda con tu profesor el tema de la actividad para tu próxima clase.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+    <div class="section-instructions-box">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="htmlcssjavascript" draggable="true">HTML CSS JavaScript</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="htmlcssjavascript" data-image-title="HTML CSS JavaScript" onclick="handleImageCardClick(this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[]')">
+          <img src="images/es-historiaweb-htmlcssjavascript.jpg" alt="HTML CSS JavaScript" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">HTML CSS JavaScript</div>
+        </div>
+      </div>
+    </section>
+
+<!-- SECTION 1: VOCABULARIO -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">2</span> Vocabulario
+      </a>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+
+    <div class="section-instructions-box">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Palabras en espera renderizadas dinámicamente -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Definiciones objetivo renderizadas dinámicamente -->
+      </div>
+
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <div class="vocab-completed-pool" id="vocab-completed-pool">
+        <!-- Píldoras de palabras resueltas renderizadas dinámicamente -->
+      </div>
+    </section>
+
+    <!-- SECTION 2: LECTURA -->
+
+<h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">3</span> Lectura
+      </a>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+
+    <div class="section-instructions-box">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.</p>
+        </div>
+      </div>
+    </div>
+
+    <article class="reading-content">
+      <div class="region-card">
+        <h3>1. HTML/CSS/JavaScript</h3>
+        <p>Empecé a crear páginas a mediados de los noventa, cuando la World Wide Web era una silenciosa promesa y las computadoras hacían ruidos extraños al conectarse por teléfono. En aquella época, el <span class="vocab-in-text" data-key="cimiento">cimiento</span> de todo era escribir código HTML a mano en un editor de texto básico. Poco después llegaron las hojas de estilo CSS para separar el diseño visual de la estructura, y un lenguaje sencillo llamado JavaScript para dar vida a la página con pequeñas animaciones.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>2. PHP y bases de datos relacionales</h3>
+        <p>Al poco tiempo, los sitios puramente estáticos ya no eran suficientes para lo que queríamos construir. Gracias a lenguajes del lado del servidor como PHP y a bases de datos relacionales como MySQL, aprendimos a conectar nuestras páginas con usuarios reales. Por primera vez, pudimos mostrar contenido personalizado en la <span class="vocab-in-text" data-key="pantalla">pantalla</span> según las acciones de cada visitante, creando foros de discusión, tiendas virtuales y formularios de registro.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>3. AJAX</h3>
+        <p>A pesar del avance de las bases de datos, navegar por la web seguía siendo una experiencia lenta y fragmentada. Cada vez que el usuario enviaba un formulario o hacía clic en un botón, la pantalla se ponía en blanco para recargar toda la página desde cero. La llegada de AJAX a mediados de los años dos mil cambió las reglas del juego: de repente, podíamos pedir datos al servidor en segundo plano y actualizar la vista sin ningún <span class="vocab-in-text" data-key="retraso">retraso</span> molesto.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>4. jQuery</h3>
+        <p>Sin embargo, programar con JavaScript en esos años tenía un lado oscuro que ponía a prueba nuestra paciencia. Durante años, lograr que un sitio se viera y funcionara exactamente igual en Netscape e Internet Explorer era una auténtica <span class="vocab-in-text" data-key="pesadilla">pesadilla</span> técnica. La librería jQuery se convirtió en nuestra salvación diaria, porque ofrecía una sintaxis simple que escondía todas esas molestas incompatibilidades entre navegadores detrás de un código limpio.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>5. Git y GitHub</h3>
+        <p>En los primeros tiempos, el flujo de trabajo en equipo era extremadamente caótico y peligroso. Teníamos la costumbre arriesgada de <span class="vocab-in-text" data-key="subir">subir</span> archivos sueltos a los servidores mediante programas de FTP, rezando para no sobreescribir por accidente el trabajo de algún colega. La llegada del control de versiones con Git y la plataforma GitHub trajo disciplina, orden y la tranquilidad de colaborar en equipo con un historial transparente de cada cambio.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>6. Diseño web adaptable (Responsive Design)</h3>
+        <p>Con la masificación de los teléfonos inteligentes, la experiencia de navegar por sitios pensados únicamente para computadoras de escritorio se sintió de pronto <span class="vocab-in-text" data-key="torpe">torpe</span> y pesada. Nadie quería hacer zoom constante con los dedos para leer un párrafo. El diseño web adaptable nos enseñó a usar rejillas fluidas y consultas de medios en CSS (Media Queries) para que las páginas respondieran con elegancia a cualquier pantalla táctil.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>7. Node.js</h3>
+        <p>En 2009 ocurrió un giro histórico que muy pocos programadores veteranos anticipamos: apareció Node.js y llevó el motor de JavaScript fuera del navegador directamente a los servidores. Aquello unificó nuestro lenguaje de trabajo y dio origen a miles de <span class="vocab-in-text" data-key="herramientas">herramientas</span> que transformaron para siempre la manera de compilar, empaquetar y gestionar dependencias en proyectos modernos.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>8. Frameworks SPA (React, Vue, Angular)</h3>
+        <p>A medida que la web se volvió más ambiciosa, manipular el documento a mano con jQuery ya no era suficiente para crear aplicaciones complejas. La aparición de React, Vue y Angular consolidó las aplicaciones de una sola página (SPA). Para los desarrolladores, dividir las interfaces complejas en componentes independientes y reutilizables representó un inmenso <span class="vocab-in-text" data-key="alivio">alivio</span> que cambió la arquitectura del software web para siempre.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>9. TypeScript</h3>
+        <p>Con equipos de cientos de ingenieros construyendo aplicaciones web gigantescas, la flexibilidad de JavaScript empezó a causar errores difíciles de detectar en producción. Adoptamos TypeScript para añadir tipado estático y autocompletado inteligente a nuestro código. Aunque hoy en día el ecosistema nos bombardea con constantes <span class="vocab-in-text" data-key="novedades">novedades</span> en librerías y utilidades, contar con un compilador estricto nos devolvió la confianza al refactorizar sistemas grandes.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>10. Inteligencia Artificial</h3>
+        <p>Hoy en día vivimos la transformación más rápida de todas: la integración de la Inteligencia Artificial en nuestro flujo diario. Ahora programamos junto a asistentes inteligentes capaces de sugerir funciones completas, detectar errores y generar interfaces en cuestión de segundos. Aceptar cada nueva etapa técnica siempre ha sido un <span class="vocab-in-text" data-key="reto">reto</span>, pero después de tres décadas en esta profesión, aprendí que la curiosidad constante es la única tecnología que nunca pasa de moda.</p>
+      </div>
+    </article>
+
+    <!-- SECTION 3: COMPRENSIÓN -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">4</span> Comprensión
+      </a>
+      <span class="section-action-hint">opción múltiple</span>
+    </h2>
+
+    <div class="section-instructions-box">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>Comenta las preguntas con tu profesor y encuentra la respuesta correcta.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="quiz-container">
+
+      <!-- Question 1 (Correct: B) -->
+      <article class="question-card" data-q="1" data-correct="B">
+        <div class="question-prompt">
+          <span class="q-num">1.</span> ¿Por qué el autor describe la llegada de AJAX como «un verdadero alivio» para los desarrolladores?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Porque permitía diseñar páginas web sin necesidad de escribir código JavaScript.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Porque evitaba que la página entera quedara en blanco para recargarse cada vez que el usuario hacía clic.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Porque solucionó de inmediato todos los problemas de compatibilidad visual con Internet Explorer.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Porque eliminó la necesidad de usar bases de datos del lado del servidor como MySQL.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 2 (Correct: D) -->
+      <article class="question-card" data-q="2" data-correct="D">
+        <div class="question-prompt">
+          <span class="q-num">2.</span> ¿Qué problema principal resolvía la librería jQuery en los primeros años de la década del 2000?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Permitía empaquetar aplicaciones automáticamente con TypeScript en el navegador.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Hacía posible ejecutar código JavaScript directamente en servidores y bases de datos.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Reemplazaba las hojas de estilo CSS para adaptar el diseño a los teléfonos inteligentes.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Ocultaba las frustrantes diferencias de compatibilidad entre navegadores como Netscape e Internet Explorer.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 3 (Correct: A) -->
+      <article class="question-card" data-q="3" data-correct="A">
+        <div class="question-prompt">
+          <span class="q-num">3.</span> Según el relato del programador, ¿qué cambio positivo trajo la adopción de Git y GitHub?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Reemplazó la práctica arriesgada de subir archivos sueltos por FTP y permitió colaborar sin borrar el trabajo de otros.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Hizo que las computadoras dejaran de emitir ruidos extraños al conectarse a Internet.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Automatizó la creación de interfaces táctiles para todo tipo de pantallas móviles.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Permitió crear foros dinámicos y formularios sin necesidad de lenguajes como PHP.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 4 (Correct: C) -->
+      <article class="question-card" data-q="4" data-correct="C">
+        <div class="question-prompt">
+          <span class="q-num">4.</span> ¿Cuál fue el impacto decisivo de Node.js en el ecosistema del desarrollo web?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Creó el primer editor de texto para programar archivos HTML a mano.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Obligó a todos los desarrolladores a abandonar los navegadores de escritorio para programar solo en celulares.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Llevó JavaScript al servidor y permitió crear un inmenso universo de herramientas de compilación y empaquetado.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Fue el primer modelo de Inteligencia Artificial capaz de escribir código sin intervención humana.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 5 (Correct: B) -->
+      <article class="question-card" data-q="5" data-correct="B">
+        <div class="question-prompt">
+          <span class="q-num">5.</span> Al final de la lectura, ¿cuál es la actitud del autor ante las nuevas tecnologías como la Inteligencia Artificial?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Siente frustración y aconseja a los jóvenes programadores no aprender ninguna herramienta nueva.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Reconoce que cada avance supone un desafío, pero afirma que la curiosidad constante nunca pasa de moda.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Cree que la IA volverá obsoletos a todos los programadores antes del final de esta década.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Considera que la tecnología era mucho mejor en los años noventa cuando todo se hacía a mano.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-D"></div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- SECTION 4: PREGUNTAS ABIERTAS -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+      </a>
+      <span class="section-action-hint">responder y debatir</span>
+    </h2>
+
+    <div class="section-instructions-box">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>El profesor y el estudiante se turnan para responder a las preguntas.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="discussion-container">
+      <ul class="open-questions-list">
+        <li class="open-question-item">
+          <span class="open-q-num">1.</span>
+          <div class="open-q-text">
+            Si hubieras vivido los inicios de Internet en los años noventa, ¿qué página o proyecto web habrías creado <span class="question-hint-wrap">primero?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Si+hubieras+vivido+los+inicios+de+Internet+en+los+a%C3%B1os+noventa%2C+%C2%BFqu%C3%A9+p%C3%A1gina+o+proyecto+web+habr%C3%ADas+creado+primero%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Buscar respuesta sugerida en Google" aria-label="Buscar respuesta sugerida en Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+        <li class="open-question-item">
+          <span class="open-q-num">2.</span>
+          <div class="open-q-text">
+            ¿Prefieres las aplicaciones modernas con actualizaciones instantáneas o extrañas la sencillez de las páginas estáticas del <span class="question-hint-wrap">pasado?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFPrefieres+las+aplicaciones+modernas+con+actualizaciones+instant%C3%A1neas+o+extra%C3%B1as+la+sencillez+de+las+p%C3%A1ginas+est%C3%A1ticas+del+pasado%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Buscar respuesta sugerida en Google" aria-label="Buscar respuesta sugerida en Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+        <li class="open-question-item">
+          <span class="open-q-num">3.</span>
+          <div class="open-q-text">
+            ¿Qué herramienta o tecnología actual consideras imprescindible en tu vida cotidiana y qué harías si dejara de <span class="question-hint-wrap">funcionar?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFQu%C3%A9+herramienta+o+tecnolog%C3%ADa+actual+consideras+imprescindible+en+tu+vida+cotidiana+y+qu%C3%A9+har%C3%ADas+si+dejara+de+funcionar%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Buscar respuesta sugerida en Google" aria-label="Buscar respuesta sugerida en Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+        <li class="open-question-item">
+          <span class="open-q-num">4.</span>
+          <div class="open-q-text">
+            ¿Crees que la Inteligencia Artificial cambiará radicalmente la forma en que los seres humanos aprenden a programar en el <span class="question-hint-wrap">futuro?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22%C2%BFCrees+que+la+Inteligencia+Artificial+cambiar%C3%A1+radicalmente+la+forma+en+que+los+seres+humanos+aprenden+a+programar+en+el+futuro%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Buscar respuesta sugerida en Google" aria-label="Buscar respuesta sugerida en Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+        <li class="open-question-item">
+          <span class="open-q-num">5.</span>
+          <div class="open-q-text">
+            Desde tu punto de vista, ¿qué cualidad es más importante hoy: especializarse a fondo en una sola tecnología o adaptarse rápido al <span class="question-hint-wrap">cambio?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+Spanish%2C+assume+you+are+from+Germany%3A+%22Desde+tu+punto+de+vista%2C+%C2%BFqu%C3%A9+cualidad+es+m%C3%A1s+importante+hoy%3A+especializarse+a+fondo+en+una+sola+tecnolog%C3%ADa+o+adaptarse+r%C3%A1pido+al+cambio%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Buscar respuesta sugerida en Google" aria-label="Buscar respuesta sugerida en Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Bottom Actions Bar -->
+    <div class="bottom-actions-bar">
+      <div>
+        <button type="button" class="reset-answers-btn" id="reset-btn" onclick="requestReset()">↺ Reiniciar respuestas</button>
+        <div class="reset-confirm-box" id="reset-confirm-box">
+          <span>¿Confirmar reinicio?</span>
+          <button type="button" class="reset-confirm-btn" onclick="cancelReset()">Cancelar</button>
+          <button type="button" class="reset-confirm-btn danger" onclick="confirmReset()">Sí, reiniciar</button>
+        </div>
+      </div>
+      <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
+        <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Índice de Actividades</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Sticky Floating Section Jump Nav Pill -->
+  <nav class="sticky-jump-nav" id="sticky-jump-nav" aria-label="Navegación flotante de secciones">
+    <!-- Poblado automáticamente por JS con paridad 1:1 -->
+  </nav>
+
+  <!-- Standardized Footer -->
+  <footer class="site-footer">
+    <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">Crea tus propias actividades</a>
+    <span class="footer-dot">•</span>
+    <span>See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+  </footer>
+
+  <script>
+    // =========================================================
+    // VOCABULARY DATA (10 NON-COGNATE KEY WORDS)
+    // =========================================================
+    const vocabData = {
+      "cimiento": {
+        "word": "cimiento",
+        "pos": "sustantivo masculino",
+        "def": "base o principio sólido sobre el cual se construye o sostiene algo",
+        "hint": "la base sólida sobre la cual se construye un edificio o un sistema",
+        "sentence": "En aquella época, el cimiento de todo era escribir código HTML a mano en un editor de texto básico."
+      },
+      "pantalla": {
+        "word": "pantalla",
+        "pos": "sustantivo femenino",
+        "def": "superficie del monitor o dispositivo electrónico donde se proyectan las imágenes y datos",
+        "hint": "la superficie de vidrio o cristal líquido donde miras la información en tu computadora",
+        "sentence": "Por primera vez, pudimos mostrar contenido personalizado en la pantalla según las acciones de cada visitante, creando foros de discusión, tiendas virtuales y formularios de registro."
+      },
+      "alivio": {
+        "word": "alivio",
+        "pos": "sustantivo masculino",
+        "def": "sensación agradable de tranquilidad y descanso que se experimenta tras una tensión o molestia",
+        "hint": "la sensación de paz y calma cuando se resuelve un gran problema o molestia",
+        "sentence": "Para los desarrolladores, dividir las interfaces complejas en componentes independientes y reutilizables representó un inmenso alivio que cambió la arquitectura del software web para siempre."
+      },
+      "retraso": {
+        "word": "retraso",
+        "pos": "sustantivo masculino",
+        "def": "tardanza o demora en ocurrir o completarse una acción o proceso",
+        "hint": "ocurre cuando algo tarda más tiempo del esperado y llega con demora",
+        "sentence": "La llegada de AJAX a mediados de los años dos mil cambió las reglas del juego: de repente, podíamos pedir datos al servidor en segundo plano y actualizar la vista sin ningún retraso molesto."
+      },
+      "pesadilla": {
+        "word": "pesadilla",
+        "pos": "sustantivo femenino",
+        "def": "sueño angustioso o situación sumamente difícil, frustrante y desagradable",
+        "hint": "un mal sueño o una situación extremadamente angustiosa y desesperante",
+        "sentence": "Durante años, lograr que un sitio se viera y funcionara exactamente igual en Netscape e Internet Explorer era una auténtica pesadilla técnica."
+      },
+      "subir": {
+        "word": "subir",
+        "pos": "verbo transitivo",
+        "def": "transferir datos o documentos desde una computadora local hacia un servidor remoto",
+        "hint": "la acción de transferir un archivo desde tu equipo personal hacia Internet",
+        "sentence": "Teníamos la costumbre arriesgada de subir archivos sueltos a los servidores mediante programas de FTP, rezando para no sobreescribir por accidente el trabajo de algún colega."
+      },
+      "torpe": {
+        "word": "torpe",
+        "pos": "adjetivo",
+        "def": "que carece de agilidad, facilidad o gracia en sus movimientos o manejo",
+        "hint": "describe algo que no se mueve con agilidad y resulta incómodo o poco fluido de usar",
+        "sentence": "Con la masificación de los teléfonos inteligentes, la experiencia de navegar por sitios pensados únicamente para computadoras de escritorio se sintió de pronto torpe y pesada."
+      },
+      "herramientas": {
+        "word": "herramientas",
+        "pos": "sustantivo femenino plural",
+        "def": "instrumentos, utilidades o programas que sirven para realizar tareas específicas de trabajo",
+        "hint": "son los instrumentos o aplicaciones que facilitan realizar un trabajo práctico",
+        "sentence": "Aquello unificó nuestro lenguaje de trabajo y dio origen a miles de herramientas que transformaron para siempre la manera de compilar, empaquetar y gestionar dependencias en proyectos modernos."
+      },
+      "novedades": {
+        "word": "novedades",
+        "pos": "sustantivo femenino plural",
+        "def": "cosas, noticias o cambios recientes que no se conocían o no existían antes",
+        "hint": "cambios, inventos o noticias recientes que acaban de aparecer en el mercado",
+        "sentence": "Aunque hoy en día el ecosistema nos bombardea con constantes novedades en librerías y utilidades, contar con un compilador estricto nos devolvió la confianza al refactorizar sistemas grandes."
+      },
+      "reto": {
+        "word": "reto",
+        "pos": "sustantivo masculino",
+        "def": "objetivo difícil o desafío estimulante que requiere esfuerzo y dedicación para superarse",
+        "hint": "un desafío difícil que pone a prueba tus capacidades y exige esfuerzo",
+        "sentence": "Aceptar cada nueva etapa técnica siempre ha sido un reto, pero después de tres décadas en esta profesión, aprendí que la curiosidad constante es la única tecnología que nunca pasa de moda."
+      }
+    };
+
+    // Shuffled initial definition order
+    const vocabOrder = [
+      "pesadilla",
+      "alivio",
+      "torpe",
+      "retraso",
+      "pantalla",
+      "cimiento",
+      "reto",
+      "herramientas",
+      "subir",
+      "novedades"
+    ];
+
+    let completedVocab = [];
+    let draggedWordKey = null;
+    let activePlacedWordKey = null;
+    let activeModalCard = null;
+
+    function getGoogleSearchUrl(word) {
+      const query = `give me the definition of the word "${word}" in Spanish, and the translation of the word in English, and then three example sentences with that word, for each example, once in Spanish and once in English`;
+      return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    }
+
+    function formatWrongDef(def) {
+      if (!def) return '';
+      let text = def.trim();
+      text = text.charAt(0).toLowerCase() + text.slice(1);
+      return text.replace(/[.,;:]+$/, '');
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE EXPLANATIONS (NO "¡CORRECTO!" / "INCORRECTO.")
+    // =========================================================
+    const explanations = {
+      "1": {
+        "A": "El autor no dice que AJAX reemplazara a JavaScript, sino que funcionaba mediante JavaScript para pedir datos al servidor en segundo plano.",
+        "B": "El texto destaca que antes de AJAX cada clic ponía la pantalla en blanco para recargar, y AJAX permitió actualizar la información sin recargar todo el sitio.",
+        "C": "La librería que solucionó las diferencias entre navegadores fue jQuery, no AJAX.",
+        "D": "Las bases de datos relacionales siguieron siendo fundamentales; AJAX solo cambió la forma en que el navegador se comunica con el servidor."
+      },
+      "2": {
+        "A": "TypeScript y las herramientas de compilación modernas aparecieron muchos años después de jQuery.",
+        "B": "Quien llevó JavaScript al servidor fue Node.js, no la librería jQuery.",
+        "C": "El diseño para dispositivos móviles se logró mediante el diseño web adaptable (Responsive Design) con CSS, no con jQuery.",
+        "D": "El autor señala que lograr que un sitio funcionara igual en Netscape e Internet Explorer era una auténtica pesadilla, y jQuery unificó y simplificó ese código."
+      },
+      "3": {
+        "A": "El autor explica que antes se subían archivos por FTP con mucho riesgo de sobreescritura, y Git aportó disciplina, orden y trabajo colaborativo seguro.",
+        "B": "Los ruidos al conectarse correspondían a los módems telefónicos de los años noventa, algo no relacionado con los sistemas de control de versiones.",
+        "C": "Git es un sistema de control de versiones de código fuente, no una herramienta para diseñar interfaces táctiles.",
+        "D": "Git gestiona el historial y los cambios del código, no la lógica de servidores o bases de datos dinámicas."
+      },
+      "4": {
+        "A": "Los editores de texto básicos ya existían desde los inicios mismos de la World Wide Web en los años noventa.",
+        "B": "La popularidad de los celulares impulsó el diseño adaptable, pero Node.js no obligó a abandonar las computadoras de escritorio.",
+        "C": "El autor resalta que Node.js llevó JavaScript a los servidores, unificando el lenguaje de trabajo y generando miles de herramientas para compilar y empaquetar.",
+        "D": "La Inteligencia Artificial es el último hito mencionado en la lectura, décadas posterior a la creación de Node.js."
+      },
+      "5": {
+        "A": "El autor no aconseja abandonar el aprendizaje; al contrario, celebra la curiosidad y la adaptación continua frente a los avances.",
+        "B": "En la última frase, el autor concluye que adaptarse a cada etapa es un reto, pero la curiosidad es la única tecnología que nunca pasa de moda.",
+        "C": "El texto no expresa ese pesimismo; describe a la IA como una herramienta compañera con la que hoy se programa en el trabajo cotidiano.",
+        "D": "Aunque recuerda los años noventa con afecto, el autor reconoce los enormes beneficios y la comodidad que trajeron las herramientas actuales."
+      }
+    };
+
+    let userAnswers = {};
+    let readingBookmarks = [];
+    const STORAGE_KEY = 'activity_historiaweb';
+
+    // =========================================================
+    // STATE MANAGEMENT (PERSISTENCE)
+    // =========================================================
+    function loadSavedState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed === 'object') {
+            userAnswers = parsed.mc || {};
+            completedVocab = Array.isArray(parsed.vocab)
+              ? parsed.vocab.filter(k => vocabData[k])
+              : [];
+            readingBookmarks = Array.isArray(parsed.bookmarks)
+              ? parsed.bookmarks.filter(idx => Number.isInteger(idx) && idx >= 0)
+              : [];
+              solvedImageIds = Array.isArray(parsed.images) ? parsed.images : [];
+          }
+        }
+      } catch (e) {
+        console.warn("Could not load from localStorage:", e);
+      }
+
+      // Restore Multiple Choice answers
+      Object.keys(userAnswers).forEach(qNum => {
+        const val = userAnswers[qNum];
+        applyQuestionFeedback(qNum, val);
+      });
+
+      // Render Vocabulary & Reading Bookmarks
+      renderVocabulary();
+      renderReadingBookmarks();
+      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
+    }
+
+    function saveState() {
+      try {
+        const state = {
+          mc: userAnswers,
+          vocab: completedVocab,
+          bookmarks: readingBookmarks,
+          images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn("Could not save to localStorage:", e);
+      }
+    }
+
+    // =========================================================
+    // READING BOOKMARKS (SHIFT + DOUBLE-CLICK ON ANY WORD)
+    // =========================================================
+    function initReadingWords() {
+      const sheet = document.querySelector('.handout-sheet');
+      if (!sheet || sheet.getAttribute('data-words-initialized') === 'true') return;
+      sheet.setAttribute('data-words-initialized', 'true');
+
+      let wordIndex = 0;
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.nodeValue;
+          if (!text || !text.trim()) return;
+          const regex = /([\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*)/gu;
+          let lastIdx = 0;
+          let match;
+          const frag = document.createDocumentFragment();
+          let found = false;
+
+          while ((match = regex.exec(text)) !== null) {
+            found = true;
+            if (match.index > lastIdx) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx, match.index)));
+            }
+            const span = document.createElement('span');
+            span.className = 'reading-word';
+            span.setAttribute('data-word-idx', String(wordIndex++));
+            span.textContent = match[0];
+            frag.appendChild(span);
+            lastIdx = regex.lastIndex;
+          }
+
+          if (found) {
+            if (lastIdx < text.length) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+            }
+            node.parentNode.replaceChild(frag, node);
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (
+            node.closest('.vocab-container') ||
+            node.closest('.jump-nav') ||
+            node.closest('.sticky-jump-nav') ||
+            node.closest('.utility-bar') ||
+            node.closest('.bottom-actions-bar') ||
+            node.closest('.lookup-btn') ||
+            node.closest('button') ||
+            node.tagName === 'BUTTON' ||
+            node.tagName === 'SVG' ||
+            node.tagName === 'SCRIPT' ||
+            node.tagName === 'STYLE' ||
+            node.classList.contains('instructions-heading') ||
+            node.classList.contains('section-num') ||
+            node.classList.contains('section-action-hint') ||
+            node.classList.contains('feedback-box')
+          ) {
+            return;
+          }
+
+          if (node.classList.contains('vocab-in-text')) {
+            const wrap = document.createElement('span');
+            wrap.className = 'reading-word';
+            wrap.setAttribute('data-word-idx', String(wordIndex++));
+            node.parentNode.replaceChild(wrap, node);
+            wrap.appendChild(node);
+            return;
+          }
+
+          const children = Array.from(node.childNodes);
+          children.forEach(processNode);
+        }
+      }
+
+      const targetAreas = sheet.querySelectorAll(
+        '.instructions-inner, .reading-content, .quiz-container, .discussion-container'
+      );
+      if (targetAreas.length > 0) {
+        targetAreas.forEach(area => processNode(area));
+      } else {
+        processNode(sheet);
+      }
+
+      sheet.addEventListener('dblclick', (e) => {
+        if (!e.shiftKey) return;
+        if (e.target && e.target.closest('.reading-bookmark')) return;
+
+        let wordEl = e.target && e.target.closest ? e.target.closest('.reading-word') : null;
+        if (!wordEl && window.getSelection) {
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const startNode = range.startContainer;
+            const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement;
+            if (startEl && sheet.contains(startEl)) {
+              wordEl = startEl.closest('.reading-word');
+            }
+          }
+        }
+
+        if (!wordEl) return;
+
+        const idx = parseInt(wordEl.getAttribute('data-word-idx'), 10);
+        if (isNaN(idx)) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        addReadingBookmark(idx);
+
+        const clearSel = () => {
+          if (window.getSelection) {
+            const sel = window.getSelection();
+            if (sel) sel.removeAllRanges();
+          }
+        };
+        clearSel();
+        requestAnimationFrame(clearSel);
+      });
+    }
+
+    function addReadingBookmark(idx) {
+      if (!readingBookmarks.includes(idx)) {
+        readingBookmarks.push(idx);
+        readingBookmarks.sort((a, b) => a - b);
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function removeReadingBookmark(idx) {
+      const next = readingBookmarks.filter(item => item !== idx);
+      if (next.length !== readingBookmarks.length) {
+        readingBookmarks = next;
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function updateStickyBookmarkState() {
+      const bmBtns = document.querySelectorAll('.jump-bookmark-btn');
+      if (bmBtns.length === 0) return;
+      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+      if (bookmarkEls.length === 0) {
+        bmBtns.forEach(btn => btn.classList.remove('show'));
+        return;
+      }
+      if (bookmarkEls.length === 1) {
+        const rect = bookmarkEls[0].getBoundingClientRect();
+        const isVisible = (rect.top >= 40 && rect.bottom <= window.innerHeight - 40);
+        bmBtns.forEach(btn => btn.classList.toggle('show', !isVisible));
+        return;
+      }
+      bmBtns.forEach(btn => btn.classList.add('show'));
+    }
+
+    function renderReadingBookmarks() {
+      document.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
+      document.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
+
+      readingBookmarks.forEach(idx => {
+        const wordEl = document.querySelector(`.reading-word[data-word-idx="${idx}"]`);
+        if (!wordEl) return;
+        wordEl.classList.add('has-bookmark');
+
+        const bm = document.createElement('span');
+        bm.className = 'reading-bookmark';
+        bm.setAttribute('data-bookmark-idx', String(idx));
+        bm.setAttribute('title', 'Eliminar marcador');
+        bm.setAttribute('aria-label', 'Eliminar marcador');
+        bm.setAttribute('role', 'button');
+        bm.setAttribute('tabindex', '0');
+        bm.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
+
+        bm.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          removeReadingBookmark(idx);
+        });
+
+        bm.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            removeReadingBookmark(idx);
+          }
+        });
+
+        wordEl.insertBefore(bm, wordEl.firstChild);
+      });
+
+      updateStickyBookmarkState();
+    }
+
+    // =========================================================
+    // INSTRUCTIONS ROLL-OUT / ROLL-UP LOGIC
+    // =========================================================
+    function toggleInstructions(e) {
+      if (e && e.shiftKey) return;
+      if (e && e.target && (e.target.tagName === 'A' || e.target.closest('a'))) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      const box = document.getElementById('instructions-box');
+      if (!box) return;
+      const isExpanded = box.classList.toggle('expanded');
+      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    }
+
+    // =========================================================
+    // SNAPPY SCROLL & SCROLL TO TOP LOGIC
+    // =========================================================
+    let activeScrollRaf = null;
+    function snappyScrollTo(targetY, duration = 280) {
+      if (activeScrollRaf) {
+        cancelAnimationFrame(activeScrollRaf);
+        activeScrollRaf = null;
+      }
+      const startY = window.scrollY;
+      const docHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      const clampedTarget = Math.max(0, Math.min(targetY, docHeight - window.innerHeight));
+      const diff = clampedTarget - startY;
+      if (Math.abs(diff) < 2) return;
+      const startTime = performance.now();
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        window.scrollTo(0, startY + diff * easeOutCubic(progress));
+        if (progress < 1) {
+          activeScrollRaf = requestAnimationFrame(step);
+        } else {
+          activeScrollRaf = null;
+        }
+      }
+      activeScrollRaf = requestAnimationFrame(step);
+    }
+
+    window.addEventListener('wheel', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+    window.addEventListener('touchstart', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+
+    function scrollToTop(e) {
+      if (e) e.preventDefault();
+      snappyScrollTo(0, 280);
+    }
+
+    // =========================================================
+    // VOCABULARY EXERCISE LOGIC
+    // =========================================================
+    function safeDismiss(callback, e) {
+      if (e && e.target && e.target.closest('.lookup-btn')) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      callback();
+    }
+
+    function appendBalancedRows(container, keys, createItemFn, rowClass, maxPerRow) {
+      const total = keys.length;
+      if (total === 0) return;
+
+      const availableWidth = container.clientWidth || 320;
+      let numRows = maxPerRow ? Math.ceil(total / maxPerRow) : (total >= 6 ? 2 : 1);
+
+      while (numRows <= total) {
+        container.innerHTML = '';
+        const base = Math.floor(total / numRows);
+        const remainder = total % numRows;
+
+        let startIndex = 0;
+        let overflows = false;
+
+        for (let r = 0; r < numRows; r++) {
+          const count = base + (r < remainder ? 1 : 0);
+          const rowKeys = keys.slice(startIndex, startIndex + count);
+          startIndex += count;
+
+          const row = document.createElement('div');
+          row.className = rowClass;
+          rowKeys.forEach(k => {
+            const el = createItemFn(k);
+            if (el) row.appendChild(el);
+          });
+          container.appendChild(row);
+
+          if (row.scrollWidth > availableWidth && count > 1) {
+            overflows = true;
+          }
+        }
+
+        if (!overflows || numRows >= total) {
+          break;
+        }
+        numRows++;
+      }
+    }
+
+    function renderVocabulary(animState) {
+      const prevChipRects = animState && animState.prevChipRects ? animState.prevChipRects : animState;
+      const prevCompletedOffsets = animState && animState.prevCompletedOffsets ? animState.prevCompletedOffsets : null;
+      const newlyCompletedKey = animState && animState.newlyCompletedKey ? animState.newlyCompletedKey : null;
+
+      const pool = document.getElementById('vocab-pool');
+      const targets = document.getElementById('vocab-targets');
+      const completedPool = document.getElementById('vocab-completed-pool');
+      const detailArea = document.getElementById('vocab-completed-detail');
+
+      if (!pool || !targets || !completedPool) return;
+
+      const savedScrollY = window.scrollY;
+
+      pool.innerHTML = '';
+      targets.innerHTML = '';
+      completedPool.innerHTML = '';
+      if (detailArea) detailArea.innerHTML = '';
+
+      // All keys
+      const allKeys = Object.keys(vocabData);
+      const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
+
+      // 1. Render Waiting Words Pool (horizontally centered, balanced across rows without wrapping)
+      if (remainingKeys.length === 0) {
+        pool.innerHTML = '';
+        pool.style.display = 'none';
+      } else {
+        pool.style.display = 'flex';
+        const createChip = (k) => {
+          const item = vocabData[k];
+          const chip = document.createElement('div');
+          chip.className = 'vocab-chip';
+          chip.setAttribute('draggable', 'true');
+          chip.setAttribute('data-key', k);
+          chip.textContent = item.word;
+
+          // Drag events
+          chip.addEventListener('dragstart', handleDragStart);
+          chip.addEventListener('dragend', handleDragEnd);
+
+          // Click opens hint popup
+          chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            showWordHintModal(k);
+          });
+
+          // Touch drag support
+          setupTouchDrag(chip, k);
+          return chip;
+        };
+
+        appendBalancedRows(pool, remainingKeys, createChip, 'vocab-pool-row');
+      }
+
+      // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
+      vocabOrder.forEach(targetKey => {
+        if (completedVocab.includes(targetKey)) return;
+
+        const item = vocabData[targetKey];
+        const card = document.createElement('div');
+        card.className = 'vocab-target-card';
+        card.setAttribute('data-target-key', targetKey);
+        card.innerHTML = `
+          <div class="vocab-target-def">${item.def}</div>
+        `;
+
+        // Drop listeners
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('dragleave', handleDragLeave);
+        card.addEventListener('drop', handleDrop);
+
+        // Click dismiss or inspect
+        card.addEventListener('click', (e) => {
+          handleTargetCardClick(card, targetKey, e);
+        });
+
+        targets.appendChild(card);
+      });
+
+      // 3. Render Completed Section Pills (centered, equally distributed across balanced rows with at most 3 per row)
+      completedPool.innerHTML = '';
+      if (completedVocab.length > 0) {
+        const createPill = (k) => {
+          const item = vocabData[k];
+          if (!item) return null;
+          const pill = document.createElement('div');
+          pill.className = 'vocab-completed-pill';
+          pill.setAttribute('data-key', k);
+          pill.innerHTML = `
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>${item.word}</span>
+          `;
+          pill.addEventListener('click', () => {
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            toggleCompletedDetail(k);
+          });
+          return pill;
+        };
+
+        appendBalancedRows(completedPool, completedVocab, createPill, 'vocab-completed-row', 3);
+      }
+
+      if (Math.abs(window.scrollY - savedScrollY) > 1) {
+        window.scrollTo(0, savedScrollY);
+      }
+
+      // 4. FLIP Animation: smoothly slide remaining waiting words into their new positions to fill the gap
+      if (prevChipRects && remainingKeys.length > 0) {
+        const chipsToAnimate = [];
+        pool.querySelectorAll('.vocab-chip').forEach(chip => {
+          const k = chip.getAttribute('data-key');
+          const oldRect = prevChipRects[k];
+          if (oldRect) {
+            const newRect = chip.getBoundingClientRect();
+            const dx = oldRect.left - newRect.left;
+            const dy = oldRect.top - newRect.top;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              chip.style.transition = 'none';
+              chip.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              chipsToAnimate.push(chip);
+            }
+          }
+        });
+        if (chipsToAnimate.length > 0) {
+          void pool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              chipsToAnimate.forEach(chip => {
+                chip.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                chip.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  chip.style.transition = '';
+                  chip.style.transform = '';
+                };
+                chip.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+            });
+          });
+        }
+      }
+
+      // 5. FLIP Animation for Completed Words Pool: existing pills slide apart to accept the new word
+      if (newlyCompletedKey && completedVocab.length > 0) {
+        const newPoolRect = completedPool.getBoundingClientRect();
+        const pillsToSlide = [];
+        let newPillEl = null;
+
+        completedPool.querySelectorAll('.vocab-completed-pill').forEach(pill => {
+          const k = pill.getAttribute('data-key');
+          if (k === newlyCompletedKey) {
+            newPillEl = pill;
+          } else if (prevCompletedOffsets && prevCompletedOffsets[k]) {
+            const r = pill.getBoundingClientRect();
+            const curLeft = r.left - newPoolRect.left;
+            const curTop = r.top - newPoolRect.top;
+            const dx = prevCompletedOffsets[k].left - curLeft;
+            const dy = prevCompletedOffsets[k].top - curTop;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              pill.style.transition = 'none';
+              pill.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              pillsToSlide.push(pill);
+            }
+          }
+        });
+
+        if (newPillEl) {
+          newPillEl.style.transition = 'none';
+          newPillEl.style.opacity = '0';
+          newPillEl.style.transform = 'scale(0.82)';
+        }
+
+        if (pillsToSlide.length > 0 || newPillEl) {
+          void completedPool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              pillsToSlide.forEach(pill => {
+                pill.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                pill.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  pill.style.transition = '';
+                  pill.style.transform = '';
+                };
+                pill.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+
+              if (newPillEl) {
+                newPillEl.style.transition = 'opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                newPillEl.style.opacity = '1';
+                newPillEl.style.transform = 'scale(1)';
+                const cleanupNew = () => {
+                  newPillEl.style.transition = '';
+                  newPillEl.style.opacity = '';
+                  newPillEl.style.transform = '';
+                };
+                newPillEl.addEventListener('transitionend', cleanupNew, { once: true });
+                setTimeout(cleanupNew, 500);
+              }
+            });
+          });
+        }
+      }
+    }
+
+    function showWordHintModal(wordKey) {
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      hideModal();
+
+      const modal = document.createElement('div');
+      modal.className = 'vocab-hint-modal';
+      modal.id = 'active-hint-modal';
+      modal.innerHTML = `
+        <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${item.word}</span>
+            <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+              <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hint-row">
+          <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+          </svg>
+          <div class="hint-text">${item.hint}</div>
+        </div>
+      `;
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('.lookup-btn')) return;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        hideModal();
+      });
+
+      document.body.appendChild(modal);
+      activeModalCard = modal;
+      showOverlay();
+    }
+
+    function hideModal() {
+      const existing = document.getElementById('active-hint-modal');
+      if (existing) existing.remove();
+      hideOverlay();
+      activeModalCard = null;
+    }
+
+    function handleTargetCardClick(card, targetKey, e) {
+      if (card.classList.contains('state-wrong')) {
+        safeDismiss(() => dismissWrongState(card), e);
+        return;
+      }
+      if (card.classList.contains('state-correct')) {
+        safeDismiss(() => dismissCorrectState(card, targetKey), e);
+      }
+    }
+
+    function toggleCompletedDetail(wordKey) {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (!detailArea) return;
+
+      if (detailArea.getAttribute('data-active-key') === wordKey) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-key');
+        return;
+      }
+
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      detailArea.setAttribute('data-active-key', wordKey);
+      detailArea.innerHTML = `
+        <div class="vocab-target-card state-correct" style="border-radius: 0; margin-bottom: 8px;">
+          <div class="dict-entry-card">
+            <div class="dict-header">
+              <div class="dict-word-group">
+                <span class="dict-word">${item.word}</span>
+                <span class="dict-pos">(${item.pos})</span>
+              </div>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+            <div class="dict-def-row">
+              <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <div class="dict-def-text">${item.def}</div>
+            </div>
+            <div class="dict-sentence">«${item.sentence}»</div>
+          </div>
+        </div>
+      `;
+
+      const card = detailArea.querySelector('.vocab-target-card');
+      if (card) {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.lookup-btn')) return;
+          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+          detailArea.innerHTML = '';
+          detailArea.removeAttribute('data-active-key');
+        });
+      }
+    }
+
+    function showOverlay() {
+      const ov = document.getElementById('vocab-overlay');
+      if (ov) ov.classList.add('active');
+    }
+
+    function hideOverlay() {
+      const ov = document.getElementById('vocab-overlay');
+      if (ov) ov.classList.remove('active');
+    }
+
+    function handleOverlayClick(e) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (activeModalCard) {
+        if (activeModalCard.classList.contains('state-wrong')) {
+          dismissWrongState(activeModalCard);
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const key = activeModalCard.getAttribute('data-target-key');
+          dismissCorrectState(activeModalCard, key);
+        } else if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+        }
+      }
+    }
+
+    function dismissWrongState(card) {
+      if (!card) return;
+      card.classList.remove('state-wrong');
+      const targetKey = card.getAttribute('data-target-key');
+      const item = vocabData[targetKey];
+      card.innerHTML = `<div class="vocab-target-def">${item.def}</div>`;
+      hideOverlay();
+      activeModalCard = null;
+
+      if (activePlacedWordKey) {
+        const chip = document.querySelector(`.vocab-chip[data-key="${activePlacedWordKey}"]`);
+        if (chip) {
+          chip.classList.remove('dragging');
+          chip.style.opacity = '';
+          chip.style.visibility = '';
+        }
+        activePlacedWordKey = null;
+      }
+    }
+
+    function dismissCorrectState(card, key) {
+      if (!completedVocab.includes(key)) {
+        completedVocab.push(key);
+        saveState();
+      }
+      hideOverlay();
+      activeModalCard = null;
+      activePlacedWordKey = null;
+
+      const pool = document.getElementById('vocab-pool');
+      const completedPool = document.getElementById('vocab-completed-pool');
+      const prevChipRects = {};
+      if (pool) {
+        pool.querySelectorAll('.vocab-chip').forEach(c => {
+          prevChipRects[c.getAttribute('data-key')] = c.getBoundingClientRect();
+        });
+      }
+      const prevCompletedOffsets = {};
+      if (completedPool) {
+        const poolRect = completedPool.getBoundingClientRect();
+        completedPool.querySelectorAll('.vocab-completed-pill').forEach(p => {
+          const r = p.getBoundingClientRect();
+          prevCompletedOffsets[p.getAttribute('data-key')] = {
+            left: r.left - poolRect.left,
+            top: r.top - poolRect.top
+          };
+        });
+      }
+
+      renderVocabulary({ prevChipRects, prevCompletedOffsets, newlyCompletedKey: key });
+    }
+
+    function processWordPlacement(wordKey, targetKey, card) {
+      activePlacedWordKey = wordKey;
+      const targetItem = vocabData[targetKey];
+      const draggedItem = vocabData[wordKey];
+
+      if (wordKey === targetKey) {
+        // Correct drop
+        card.classList.remove('state-wrong', 'drag-over');
+        card.classList.add('state-correct');
+        card.innerHTML = `
+          <div class="dict-entry-card">
+            <div class="dict-header">
+              <div class="dict-word-group">
+                <span class="dict-word">${draggedItem.word}</span>
+                <span class="dict-pos">(${draggedItem.pos})</span>
+              </div>
+              <a href="${getGoogleSearchUrl(draggedItem.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+            <div class="dict-def-row">
+              <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <div class="dict-def-text">${draggedItem.def}</div>
+            </div>
+            <div class="dict-sentence">«${draggedItem.sentence}»</div>
+          </div>
+        `;
+        activeModalCard = card;
+        showOverlay();
+      } else {
+        // Wrong drop
+        card.classList.remove('state-correct', 'drag-over');
+        card.classList.add('state-wrong');
+        card.innerHTML = `
+          <div class="dict-header" style="border-bottom: 1px solid rgba(143, 42, 36, 0.25); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word" style="color: var(--wrong-red); font-size: 17px; font-weight: 700;">${draggedItem.word}</span>
+              <a href="${getGoogleSearchUrl(draggedItem.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="wrong-def-row">
+            <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="wrong-def-text">${formatWrongDef(targetItem.def)}</div>
+          </div>
+          <div class="wrong-hint-row">
+            <svg class="wrong-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
+            <div class="wrong-hint-text">${draggedItem.hint}</div>
+          </div>
+        `;
+        activeModalCard = card;
+        showOverlay();
+      }
+    }
+
+    // Drag & Drop event handlers
+    let customDragAvatar = null;
+
+    function handleDragStart(e) {
+      if (activeModalCard) {
+        e.preventDefault();
+        return;
+      }
+      draggedWordKey = this.getAttribute('data-key');
+      try {
+        e.dataTransfer.setData('text/plain', draggedWordKey);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+
+      const chip = this;
+      setTimeout(() => {
+        chip.classList.add('dragging');
+      }, 0);
+
+      // Custom floating avatar
+      customDragAvatar = document.createElement('div');
+      customDragAvatar.className = 'vocab-drag-avatar';
+      customDragAvatar.textContent = vocabData[draggedWordKey].word;
+      document.body.appendChild(customDragAvatar);
+
+      const moveAvatar = (moveEvt) => {
+        if (customDragAvatar) {
+          customDragAvatar.style.left = moveEvt.clientX + 'px';
+          customDragAvatar.style.top = moveEvt.clientY + 'px';
+        }
+      };
+      document.addEventListener('dragover', moveAvatar);
+      chip._moveAvatarHandler = moveAvatar;
+
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+    }
+
+    function handleDragEnd(e) {
+      const chip = this;
+      if (chip._moveAvatarHandler) {
+        document.removeEventListener('dragover', chip._moveAvatarHandler);
+        chip._moveAvatarHandler = null;
+      }
+      if (customDragAvatar) {
+        customDragAvatar.remove();
+        customDragAvatar = null;
+      }
+
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+
+      document.querySelectorAll('.vocab-target-card.drag-over').forEach(card => card.classList.remove('drag-over'));
+
+      if (!activePlacedWordKey) {
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+      }
+      draggedWordKey = null;
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();
+    }
+
+    function handleDragOver(e) {
+      if (!draggedWordKey || activeModalCard) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      this.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      if (!this.contains(e.relatedTarget)) {
+        this.classList.remove('drag-over');
+      }
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      if (!draggedWordKey || activeModalCard) return;
+
+      const targetKey = this.getAttribute('data-target-key');
+      processWordPlacement(draggedWordKey, targetKey, this);
+    }
+
+    // Touch Drag support for mobile
+    function setupTouchDrag(chip, key) {
+      let touchMoved = false;
+      let touchAvatar = null;
+      let startX = 0;
+      let startY = 0;
+      let lastTargetCard = null;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedWordKey = key;
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (!draggedWordKey || activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+
+        if (dist > 8) {
+          touchMoved = true;
+          if (!touchAvatar) {
+            chip.classList.add('dragging');
+            touchAvatar = document.createElement('div');
+            touchAvatar.className = 'vocab-touch-avatar';
+            touchAvatar.textContent = vocabData[key].word;
+            document.body.appendChild(touchAvatar);
+
+            const targetsContainer = document.getElementById('vocab-targets');
+            if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+          }
+
+          touchAvatar.style.left = touch.clientX + 'px';
+          touchAvatar.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const targetCard = elem ? elem.closest('.vocab-target-card') : null;
+
+          if (lastTargetCard && lastTargetCard !== targetCard) {
+            lastTargetCard.classList.remove('drag-over');
+          }
+          if (targetCard && !targetCard.classList.contains('state-wrong') && !targetCard.classList.contains('state-correct')) {
+            targetCard.classList.add('drag-over');
+            lastTargetCard = targetCard;
+          } else {
+            lastTargetCard = null;
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (!draggedWordKey || activeModalCard) return;
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+
+        if (!touchMoved) {
+          draggedWordKey = null;
+          return;
+        }
+
+        const touch = e.changedTouches[0];
+        const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
+        const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
+        const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
+
+        if (targetCard && targetKey && !activeModalCard) {
+          processWordPlacement(key, targetKey, targetCard);
+        } else {
+          chip.classList.remove('dragging');
+          chip.style.opacity = '';
+          chip.style.visibility = '';
+        }
+        draggedWordKey = null;
+      });
+
+      chip.addEventListener('touchcancel', () => {
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+        draggedWordKey = null;
+      });
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE QUIZ LOGIC (RADIO-FREE)
+    // =========================================================
+    function selectOption(qNum, value) {
+      if (window.event && window.event.shiftKey) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (userAnswers[qNum] === value) {
+        delete userAnswers[qNum];
+        applyQuestionFeedback(qNum, null);
+        saveState();
+        return;
+      }
+      userAnswers[qNum] = value;
+      applyQuestionFeedback(qNum, value);
+      saveState();
+    }
+
+    function applyQuestionFeedback(qNum, value) {
+      const card = document.querySelector(`.question-card[data-q="${qNum}"]`);
+      if (!card) return;
+      const correctVal = card.getAttribute('data-correct');
+
+      const allOptionItems = card.querySelectorAll('.option-item');
+      allOptionItems.forEach(item => item.classList.remove('selected'));
+
+      const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
+      allFeedbackBoxes.forEach(fb => {
+        fb.className = 'feedback-box';
+        fb.innerHTML = '';
+      });
+
+      if (!value) {
+        card.classList.remove('answered', 'correct', 'incorrect');
+        return;
+      }
+
+      const activeOption = card.querySelector(`.option-item[onclick*="'${value}'"]`);
+      if (activeOption) activeOption.classList.add('selected');
+
+      const feedbackBox = document.getElementById(`feedback-${qNum}-${value}`);
+      if (!feedbackBox) return;
+
+      const qExplanations = explanations[qNum] || {};
+      const explanation = qExplanations[value] || '';
+
+      card.classList.add('answered');
+      if (value === correctVal) {
+        card.classList.remove('incorrect');
+        card.classList.add('correct');
+        feedbackBox.className = 'feedback-box show correct-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      } else {
+        card.classList.remove('correct');
+        card.classList.add('incorrect');
+        feedbackBox.className = 'feedback-box show wrong-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      }
+    }
+
+    // =========================================================
+    // RESET WORKSHEET
+    // =========================================================
+    let resetTimer = null;
+
+    function requestReset() {
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (!btn || !box) return;
+      btn.style.display = 'none';
+      box.style.display = 'inline-flex';
+
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        cancelReset();
+      }, 8000);
+    }
+
+    function cancelReset() {
+      if (resetTimer) {
+        clearTimeout(resetTimer);
+        resetTimer = null;
+      }
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (btn) btn.style.display = 'inline-flex';
+      if (box) box.style.display = 'none';
+    }
+
+    function confirmReset() {
+      cancelReset();
+      executeReset();
+    }
+
+    function executeReset() {
+      savedReturnScrollY = null;
+      document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
+      userAnswers = {};
+      completedVocab = [];
+      readingBookmarks = [];
+      activeModalCard = null;
+      activePlacedWordKey = null;
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      const optionItems = document.querySelectorAll('.option-item');
+      optionItems.forEach(item => item.classList.remove('selected'));
+
+      const cards = document.querySelectorAll('.question-card');
+      cards.forEach(c => {
+        c.classList.remove('answered', 'correct', 'incorrect');
+      });
+
+      const feedbacks = document.querySelectorAll('.feedback-box');
+      feedbacks.forEach(f => {
+        f.textContent = '';
+        f.className = 'feedback-box';
+      });
+
+      hideModal();
+      renderVocabulary();
+      renderReadingBookmarks();
+    }
+
+    // =========================================================
+    // SECTION JUMP NAVIGATION (STATIONARY & STICKY PILL PARITY)
+    // =========================================================
+    let savedReturnScrollY = null;
+
+    function returnToPreviousSpot(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if (savedReturnScrollY !== null) {
+        const targetY = savedReturnScrollY;
+        savedReturnScrollY = null;
+        document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
+        snappyScrollTo(targetY, 280);
+      }
+    }
+
+    function handleBookmarkJump(e) {
+      if (e) e.preventDefault();
+      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+      if (bookmarkEls.length === 0) return;
+
+      bookmarkEls.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+      let nextBm = bookmarkEls.find(bm => bm.getBoundingClientRect().top > 120);
+      if (!nextBm) {
+        nextBm = bookmarkEls[0];
+      }
+
+      const rect = nextBm.getBoundingClientRect();
+      const targetY = window.scrollY + rect.top - 80;
+      snappyScrollTo(Math.max(0, targetY), 280);
+    }
+
+    function setupStickyJumpNav() {
+      const headerJumpNav = document.querySelector('.jump-nav');
+      const stickyNav = document.getElementById('sticky-jump-nav');
+      if (!headerJumpNav || !stickyNav) return;
+
+      const createTopBtn = () => {
+        const topBtn = document.createElement('button');
+        topBtn.type = 'button';
+        topBtn.className = 'jump-top-btn';
+        topBtn.title = 'Ir al inicio';
+        topBtn.setAttribute('aria-label', 'Ir al inicio');
+        topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="7"></line><polyline points="6 13 12 7 18 13"></polyline><line x1="4" y1="3" x2="20" y2="3"></line></svg>';
+        topBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (window.scrollY >= window.innerHeight * 0.85) {
+            savedReturnScrollY = window.scrollY;
+            document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
+          }
+          snappyScrollTo(0, 280);
+        });
+        return topBtn;
+      };
+
+      const createReturnBtn = () => {
+        const returnBtn = document.createElement('button');
+        returnBtn.type = 'button';
+        returnBtn.className = 'jump-return-btn' + (savedReturnScrollY !== null ? ' show' : '');
+        returnBtn.title = 'Volver al punto anterior';
+        returnBtn.setAttribute('aria-label', 'Volver al punto anterior');
+        returnBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
+        returnBtn.addEventListener('click', returnToPreviousSpot);
+        return returnBtn;
+      };
+
+      const createBookmarkBtn = () => {
+        const bmBtn = document.createElement('button');
+        bmBtn.type = 'button';
+        bmBtn.className = 'jump-bookmark-btn';
+        bmBtn.title = 'Ir al siguiente marcador';
+        bmBtn.setAttribute('aria-label', 'Ir al siguiente marcador');
+        bmBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>';
+        bmBtn.addEventListener('click', handleBookmarkJump);
+        return bmBtn;
+      };
+
+      const headerLinks = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
+      const sectionIds = [];
+      headerLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('#')) {
+          sectionIds.push(href.slice(1));
+        }
+      });
+
+      // Populate sticky nav with 1:1 button parity
+      stickyNav.innerHTML = '';
+      stickyNav.appendChild(createTopBtn());
+      stickyNav.appendChild(createReturnBtn());
+
+      headerLinks.forEach(link => {
+        const clone = link.cloneNode(true);
+        stickyNav.appendChild(clone);
+      });
+      stickyNav.appendChild(createBookmarkBtn());
+
+      const handleJumpClick = function(e) {
+        const href = this.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        const targetId = href.slice(1);
+        const targetEl = document.getElementById(targetId);
+        if (!targetEl) return;
+        e.preventDefault();
+
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
+
+        if ((targetId === sectionIds[0] || targetId === sectionIds[sectionIds.length - 1]) && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
+          returnToPreviousSpot();
+          return;
+        }
+
+        if (Math.abs(window.scrollY - targetTop) > 100 && window.scrollY >= window.innerHeight * 0.85) {
+          savedReturnScrollY = window.scrollY;
+          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
+        }
+
+        snappyScrollTo(Math.max(0, targetTop), 280);
+      };
+
+      headerJumpNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
+      stickyNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
+
+      const updateStickyNavState = () => {
+        // Sticky button menu appears ONLY when stationary menu is no longer visible on screen
+        const headerRect = headerJumpNav.getBoundingClientRect();
+        const shouldShow = headerRect.bottom <= 0;
+        stickyNav.classList.toggle('visible', shouldShow);
+
+        // Stationary Top button only shows when scrolled down past 30px
+        const headerTopBtn = headerJumpNav.querySelector('.jump-top-btn');
+        if (headerTopBtn) {
+          headerTopBtn.classList.toggle('show', window.scrollY > 30);
+        }
+
+        let currentSectionId = sectionIds[0];
+        const threshold = 130;
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const top = el.getBoundingClientRect().top;
+            if (top <= threshold) {
+              currentSectionId = id;
+            }
+          }
+        }
+        if ((window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 40)) {
+          currentSectionId = sectionIds[sectionIds.length - 1];
+        }
+
+        // Active section highlight on BOTH stationary and sticky menus
+        headerJumpNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
+        });
+        stickyNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
+        });
+
+        updateStickyBookmarkState();
+      };
+
+      window.addEventListener('scroll', updateStickyNavState, { passive: true });
+      updateStickyNavState();
+    }
+
+    let cachedActivityStyles = '';
+    function getPageStyles() {
+      if (!cachedActivityStyles) {
+        cachedActivityStyles = Array.from(document.querySelectorAll('style'))
+          .map(s => s.outerHTML)
+          .join('\n');
+      }
+      return cachedActivityStyles;
+    }
+
+    function prefetchUrl(url) {
+      if (!url) return;
+      if (!document.querySelector(`link[rel="prefetch"][href="${url}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    }
+
+    function captureOutgoingActivity(direction) {
+      try {
+        const styles = getPageStyles();
+        const util = document.querySelector('.utility-bar');
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          const html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          sessionStorage.setItem('nav-direction', direction);
+          sessionStorage.setItem('nav-outgoing-styles', styles);
+          sessionStorage.setItem('nav-outgoing-html', html);
+          sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
+          sessionStorage.setItem('nav-outgoing-padding', '0 8px 12px 8px');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function handleBackNavigation(e, url) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
+      const targetUrl = url || '../../index.html';
+      if (window.innerWidth <= 680) {
+        if (e) e.preventDefault();
+        captureOutgoingActivity('backward');
+        window.location.href = targetUrl;
+        return false;
+      }
+      window.location.href = targetUrl;
+      return false;
+    }
+
+    // Simultaneously whoosh outgoing main page off to the left as activity page whooshes in from the right
+    (function runIncomingTransition() {
+      try {
+        if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'forward') {
+          const outStyles = sessionStorage.getItem('nav-outgoing-styles') || '';
+          const outHtml = sessionStorage.getItem('nav-outgoing-html') || '';
+          const outScroll = parseFloat(sessionStorage.getItem('nav-outgoing-scroll') || '0');
+          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '12px 8px';
+
+          sessionStorage.removeItem('nav-direction');
+          sessionStorage.removeItem('nav-outgoing-styles');
+          sessionStorage.removeItem('nav-outgoing-html');
+          sessionStorage.removeItem('nav-outgoing-scroll');
+          sessionStorage.removeItem('nav-outgoing-padding');
+
+          const sheet = document.querySelector('.handout-sheet');
+          const util = document.querySelector('.utility-bar');
+          if (sheet) {
+            sheet.classList.remove('page-slide-out-right');
+            sheet.classList.add('page-slide-in-right');
+            const cleanupSheet = () => sheet.classList.remove('page-slide-in-right');
+            sheet.addEventListener('animationend', cleanupSheet, { once: true });
+            setTimeout(cleanupSheet, 340);
+          }
+          if (util) {
+            util.classList.remove('page-slide-out-right');
+            util.classList.add('page-slide-in-right');
+            const cleanupUtil = () => util.classList.remove('page-slide-in-right');
+            util.addEventListener('animationend', cleanupUtil, { once: true });
+            setTimeout(cleanupUtil, 340);
+          }
+
+          if (outHtml) {
+            const overlayHost = document.createElement('div');
+            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
+            const shadow = overlayHost.attachShadow({ mode: 'open' });
+            shadow.innerHTML = `
+              ${outStyles}
+              <style>
+                :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+                .outgoing-stage {
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: ${outPadding};
+                  transform: translate3d(0, -${outScroll}px, 0);
+                  animation: whooshOutLeft 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                }
+                @keyframes whooshOutLeft {
+                  from { transform: translate3d(0, -${outScroll}px, 0); }
+                  to { transform: translate3d(-105vw, -${outScroll}px, 0); }
+                }
+              </style>
+              <div class="outgoing-stage">${outHtml}</div>
+            `;
+            document.body.appendChild(overlayHost);
+            setTimeout(() => {
+              overlayHost.remove();
+            }, 240);
+          }
+        }
+      } catch (e) {}
+    })();
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      getPageStyles();
+      initReadingWords();
+      loadSavedState();
+      setupStickyJumpNav();
+
+      // Keyboard support for instructions box
+      const box = document.getElementById('instructions-box');
+      if (box) {
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleInstructions(e);
+          }
+        });
+      }
+
+      // Prefetch back navigation on touch/pointer down for instant switching
+      document.querySelectorAll('.back-link').forEach(link => {
+        const url = link.getAttribute('href') || '../../index.html';
+        link.addEventListener('pointerdown', () => prefetchUrl(url), { passive: true });
+        link.addEventListener('touchstart', () => prefetchUrl(url), { passive: true });
+      });
+
+      // Click on vocabulary words in reading text opens hint modal
+      document.querySelectorAll('.vocab-in-text').forEach(span => {
+        span.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (e.shiftKey) return;
+          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+          const key = span.getAttribute('data-key') || span.textContent.trim().toLowerCase();
+          if (vocabData[key]) {
+            showWordHintModal(key);
+          }
+        });
+      });
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          if (!activeModalCard) renderVocabulary();
+        });
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (!activeModalCard) renderVocabulary();
+    });
+
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const sheet = document.querySelector('.handout-sheet');
+        const util = document.querySelector('.utility-bar');
+        if (sheet) sheet.classList.remove('page-slide-out-right', 'page-slide-in-right');
+        if (util) util.classList.remove('page-slide-out-right', 'page-slide-in-right');
+      }
+    });
+
+    // =========================================================
+    // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // =========================================================
+    let lbScale = 1;
+    let lbTranslateX = 0;
+    let lbTranslateY = 0;
+    let lbPinchStartDist = 0;
+    let lbPinchStartScale = 1;
+    let lbPanStartX = 0;
+    let lbPanStartY = 0;
+    let lbLastTouchX = 0;
+    let lbLastTouchY = 0;
+    let lbMouseDown = false;
+    let lbSelectingCaption = false;
+    let lbLastMouseX = 0;
+    let lbLastMouseY = 0;
+    let lbGestureMoved = false;
+    let lbIgnoreNextClick = false;
+    const LB_MAX_SCALE = 50;
+
+    function applyLightboxTransform() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      if (img) {
+        img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
+      }
+      if (overlay) {
+        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
+      }
+    }
+
+    function openImageLightbox(src, alt, questionsJson, isSparkle) {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay || !img) return;
+      img.src = src;
+      img.alt = alt || '';
+      if (caption) {
+        caption.textContent = alt || '';
+        caption.classList.remove('sparkle');
+        if (isSparkle) {
+          void caption.offsetWidth;
+          caption.classList.add('sparkle');
+        }
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+        let qList = [];
+        try {
+          if (Array.isArray(questionsJson)) qList = questionsJson;
+          else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
+        } catch (e) {}
+        if (qList && qList.length > 0) {
+          const pillBubbleSvg = '<svg viewBox="0 0 20 20" width="16" height="16" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
+          qList.forEach(q => {
+            const pill = document.createElement('div');
+            pill.className = 'image-lightbox-q-pill';
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'image-lightbox-q-icon';
+            iconSpan.innerHTML = pillBubbleSvg;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'image-lightbox-q-text';
+            textSpan.textContent = q;
+
+            pill.appendChild(iconSpan);
+            pill.appendChild(textSpan);
+            questionsContainer.appendChild(pill);
+          });
+          questionsContainer.style.display = 'flex';
+        } else {
+          questionsContainer.style.display = 'none';
+        }
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+      lbGestureMoved = false;
+      lbIgnoreNextClick = false;
+      overlay.classList.remove('is-zoomed', 'is-panning');
+      applyLightboxTransform();
+      overlay.classList.add('active');
+    }
+
+    function closeImageLightbox() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay) return;
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
+          sel.removeAllRanges();
+        }
+      }
+      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
+      if (img) {
+        img.src = '';
+        img.style.transform = '';
+      }
+      if (caption) {
+        caption.textContent = '';
+        caption.classList.remove('sparkle');
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+    }
+
+    function handleLightboxClick(e) {
+      if (lbIgnoreNextClick) {
+        lbIgnoreNextClick = false;
+        return;
+      }
+      if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
+        return;
+      }
+      const isImgClick = e && e.target && (e.target.id === 'image-lightbox-img' || e.target.closest('#image-lightbox-img'));
+      if (isImgClick) {
+        const questionsContainer = document.getElementById('image-lightbox-questions');
+        const hasQuestions = questionsContainer && questionsContainer.children.length > 0;
+        if (hasQuestions) {
+          questionsContainer.style.display = questionsContainer.style.display === 'none' ? 'flex' : 'none';
+        } else {
+          closeImageLightbox();
+        }
+        return;
+      }
+      closeImageLightbox();
+    }
+
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
+
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
+
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2) {
+            e.preventDefault();
+            lbGestureMoved = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
+    // =========================================================
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
+    // =========================================================
+    let solvedImageIds = [];
+    let draggedImageId = null;
+    let selectedImageLabelChip = null;
+
+    function handleImageLabelDragStart(e, chip) {
+      draggedImageId = chip.getAttribute('data-image-id');
+      try {
+        e.dataTransfer.setData('text/plain', draggedImageId);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+      chip.classList.add('is-dragging');
+      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
+        selectedImageLabelChip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      }
+    }
+
+    function handleImageLabelDragEnd(e, chip) {
+      chip.classList.remove('is-dragging');
+      draggedImageId = null;
+      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
+    }
+
+    function handleImageLabelClick(chip) {
+      if (selectedImageLabelChip === chip) {
+        chip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      } else {
+        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
+        chip.classList.add('is-selected');
+        selectedImageLabelChip = chip;
+      }
+    }
+
+    function setupImageTouchDrag(chip) {
+      let touchMoved = false;
+      let ghost = null;
+      let startX = 0;
+      let startY = 0;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedImageId = chip.getAttribute('data-image-id');
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1 || !draggedImageId) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+        if (dist > 8) {
+          touchMoved = true;
+          if (!ghost) {
+            ghost = chip.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.zIndex = '9999';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.opacity = '0.85';
+            ghost.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ghost);
+            chip.classList.add('is-dragging');
+          }
+          ghost.style.left = touch.clientX + 'px';
+          ghost.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
+            if (c !== card) c.classList.remove('image-drop-hover');
+          });
+          if (card && !card.classList.contains('is-solved')) {
+            card.classList.add('image-drop-hover');
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (ghost) {
+          ghost.remove();
+          ghost = null;
+        }
+        chip.classList.remove('is-dragging');
+        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
+
+        if (touchMoved && draggedImageId) {
+          const changedTouch = e.changedTouches[0];
+          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          if (card && !card.classList.contains('is-solved')) {
+            const cardId = card.getAttribute('data-image-id');
+            if (cardId === draggedImageId) {
+              const img = card.querySelector('img');
+              const src = img ? img.getAttribute('src') : '';
+              const alt = card.getAttribute('data-image-title') || '';
+              solveImage(card, chip, src, alt);
+            }
+          }
+          draggedImageId = null;
+        }
+      });
+    }
+
+    function handleImageCardDragOver(e, card) {
+      if (card.classList.contains('is-solved')) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      card.classList.add('image-drop-hover');
+    }
+
+    function handleImageCardDragLeave(e, card) {
+      if (!card.contains(e.relatedTarget)) {
+        card.classList.remove('image-drop-hover');
+      }
+    }
+
+    function handleImageCardDrop(e, card, src, alt, questionsJson) {
+      e.preventDefault();
+      card.classList.remove('image-drop-hover');
+      if (card.classList.contains('is-solved')) return;
+      let droppedId = '';
+      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
+      if (!droppedId) droppedId = draggedImageId;
+      const cardId = card.getAttribute('data-image-id');
+      if (droppedId && droppedId === cardId) {
+        const pool = document.getElementById('image-labels-pool');
+        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
+        solveImage(card, chip, src, alt, questionsJson);
+      }
+    }
+
+    function handleImageCardClick(card, src, alt, questionsJson) {
+      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
+        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
+        const cardId = card.getAttribute('data-image-id');
+        if (selectedId === cardId) {
+          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
+          return;
+        } else {
+          selectedImageLabelChip.classList.remove('is-selected');
+          selectedImageLabelChip = null;
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function solveImage(card, chip, src, alt, questionsJson) {
+      if (!card) return;
+      const imageId = card.getAttribute('data-image-id');
+      card.classList.add('is-solved');
+      if (chip) {
+        chip.classList.remove('is-selected', 'is-dragging');
+        chip.classList.add('is-hidden');
+      }
+      if (selectedImageLabelChip === chip) {
+        selectedImageLabelChip = null;
+      }
+      if (imageId && !solvedImageIds.includes(imageId)) {
+        solvedImageIds.push(imageId);
+        if (typeof saveState === 'function') {
+          saveState();
+        }
+      }
+      openImageLightbox(src, alt, questionsJson, true);
+    }
+
+    function initImageLabelsGame() {
+      const pool = document.getElementById('image-labels-pool');
+      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
+      if (!pool || cards.length === 0) return;
+
+      // 1. Gather existing chips in pool and deduplicate
+      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
+      const seenIds = new Set();
+      const validChips = [];
+
+      chips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          validChips.push(chip);
+        } else {
+          chip.remove();
+        }
+      });
+
+      // 2. If pool was empty, generate from cards
+      if (validChips.length === 0) {
+        cards.forEach(card => {
+          const id = card.getAttribute('data-image-id');
+          const title = card.getAttribute('data-image-title');
+          if (id && title && !seenIds.has(id)) {
+            seenIds.add(id);
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'image-label-chip';
+            chip.setAttribute('data-image-id', id);
+            chip.setAttribute('draggable', 'true');
+            chip.textContent = title;
+            pool.appendChild(chip);
+            validChips.push(chip);
+          }
+        });
+      }
+
+      // 3. Fisher-Yates shuffle order in pool
+      for (let i = validChips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = validChips[i];
+        validChips[i] = validChips[j];
+        validChips[j] = temp;
+      }
+      validChips.forEach(chip => pool.appendChild(chip));
+
+      // 4. Attach event listeners and sync solved state
+      validChips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        const isSolved = solvedImageIds.includes(id);
+        chip.classList.toggle('is-hidden', isSolved);
+        chip.classList.remove('is-selected', 'is-dragging');
+
+        if (!chip.dataset.bound) {
+          chip.dataset.bound = 'true';
+          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+          chip.addEventListener('click', () => handleImageLabelClick(chip));
+          setupImageTouchDrag(chip);
+        }
+      });
+
+      // 5. Update cards solved state
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        if (id && solvedImageIds.includes(id)) {
+          card.classList.add('is-solved');
+        } else {
+          card.classList.remove('is-solved');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initImageLabelsGame();
+    });
+
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          if (typeof closeImageLightbox === 'function') closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+
+  </script>
+</body>
+</html>

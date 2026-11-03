@@ -1,0 +1,5 @@
+## general
+
+- rename skill "create-learning-activity" to "create-activity"
+	- change all references as well, e.g. README
+- for all activities, when all labels have been draggeed and dropped for the images, then the "label area" is hidden

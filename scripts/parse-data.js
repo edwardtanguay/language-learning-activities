@@ -1905,9 +1905,19 @@ function ensureLightboxAssets(html) {
       /<div class="image-lightbox-overlay" id="image-lightbox"[^>]*>[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/,
       SECTION_LIGHTBOX_HTML.trim()
     );
+  } else if (/(<div class="(?:vocab-overlay|vocab-dim-overlay)"[^>]*><\/div>)/.test(out)) {
+    out = out.replace(
+      /(<div class="(?:vocab-overlay|vocab-dim-overlay)"[^>]*><\/div>)/,
+      `$1\n${SECTION_LIGHTBOX_HTML}`
+    );
+  } else if (out.includes('<div class="utility-bar">')) {
+    out = out.replace(
+      /(<div class="utility-bar">)/,
+      `${SECTION_LIGHTBOX_HTML}\n\n  $1`
+    );
   } else {
     out = out.replace(
-      /(<div class="vocab-dim-overlay"[^>]*><\/div>)/,
+      /(<body[^>]*>)/i,
       `$1\n${SECTION_LIGHTBOX_HTML}`
     );
   }
