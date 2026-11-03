@@ -704,17 +704,18 @@
       position: fixed;
       pointer-events: none;
       z-index: 1000;
-      transform: translate(-50%, -100%);
+      transform: translate(-50%, -120%);
       font-family: var(--font-typewriter);
-      font-size: 24px;
+      font-size: 13px;
       font-weight: 700;
       background: var(--paper-sheet);
       color: var(--ink-main);
-      border: 2px solid var(--stamp-blue);
-      box-shadow: 0 10px 28px rgba(45, 40, 35, 0.25);
-      padding: 6px 14px;
+      border: 1px solid var(--stamp-blue);
+      box-shadow: 0 4px 14px rgba(45, 40, 35, 0.25);
+      padding: 5px 10px 3px 10px;
       white-space: nowrap;
       border-radius: 0;
+      line-height: 1.15;
     }
 
     .vocab-target-card {
@@ -2671,9 +2672,6 @@
 
     let completedVocab = [];
     let draggedWordKey = null;
-    let selectedWordKey = null;
-    let lastChipClickTime = 0;
-    let lastClickedChipKey = null;
     let activePlacedWordKey = null;
     let activeModalCard = null;
 
@@ -3276,472 +3274,15 @@
           chip.dataset.bound = 'true';
           chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
           chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
-          chip.addEventListener('click', () => handleImageLabelClick(chip));
-          setupImageTouchDrag(chip);
-        }
-      });
-
-      // 5. Update cards solved state and pool visibility
-      cards.forEach(card => {
-        const id = card.getAttribute('data-image-id');
-        if (id && solvedImageIds.includes(id)) {
-          card.classList.add('is-solved');
-        } else {
-          card.classList.remove('is-solved');
-        }
-      });
-
-      const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
-      pool.style.display = (validChips.length > 0 && remainingChips.length === 0) ? 'none' : 'flex';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      initImageLabelsGame();
-    });
-
-    // STATE MANAGEMENT (PERSISTENCE)
-    // =========================================================
-    function loadSavedState() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (parsed && typeof parsed === 'object') {
-            if (parsed.mc || parsed.vocab || parsed.bookmarks) {
-              userAnswers = parsed.mc || {};
-              completedVocab = Array.isArray(parsed.vocab)
-                ? parsed.vocab.filter(k => vocabData[k])
-                : [];
-              readingBookmarks = Array.isArray(parsed.bookmarks)
-                ? parsed.bookmarks.filter(idx => Number.isInteger(idx) && idx >= 0)
-                : [];
-              solvedImageIds = Array.isArray(parsed.images) ? parsed.images : [];
-            } else {
-              userAnswers = parsed;
-              completedVocab = [];
-              readingBookmarks = [];
-              solvedImageIds = [];
-            }
-          }
-        }
-      } catch (e) {
-        console.warn("Could not load from localStorage:", e);
-      }
-
-      // Restore Multiple Choice answers
-      Object.keys(userAnswers).forEach(qNum => {
-        const val = userAnswers[qNum];
-        applyQuestionFeedback(qNum, val);
-      });
-
-      // Render Vocabulary & Reading Bookmarks
-      renderVocabulary();
-      renderReadingBookmarks();
-      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
-    }
-
-    function saveState() {
-      try {
-        const state = {
-          mc: userAnswers,
-          vocab: completedVocab,
-          bookmarks: readingBookmarks,
-          images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (e) {
-        console.warn("Could not save to localStorage:", e);
-      }
-    }
-
-    // =========================================================
-    // READING BOOKMARKS (SHIFT + DOUBLE-CLICK ON ANY WORD)
-    // =========================================================
-    function initReadingWords() {
-      const sheet = document.querySelector('.handout-sheet');
-      if (!sheet || sheet.getAttribute('data-words-initialized') === 'true') return;
-      sheet.setAttribute('data-words-initialized', 'true');
-
-      let wordIndex = 0;
-
-      function processNode(node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const text = node.nodeValue;
-          if (!text || !text.trim()) return;
-          const regex = /([\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*)/gu;
-          let lastIdx = 0;
-          let match;
-          const frag = document.createDocumentFragment();
-          let found = false;
-
-          while ((match = regex.exec(text)) !== null) {
-            found = true;
-            if (match.index > lastIdx) {
-              frag.appendChild(document.createTextNode(text.slice(lastIdx, match.index)));
-            }
-            const span = document.createElement('span');
-            span.className = 'reading-word';
-            span.setAttribute('data-word-idx', String(wordIndex++));
-            span.textContent = match[0];
-            frag.appendChild(span);
-            lastIdx = regex.lastIndex;
-          }
-
-          if (found) {
-            if (lastIdx < text.length) {
-              frag.appendChild(document.createTextNode(text.slice(lastIdx)));
-            }
-            node.parentNode.replaceChild(frag, node);
-          }
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-          if (
-            node.closest('.vocab-section') ||
-            node.closest('.jump-nav') ||
-            node.closest('.sticky-jump-nav') ||
-            node.closest('.utility-bar') ||
-            node.closest('.bottom-actions-bar') ||
-            node.closest('.lookup-btn') ||
-            node.closest('button') ||
-            node.tagName === 'BUTTON' ||
-            node.tagName === 'SVG' ||
-            node.tagName === 'SCRIPT' ||
-            node.tagName === 'STYLE' ||
-            node.classList.contains('instructions-heading') ||
-            node.classList.contains('section-num') ||
-            node.classList.contains('section-action-hint') ||
-            node.classList.contains('feedback-box')
-          ) {
-            return;
-          }
-
-          if (node.classList.contains('vocab-in-text')) {
-            const wrap = document.createElement('span');
-            wrap.className = 'reading-word';
-            wrap.setAttribute('data-word-idx', String(wordIndex++));
-            node.parentNode.replaceChild(wrap, node);
-            wrap.appendChild(node);
-            return;
-          }
-
-          const children = Array.from(node.childNodes);
-          children.forEach(processNode);
-        }
-      }
-
-      const targetAreas = sheet.querySelectorAll(
-        '.instructions-inner, .reading-content, .quiz-container, .discussion-container'
-      );
-      if (targetAreas.length > 0) {
-        targetAreas.forEach(area => processNode(area));
-      } else {
-        processNode(sheet);
-      }
-
-      sheet.addEventListener('dblclick', (e) => {
-        if (!e.shiftKey) return;
-        if (e.target && e.target.closest('.reading-bookmark')) return;
-
-        let wordEl = e.target && e.target.closest ? e.target.closest('.reading-word') : null;
-        if (!wordEl && window.getSelection) {
-          const sel = window.getSelection();
-          if (sel && sel.rangeCount > 0) {
-            const range = sel.getRangeAt(0);
-            const startNode = range.startContainer;
-            const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement;
-            if (startEl && sheet.contains(startEl)) {
-              wordEl = startEl.closest('.reading-word');
-            }
-          }
-        }
-
-        if (!wordEl) return;
-
-        const idx = parseInt(wordEl.getAttribute('data-word-idx'), 10);
-        if (isNaN(idx)) return;
-
-        e.preventDefault();
-        e.stopPropagation();
-        addReadingBookmark(idx);
-
-        const clearSel = () => {
-          if (window.getSelection) {
-            const sel = window.getSelection();
-            if (sel) sel.removeAllRanges();
-          }
-        };
-        clearSel();
-        requestAnimationFrame(clearSel);
-      });
-    }
-
-    function addReadingBookmark(idx) {
-      if (!readingBookmarks.includes(idx)) {
-        readingBookmarks.push(idx);
-        readingBookmarks.sort((a, b) => a - b);
-        saveState();
-      }
-      renderReadingBookmarks();
-    }
-
-    function removeReadingBookmark(idx) {
-      const next = readingBookmarks.filter(item => item !== idx);
-      if (next.length !== readingBookmarks.length) {
-        readingBookmarks = next;
-        saveState();
-      }
-      renderReadingBookmarks();
-    }
-
-    function updateStickyBookmarkState() {
-      const bmBtns = document.querySelectorAll('.jump-bookmark-btn');
-      if (bmBtns.length === 0) return;
-      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
-      if (bookmarkEls.length === 0) {
-        bmBtns.forEach(btn => btn.classList.remove('show'));
-        return;
-      }
-      if (bookmarkEls.length === 1) {
-        const rect = bookmarkEls[0].getBoundingClientRect();
-        const isVisible = (rect.top >= 40 && rect.bottom <= window.innerHeight - 40);
-        bmBtns.forEach(btn => btn.classList.toggle('show', !isVisible));
-        return;
-      }
-      bmBtns.forEach(btn => btn.classList.add('show'));
-    }
-
-    function renderReadingBookmarks() {
-      document.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
-      document.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
-
-      readingBookmarks.forEach(idx => {
-        const wordEl = document.querySelector(`.reading-word[data-word-idx="${idx}"]`);
-        if (!wordEl) return;
-        wordEl.classList.add('has-bookmark');
-
-        const bm = document.createElement('span');
-        bm.className = 'reading-bookmark';
-        bm.setAttribute('data-bookmark-idx', String(idx));
-        bm.setAttribute('title', 'Eliminar marcador');
-        bm.setAttribute('aria-label', 'Eliminar marcador');
-        bm.setAttribute('role', 'button');
-        bm.setAttribute('tabindex', '0');
-        bm.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
-
-        bm.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          removeReadingBookmark(idx);
-        });
-
-        bm.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            e.stopPropagation();
-            removeReadingBookmark(idx);
-          }
-        });
-
-        wordEl.insertBefore(bm, wordEl.firstChild);
-      });
-
-      updateStickyBookmarkState();
-    }
-
-    // =========================================================
-    // INSTRUCTIONS ROLL-OUT / ROLL-UP LOGIC
-    // =========================================================
-    function toggleInstructions(e) {
-      if (e && e.shiftKey) return;
-      if (e && e.target && (e.target.tagName === 'A' || e.target.closest('a'))) return;
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      const box = document.getElementById('instructions-box');
-      if (!box) return;
-      const isExpanded = box.classList.toggle('expanded');
-      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-    }
-
-    function toggleSectionInstructions() {}
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const box = document.getElementById('instructions-box');
-      if (box) {
-        box.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            toggleInstructions(e);
-          }
-        });
-      }
-    });
-
-    // =========================================================
-    // SNAPPY SCROLL & SCROLL TO TOP LOGIC
-    // =========================================================
-    let activeScrollRaf = null;
-    function snappyScrollTo(targetY, duration = 280) {
-      if (activeScrollRaf) {
-        cancelAnimationFrame(activeScrollRaf);
-        activeScrollRaf = null;
-      }
-      const startY = window.scrollY;
-      const docHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight
-      );
-      const clampedTarget = Math.max(0, Math.min(targetY, docHeight - window.innerHeight));
-      const diff = clampedTarget - startY;
-      if (Math.abs(diff) < 2) return;
-      const startTime = performance.now();
-
-      function easeOutCubic(t) {
-        return 1 - Math.pow(1 - t, 3);
-      }
-
-      function step(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(1, elapsed / duration);
-        window.scrollTo(0, startY + diff * easeOutCubic(progress));
-        if (progress < 1) {
-          activeScrollRaf = requestAnimationFrame(step);
-        } else {
-          activeScrollRaf = null;
-        }
-      }
-      activeScrollRaf = requestAnimationFrame(step);
-    }
-
-    window.addEventListener('wheel', () => {
-      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
-    }, { passive: true });
-    window.addEventListener('touchstart', () => {
-      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
-    }, { passive: true });
-
-    function scrollToTop(e) {
-      if (e) e.preventDefault();
-      snappyScrollTo(0, 280);
-    }
-
-    // =========================================================
-    // VOCABULARY EXERCISE LOGIC
-    // =========================================================
-    function safeDismiss(callback, e) {
-      if (e && e.target && e.target.closest('.lookup-btn')) return;
-      if (e && e.target && e.target.closest('.dict-close-btn')) {
-        callback();
-        return;
-      }
-      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-      callback();
-    }
-
-    function appendBalancedRows(container, keys, createItemFn, rowClass, maxPerRow) {
-      const total = keys.length;
-      if (total === 0) return;
-
-      const availableWidth = container.clientWidth || 320;
-      let numRows = maxPerRow ? Math.ceil(total / maxPerRow) : (total >= 6 ? 2 : 1);
-
-      while (numRows <= total) {
-        container.innerHTML = '';
-        const base = Math.floor(total / numRows);
-        const remainder = total % numRows;
-
-        let startIndex = 0;
-        let overflows = false;
-
-        for (let r = 0; r < numRows; r++) {
-          const count = base + (r < remainder ? 1 : 0);
-          const rowKeys = keys.slice(startIndex, startIndex + count);
-          startIndex += count;
-
-          const row = document.createElement('div');
-          row.className = rowClass;
-          rowKeys.forEach(k => {
-            const el = createItemFn(k);
-            if (el) row.appendChild(el);
-          });
-          container.appendChild(row);
-
-          if (row.scrollWidth > availableWidth && count > 1) {
-            overflows = true;
-          }
-        }
-
-        if (!overflows || numRows >= total) {
-          break;
-        }
-        numRows++;
-      }
-    }
-
-    function renderVocabulary(animState) {
-      const prevChipRects = animState && animState.prevChipRects ? animState.prevChipRects : animState;
-      const prevCompletedOffsets = animState && animState.prevCompletedOffsets ? animState.prevCompletedOffsets : null;
-      const newlyCompletedKey = animState && animState.newlyCompletedKey ? animState.newlyCompletedKey : null;
-
-      const pool = document.getElementById('vocab-pool');
-      const targets = document.getElementById('vocab-targets');
-      const completedPool = document.getElementById('vocab-completed-pool');
-      const detailArea = document.getElementById('vocab-completed-detail');
-
-      if (!pool || !targets || !completedPool) return;
-
-      const savedScrollY = window.scrollY;
-
-      pool.innerHTML = '';
-      targets.innerHTML = '';
-      completedPool.innerHTML = '';
-      if (detailArea) detailArea.innerHTML = '';
-
-      // All keys
-      const allKeys = Object.keys(vocabData);
-      const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
-
-      // 1. Render Waiting Words Pool (horizontally centered, balanced across rows without wrapping)
-      if (remainingKeys.length === 0) {
-        pool.innerHTML = '';
-        pool.style.display = 'none';
-      } else {
-        pool.style.display = 'flex';
-        const createChip = (k) => {
-          const item = vocabData[k];
-          const chip = document.createElement('div');
-          chip.className = 'vocab-chip';
-          chip.setAttribute('draggable', 'true');
-          chip.setAttribute('data-key', k);
-          chip.textContent = item.word;
-
-          // Drag events
-          chip.addEventListener('dragstart', handleDragStart);
-          chip.addEventListener('dragend', handleDragEnd);
-
-          // Click / tap selection and double-tap hint popup
+          // Click opens hint/definition popup
           chip.addEventListener('click', (e) => {
             e.stopPropagation();
             if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-            const now = Date.now();
-            if (lastClickedChipKey === k && (now - lastChipClickTime < 350)) {
-              chip.classList.remove('selected');
-              selectedWordKey = null;
-              lastClickedChipKey = null;
-              showWordHintModal(k);
-              return;
-            }
-            lastChipClickTime = now;
-            lastClickedChipKey = k;
-
-            if (selectedWordKey === k) {
-              chip.classList.remove('selected');
-              selectedWordKey = null;
-            } else {
-              const poolEl = document.getElementById('vocab-pool');
-              if (poolEl) poolEl.querySelectorAll('.vocab-chip.selected').forEach(c => c.classList.remove('selected'));
-              chip.classList.add('selected');
-              selectedWordKey = k;
-            }
+            showWordHintModal(k);
           });
+
+          // Touch drag support (250ms hold-to-drag on mobile)
+          setupTouchDrag(chip, k);
           return chip;
         };
 
@@ -3945,23 +3486,7 @@
       activeModalCard = null;
     }
 
-    
-    document.addEventListener('click', (e) => {
-      if (selectedWordKey && !e.target.closest('.vocab-chip') && !e.target.closest('.vocab-target-card')) {
-        const chip = document.querySelector(`.vocab-chip[data-key="${selectedWordKey}"]`);
-        if (chip) chip.classList.remove('selected');
-        selectedWordKey = null;
-      }
-    });
     function handleTargetCardClick(card, targetKey, e) {
-      if (selectedWordKey && !card.classList.contains('state-wrong') && !card.classList.contains('state-correct')) {
-        const wordKey = selectedWordKey;
-        const chip = document.querySelector(`.vocab-chip[data-key="${wordKey}"]`);
-        if (chip) chip.classList.remove('selected');
-        selectedWordKey = null;
-        processWordPlacement(wordKey, targetKey, card);
-        return;
-      }
       if (card.classList.contains('state-wrong')) {
         safeDismiss(() => dismissWrongState(card), e);
         return;
@@ -4258,7 +3783,129 @@
     }
 
     function setupTouchDrag(chip, key) {
-      // Touch-drag disabled on mobile in favor of tap-to-select to preserve native scrolling
+      let touchMoved = false;
+      let isDragging = false;
+      let touchAvatar = null;
+      let startX = 0;
+      let startY = 0;
+      let holdTimer = null;
+      let lastTargetCard = null;
+
+      function clearHoldTimer() {
+        if (holdTimer) {
+          clearTimeout(holdTimer);
+          holdTimer = null;
+        }
+      }
+
+      function cleanupDrag() {
+        clearHoldTimer();
+        isDragging = false;
+        draggedWordKey = null;
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+      }
+
+      chip.addEventListener('touchstart', (e) => {
+        if (activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        isDragging = false;
+
+        clearHoldTimer();
+        // 250ms press-and-hold required before drag activates
+        holdTimer = setTimeout(() => {
+          if (touchMoved || activeModalCard) return;
+          isDragging = true;
+          draggedWordKey = key;
+          chip.classList.add('dragging');
+          chip.style.opacity = '0';
+          chip.style.visibility = 'hidden';
+
+          touchAvatar = document.createElement('div');
+          touchAvatar.className = 'vocab-touch-avatar';
+          touchAvatar.textContent = vocabData[key].word;
+          document.body.appendChild(touchAvatar);
+          touchAvatar.style.left = touch.clientX + 'px';
+          touchAvatar.style.top = touch.clientY + 'px';
+
+          const targetsContainer = document.getElementById('vocab-targets');
+          if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+
+          if (navigator.vibrate) {
+            try { navigator.vibrate(25); } catch (_) {}
+          }
+        }, 250);
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+
+        if (dist > 8) {
+          touchMoved = true;
+          if (!isDragging) {
+            // Moved before 250ms hold -> page scroll! Cancel drag immediately
+            clearHoldTimer();
+            return;
+          }
+        }
+
+        if (isDragging && touchAvatar) {
+          touchAvatar.style.left = touch.clientX + 'px';
+          touchAvatar.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.vocab-target-card') : null;
+          if (card !== lastTargetCard) {
+            if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
+            if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
+              card.classList.add('drag-over');
+            }
+            lastTargetCard = card;
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        clearHoldTimer();
+
+        if (isDragging) {
+          const touch = e.changedTouches[0];
+          const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
+          const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
+          const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
+
+          cleanupDrag();
+
+          if (targetCard && targetKey && !activeModalCard) {
+            processWordPlacement(key, targetKey, targetCard);
+          }
+          return;
+        }
+
+        // Quick tap: click event fires naturally and triggers showWordHintModal(key)
+      });
+
+      chip.addEventListener('touchcancel', () => {
+        cleanupDrag();
+      });
     }
 
     // =========================================================

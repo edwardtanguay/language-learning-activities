@@ -697,17 +697,18 @@
       position: fixed;
       pointer-events: none;
       z-index: 1000;
-      transform: translate(-50%, -100%);
+      transform: translate(-50%, -120%);
       font-family: var(--font-typewriter);
-      font-size: 24px;
+      font-size: 13px;
       font-weight: 700;
       background: var(--paper-sheet);
       color: var(--ink-main);
-      border: 2px solid var(--stamp-blue);
-      box-shadow: 0 10px 28px rgba(45, 40, 35, 0.25);
-      padding: 6px 14px;
+      border: 1px solid var(--stamp-blue);
+      box-shadow: 0 4px 14px rgba(45, 40, 35, 0.25);
+      padding: 5px 10px 3px 10px;
       white-space: nowrap;
       border-radius: 0;
+      line-height: 1.15;
     }
 
     .vocab-target-card {
@@ -2341,9 +2342,6 @@
     let readingBookmarks = [];
     let activeModalCard = null;
     let draggedWordKey = null;
-    let selectedWordKey = null;
-    let lastChipClickTime = 0;
-    let lastClickedChipKey = null;
     let activePlacedWordKey = null;
 
     // 10 Hardest Non-Cognate Vocabulary Words from the Text
@@ -3014,447 +3012,15 @@
           chip.dataset.bound = 'true';
           chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
           chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
-          chip.addEventListener('click', () => handleImageLabelClick(chip));
-          setupImageTouchDrag(chip);
-        }
-      });
-
-      // 5. Update cards solved state and pool visibility
-      cards.forEach(card => {
-        const id = card.getAttribute('data-image-id');
-        if (id && solvedImageIds.includes(id)) {
-          card.classList.add('is-solved');
-        } else {
-          card.classList.remove('is-solved');
-        }
-      });
-
-      const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
-      pool.style.display = (validChips.length > 0 && remainingChips.length === 0) ? 'none' : 'flex';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      initImageLabelsGame();
-    });
-
-    function dismissActiveVocabModal() {
-      const detailArea = document.getElementById('vocab-completed-detail');
-      if (detailArea && detailArea.getAttribute('data-active-word')) {
-        detailArea.innerHTML = '';
-        detailArea.removeAttribute('data-active-word');
-        return true;
-      }
-      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
-        if (activeModalCard.id === 'active-hint-modal') {
-          hideModal();
-          return true;
-        } else if (activeModalCard.classList.contains('state-wrong')) {
-          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
-          else hideModal();
-          return true;
-        } else if (activeModalCard.classList.contains('state-correct')) {
-          const targetKey = activeModalCard.getAttribute('data-target-key');
-          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
-          else hideModal();
-          return true;
-        } else {
-          hideModal();
-          return true;
-        }
-      }
-      const existingHint = document.getElementById('active-hint-modal');
-      if (existingHint) {
-        hideModal();
-        return true;
-      }
-      return false;
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        const overlay = document.getElementById('image-lightbox');
-        if (overlay && overlay.classList.contains('active')) {
-          closeImageLightbox();
-          return;
-        }
-        if (typeof dismissActiveVocabModal === 'function') {
-          dismissActiveVocabModal();
-        }
-      }
-    });
-
-    (function setupLightboxTouchZoom() {
-      document.addEventListener('DOMContentLoaded', () => {
-        const overlay = document.getElementById('image-lightbox');
-        if (!overlay) return;
-
-        overlay.addEventListener('wheel', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          e.preventDefault();
-          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
-          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
-
-          if (newScale > 1.005) {
-            const cx = window.innerWidth / 2;
-            const cy = window.innerHeight / 2;
-            const offsetX = e.clientX - cx;
-            const offsetY = e.clientY - cy;
-            const ratio = newScale / lbScale;
-            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
-            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
-            lbScale = newScale;
-          } else {
-            lbScale = 1;
-            lbTranslateX = 0;
-            lbTranslateY = 0;
-          }
-          applyLightboxTransform();
-        }, { passive: false });
-
-        overlay.addEventListener('touchstart', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          if (e.touches.length === 2) {
-            e.preventDefault();
-            lbGestureMoved = false;
-            const dx = e.touches[0].clientX - e.touches[1].clientX;
-            const dy = e.touches[0].clientY - e.touches[1].clientY;
-            lbPinchStartDist = Math.hypot(dx, dy);
-            lbPinchStartScale = lbScale;
-            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-          } else if (e.touches.length === 1) {
-            lbPanStartX = e.touches[0].clientX;
-            lbPanStartY = e.touches[0].clientY;
-            lbLastTouchX = e.touches[0].clientX;
-            lbLastTouchY = e.touches[0].clientY;
-            lbGestureMoved = false;
-          }
-        }, { passive: false });
-
-        overlay.addEventListener('touchmove', (e) => {
-          if (!overlay.classList.contains('active')) return;
-          if (e.touches.length === 2 && lbPinchStartDist > 0) {
-            e.preventDefault();
-            lbGestureMoved = true;
-            const dx = e.touches[0].clientX - e.touches[1].clientX;
-            const dy = e.touches[0].clientY - e.touches[1].clientY;
-            const dist = Math.hypot(dx, dy);
-            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
-
-            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-            if (lbScale > 1) {
-              lbTranslateX += (midX - lbLastTouchX);
-              lbTranslateY += (midY - lbLastTouchY);
-            } else {
-              lbTranslateX = 0;
-              lbTranslateY = 0;
-            }
-            lbLastTouchX = midX;
-            lbLastTouchY = midY;
-            applyLightboxTransform();
-          } else if (e.touches.length === 1) {
-            const curX = e.touches[0].clientX;
-            const curY = e.touches[0].clientY;
-            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
-              lbGestureMoved = true;
-            }
-            if (lbScale > 1 && lbGestureMoved) {
-              e.preventDefault();
-              lbTranslateX += (curX - lbLastTouchX);
-              lbTranslateY += (curY - lbLastTouchY);
-              lbLastTouchX = curX;
-              lbLastTouchY = curY;
-              applyLightboxTransform();
-            }
-          }
-        }, { passive: false });
-
-        overlay.addEventListener('touchend', (e) => {
-          if (e.touches.length < 2) {
-            lbPinchStartDist = 0;
-          }
-          if (e.touches.length === 1) {
-            lbLastTouchX = e.touches[0].clientX;
-            lbLastTouchY = e.touches[0].clientY;
-          }
-          if (e.touches.length === 0) {
-            if (lbScale <= 1.02) {
-              lbScale = 1;
-              lbTranslateX = 0;
-              lbTranslateY = 0;
-              applyLightboxTransform();
-            }
-            if (lbGestureMoved) {
-              lbIgnoreNextClick = true;
-              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
-            }
-          }
-        });
-      });
-    })();
-
-    // =========================================================
-    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
-    // =========================================================
-let draggedImageId = null;
-    let selectedImageLabelChip = null;
-
-    function handleImageLabelDragStart(e, chip) {
-      draggedImageId = chip.getAttribute('data-image-id');
-      try {
-        e.dataTransfer.setData('text/plain', draggedImageId);
-        e.dataTransfer.effectAllowed = 'move';
-      } catch (err) {}
-      chip.classList.add('is-dragging');
-      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
-        selectedImageLabelChip.classList.remove('is-selected');
-        selectedImageLabelChip = null;
-      }
-    }
-
-    function handleImageLabelDragEnd(e, chip) {
-      chip.classList.remove('is-dragging');
-      draggedImageId = null;
-      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
-    }
-
-    function handleImageLabelClick(chip) {
-      if (selectedImageLabelChip === chip) {
-        chip.classList.remove('is-selected');
-        selectedImageLabelChip = null;
-      } else {
-        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
-        chip.classList.add('is-selected');
-        selectedImageLabelChip = chip;
-      }
-    }
-
-    function setupImageTouchDrag(chip) {
-      let touchMoved = false;
-      let ghost = null;
-      let startX = 0;
-      let startY = 0;
-
-      chip.addEventListener('touchstart', (e) => {
-        if (e.touches.length !== 1) return;
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        touchMoved = false;
-        draggedImageId = chip.getAttribute('data-image-id');
-      }, { passive: true });
-
-      chip.addEventListener('touchmove', (e) => {
-        if (e.touches.length !== 1 || !draggedImageId) return;
-        const touch = e.touches[0];
-        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
-        if (dist > 8) {
-          touchMoved = true;
-          if (!ghost) {
-            ghost = chip.cloneNode(true);
-            ghost.style.position = 'fixed';
-            ghost.style.zIndex = '9999';
-            ghost.style.pointerEvents = 'none';
-            ghost.style.opacity = '0.85';
-            ghost.style.transform = 'translate(-50%, -50%)';
-            document.body.appendChild(ghost);
-            chip.classList.add('is-dragging');
-          }
-          ghost.style.left = touch.clientX + 'px';
-          ghost.style.top = touch.clientY + 'px';
-
-          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
-          const card = elem ? elem.closest('.image-thumb-wrap') : null;
-          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
-            if (c !== card) c.classList.remove('image-drop-hover');
-          });
-          if (card && !card.classList.contains('is-solved')) {
-            card.classList.add('image-drop-hover');
-          }
-        }
-      }, { passive: true });
-
-      chip.addEventListener('touchend', (e) => {
-        if (ghost) {
-          ghost.remove();
-          ghost = null;
-        }
-        chip.classList.remove('is-dragging');
-        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
-
-        if (touchMoved && draggedImageId) {
-          const changedTouch = e.changedTouches[0];
-          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
-          const card = elem ? elem.closest('.image-thumb-wrap') : null;
-          if (card && !card.classList.contains('is-solved')) {
-            const cardId = card.getAttribute('data-image-id');
-            if (cardId === draggedImageId) {
-              const img = card.querySelector('img');
-              const src = img ? img.getAttribute('src') : '';
-              const alt = card.getAttribute('data-image-title') || '';
-              solveImage(card, chip, src, alt);
-            }
-          }
-          draggedImageId = null;
-        }
-      });
-    }
-
-    function handleImageCardDragOver(e, card) {
-      if (card.classList.contains('is-solved')) return;
-      e.preventDefault();
-      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-      card.classList.add('image-drop-hover');
-    }
-
-    function handleImageCardDragLeave(e, card) {
-      if (!card.contains(e.relatedTarget)) {
-        card.classList.remove('image-drop-hover');
-      }
-    }
-
-    function handleImageCardDrop(e, card, src, alt, questionsJson) {
-      e.preventDefault();
-      card.classList.remove('image-drop-hover');
-      if (card.classList.contains('is-solved')) return;
-      let droppedId = '';
-      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
-      if (!droppedId) droppedId = draggedImageId;
-      const cardId = card.getAttribute('data-image-id');
-      if (droppedId && droppedId === cardId) {
-        const pool = document.getElementById('image-labels-pool');
-        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
-        solveImage(card, chip, src, alt, questionsJson);
-      }
-    }
-
-    function handleImageCardClick(card, src, alt, questionsJson) {
-      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
-        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
-        const cardId = card.getAttribute('data-image-id');
-        if (selectedId === cardId) {
-          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
-          return;
-        } else {
-          selectedImageLabelChip.classList.remove('is-selected');
-          selectedImageLabelChip = null;
-        }
-      }
-      openImageLightbox(src, alt, questionsJson);
-    }
-
-    function solveImage(card, chip, src, alt, questionsJson) {
-      if (!card) return;
-      const imageId = card.getAttribute('data-image-id');
-      card.classList.add('is-solved');
-      if (chip) {
-        chip.classList.remove('is-selected', 'is-dragging');
-        chip.classList.add('is-hidden');
-      }
-      if (selectedImageLabelChip === chip) {
-        selectedImageLabelChip = null;
-      }
-      if (imageId && !solvedImageIds.includes(imageId)) {
-        solvedImageIds.push(imageId);
-        if (typeof saveState === 'function') {
-          saveState();
-        }
-      }
-      const pool = document.getElementById('image-labels-pool');
-      if (pool) {
-        const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
-        if (remainingChips.length === 0) {
-          pool.style.display = 'none';
-        }
-      }
-      openImageLightbox(src, alt, questionsJson, true);
-    }
-
-    function initImageLabelsGame() {
-      const pool = document.getElementById('image-labels-pool');
-      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
-      if (!pool || cards.length === 0) return;
-
-      // 1. Gather existing chips in pool and deduplicate
-      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
-      const seenIds = new Set();
-      const validChips = [];
-
-      chips.forEach(chip => {
-        const id = chip.getAttribute('data-image-id');
-        if (id && !seenIds.has(id)) {
-          seenIds.add(id);
-          validChips.push(chip);
-        } else {
-          chip.remove();
-        }
-      });
-
-      // 2. If pool was empty, generate from cards
-      if (validChips.length === 0) {
-        cards.forEach(card => {
-          const id = card.getAttribute('data-image-id');
-          const title = card.getAttribute('data-image-title');
-          if (id && title && !seenIds.has(id)) {
-            seenIds.add(id);
-            const chip = document.createElement('button');
-            chip.type = 'button';
-            chip.className = 'image-label-chip';
-            chip.setAttribute('data-image-id', id);
-            chip.setAttribute('draggable', 'true');
-            chip.textContent = title;
-            pool.appendChild(chip);
-            validChips.push(chip);
-          }
-        });
-      }
-
-      // 3. Fisher-Yates shuffle order in pool
-      for (let i = validChips.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = validChips[i];
-        validChips[i] = validChips[j];
-        validChips[j] = temp;
-      }
-      validChips.forEach(chip => pool.appendChild(chip));
-
-      // 4. Attach event listeners and sync solved state
-      validChips.forEach(chip => {
-        const id = chip.getAttribute('data-image-id');
-        const isSolved = solvedImageIds.includes(id);
-        chip.classList.toggle('is-hidden', isSolved);
-        chip.classList.remove('is-selected', 'is-dragging');
-
-        if (!chip.dataset.bound) {
-          chip.dataset.bound = 'true';
-          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
-          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
-          // Click / tap selection and double-tap hint popup
+          // Click opens hint/definition popup
           chip.addEventListener('click', (e) => {
             e.stopPropagation();
             if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
-            const now = Date.now();
-            if (lastClickedChipKey === k && (now - lastChipClickTime < 350)) {
-              chip.classList.remove('selected');
-              selectedWordKey = null;
-              lastClickedChipKey = null;
-              showWordHintModal(k);
-              return;
-            }
-            lastChipClickTime = now;
-            lastClickedChipKey = k;
-
-            if (selectedWordKey === k) {
-              chip.classList.remove('selected');
-              selectedWordKey = null;
-            } else {
-              const poolEl = document.getElementById('vocab-pool');
-              if (poolEl) poolEl.querySelectorAll('.vocab-chip.selected').forEach(c => c.classList.remove('selected'));
-              chip.classList.add('selected');
-              selectedWordKey = k;
-            }
+            showWordHintModal(k);
           });
+
+          // Touch drag support (250ms hold-to-drag on mobile)
+          setupTouchDrag(chip, k);
           return chip;
         };
 
@@ -3657,23 +3223,7 @@ let draggedImageId = null;
       activeModalCard = null;
     }
 
-    
-    document.addEventListener('click', (e) => {
-      if (selectedWordKey && !e.target.closest('.vocab-chip') && !e.target.closest('.vocab-target-card')) {
-        const chip = document.querySelector(`.vocab-chip[data-key="${selectedWordKey}"]`);
-        if (chip) chip.classList.remove('selected');
-        selectedWordKey = null;
-      }
-    });
     function handleTargetCardClick(card, targetKey, e) {
-      if (selectedWordKey && !card.classList.contains('state-wrong') && !card.classList.contains('state-correct')) {
-        const wordKey = selectedWordKey;
-        const chip = document.querySelector(`.vocab-chip[data-key="${wordKey}"]`);
-        if (chip) chip.classList.remove('selected');
-        selectedWordKey = null;
-        processWordPlacement(wordKey, targetKey, card);
-        return;
-      }
       if (card.classList.contains('state-wrong')) {
         safeDismiss(() => dismissWrongState(card), e);
         return;
@@ -3966,7 +3516,129 @@ let draggedImageId = null;
     }
 
     function setupTouchDrag(chip, key) {
-      // Touch-drag disabled on mobile in favor of tap-to-select to preserve native scrolling
+      let touchMoved = false;
+      let isDragging = false;
+      let touchAvatar = null;
+      let startX = 0;
+      let startY = 0;
+      let holdTimer = null;
+      let lastTargetCard = null;
+
+      function clearHoldTimer() {
+        if (holdTimer) {
+          clearTimeout(holdTimer);
+          holdTimer = null;
+        }
+      }
+
+      function cleanupDrag() {
+        clearHoldTimer();
+        isDragging = false;
+        draggedWordKey = null;
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+      }
+
+      chip.addEventListener('touchstart', (e) => {
+        if (activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        isDragging = false;
+
+        clearHoldTimer();
+        // 250ms press-and-hold required before drag activates
+        holdTimer = setTimeout(() => {
+          if (touchMoved || activeModalCard) return;
+          isDragging = true;
+          draggedWordKey = key;
+          chip.classList.add('dragging');
+          chip.style.opacity = '0';
+          chip.style.visibility = 'hidden';
+
+          touchAvatar = document.createElement('div');
+          touchAvatar.className = 'vocab-touch-avatar';
+          touchAvatar.textContent = vocabData[key].word;
+          document.body.appendChild(touchAvatar);
+          touchAvatar.style.left = touch.clientX + 'px';
+          touchAvatar.style.top = touch.clientY + 'px';
+
+          const targetsContainer = document.getElementById('vocab-targets');
+          if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+
+          if (navigator.vibrate) {
+            try { navigator.vibrate(25); } catch (_) {}
+          }
+        }, 250);
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+
+        if (dist > 8) {
+          touchMoved = true;
+          if (!isDragging) {
+            // Moved before 250ms hold -> page scroll! Cancel drag immediately
+            clearHoldTimer();
+            return;
+          }
+        }
+
+        if (isDragging && touchAvatar) {
+          touchAvatar.style.left = touch.clientX + 'px';
+          touchAvatar.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.vocab-target-card') : null;
+          if (card !== lastTargetCard) {
+            if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
+            if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
+              card.classList.add('drag-over');
+            }
+            lastTargetCard = card;
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        clearHoldTimer();
+
+        if (isDragging) {
+          const touch = e.changedTouches[0];
+          const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
+          const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
+          const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
+
+          cleanupDrag();
+
+          if (targetCard && targetKey && !activeModalCard) {
+            processWordPlacement(key, targetKey, targetCard);
+          }
+          return;
+        }
+
+        // Quick tap: click event fires naturally and triggers showWordHintModal(key)
+      });
+
+      chip.addEventListener('touchcancel', () => {
+        cleanupDrag();
+      });
     }
 
     // =========================================================
