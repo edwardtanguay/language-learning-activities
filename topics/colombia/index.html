@@ -645,6 +645,7 @@
       gap: 5px;
       flex-shrink: 0;
       white-space: nowrap;
+      touch-action: none;
     }
 
     .vocab-chip:active {
@@ -3129,6 +3130,7 @@
           // Click opens hint/definition popup
           chip.addEventListener('click', (e) => {
             e.stopPropagation();
+            if (chip.getAttribute('data-just-dragged') === 'true') return;
             if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
             showWordHintModal(k);
           });
@@ -3638,23 +3640,67 @@
 
     // Touch event helper for mobile drag & drop with 2x enlarged floating avatar
     function setupTouchDrag(chip, key) {
-      let touchMoved = false;
       let isDragging = false;
       let touchAvatar = null;
       let startX = 0;
       let startY = 0;
-      let holdTimer = null;
+      let lastClientX = 0;
+      let lastClientY = 0;
       let lastTargetCard = null;
+      let autoScrollRaf = null;
 
-      function clearHoldTimer() {
-        if (holdTimer) {
-          clearTimeout(holdTimer);
-          holdTimer = null;
+      function startAutoScroll() {
+        if (autoScrollRaf) return;
+        function step() {
+          if (!isDragging) {
+            autoScrollRaf = null;
+            return;
+          }
+          const edgeThreshold = 70;
+          const maxSpeed = 14;
+          const vh = window.innerHeight;
+          let scrollDelta = 0;
+
+          if (lastClientY < edgeThreshold) {
+            const ratio = (edgeThreshold - lastClientY) / edgeThreshold;
+            scrollDelta = -Math.round(ratio * maxSpeed);
+          } else if (lastClientY > vh - edgeThreshold) {
+            const ratio = (lastClientY - (vh - edgeThreshold)) / edgeThreshold;
+            scrollDelta = Math.round(ratio * maxSpeed);
+          }
+
+          if (scrollDelta !== 0) {
+            window.scrollBy(0, scrollDelta);
+            updateTargetUnderTouch(lastClientX, lastClientY);
+          }
+
+          autoScrollRaf = requestAnimationFrame(step);
+        }
+        autoScrollRaf = requestAnimationFrame(step);
+      }
+
+      function stopAutoScroll() {
+        if (autoScrollRaf) {
+          cancelAnimationFrame(autoScrollRaf);
+          autoScrollRaf = null;
+        }
+      }
+
+      function updateTargetUnderTouch(clientX, clientY) {
+        if (!isDragging) return;
+        const elem = document.elementFromPoint(clientX, clientY);
+        const card = elem ? elem.closest('.vocab-target-card') : null;
+        if (card !== lastTargetCard) {
+          if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
+          if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
+            card.classList.add('drag-over');
+          }
+          lastTargetCard = card;
         }
       }
 
       function cleanupDrag() {
-        clearHoldTimer();
+        stopAutoScroll();
         isDragging = false;
         draggedWordKey = null;
         if (touchAvatar) {
@@ -3678,70 +3724,61 @@
         const touch = e.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
-        touchMoved = false;
+        lastClientX = touch.clientX;
+        lastClientY = touch.clientY;
         isDragging = false;
-
-        clearHoldTimer();
-        // 250ms press-and-hold required before drag activates
-        holdTimer = setTimeout(() => {
-          if (touchMoved || activeModalCard) return;
-          isDragging = true;
-          draggedWordKey = key;
-          chip.classList.add('dragging');
-          chip.style.opacity = '0';
-          chip.style.visibility = 'hidden';
-
-          touchAvatar = document.createElement('div');
-          touchAvatar.className = 'vocab-touch-avatar';
-          touchAvatar.textContent = vocabData[key].word;
-          document.body.appendChild(touchAvatar);
-          touchAvatar.style.left = touch.clientX + 'px';
-          touchAvatar.style.top = touch.clientY + 'px';
-
-          const targetsContainer = document.getElementById('vocab-targets');
-          if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
-
-          if (navigator.vibrate) {
-            try { navigator.vibrate(25); } catch (_) {}
-          }
-        }, 250);
       }, { passive: true });
 
       chip.addEventListener('touchmove', (e) => {
         if (activeModalCard) return;
         if (e.touches.length !== 1) return;
         const touch = e.touches[0];
+        lastClientX = touch.clientX;
+        lastClientY = touch.clientY;
         const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
 
-        if (dist > 8) {
-          touchMoved = true;
-          if (!isDragging) {
-            // Moved before 250ms hold -> page scroll! Cancel drag immediately
-            clearHoldTimer();
+        if (!isDragging) {
+          if (dist > 8) {
+            isDragging = true;
+            draggedWordKey = key;
+            chip.setAttribute('data-just-dragged', 'true');
+            chip.classList.add('dragging');
+            chip.style.opacity = '0';
+            chip.style.visibility = 'hidden';
+
+            touchAvatar = document.createElement('div');
+            touchAvatar.className = 'vocab-touch-avatar';
+            touchAvatar.textContent = vocabData[key].word;
+            document.body.appendChild(touchAvatar);
+            touchAvatar.style.left = touch.clientX + 'px';
+            touchAvatar.style.top = touch.clientY + 'px';
+
+            const targetsContainer = document.getElementById('vocab-targets');
+            if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+
+            if (navigator.vibrate) {
+              try { navigator.vibrate(25); } catch (_) {}
+            }
+
+            startAutoScroll();
+          } else {
             return;
           }
         }
 
-        if (isDragging && touchAvatar) {
-          touchAvatar.style.left = touch.clientX + 'px';
-          touchAvatar.style.top = touch.clientY + 'px';
-
-          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
-          const card = elem ? elem.closest('.vocab-target-card') : null;
-          if (card !== lastTargetCard) {
-            if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
-            if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
-              card.classList.add('drag-over');
-            }
-            lastTargetCard = card;
+        if (isDragging) {
+          e.preventDefault();
+          if (touchAvatar) {
+            touchAvatar.style.left = touch.clientX + 'px';
+            touchAvatar.style.top = touch.clientY + 'px';
           }
+          updateTargetUnderTouch(touch.clientX, touch.clientY);
         }
-      }, { passive: true });
+      }, { passive: false });
 
       chip.addEventListener('touchend', (e) => {
-        clearHoldTimer();
-
         if (isDragging) {
+          e.preventDefault();
           const touch = e.changedTouches[0];
           const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
           const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
@@ -3752,14 +3789,20 @@
           if (targetCard && targetKey && !activeModalCard) {
             processWordPlacement(key, targetKey, targetCard);
           }
+          setTimeout(() => {
+            chip.removeAttribute('data-just-dragged');
+          }, 350);
           return;
         }
 
-        // Quick tap: click event fires naturally and triggers showWordHintModal(key)
-      });
+        cleanupDrag();
+      }, { passive: false });
 
       chip.addEventListener('touchcancel', () => {
         cleanupDrag();
+        setTimeout(() => {
+          chip.removeAttribute('data-just-dragged');
+        }, 350);
       });
     }
 
