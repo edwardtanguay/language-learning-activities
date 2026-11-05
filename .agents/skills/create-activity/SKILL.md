@@ -204,6 +204,7 @@ Each activity file should include the following sections:
    - Paragraphs and subsection cards must NOT have vertical lines on the left (clean unbordered text).
    - Divided into logical paragraphs or subsections. Subsection titles use the serif body font with standard capitalization (`text-transform: none; font-weight: 700;`) without numbers (e.g., `<h3>La Costa (Región Litoral)</h3>`).
 6. **Vocabulary (Vocabulario) Drag & Drop & Hint Exercise**:
+   - **No Repeated Words Across Activities**: The 10 vocabulary words chosen for an activity must be completely unique and MUST NOT repeat words already featured in any other activity in the codebase for that target language. Before finalizing the vocabulary selection, check existing activities to ensure every selected word is completely novel.
    - Positioned immediately following Section 1 (the reading text).
    - Title standardized to "Vocabulary" translated into the target language without period (e.g., `<span class="section-num">2</span> Vocabulario`), with right-aligned action hint "drag and drop" in the target language.
    - Features the 10 hardest words from the text.

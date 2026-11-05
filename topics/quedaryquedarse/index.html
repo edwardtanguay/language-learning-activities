@@ -1531,6 +1531,383 @@
         display: none;
       }
     }
+  
+    /* =========================================================
+       IMAGES & FULLSCREEN LIGHTBOX
+       ========================================================= */
+    .images-section {
+      margin-top: 18px;
+      margin-bottom: 24px;
+    }
+
+    .image-labels-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin: 4px 0 16px 0;
+      padding: 10px;
+      background: rgba(230, 224, 210, 0.4);
+      border: 1px dashed var(--ink-rule);
+      box-sizing: border-box;
+      min-height: 44px;
+    }
+
+    .image-label-chip {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 5px 10px 3px 10px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      box-shadow: 0 1px 3px rgba(45, 40, 35, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      line-height: 1.15;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      touch-action: manipulation;
+    }
+
+    .image-label-chip:focus {
+      outline: none;
+    }
+
+    .image-label-chip:focus-visible {
+      outline: 1px dashed var(--ink-rule);
+      outline-offset: 1px;
+    }
+
+    .image-label-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue, #1d4ed8);
+    }
+
+    .image-label-chip.is-dragging {
+      cursor: grabbing;
+      opacity: 0.4;
+    }
+
+    .image-label-chip.is-selected {
+      background-color: var(--highlight);
+      border-color: var(--stamp-blue, #1d4ed8);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.25);
+    }
+
+    .image-label-chip.is-hidden {
+      display: none !important;
+    }
+
+    .images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-thumb-wrap {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      padding: 4px;
+      border-radius: 2px;
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.06);
+      cursor: zoom-in;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      display: inline-flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-thumb-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue);
+    }
+
+    .image-thumb-wrap.image-drop-hover {
+      background-color: #e4dfd5 !important;
+      border-color: var(--stamp-blue, #1d4ed8) !important;
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.3) !important;
+    }
+
+    .image-thumb {
+      height: 150px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 1px;
+      pointer-events: none;
+    }
+
+    .image-thumb-title {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      background: rgba(244, 239, 228, 0.92);
+      border-top: 1px solid rgba(138, 128, 112, 0.3);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px 6px;
+      line-height: 1.2;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      backdrop-filter: blur(2px);
+    }
+
+    .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+      display: none !important;
+    }
+
+    .image-thumb-wrap.is-solved .image-thumb-title {
+      display: block !important;
+    }
+
+    /* Thumbnail Question/Statement Badges */
+    .image-thumb-questions {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .image-thumb-q-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+      pointer-events: none;
+    }
+
+    .image-thumb-q-badge svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      pointer-events: none;
+    }
+
+    .image-lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(24, 22, 20, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: zoom-out;
+      touch-action: none;
+    }
+
+    .image-lightbox-overlay.active {
+      display: flex;
+    }
+
+    .image-lightbox-overlay.is-zoomed {
+      cursor: grab;
+    }
+
+    .image-lightbox-overlay.is-panning {
+      cursor: grabbing;
+    }
+
+    .image-lightbox-stage {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      max-width: 94vw;
+      max-height: 92vh;
+      position: relative;
+    }
+
+    .image-lightbox-img-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+      max-width: 94vw;
+      max-height: 86vh;
+    }
+
+    .image-lightbox-img {
+      max-width: 94vw;
+      max-height: 86vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      transform-origin: center center;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      display: block;
+      cursor: pointer;
+    }
+
+    /* Lightbox Questions List Overlay in lower-left */
+    .image-lightbox-questions {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: calc(100% - 24px);
+      z-index: 5;
+      pointer-events: auto;
+      transition: opacity 0.2s ease;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-questions {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .image-lightbox-q-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(24, 22, 20, 0.82);
+      color: #fffdf9;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: left;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+      max-width: fit-content;
+    }
+
+    .image-lightbox-q-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      line-height: 1;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .image-lightbox-q-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .image-lightbox-q-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .image-lightbox-q-pill::selection,
+    .image-lightbox-q-text::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
+    }
+
+    .image-lightbox-caption {
+      margin-top: 10px;
+      font-family: var(--font-typewriter);
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      color: var(--ink-main);
+      background: rgba(244, 239, 228, 0.92);
+      border: 1px solid rgba(138, 128, 112, 0.3);
+      border-radius: 3px;
+      padding: 6px 14px;
+      text-align: right;
+      align-self: flex-end;
+      line-height: 1.2;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      transition: opacity 0.2s ease;
+      pointer-events: auto;
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .image-lightbox-caption::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
+    }
+
+    @keyframes label-sparkle {
+      0% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+      35% {
+        box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 0 0 6px rgba(234, 179, 8, 0.9);
+        border-color: rgba(250, 204, 21, 0.85);
+        background: rgba(254, 249, 215, 0.98);
+        transform: scale(1.03);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+    }
+
+    .image-lightbox-caption.sparkle {
+      animation: label-sparkle 0.85s ease-out;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .mobile-only-inline {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .desktop-only-inline {
+        display: none !important;
+      }
+      .mobile-only-inline {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-wrap .image-thumb-title {
+        display: block !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1551,11 +1928,22 @@
     <!-- Overlay for Word Hint / Result Modals -->
     <div class="vocab-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
 
+<!-- Fullscreen Image Lightbox -->
+  <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
+    <div class="image-lightbox-stage" id="image-lightbox-stage">
+      <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
+        <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+        <div class="image-lightbox-questions" id="image-lightbox-questions"></div>
+      </div>
+      <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+    </div>
+  </div>
+
     <!-- Worksheet Header -->
     <header class="worksheet-header">
       <div class="header-top">
         <div class="handout-title-group">
-          <h1>Quedar y quedarse: Guía esencial de uso y matices</h1>
+          <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">Quedar y quedarse: Guía esencial de uso y matices</h1>
         </div>
         <div class="stamp-badge">Español B1</div>
       </div>
@@ -1565,11 +1953,12 @@
       </div>
 
       <!-- Centered Jump Links -->
-      <nav class="jump-nav" id="header-jump-nav" aria-label="Navegación rápida de secciones">
-        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Vocabulario">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Preguntas">4</a>
+      <nav class="jump-nav" aria-label="Navegación de secciones">
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
       </nav>
     </header>
 
@@ -1613,10 +2002,47 @@
       </div>
     </div>
 
-    <!-- SECTION 1: VOCABULARY DRAG & DROP -->
+    <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Vocabulario
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+    <div class="section-instructions-box">
+      <div class="section-instructions-content">
+        <div class="section-instructions-inner">
+          <p>Estas son imágenes de lugares y cosas mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="quedarvsquedarseejemplos" draggable="true">quedar vs quedarse ejemplos</button>
+        <button type="button" class="image-label-chip" data-image-id="quedarvsquedarsevsquedaren" draggable="true">quedar vs quedarse vs quedar en</button>
+        <button type="button" class="image-label-chip" data-image-id="stayvsmeet" draggable="true">Stay vs Meet</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="quedarvsquedarseejemplos" data-image-title="quedar vs quedarse ejemplos" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg', 'quedar vs quedarse ejemplos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg', 'quedar vs quedarse ejemplos', '[]')">
+          <img src="images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg" alt="quedar vs quedarse ejemplos" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">quedar vs quedarse ejemplos</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="quedarvsquedarsevsquedaren" data-image-title="quedar vs quedarse vs quedar en" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg', 'quedar vs quedarse vs quedar en', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg', 'quedar vs quedarse vs quedar en', '[]')">
+          <img src="images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg" alt="quedar vs quedarse vs quedar en" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">quedar vs quedarse vs quedar en</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="stayvsmeet" data-image-title="Stay vs Meet" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-stayvsmeet.jpg', 'Stay vs Meet', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-stayvsmeet.jpg', 'Stay vs Meet', '[]')">
+          <img src="images/es-quedaryquedarse-stayvsmeet.jpg" alt="Stay vs Meet" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Stay vs Meet</div>
+        </div>
+      </div>
+    </section>
+
+<!-- SECTION 1: VOCABULARY DRAG & DROP -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">2</span> Vocabulario
       </a>
       <span class="section-action-hint">arrastrar y soltar</span>
     </h2>
@@ -1647,10 +2073,10 @@
       </div>
     </section>
 
-    <!-- SECTION 2: READING PASSAGE -->
-    <h2 class="section-title" id="seccion-2">
+<!-- SECTION 2: READING PASSAGE -->
+    <h2 class="section-title" id="seccion-3">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">2</span> Lectura
+        <span class="section-num">3</span> Lectura
       </a>
       <span class="section-action-hint">leer en voz alta</span>
     </h2>
@@ -1663,29 +2089,41 @@
 
     <article class="reading-content">
       <p>
-        Para cualquier estudiante angloparlante, dominar el verbo «quedar» y su variante reflexiva «quedarse» suele parecer un laberinto lleno de incertidumbre. Un primer <span class="vocab-in-text" data-key="despiste">despiste</span> muy habitual es asociarlo falsamente con el inglés <em>to quit</em>, cuando en realidad no guardan ningún parentesco semántico. No busques un <span class="vocab-in-text" data-key="atajo">atajo</span> superficial ni intentes memorizar listas aisladas: para asimilar sus múltiples funciones sin cometer un <span class="vocab-in-text" data-key="tropiezo">tropiezo</span> recurrente, la mejor <span class="vocab-in-text" data-key="pauta">pauta</span> consiste en comprender cada sutil <span class="vocab-in-text" data-key="matiz">matiz</span> que activa o transforma el pronombre reflexivo.
+        Para cualquier persona que aprende español desde el inglés, los verbos «quedar» y «quedarse» representan uno de los mayores desafíos comunicativos. Un primer <span class="vocab-in-text" data-key="despiste">despiste</span> recurrente es relacionar este verbo con el inglés <em>to quit</em>, cuando en realidad abandonar un trabajo o un hábito se expresa con «dejar» o «renunciar». Para alcanzar verdadera <span class="vocab-in-text" data-key="soltura">soltura</span> y precisión al hablar, es imprescindible descomponer sus múltiples funciones según la presencia o ausencia del pronombre reflexivo.
       </p>
 
-      <h3>Quedarse: Anclarse a un lugar o caer en un estado</h3>
+      <h3>Quedarse: El principio del anclaje y los estados involuntarios</h3>
       <p>
-        El truco maestro para dominar «quedarse» consiste en visualizar un ancla imaginaria. Cuando el verbo adopta la forma pronominal, el sujeto permanece fijo en una ubicación física determinada en lugar de desplazarse: «Hoy llueve a cántaros, así que prefiero quedarme en casa leyendo». Sin embargo, esta misma ancla opera en el terreno psicológico y físico para describir transiciones involuntarias o repentinas hacia un nuevo estado. De este modo, decimos «quedarse dormido» cuando el sueño nos vence de improviso, «quedarse de piedra» al recibir una sorpresa mayúscula, «quedarse en blanco» ante un examen difícil, o «quedarse sin batería» al agotarse por completo la carga del teléfono móvil.
+        El secreto para dominar la forma pronominal «quedarse» (me quedo, te quedas, se queda...) consiste en comprender el concepto de <span class="vocab-in-text" data-key="anclaje">anclaje</span>. Cuando el sujeto decide no desplazarse y permanecer en un lugar físico, el verbo echa el ancla: «Hoy no voy a salir; me quedo en casa descansando». Este mismo anclaje se traslada al ámbito psicológico o físico cuando una persona cae de forma imprevista o involuntaria en un estado nuevo. Por ejemplo, si el cansancio te vence durante una película, dices «me quedé dormido en el sofá» (te dormiste sin planearlo). Si un examen te paraliza de sorpresa, «te quedas en blanco». Si una noticia te deja boquiabierto, «te quedas de piedra» o «te quedas helado». E incluso ante una avería técnica cotidiana, este verbo señala el <span class="vocab-in-text" data-key="desenlace">desenlace</span> repentino de perder un recurso vital: «¡Vaya, el teléfono se ha quedado sin batería!» o «Nos hemos quedado sin gasolina en medio de la carretera».
       </p>
 
-      <h3>Quedar con y quedar en: Encuentros sociales y acuerdos</h3>
+      <h3>Quedar con y quedar en: Citas, planes y acuerdos</h3>
       <p>
-        Por el contrario, «quedar» sin pronombre suele proyectarse hacia el exterior y coordinar interacciones con otras personas. Al consultar el calendario en busca de un <span class="vocab-in-text" data-key="hueco">hueco</span> libre entre tus compromisos, resulta natural proponer: «¿Quedamos este viernes a las siete para tomar un café?». En el habla coloquial de España, este tipo de reunión amistosa recibe el nombre de <span class="vocab-in-text" data-key="quedada">quedada</span>. Conviene prestar atención a las preposiciones: «quedar con» señala a la persona con quien te vas a ver («Anoche quedé con Laura»), mientras que «quedar en» introduce el <span class="vocab-in-text" data-key="acuerdo">acuerdo</span> concreto alcanzado entre ambas partes («Quedamos en reservar la mesa por internet»).
+        Por el contrario, cuando «quedar» no lleva pronombre reflexivo, el verbo mira hacia afuera y conecta con otras personas para coordinar actividades sociales. Si tienes la tarde ocupada pero encuentras un pequeño <span class="vocab-in-text" data-key="hueco">hueco</span> libre entre tus tareas, le escribes a un amigo: «¿Quedamos a tomar un café a las seis?». En España, este encuentro amistoso e informal se denomina habitualmente una <span class="vocab-in-text" data-key="quedada">quedada</span>.
+      </p>
+      <p>
+        En este ámbito social, la preposición elegida cambia el sentido de la frase de manera decisiva. La estructura «quedar con» identifica a la persona con quien vas a reunirte: «El sábado quedé con Elena para ir al cine». En cambio, «quedar en» introduce el <span class="vocab-in-text" data-key="acuerdo">acuerdo</span> mutuo o el contenido de la decisión compartida: «Quedamos en comprar las entradas juntos por internet». Si surge un imprevisto de última hora y necesitáis cambiar la cita, basta con negociar un nuevo <span class="vocab-in-text" data-key="arreglo">arreglo</span> entre vosotros: «Al final quedamos en posponer la cena para el domingo».
       </p>
 
-      <h3>Ubicación, disponibilidad restante y ropa</h3>
+      <h3>Ubicación, distancias y disponibilidad restante</h3>
       <p>
-        Asimismo, «quedar» asume tres roles fundamentales en la conversación diaria. En primer lugar, sirve para indicar la situación geográfica o la distancia de un punto: «La estación central queda a diez minutos a pie». En segundo lugar, sigue una estructura idéntica a la del verbo <em>gustar</em> para expresar lo que aún resta o permanece disponible, ya sea dinero, comida o tiempo de <span class="vocab-in-text" data-key="sobra">sobra</span>: «Solo me quedan tres billetes en el bolsillo» o «¿Nos queda suficiente leche para desayunar?». Finalmente, al juzgar el tamaño y la estética de una <span class="vocab-in-text" data-key="prenda">prenda</span> de vestir, «quedar bien o mal» describe si favorece tu figura: «Esa camisa azul te queda perfecta». Interiorizar estos contrastes te otorgará una envidiable soltura y precisión en español.
+        Asimismo, «quedar» cumple dos funciones esenciales de orientación y contabilidad. Primero, sirve para indicar dónde se sitúa un edificio o a qué distancia se encuentra: «¿Dónde queda la estación de tren? Queda a solo tres manzanas de aquí». Segundo, sigue una estructura idéntica a la del verbo <em>gustar</em> para señalar lo que todavía resta o permanece de <span class="vocab-in-text" data-key="sobra">sobra</span>: «Solo me quedan diez euros en la cartera» o «¿Cuánto tiempo nos queda antes de que salga el tren?». Observa que lo que queda es el sujeto gramatical («diez euros quedan»), mientras que la persona afectada se indica con el pronombre indirecto (me, te, le, nos, os, les).
+      </p>
+
+      <h3>Ropa y apariencia: Sentar bien o mal</h3>
+      <p>
+        Finalmente, al valorar una <span class="vocab-in-text" data-key="prenda">prenda</span> de ropa o el corte de pelo de alguien, la expresión «quedar bien» o «quedar mal» describe si la talla y el estilo favorecen a la persona: «Esa chaqueta verde te queda estupenda; resalta el color de tus ojos». Esta misma fórmula se extiende a las normas sociales de cortesía: si alguien llega una hora tarde a un compromiso formal, «queda muy mal» con los demás; pero si lleva un detalle de agradecimiento a los anfitriones, «queda fenomenal».
+      </p>
+
+      <p>
+        Como regla mnemotécnica para angloparlantes: si la acción te retiene o te transforma por dentro, piensa en <em>quedarse</em> (<em>to stay</em> o <em>to end up</em>); si organizas una cita, preguntas por un lugar o cuentas lo que resta, recurre al verbo simple <em>quedar</em> (<em>to meet</em>, <em>to be located</em>, <em>to have left</em>). Dominar estas distinciones convertirá la vacilación en absoluta soltura al hablar.
       </p>
     </article>
 
     <!-- SECTION 3: COMPREHENSION QUESTIONS -->
-    <h2 class="section-title" id="seccion-3">
+    <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">3</span> Comprensión
+        <span class="section-num">4</span> Comprensión
       </a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
@@ -1889,9 +2327,9 @@
     </section>
 
     <!-- SECTION 4: OPEN QUESTIONS -->
-    <h2 class="section-title" id="seccion-4">
+    <h2 class="section-title" id="seccion-5">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+        <span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
       </a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
@@ -1954,90 +2392,90 @@
     // VOCABULARY DATA (10 KEY WORDS)
     // =========================================================
     const vocabData = {
-      "matiz": {
-        "word": "matiz",
-        "pos": "sustantivo masculino",
-        "def": "Rasgo particular o diferencia sutil que distingue dos conceptos parecidos.",
-        "hint": "Variación sutil o detalle fino que diferencia dos significados",
-        "sentence": "Para asimilar sus múltiples funciones sin cometer un tropiezo recurrente, la mejor pauta consiste en comprender cada sutil <mark>matiz</mark> que activa o transforma el pronombre reflexivo."
-      },
       "despiste": {
         "word": "despiste",
         "pos": "sustantivo masculino",
         "def": "Distracción momentánea que provoca una confusión o un descuido involuntario.",
         "hint": "Confusión o descuido pasajero originado por falta de atención",
-        "sentence": "Un primer <mark>despiste</mark> muy habitual es asociarlo falsamente con el inglés to quit, cuando en realidad no guardan ningún parentesco semántico."
+        "sentence": "Un primer <mark>despiste</mark> recurrente es relacionar este verbo con el inglés to quit, cuando en realidad abandonar un trabajo o un hábito se expresa con «dejar» o «renunciar»."
       },
-      "atajo": {
-        "word": "atajo",
-        "pos": "sustantivo masculino",
-        "def": "Procedimiento o camino más corto para lograr un propósito ahorrando tiempo.",
-        "hint": "Vía rápida o método abreviado para llegar a un objetivo",
-        "sentence": "No busques un <mark>atajo</mark> superficial ni intentes memorizar listas aisladas sin comprender la lógica interna."
-      },
-      "tropiezo": {
-        "word": "tropiezo",
-        "pos": "sustantivo masculino",
-        "def": "Dificultad, inconveniente o desliz involuntario al realizar una tarea.",
-        "hint": "Fallo imprevisto o equivocación en el camino del aprendizaje",
-        "sentence": "Comprender la raíz de las estructuras previene cualquier <mark>tropiezo</mark> recurrente en tus redacciones y charlas."
-      },
-      "pauta": {
-        "word": "pauta",
+      "soltura": {
+        "word": "soltura",
         "pos": "sustantivo femenino",
-        "def": "Norma, modelo o directriz que sirve de guía para orientar una acción.",
-        "hint": "Criterio o regla orientadora que sirve para hacer algo con orden",
-        "sentence": "La mejor <mark>pauta</mark> consiste en comprender cada sutil matiz que activa o transforma el pronombre reflexivo."
+        "def": "Agilidad, desenvoltura y facilidad natural para hablar o actuar sin bloqueos.",
+        "hint": "Facilidad y fluidez natural para comunicarse sin trabas",
+        "sentence": "Para alcanzar verdadera <mark>soltura</mark> y precisión al hablar, es imprescindible descomponer sus múltiples funciones según la presencia o ausencia del pronombre reflexivo."
+      },
+      "anclaje": {
+        "word": "anclaje",
+        "pos": "sustantivo masculino",
+        "def": "Sujeción o fijación firme que inmoviliza algo en un punto e impide su desplazamiento.",
+        "hint": "Fijación firme que mantiene algo amarrado o inmóvil en un lugar",
+        "sentence": "El secreto para dominar la forma pronominal «quedarse» consiste en comprender el concepto de <mark>anclaje</mark>."
+      },
+      "desenlace": {
+        "word": "desenlace",
+        "pos": "sustantivo masculino",
+        "def": "Resultado final, efecto o modo en que concluye un acontecimiento imprevisto.",
+        "hint": "Conclusión o efecto final en que desemboca una situación",
+        "sentence": "E incluso ante una avería técnica cotidiana, este verbo señala el <mark>desenlace</mark> repentino de perder un recurso vital como la batería del móvil."
       },
       "hueco": {
         "word": "hueco",
         "pos": "sustantivo masculino",
         "def": "Espacio libre o intervalo disponible en una agenda u horario ocupado.",
         "hint": "Intervalo libre de tiempo en un horario para hacer un plan",
-        "sentence": "Al consultar el calendario en busca de un <mark>hueco</mark> libre entre tus compromisos, resulta natural proponer una salida."
+        "sentence": "Si tienes la tarde ocupada pero encuentras un pequeño <mark>hueco</mark> libre entre tus tareas, le escribes a un amigo: «¿Quedamos a tomar un café a las seis?»."
       },
       "quedada": {
         "word": "quedada",
         "pos": "sustantivo femenino",
         "def": "Encuentro informal pactado entre varias personas para pasar el rato juntas.",
         "hint": "Reunión acordada entre amigos para conversar o tomar algo",
-        "sentence": "En el habla coloquial de España, este tipo de reunión amistosa recibe el nombre de <mark>quedada</mark>."
+        "sentence": "En España, este encuentro amistoso e informal se denomina habitualmente una <mark>quedada</mark>."
       },
       "acuerdo": {
         "word": "acuerdo",
         "pos": "sustantivo masculino",
         "def": "Resolución conjunta o pacto tomado de mutuo consenso entre dos o más partes.",
         "hint": "Decisión tomada en común por varias personas sobre un asunto",
-        "sentence": "«Quedar en» introduce el <mark>acuerdo</mark> concreto alcanzado entre ambas partes para realizar una acción futura."
+        "sentence": "En cambio, «quedar en» introduce el <mark>acuerdo</mark> mutuo o el contenido de la decisión compartida: «Quedamos en comprar las entradas juntos por internet»."
+      },
+      "arreglo": {
+        "word": "arreglo",
+        "pos": "sustantivo masculino",
+        "def": "Acuerdo conveniente o solución práctica concertada entre dos o más partes.",
+        "hint": "Solución concertada o pacto amistoso para resolver algo",
+        "sentence": "Si surge un imprevisto de última hora y necesitáis cambiar la cita, basta con negociar un nuevo <mark>arreglo</mark> entre vosotros: «Al final quedamos en posponer la cena para el domingo»."
       },
       "sobra": {
         "word": "sobra",
         "pos": "sustantivo femenino",
         "def": "Cantidad, porción o tiempo restante que permanece en exceso o disponible.",
         "hint": "Aquello que resta o no se ha agotado y permanece disponible",
-        "sentence": "El verbo sirve para expresar lo que aún resta o permanece disponible, ya sea dinero, comida o tiempo de <mark>sobra</mark>."
+        "sentence": "Segundo, sigue una estructura idéntica a la del verbo gustar para señalar lo que todavía resta o permanece de <mark>sobra</mark>."
       },
       "prenda": {
         "word": "prenda",
         "pos": "sustantivo femenino",
         "def": "Pieza de vestimenta o ropa que cubre y adorna el cuerpo.",
         "hint": "Artículo de ropa o indumentaria que viste una persona",
-        "sentence": "Al juzgar el tamaño y la estética de una <mark>prenda</mark> de vestir, quedar bien o mal describe si favorece tu figura."
+        "sentence": "Finalmente, al valorar una <mark>prenda</mark> de ropa o el corte de pelo de alguien, la expresión «quedar bien» o «quedar mal» describe si la talla y el estilo favorecen a la persona."
       }
     };
 
     // Shuffled initial definition order
     const vocabOrder = [
       "hueco",
-      "pauta",
-      "matiz",
+      "desenlace",
+      "anclaje",
       "quedada",
       "despiste",
       "prenda",
       "acuerdo",
-      "tropiezo",
+      "arreglo",
       "sobra",
-      "atajo"
+      "soltura"
     ];
 
     let completedVocab = [];
@@ -2074,7 +2512,7 @@
         "D": "«Quedar con» especifica el acompañante del encuentro («quedé con Laura») y «quedar en» el compromiso acordado («quedamos en vernos mañana»)."
       },
       "3": {
-        "A": "Sigue la pauta de «gustar»: los tres euros son el sujeto que permanece disponible y «me» es el pronombre de objeto indirecto que recibe la acción.",
+        "A": "Sigue la estructura de «gustar»: los tres euros son el sujeto que permanece disponible y «me» es el pronombre de objeto indirecto que recibe la acción.",
         "B": "No describe un cambio de ánimo ni es reflexivo; señala la cantidad o elemento disponible que todavía no se ha consumido.",
         "C": "«Quedar» no tiene relación con to quit; en este contexto equivale al inglés to have left o to remain.",
         "D": "Esta construcción es un estándar universal del español utilizado en todos los países hispanohablantes para hablar de lo restante."
@@ -2114,10 +2552,12 @@
               readingBookmarks = Array.isArray(parsed.bookmarks)
                 ? parsed.bookmarks.filter(idx => Number.isInteger(idx) && idx >= 0)
                 : [];
+              solvedImageIds = Array.isArray(parsed.images) ? parsed.images : [];
             } else {
               userAnswers = parsed;
               completedVocab = [];
               readingBookmarks = [];
+              solvedImageIds = [];
             }
           }
         }
@@ -2134,6 +2574,7 @@
       // Render Vocabulary & Reading Bookmarks
       renderVocabulary();
       renderReadingBookmarks();
+      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
     }
 
     function saveState() {
@@ -2141,7 +2582,8 @@
         const state = {
           mc: userAnswers,
           vocab: completedVocab,
-          bookmarks: readingBookmarks
+          bookmarks: readingBookmarks,
+          images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (e) {
@@ -3299,6 +3741,565 @@
         window.location.reload();
       }
     }
+
+    // =========================================================
+    // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // =========================================================
+    let lbScale = 1;
+    let lbTranslateX = 0;
+    let lbTranslateY = 0;
+    let lbPinchStartDist = 0;
+    let lbPinchStartScale = 1;
+    let lbPanStartX = 0;
+    let lbPanStartY = 0;
+    let lbLastTouchX = 0;
+    let lbLastTouchY = 0;
+    let lbMouseDown = false;
+    let lbSelectingCaption = false;
+    let lbLastMouseX = 0;
+    let lbLastMouseY = 0;
+    let lbGestureMoved = false;
+    let lbIgnoreNextClick = false;
+    const LB_MAX_SCALE = 50;
+
+    function applyLightboxTransform() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      if (img) {
+        img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
+      }
+      if (overlay) {
+        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
+      }
+    }
+
+    function openImageLightbox(src, alt, questionsJson, isSparkle) {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay || !img) return;
+      img.src = src;
+      img.alt = alt || '';
+      if (caption) {
+        caption.textContent = alt || '';
+        caption.classList.remove('sparkle');
+        if (isSparkle) {
+          void caption.offsetWidth;
+          caption.classList.add('sparkle');
+        }
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+        let qList = [];
+        try {
+          if (Array.isArray(questionsJson)) qList = questionsJson;
+          else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
+        } catch (e) {}
+        if (qList && qList.length > 0) {
+          const pillBubbleSvg = '<svg viewBox="0 0 20 20" width="16" height="16" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
+          qList.forEach(q => {
+            const pill = document.createElement('div');
+            pill.className = 'image-lightbox-q-pill';
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'image-lightbox-q-icon';
+            iconSpan.innerHTML = pillBubbleSvg;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'image-lightbox-q-text';
+            textSpan.textContent = q;
+
+            pill.appendChild(iconSpan);
+            pill.appendChild(textSpan);
+            questionsContainer.appendChild(pill);
+          });
+          questionsContainer.style.display = 'flex';
+        } else {
+          questionsContainer.style.display = 'none';
+        }
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+      lbGestureMoved = false;
+      lbIgnoreNextClick = false;
+      overlay.classList.remove('is-zoomed', 'is-panning');
+      applyLightboxTransform();
+      overlay.classList.add('active');
+    }
+
+    function closeImageLightbox() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay) return;
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
+          sel.removeAllRanges();
+        }
+      }
+      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
+      if (img) {
+        img.src = '';
+        img.style.transform = '';
+      }
+      if (caption) {
+        caption.textContent = '';
+        caption.classList.remove('sparkle');
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+    }
+
+    function handleLightboxClick(e) {
+      if (lbIgnoreNextClick) {
+        lbIgnoreNextClick = false;
+        return;
+      }
+      if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
+        return;
+      }
+      const isImgClick = e && e.target && (e.target.id === 'image-lightbox-img' || e.target.closest('#image-lightbox-img'));
+      if (isImgClick) {
+        const questionsContainer = document.getElementById('image-lightbox-questions');
+        const hasQuestions = questionsContainer && questionsContainer.children.length > 0;
+        if (hasQuestions) {
+          questionsContainer.style.display = questionsContainer.style.display === 'none' ? 'flex' : 'none';
+        } else {
+          closeImageLightbox();
+        }
+        return;
+      }
+      closeImageLightbox();
+    }
+
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
+
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
+
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2) {
+            e.preventDefault();
+            lbGestureMoved = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
+    // =========================================================
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
+    // =========================================================
+    let solvedImageIds = [];
+    let draggedImageId = null;
+    let selectedImageLabelChip = null;
+
+    function handleImageLabelDragStart(e, chip) {
+      draggedImageId = chip.getAttribute('data-image-id');
+      try {
+        e.dataTransfer.setData('text/plain', draggedImageId);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+      chip.classList.add('is-dragging');
+      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
+        selectedImageLabelChip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      }
+    }
+
+    function handleImageLabelDragEnd(e, chip) {
+      chip.classList.remove('is-dragging');
+      draggedImageId = null;
+      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
+    }
+
+    function handleImageLabelClick(chip) {
+      if (selectedImageLabelChip === chip) {
+        chip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      } else {
+        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
+        chip.classList.add('is-selected');
+        selectedImageLabelChip = chip;
+      }
+    }
+
+    function setupImageTouchDrag(chip) {
+      let touchMoved = false;
+      let ghost = null;
+      let startX = 0;
+      let startY = 0;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedImageId = chip.getAttribute('data-image-id');
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1 || !draggedImageId) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+        if (dist > 8) {
+          touchMoved = true;
+          if (!ghost) {
+            ghost = chip.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.zIndex = '9999';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.opacity = '0.85';
+            ghost.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ghost);
+            chip.classList.add('is-dragging');
+          }
+          ghost.style.left = touch.clientX + 'px';
+          ghost.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
+            if (c !== card) c.classList.remove('image-drop-hover');
+          });
+          if (card && !card.classList.contains('is-solved')) {
+            card.classList.add('image-drop-hover');
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (ghost) {
+          ghost.remove();
+          ghost = null;
+        }
+        chip.classList.remove('is-dragging');
+        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
+
+        if (touchMoved && draggedImageId) {
+          const changedTouch = e.changedTouches[0];
+          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          if (card && !card.classList.contains('is-solved')) {
+            const cardId = card.getAttribute('data-image-id');
+            if (cardId === draggedImageId) {
+              const img = card.querySelector('img');
+              const src = img ? img.getAttribute('src') : '';
+              const alt = card.getAttribute('data-image-title') || '';
+              solveImage(card, chip, src, alt);
+            }
+          }
+          draggedImageId = null;
+        }
+      });
+    }
+
+    function handleImageCardDragOver(e, card) {
+      if (card.classList.contains('is-solved')) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      card.classList.add('image-drop-hover');
+    }
+
+    function handleImageCardDragLeave(e, card) {
+      if (!card.contains(e.relatedTarget)) {
+        card.classList.remove('image-drop-hover');
+      }
+    }
+
+    function handleImageCardDrop(e, card, src, alt, questionsJson) {
+      e.preventDefault();
+      card.classList.remove('image-drop-hover');
+      if (card.classList.contains('is-solved')) return;
+      let droppedId = '';
+      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
+      if (!droppedId) droppedId = draggedImageId;
+      const cardId = card.getAttribute('data-image-id');
+      if (droppedId && droppedId === cardId) {
+        const pool = document.getElementById('image-labels-pool');
+        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
+        solveImage(card, chip, src, alt, questionsJson);
+      }
+    }
+
+    function handleImageCardClick(card, src, alt, questionsJson) {
+      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
+        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
+        const cardId = card.getAttribute('data-image-id');
+        if (selectedId === cardId) {
+          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
+          return;
+        } else {
+          selectedImageLabelChip.classList.remove('is-selected');
+          selectedImageLabelChip = null;
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function solveImage(card, chip, src, alt, questionsJson) {
+      if (!card) return;
+      const imageId = card.getAttribute('data-image-id');
+      card.classList.add('is-solved');
+      if (chip) {
+        chip.classList.remove('is-selected', 'is-dragging');
+        chip.classList.add('is-hidden');
+      }
+      if (selectedImageLabelChip === chip) {
+        selectedImageLabelChip = null;
+      }
+      if (imageId && !solvedImageIds.includes(imageId)) {
+        solvedImageIds.push(imageId);
+        if (typeof saveState === 'function') {
+          saveState();
+        }
+      }
+      const pool = document.getElementById('image-labels-pool');
+      if (pool) {
+        const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+        if (remainingChips.length === 0) {
+          pool.style.display = 'none';
+        }
+      }
+      openImageLightbox(src, alt, questionsJson, true);
+    }
+
+    function initImageLabelsGame() {
+      const pool = document.getElementById('image-labels-pool');
+      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
+      if (!pool || cards.length === 0) return;
+
+      // 1. Gather existing chips in pool and deduplicate
+      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
+      const seenIds = new Set();
+      const validChips = [];
+
+      chips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          validChips.push(chip);
+        } else {
+          chip.remove();
+        }
+      });
+
+      // 2. If pool was empty, generate from cards
+      if (validChips.length === 0) {
+        cards.forEach(card => {
+          const id = card.getAttribute('data-image-id');
+          const title = card.getAttribute('data-image-title');
+          if (id && title && !seenIds.has(id)) {
+            seenIds.add(id);
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'image-label-chip';
+            chip.setAttribute('data-image-id', id);
+            chip.setAttribute('draggable', 'true');
+            chip.textContent = title;
+            pool.appendChild(chip);
+            validChips.push(chip);
+          }
+        });
+      }
+
+      // 3. Fisher-Yates shuffle order in pool
+      for (let i = validChips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = validChips[i];
+        validChips[i] = validChips[j];
+        validChips[j] = temp;
+      }
+      validChips.forEach(chip => pool.appendChild(chip));
+
+      // 4. Attach event listeners and sync solved state
+      validChips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        const isSolved = solvedImageIds.includes(id);
+        chip.classList.toggle('is-hidden', isSolved);
+        chip.classList.remove('is-selected', 'is-dragging');
+
+        if (!chip.dataset.bound) {
+          chip.dataset.bound = 'true';
+          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+          chip.addEventListener('click', () => handleImageLabelClick(chip));
+          setupImageTouchDrag(chip);
+        }
+      });
+
+      // 5. Update cards solved state and pool visibility
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        if (id && solvedImageIds.includes(id)) {
+          card.classList.add('is-solved');
+        } else {
+          card.classList.remove('is-solved');
+        }
+      });
+
+      const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+      pool.style.display = (validChips.length > 0 && remainingChips.length === 0) ? 'none' : 'flex';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initImageLabelsGame();
+    });
 
     function dismissActiveVocabModal() {
       const detailArea = document.getElementById('vocab-completed-detail');
