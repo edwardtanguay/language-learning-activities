@@ -211,17 +211,17 @@ const SECTION_INSTRUCTIONS_TEXT_I18N = {
     de: 'Dies sind allgemeine Fragen zum Text, die vor dem lauten Vorlesen mit der Lehrkraft geklärt werden können.'
   },
   images: {
-    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span>',
+    es: 'Estas son imágenes de lugares, cosas y conceptos mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span>',
     en: 'These are images of places and things mentioned in the text. <span class="desktop-only-inline">Drag and drop the labels onto the correct photos as you discuss them with your professor.</span><span class="mobile-only-inline">Tap any image to enlarge it and discuss it with your professor.</span>',
     de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. <span class="desktop-only-inline">Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.</span><span class="mobile-only-inline">Tippe auf ein beliebiges Bild, um es zu vergrößern und mit deiner Lehrkraft zu besprechen.</span>'
   },
   imagesDesktop: {
-    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas mientras conversas sobre ellas con tu profesor.',
+    es: 'Estas son imágenes de lugares, cosas y conceptos mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas.',
     en: 'These are images of places and things mentioned in the text. Drag and drop the labels onto the correct photos as you discuss them with your professor.',
     de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.'
   },
   imagesMobile: {
-    es: 'Estas son imágenes de lugares y cosas mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.',
+    es: 'Estas son imágenes de lugares, cosas y conceptos mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.',
     en: 'These are images of places and things mentioned in the text. Discuss them with your professor.',
     de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Schau sie dir an und besprich sie mit deiner Lehrkraft.'
   },
@@ -2088,7 +2088,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   html = html.replace(/[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:IMAGES|QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*/gi, '');
   html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*/gi, '');
   html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*/gi, '');
-  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|lugares y cosas mencionados en el texto|usos y contrastes de por y para)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
+  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|lugares, cosas y conceptos mencionados en el texto|usos y contrastes de por y para)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
   html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:preguntas generales sobre el texto|general questions about the text)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
   html = html.replace(/[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/gi, '');
   html = html.replace(/<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/gi, '');
