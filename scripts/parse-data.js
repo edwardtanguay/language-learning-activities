@@ -211,22 +211,22 @@ const SECTION_INSTRUCTIONS_TEXT_I18N = {
     de: 'Dies sind allgemeine Fragen zum Text, die vor dem lauten Vorlesen mit der Lehrkraft geklärt werden können.'
   },
   images: {
-    es: 'Estas son imágenes de lugares, cosas y conceptos mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span>',
+    es: 'Estas son imágenes de cosas y conceptos mencionados en el texto. <span class="desktop-only-inline">Arrastra y suelta las etiquetas sobre las fotos correctas.</span><span class="mobile-only-inline">Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.</span>',
     en: 'These are images of places and things mentioned in the text. <span class="desktop-only-inline">Drag and drop the labels onto the correct photos as you discuss them with your professor.</span><span class="mobile-only-inline">Tap any image to enlarge it and discuss it with your professor.</span>',
     de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. <span class="desktop-only-inline">Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.</span><span class="mobile-only-inline">Tippe auf ein beliebiges Bild, um es zu vergrößern und mit deiner Lehrkraft zu besprechen.</span>'
   },
   imagesDesktop: {
-    es: 'Estas son imágenes de lugares, cosas y conceptos mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas.',
+    es: 'Estas son imágenes de cosas y conceptos mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas.',
     en: 'These are images of places and things mentioned in the text. Drag and drop the labels onto the correct photos as you discuss them with your professor.',
     de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Ziehe die Beschriftungen auf die passenden Fotos, während du sie mit deiner Lehrkraft besprichst.'
   },
   imagesMobile: {
-    es: 'Estas son imágenes de lugares, cosas y conceptos mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.',
+    es: 'Estas son imágenes de cosas y conceptos mencionados en el texto. Míralas y conversa sobre ellas con tu profesor.',
     en: 'These are images of places and things mentioned in the text. Discuss them with your professor.',
     de: 'Dies sind Bilder zu Orten und Dingen aus dem Text. Schau sie dir an und besprich sie mit deiner Lehrkraft.'
   },
   vocab: {
-    es: 'Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.',
+    es: 'Arrastra y suelta las palabras en sus definiciones correctas y lee el texto.',
     en: 'Drag and drop the words to their correct definitions and read the text. Your professor will correct your pronunciation and help you understand the words.',
     de: 'Ziehe die Wörter zu ihren passenden Definitionen und lies den Text. Deine Lehrkraft korrigiert deine Aussprache und hilft dir, die Wörter zu verstehen.'
   },

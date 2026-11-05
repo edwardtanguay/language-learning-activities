@@ -74,8 +74,8 @@ Each activity lives in `topics/<foldername>/index.html`:
   - **Section Instructions (Always Visible)**:
     - Directly below each section header line across the full width, include a clean instructions box (`.section-instructions-box`, `padding: 10px 16px; margin: -6px 0 18px 0; background-color: var(--highlight); border-left: 4px solid var(--ink-rule); font-family: var(--font-typewriter); font-size: 13.5px; line-height: 1.45; color: var(--ink-main);`) that is always visible and permanently open, without tab labels or toggles on the right.
     - Each section displays concise instructions in the target language addressing both learner and tutor in the familiar (*tú*) tone:
-      - **Imágenes**: *Estas son imágenes de lugares, cosas y conceptos mencionados en el texto.* On desktop: *Arrastra y suelta las etiquetas sobre las fotos correctas.* On mobile (`max-width: 680px`): *Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.* (Rendered responsively with `.desktop-only-inline` and `.mobile-only-inline`).
-      - **Vocabulario**: *Arrastra y suelta las palabras en sus definiciones correctas y lee el texto. Tu profesor corregirá tu pronunciación y te ayudará a comprender las palabras.*
+      - **Imágenes**: *Estas son imágenes de cosas y conceptos mencionados en el texto.* On desktop: *Arrastra y suelta las etiquetas sobre las fotos correctas.* On mobile (`max-width: 680px`): *Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.* (Rendered responsively with `.desktop-only-inline` and `.mobile-only-inline`).
+      - **Vocabulario**: *Arrastra y suelta las palabras en sus definiciones correctas y lee el texto.*
       - **Preguntas para el profesor**: *Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.*
       - **Lectura**: *Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.*
       - **Comprensión**: *Comenta las preguntas con tu profesor y encuentra la respuesta correcta.*
