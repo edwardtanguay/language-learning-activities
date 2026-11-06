@@ -5,9 +5,12 @@ lima: ¿Has estado alguna vez en Lima?
 lima: ¿Cómo son las relaciones entre Ecuador y Perú? ¿Mucha gente viaja allí?
 lima: La costa de Perú tiene un aspecto muy árido.
 bogota: ¿Cuánto tiempo se tarda en volar de Quito a Bogotá?
+bogota: ¿Cuánto cuesta? ¿Y hay aerolíneas de bajo coste, como EasyJet?
 santiago: ¿Has estado alguna vez en Santiago?
 buenos: ¿Has estado alguna vez en Buenos Aires?
 buenos: ¿Dirías que en Argentina se habla un español distinto al de Ecuador?
+mapa: ¿Es común que la gente en Ecuador viaje por Sudamérica?
+mapa: ¿Es más difícil viajar a países donde no se habla español, como Brasil, Guyana, Surinam o la Guayana Francesa?
 
 ## quedaryquedarse
 
