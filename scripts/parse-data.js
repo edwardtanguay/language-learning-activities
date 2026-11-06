@@ -2088,11 +2088,20 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   html = html.replace(/[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:IMAGES|QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*/gi, '');
   html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*/gi, '');
   html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*/gi, '');
-  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|lugares, cosas y conceptos mencionados en el texto|usos y contrastes de por y para)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
-  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:preguntas generales sobre el texto|general questions about the text)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
+  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|cosas y conceptos|places and things|Orten und Dingen|lugares, cosas y conceptos|usos y contrastes|fotos correctas|correct photos|passenden Fotos)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
+  html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:preguntas generales sobre el texto|general questions about the text|allgemeine Fragen zum Text)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
   html = html.replace(/[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/gi, '');
   html = html.replace(/<section class="images-section"[^>]*>[\s\S]*?<\/section>\s*/gi, '');
   html = html.replace(/<section class="teacher-questions-section"[^>]*>[\s\S]*?<\/section>\s*/gi, '');
+
+  // Strip any orphan section-instructions-box sitting before the first section heading
+  const firstH2Match = html.match(/<h2 class="section-title"/i);
+  if (firstH2Match) {
+    const headPart = html.slice(0, firstH2Match.index);
+    const restPart = html.slice(firstH2Match.index);
+    const cleanedHead = headPart.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
+    html = cleanedHead + restPart;
+  }
 
   // Extract vocab section if present
   let vocabBlock = '';
