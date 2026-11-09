@@ -1968,9 +1968,14 @@
 
     <section class="images-section" id="images-section">
       <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="cheatsheet" draggable="true">Cheat Sheet</button>
         <button type="button" class="image-label-chip" data-image-id="doctorplace" draggable="true">Doctor Place</button>
       </div>
       <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="cheatsheet" data-image-title="Cheat Sheet" onclick="handleImageCardClick(this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')">
+          <img src="images/es-seryestar-cheatsheet.jpg" alt="Cheat Sheet" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cheat Sheet</div>
+        </div>
         <div class="image-thumb-wrap" data-image-id="doctorplace" data-image-title="Doctor Place" onclick="handleImageCardClick(this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')">
           <img src="images/es-seryestar-doctorplace.jpg" alt="Doctor Place" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">Doctor Place</div>
@@ -3865,6 +3870,7 @@ function loadSavedState() {
     });
 
     
+
 
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
