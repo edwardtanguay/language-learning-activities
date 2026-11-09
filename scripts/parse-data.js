@@ -1921,14 +1921,18 @@ function ensureLightboxAssets(html) {
   out = out.replace(/<head>\s*<script>[\s\S]*?<\/script>/i, `<head>\n  ${redirectScript}`);
 
   // 2. Ensure CSS contains the latest images & lightbox CSS
-  const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===|\s*\/\* Topic Header Icon)/;
+  const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===|\s*\/\* Topic Header Icon|\s*\/\* Responsive)/;
+  const legacyLightboxCssRegex = /\/\* Fullscreen Image Lightbox & Zoom Overlay \*\/[\s\S]*?(?=\s*\/\* Responsive|\s*@media \(max-width: 680px\)|\s*<\/style>)/;
   if (imagesCssRegex.test(out)) {
     out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
-  } else if (!out.includes('.image-lightbox-overlay')) {
+  } else if (legacyLightboxCssRegex.test(out)) {
+    out = out.replace(legacyLightboxCssRegex, `${SECTION_IMAGES_CSS.trim()}\n\n    `);
+  } else if (!out.includes('.images-section') || !out.includes('.image-lightbox-overlay')) {
     out = out.replace('</style>', `${SECTION_IMAGES_CSS}  </style>`);
   }
 
-  // 3. Ensure HTML lightbox overlay
+  // 3. Ensure HTML lightbox overlay (and strip any legacy #image-lightbox-overlay duplicate)
+  out = out.replace(/[ \t]*<!-- Fullscreen Lightbox Overlay -->\s*<div class="image-lightbox-overlay" id="image-lightbox-overlay"[^>]*>[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>\s*/g, '');
   const lightboxHtmlRegex = /(?:[ \t]*<!-- Fullscreen Image Lightbox -->\s*)+<div class="image-lightbox-overlay" id="image-lightbox"[\s\S]*?id="image-lightbox-caption"><\/div>\s*<\/div>\s*<\/div>(?:\s*<\/div>)?/;
   if (lightboxHtmlRegex.test(out)) {
     out = out.replace(lightboxHtmlRegex, SECTION_LIGHTBOX_HTML.trim());
@@ -1955,6 +1959,7 @@ function ensureLightboxAssets(html) {
   }
 
   // 4. Clean out any previous/duplicate copies of SECTION_LIGHTBOX_JS and drag & drop game
+  out = out.replace(/[ \t]*\/\/ Fullscreen Lightbox logic\s*function openImageLightbox\(src,\s*caption\)\s*\{[\s\S]*?function closeImageLightbox\(e\)\s*\{[\s\S]*?\n    \}\s*/g, '');
   const anyLightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?(?:initImageLabelsGame\(\);\s*\}\);|setupLightboxTouchZoom\(\);\s*\}\)\(\);?)/gi;
   out = out.replace(anyLightboxJsRegex, '');
 
