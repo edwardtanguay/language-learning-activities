@@ -29,14 +29,7 @@ Each activity lives in `topics/<foldername>/index.html`:
 - **Local State & Reset**: Interactive features (e.g., quiz answers, vocabulary completion state) must use `localStorage` for persistence, and MUST include a visible reset button that prompts for confirmation before clearing `localStorage` and reloading the page scrolled to the top.
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, wrong-drop hints, and navigation links) must be exclusively in the target language.
-- **Roll-Out / Roll-Up Instructions Callout**:
-  - Initial state displays as a clean, full-width parchment highlight bar (`var(--highlight)`) with **INSTRUCCIONES** centered in bold typewriter uppercase (`.instructions-heading`).
-  - Clicking anywhere on the bar smoothly "rolls out" the instructions downwards (`grid-template-rows: 0fr -> 1fr`, CSS transition) to reveal:
-    - **Introductory paragraph**: Explains that this learning method is learner-centered, requiring zero preparation by the tutor, and is ideal for tandems or tutoring platforms like Preply or italki, using a warm and familiar tone (*tú*) addressing both learner and tutor.
-    - **Two columns (side-by-side on desktop, stacked on mobile)**, consistently written in the familiar (*tú*) tone:
-      - **Teacher / Profesor**: Explains that although no prep is needed, the tutor actively challenges the student with in-depth "how/why" questions, shares stories, maintains a 50%/50% speaking balance, and keeps an error log during class to send afterwards.
-      - **Student / Estudiante**: Explains the student's workflow: generate activity via AI (5–10 mins), read with translation, complete exercises in advance, research details & add images, commit to GitHub / Vercel, engage in 50%/50% conversation in class, and choose the next topic together.
-  - Clicking anywhere on the instructions box rolls it back up into the compact initial bar with centered **INSTRUCCIONES**. Preserves universal text selection and does not collapse when clicking links.
+- **No Instruction Boxes**: Activity pages do not include a top roll-out `INSTRUCCIONES` callout box (`.instructions-box`) or per-section instruction boxes (`.section-instructions-box`).
 - **Header, Top Utility Bar, Jump Links & Title on Mobile**:
   - **Worksheet Header & Stamp Alignment**: Regardless of title length, always anchor the language/level stamp badge (`.stamp-badge`) on the right (`.header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 20px; }`, `.stamp-badge { flex-shrink: 0; }`). If the title is long, break the title onto multiple lines (`.handout-title-group { flex: 1; min-width: 0; }`) with tight line spacing (`.handout-title-group h1 { line-height: 1.1; }`) so it holds together cohesively as one unified title without ever pushing the stamp badge down.
   - The top utility bar has generous top padding (desktop: `padding-top: 14px;`, mobile: `padding: 24px 0 14px 0;`) so "Índice de Actividades" has comfortable space from the top of the page.
@@ -71,15 +64,7 @@ Each activity lives in `topics/<foldername>/index.html`:
     - **When neither images nor teacher questions exist**: Section 1 is Vocabulario, Section 2 is Lectura, Section 3 is Comprensión, Section 4 is Preguntas abiertas.
   - Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside the comprehension quiz are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page without adding `#top` to the URL bar.
-  - **Section Instructions (Always Visible)**:
-    - Directly below each section header line across the full width, include a clean instructions box (`.section-instructions-box`, `padding: 10px 16px; margin: -6px 0 18px 0; background-color: var(--highlight); border-left: 4px solid var(--ink-rule); font-family: var(--font-typewriter); font-size: 13.5px; line-height: 1.45; color: var(--ink-main);`) that is always visible and permanently open, without tab labels or toggles on the right.
-    - Each section displays concise instructions in the target language addressing both learner and tutor in the familiar (*tú*) tone:
-      - **Imágenes**: *Estas son imágenes de cosas y conceptos mencionados en el texto.* On desktop: *Arrastra y suelta las etiquetas sobre las fotos correctas.* On mobile (`max-width: 680px`): *Toca cualquier imagen para ampliarla y conversar sobre ella con tu profesor.* (Rendered responsively with `.desktop-only-inline` and `.mobile-only-inline`).
-      - **Vocabulario**: *Arrastra y suelta las palabras en sus definiciones correctas y lee el texto.*
-      - **Preguntas para el profesor**: *Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.*
-      - **Lectura**: *Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.*
-      - **Comprensión**: *Comenta las preguntas con tu profesor y encuentra la respuesta correcta.*
-      - **Preguntas abiertas**: *El profesor y el estudiante se turnan para responder a las preguntas.*
+  - **No Section Instruction Boxes**: Do not include `.section-instructions-box` blocks below section headers.
   - **Images Section Drag & Drop Game**:
     - Above the images grid, a flex-flow pool (`.image-labels-pool`) displays shuffled beige label chips pre-rendered in HTML matching the `.vocab-chip` styling (typewriter font, warm parchment background, clean 1px ink border, balanced `padding: 5px 10px 3px 10px; line-height: 1.15;`, no click blinking via `-webkit-tap-highlight-color: transparent; outline: none;`).
     - Unsolved image cards display only the clean photo within the card frame across all screen sizes (no beige drop slot or label bar at the bottom). When hovering a dragged label over a card, the card border/background highlights as an active drop target (`.image-drop-hover`). Clicking an image directly (solved or unsolved) opens the full image lightbox popup with zoom, caption, and discussion questions.

@@ -2084,46 +2084,6 @@
       </nav>
     </header>
 
-    <!-- Instructions (Roll-out / Roll-up) -->
-    <div class="instructions-box" id="instructions-box" onclick="toggleInstructions(event)" title="Clic para desplegar o cerrar las instrucciones" role="region" aria-expanded="false" tabindex="0">
-      <div class="instructions-heading">INSTRUCCIONES</div>
-      <div class="instructions-content">
-        <div class="instructions-inner">
-          <p class="instructions-intro">
-            Este método de aprendizaje de idiomas está sumamente centrado en ti como estudiante, lo que significa que para ti como profesor no se requiere ninguna preparación previa. Esto es perfecto para intercambios lingüísticos (tándem) o plataformas como Preply o italki, donde a menudo enseñas como una actividad secundaria y puedes tener decenas de estudiantes. Tú como estudiante utilizas la IA para crear actividades interactivas en las que trabajas por tu cuenta antes de la clase y luego junto con tu profesor durante la sesión, donde el enfoque principal es la conversación. Ambos eligen juntos los temas de las actividades en función de intereses compartidos que resulten enriquecedores para los dos.
-          </p>
-          <div class="instructions-columns">
-            <div class="instructions-col">
-              <div class="instructions-col-title">Profesor</div>
-              <ul>
-                <li>Aunque no necesitas ninguna preparación previa por tu parte, puedes ayudar a tu estudiante durante la clase de muchas maneras.</li>
-                <li>Lleva una lista de los errores que cometa tu estudiante durante la clase y envíasela después. Puede ser útil corregirle de vez en cuando durante la conversación en vivo, pero contar con una lista de errores después de clase, cuando tiene tiempo para investigar, organizar y reflexionar sobre ellos, le será de gran utilidad para superarlos con el tiempo.</li>
-                <li>Interactúa constantemente con tu estudiante: pídele que aclare lo que no esté claro, comparte tus propias historias y opiniones, interrúmpele, hazle preguntas, desafía sus respuestas y debate los temas a fondo. Prefiere preguntas con «cómo» y «por qué» sobre preguntas con «qué», «cuándo» o de «sí/no», las cuales obligan a dar respuestas más largas y profundas.</li>
-                <li>El objetivo es mantener el porcentaje de habla de estudiante/profesor en un 50%/50%. La plataforma de video de Preply reporta esta estadística hacia el final de la clase, lo cual es muy útil.</li>
-                <li>Tu meta no es terminar la actividad a toda costa, sino mantener una interacción constante con tu estudiante a un nivel que le suponga un reto y le ayude a mejorar, pero sin abrumarle.</li>
-                <li>Hoy en día, gracias a la IA y los recursos en línea, los estudiantes tienen casi todo lo necesario para aprender idiomas por su cuenta. Lo que tu estudiante necesita de ti en clase es el desafío constante de la interacción en tiempo real en la conversación, y después una lista de los errores cometidos durante la clase.</li>
-              </ul>
-            </div>
-            <div class="instructions-col">
-              <div class="instructions-col-title">Estudiante</div>
-              <ul>
-                <li>Crea una actividad para tu próxima clase en tu editor con la habilidad, ej.: «/create-activity on Ecuador in Spanish B1».</li>
-                <li>Con la mayoría de los modelos de IA, tardarás entre 5 y 10 minutos en crearla.</li>
-                <li>Una vez lista, lee el texto con la ayuda de Google Traductor hasta el punto de poder leerlo de nuevo en el idioma meta y comprenderlo en general.</li>
-                <li>Realiza todos los ejercicios para que tengas una comprensión general tanto de las preguntas como de las respuestas, hasta el punto de poder responderlas en vivo en clase con tu profesor.</li>
-                <li>Prepara el vocabulario y las estructuras que necesitarás para debatir el texto y los ejercicios con tu profesor en clase.</li>
-                <li>Vuelve a leer el texto, esta vez investigando detalles y añadiendo capturas de imágenes de Internet (consulta las <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">instrucciones</a> para una guía técnica).</li>
-                <li>Haz commit de la actividad y las imágenes a tu repositorio de GitHub, lo cual la publicará en tu sitio de Vercel.</li>
-                <li>En clase, trabaja en cada sección con tu profesor, debatiendo los temas a medida que surjan de manera natural.</li>
-                <li>Tu objetivo no es terminar la actividad en clase, sino mantener una conversación abierta e interesante con tu profesor durante toda la sesión con un 50%/50% de participación para una práctica sólida tanto de expresión oral como de comprensión auditiva.</li>
-                <li>Antes de que termine la clase, acuerda con tu profesor el tema de la actividad para tu próxima clase.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
@@ -2145,15 +2105,7 @@
     <h2 class="section-title" id="seccion-2">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
         </h2>
-      <div class="section-instructions-box">
-        <div class="section-instructions-content">
-          <div class="section-instructions-inner">
-            <p>Arrastra y suelta las palabras en sus definiciones correctas y lee el texto.</p>
-          </div>
-        </div>
-      </div>
-
-    <section class="vocab-container" id="vocab-container">
+      <section class="vocab-container" id="vocab-container">
       <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
         <!-- Waiting words populated dynamically -->
       </div>
@@ -2177,15 +2129,7 @@
     <h2 class="section-title" id="seccion-3">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
         </h2>
-      <div class="section-instructions-box">
-        <div class="section-instructions-content">
-          <div class="section-instructions-inner">
-            <p>Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.</p>
-          </div>
-        </div>
-      </div>
-
-    <article class="reading-content">
+      <article class="reading-content">
       <p>
         En una pequeña mesa del café universitario, Mateo suspiró mientras cerraba su gastado cuaderno de gramática. «Siento un tremendo <span class="vocab-in-text" data-key="enredo">enredo</span> en la cabeza», admitió con sincero desánimo. «Cada vez que redacto un texto, dudo entre por y para; temo cometer un <span class="vocab-in-text" data-key="descuido">descuido</span> en cada frase y confundir a quien me lea». Valentina dejó su taza sobre el plato y sonrió con serenidad. «Es un <span class="vocab-in-text" data-key="tropiezo">tropiezo</span> muy habitual al aprender español», le aseguró con calidez. «A primera vista parece una auténtica <span class="vocab-in-text" data-key="trampa">trampa</span> gramatical, pero esta provechosa <span class="vocab-in-text" data-key="charla">charla</span> entre amigos te ayudará a ver las diferencias con absoluta claridad».
       </p>
@@ -2207,15 +2151,7 @@
     <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión</a>
         </h2>
-      <div class="section-instructions-box">
-        <div class="section-instructions-content">
-          <div class="section-instructions-inner">
-            <p>Comenta las preguntas con tu profesor y encuentra la respuesta correcta.</p>
-          </div>
-        </div>
-      </div>
-
-    <div class="quiz-container" id="quiz-container">
+      <div class="quiz-container" id="quiz-container">
 
       
       <!-- Question 1 -->
@@ -2412,15 +2348,7 @@
     <h2 class="section-title" id="seccion-5">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
         </h2>
-      <div class="section-instructions-box">
-        <div class="section-instructions-content">
-          <div class="section-instructions-inner">
-            <p>El profesor y el estudiante se turnan para responder a las preguntas.</p>
-          </div>
-        </div>
-      </div>
-
-    <section class="discussion-container">
+      <section class="discussion-container">
       
       <ol class="discussion-questions">
         <li>

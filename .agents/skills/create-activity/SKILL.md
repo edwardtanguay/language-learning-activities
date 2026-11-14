@@ -109,15 +109,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
     - **When neither images nor teacher questions exist**: Section 1 is Vocabulario, Section 2 is Lectura, Section 3 is Comprensión, Section 4 is Preguntas abiertas.
   - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, `4`, `5`). Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside Comprensión are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page so the top utility bar and "Índice de Actividades" link remain fully visible, without adding `#top` to the URL bar (`text-decoration: none; color: inherit; cursor: pointer;`).
-  - **Section Instructions (Always Visible)**:
-    - Directly below each section header line across the full width, include a clean instructions box (`.section-instructions-box`, `padding: 10px 16px; margin: -6px 0 18px 0; background-color: var(--highlight); border-left: 4px solid var(--ink-rule); font-family: var(--font-typewriter); font-size: 13.5px; line-height: 1.45; color: var(--ink-main);`) that is always visible and permanently open, without tab labels or toggles on the right.
-    - Each section displays concise instructions in the target language addressing both learner and tutor in the familiar (*tú*) tone:
-      - Images: *Estas son imágenes de cosas y conceptos mencionados en el texto. Arrastra y suelta las etiquetas sobre las fotos correctas.*
-      - Vocabulary: *Arrastra y suelta las palabras en sus definiciones correctas y lee el texto.*
-      - Questions for the Teacher: *Estas son preguntas generales sobre el texto que tengas y que puedes aclarar con tu profesor aquí antes de leer el texto en voz alta.*
-      - Reading: *Lee este texto en voz alta. Tu profesor te corregirá en tiempo real.*
-      - Comprehension: *Comenta las preguntas con tu profesor y encuentra la respuesta correcta.*
-      - Open Questions: *El profesor y el estudiante se turnan para responder a las preguntas.*
+  - **No Instruction Boxes**: Do not include a top roll-out `INSTRUCCIONES` box (`.instructions-box`) or per-section instruction boxes (`.section-instructions-box`).
   - **Images Section Drag & Drop Game**:
     - Above the images grid, a flex-flow pool (`.image-labels-pool`) displays shuffled beige label chips pre-rendered in HTML matching the `.vocab-chip` styling (typewriter font, warm parchment background, clean 1px ink border, balanced `padding: 5px 10px 3px 10px; line-height: 1.15;`, no click blinking via `-webkit-tap-highlight-color: transparent; outline: none;`).
     - Unsolved image cards display only the clean photo within the card frame across all screen sizes (no beige drop slot or label bar at the bottom). When hovering a dragged label over a card, the card border/background highlights as an active drop target (`.image-drop-hover`). Clicking an image directly (solved or unsolved) opens the full image lightbox popup with zoom, caption, and discussion questions.
@@ -165,15 +157,7 @@ Each activity file should include the following sections:
    - Do NOT include a print button.
 2. **Worksheet Header**:
    - Title (`<h1>`) and language/level stamp badge (`[Language] [Level]`) in `.header-top`. Regardless of title length, always anchor the stamp badge on the right (`.header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 20px; }`, `.stamp-badge { flex-shrink: 0; }`). If the title is long, break the title onto multiple lines (`.handout-title-group { flex: 1; min-width: 0; }`) with tight line spacing (`line-height: 1.1;`) so it holds together cohesively as one title without ever pushing the stamp badge down. Beneath them, concise 1–2 sentence content overview in the target language with balanced top and bottom spacing.
-3. **Roll-Out / Roll-Up Instructions Callout Box**:
-   - Initial state displays as a clean, full-width parchment highlight bar (`var(--highlight)`) with **INSTRUCCIONES** centered in bold typewriter uppercase (`.instructions-heading`).
-   - Clicking anywhere on the bar smoothly "rolls out" the instructions downwards (`grid-template-rows: 0fr -> 1fr`, CSS transition) to reveal:
-     - An introductory overview paragraph translated into the target language explaining the learner-centered method (no teacher preparation necessary, perfect for tandems or platforms like Preply or italki, student uses AI to create interactive activities to work on alone and in class where conversation is the focus, win-win topics chosen together).
-     - Two responsive columns below the intro (`.instructions-cols`):
-       - **Profesor**: Advice and role in class (no preparation needed, keep list of errors during class to send afterwards, constant live interaction with clarifying questions, stories, opinions, challenging answers, prefer "how" and "why" questions over "what/when/yes-no", aim for 50%/50% speaking time, focus is constant interactive challenge rather than rushing to finish the activity).
-       - **Estudiante**: Step-by-step workflow before and during class (create activity with AI skill, read through text and understand it, work through exercises beforehand, prepare speaking topics, research details and add screenshots of web images with link to instructions, commit and publish to Vercel, work through sections in class naturally aiming for 50%/50% speaking/listening, decide on next topic before class ends).
-   - Clicking anywhere on the instructions box rolls it back up into the compact initial bar with centered **INSTRUCCIONES** (while clicks on links or text selections are ignored).
-4. **Section Structure & Canonical Ordering**:
+3. **Section Structure & Canonical Ordering**:
    - **Canonical Section Order**:
      1. **Imágenes** (`clic para ampliar`, if present)
      2. **Vocabulario** (`arrastrar y soltar`)

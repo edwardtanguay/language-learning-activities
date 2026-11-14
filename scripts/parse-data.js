@@ -1754,21 +1754,12 @@ function buildSectionQuestionsHtml(activity, questions, sectionNum) {
     })
     .join('\n');
 
-  const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.questions && SECTION_INSTRUCTIONS_TEXT_I18N.questions[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.questions.es;
-
   return `    <!-- SECTION ${num}: QUESTIONS FOR TEACHER -->
     <h2 class="section-title" id="seccion-${num}">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
         <span class="section-num">${num}</span> ${i18n.sectionTitle}
       </a>
     </h2>
-    <div class="section-instructions-box">
-      <div class="section-instructions-content">
-        <div class="section-instructions-inner">
-          <p>${instructionsText}</p>
-        </div>
-      </div>
-    </div>
 
     <section class="teacher-questions-section" id="teacher-questions-section">
       <div class="teacher-questions-card">
@@ -1882,8 +1873,6 @@ ${thumbsHtml}
     .map(c => `        <button type="button" class="image-label-chip" data-image-id="${c.slug}" draggable="true">${c.title}</button>`)
     .join('\n');
 
-  const instructionsText = (SECTION_INSTRUCTIONS_TEXT_I18N.images && SECTION_INSTRUCTIONS_TEXT_I18N.images[activity.lang]) || SECTION_INSTRUCTIONS_TEXT_I18N.images.es;
-
   return `    <!-- SECTION ${sectionNum}: IMAGES -->
     <h2 class="section-title" id="seccion-${sectionNum}">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
@@ -1891,13 +1880,6 @@ ${thumbsHtml}
       </a>
       <span class="section-action-hint">${i18n.actionHint}</span>
     </h2>
-    <div class="section-instructions-box">
-      <div class="section-instructions-content">
-        <div class="section-instructions-inner">
-          <p>${instructionsText}</p>
-        </div>
-      </div>
-    </div>
 
     <section class="images-section" id="images-section">
       <div class="image-labels-pool" id="image-labels-pool">
@@ -2279,39 +2261,52 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     `function handleBackNavigation(e, url) {\n      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;\n      const targetUrl = url || '../../index.html';\n      if (window.innerWidth <= 680) {\n        if (e) e.preventDefault();\n        captureOutgoingActivity('backward');\n        window.location.href = targetUrl;\n        return false;\n      }\n      window.location.href = targetUrl;\n      return false;\n    }`
   );
 
-  // 10. Update instruction texts
-  const oldVocabRegex = /<p>\s*Estas son las diez palabras más desafiantes del texto[\s\S]*?según lo necesites\.\s*<\/p>/gi;
-  html = html.replace(oldVocabRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.vocab[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.vocab.es}</p>`);
-
-  const oldReadingRegex = /<p>\s*Lee este texto en voz alta\.\s*Tu profesor te corregir[áa] en tiempo real y anotar[áa] las palabras[\s\S]*?notas ling[üu][íi]sticas [úu]tiles\.\s*<\/p>/gi;
-  html = html.replace(oldReadingRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.reading[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.reading.es}</p>`);
-
-  const oldQuizRegex = /<p>\s*Responde a cada una de estas preguntas eligiendo la respuesta correcta[\s\S]*?cualquier duda\.\s*<\/p>/gi;
-  html = html.replace(oldQuizRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.comprehension[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.comprehension.es}</p>`);
-
-  const oldDiscussRegex = /<p>\s*Lee cada pregunta en voz alta\.\s*Tu profesor responder[áa] primero[\s\S]*?siguiente pregunta\.\s*<\/p>/gi;
-  html = html.replace(oldDiscussRegex, `<p>${SECTION_INSTRUCTIONS_TEXT_I18N.discuss[activity.lang] || SECTION_INSTRUCTIONS_TEXT_I18N.discuss.es}</p>`);
-
-  // 11. Remove all section instructions tab buttons and make boxes clean and always visible
-  html = html.replace(/<button type="button" class="section-instructions-tab[^>]*>[\s\S]*?<\/button>\s*/gi, '');
-  html = html.replace(/<div class="section-instructions-box[^>]*>/gi, '<div class="section-instructions-box">');
-
-  // 12. Update CSS for section instructions: remove tab styles, make box permanently visible
-  const oldInstructionsCssRegex = /\.section-instructions-tab\s*\{[\s\S]*?\.section-instructions-box\.expanded\s*\{[\s\S]*?\}/;
-  if (oldInstructionsCssRegex.test(html)) {
-    html = html.replace(
-      oldInstructionsCssRegex,
-      `.section-instructions-box {\n      background-color: var(--highlight);\n      border-left: 4px solid var(--ink-rule);\n      font-family: var(--font-typewriter);\n      font-size: 13.5px;\n      line-height: 1.45;\n      color: var(--ink-main);\n      padding: 10px 16px;\n      margin: -6px 0 18px 0;\n    }`
-    );
+  // 10. Remove all top instructions boxes and per-section instruction boxes
+  function stripDivByClass(source, className) {
+    const openRegex = new RegExp(`<div\\s+class="[^"]*\\b${className}\\b[^"]*"[^>]*>`, 'i');
+    let result = source;
+    let match;
+    while ((match = openRegex.exec(result)) !== null) {
+      const startIdx = match.index;
+      let depth = 1;
+      let cursor = startIdx + match[0].length;
+      const tagRegex = /<\/?div\b[^>]*>/gi;
+      tagRegex.lastIndex = cursor;
+      let tagMatch;
+      let endIdx = -1;
+      while ((tagMatch = tagRegex.exec(result)) !== null) {
+        if (tagMatch[0].startsWith('</')) {
+          depth--;
+        } else {
+          depth++;
+        }
+        if (depth === 0) {
+          endIdx = tagMatch.index + tagMatch[0].length;
+          break;
+        }
+      }
+      if (endIdx === -1) break;
+      // Consume trailing whitespace/newlines up to next tag
+      while (endIdx < result.length && (result[endIdx] === ' ' || result[endIdx] === '\t' || result[endIdx] === '\r' || result[endIdx] === '\n')) {
+        endIdx++;
+      }
+      result = result.slice(0, startIdx) + result.slice(endIdx);
+    }
+    return result;
   }
 
-  // 13. Make toggleSectionInstructions a no-op
+  html = html.replace(/<!--\s*Instructions\s*\(Roll-out\s*\/\s*Roll-up\)\s*-->\s*/gi, '');
+  html = stripDivByClass(html, 'instructions-box');
+  html = stripDivByClass(html, 'section-instructions-box');
+  html = html.replace(/<button type="button" class="section-instructions-tab[^>]*>[\s\S]*?<\/button>\s*/gi, '');
+
+  // 11. Make toggleSectionInstructions / toggleInstructions a no-op
   html = html.replace(
     /function toggleSectionInstructions\(el\)\s*\{[\s\S]*?\n    \}/,
     `function toggleSectionInstructions() {}`
   );
 
-  // 14. Update confirmReset() / executeReset()
+  // 12. Clean up any legacy section-instructions reset lines
   html = html.replace(
     /(?:document\.querySelectorAll\('\.section-instructions-box[\s\S]*?\}\);\s*)*(?:document\.querySelectorAll\('\.section-instructions-tab[\s\S]*?\}\);\s*)*(?:tab\.setAttribute\('aria-expanded',\s*'true'\);\s*\}\);\s*)+/,
     ''
