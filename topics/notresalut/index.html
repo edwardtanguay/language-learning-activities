@@ -1,0 +1,4712 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <script>
+    if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprendre « Notre Salut » d'Emmanuel Marre | Activité de Français B2</title>
+  <meta name="description" content="Guide d'analyse thématique et formelle rédigé par un professeur de cinéma pour aider les étudiants de niveau B2 à comprendre les enjeux profonds du film Notre Salut d'Emmanuel Marre.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       1970s SCHOOL HANDOUT DESIGN SYSTEM
+       Simple, clean, nostalgic, paper-and-ink aesthetic
+       ========================================================= */
+    :root {
+      --paper-bg: #f9f6ef;
+      --paper-sheet: #fffdf9;
+      --ink-main: #22201e;
+      --ink-muted: #5e5953;
+      --ink-border: #d5cebf;
+      --ink-rule: #d5cebf;
+      --stamp-blue: #1d4373;
+      --lang-color: #333388; /* Standard French (fr) */
+      --correct-green: #235c34;
+      --correct-bg: #eef7ee;
+      --wrong-red: #8f2a24;
+      --wrong-bg: #faeef0;
+      --highlight: #f2e9cb;
+      --font-typewriter: "Courier Prime", "Courier New", Courier, monospace;
+      --font-body: "Lora", Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    html, body {
+      touch-action: manipulation;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      color: var(--ink-main);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.65;
+      padding: 24px 16px;
+      background-image: radial-gradient(var(--ink-rule) 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    /* Top utility bar */
+    .utility-bar {
+      max-width: 860px;
+      margin: 0 auto 16px auto;
+      padding-top: 14px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+    }
+
+    .back-link {
+      color: var(--stamp-blue);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.1s ease, transform 0.1s ease;
+    }
+
+    .back-link:active {
+      opacity: 0.65;
+      transform: scale(0.97);
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .back-arrow {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.8;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Main Handout Container - Paper sheet with realistic desk drop-shadow */
+    .handout-sheet {
+      max-width: 860px;
+      margin: 0 auto;
+      background-color: var(--paper-sheet);
+      border: 1px solid #e8e2d5;
+      box-shadow: 0 12px 38px rgba(45, 40, 35, 0.08), 0 3px 10px rgba(45, 40, 35, 0.04);
+      border-radius: 3px;
+      padding: 38px 46px;
+      position: relative;
+    }
+
+    /* Worksheet Header */
+    .worksheet-header {
+      border: none;
+      padding: 0;
+      margin-bottom: 24px;
+      background: transparent;
+      font-family: var(--font-typewriter);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
+    .handout-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      font-family: var(--font-typewriter);
+      color: var(--ink-main);
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+
+    .handout-subtitle {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    .stamp-badge {
+      border: 3px solid var(--lang-color);
+      color: var(--lang-color);
+      padding: 6px 14px;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      transform: rotate(-2deg);
+      display: inline-block;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Section Jump Navigation */
+    .jump-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 18px auto 22px auto;
+      flex-wrap: wrap;
+    }
+
+    .jump-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+
+    .jump-num:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-num.active {
+      background-color: #c8beaa;
+      color: var(--ink-main);
+    }
+
+    .jump-top-btn,
+    .jump-return-btn {
+      background: var(--highlight);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+      flex-shrink: 0;
+    }
+
+    /* Stationary Top button smooth collapse/expand based on scrollY > 30 */
+    .jump-nav .jump-top-btn {
+      width: 0;
+      height: 32px;
+      opacity: 0;
+      transform: scale(0.6);
+      pointer-events: none;
+      overflow: hidden;
+      margin-right: -14px;
+      border: 0 solid var(--ink-rule);
+      transition: width 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.18s ease,
+                  transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  margin-right 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-width 0.18s ease;
+    }
+
+    .jump-nav .jump-top-btn.show {
+      width: 32px;
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      margin-right: 0;
+      border-width: 1px;
+    }
+
+    .jump-return-btn {
+      display: none;
+    }
+
+    .jump-return-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-top-btn:hover,
+    .jump-return-btn:hover {
+      background-color: #e6dbb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-bookmark-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #e6e0d2;
+      color: var(--lang-color);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      padding: 0;
+      transition: background-color 0.15s, transform 0.15s, opacity 0.2s, box-shadow 0.15s;
+      flex-shrink: 0;
+    }
+
+    .jump-bookmark-btn.show {
+      display: inline-flex;
+    }
+
+    .jump-bookmark-btn:hover {
+      background-color: #dacfb8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
+    }
+
+    .jump-bookmark-btn svg,
+    .jump-top-btn svg,
+    .jump-return-btn svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
+    /* Sticky Section Jump Pill & Return to Reading */
+    .sticky-jump-nav {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translate3d(-50%, -150%, 0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 880;
+      background: rgba(255, 253, 249, 0.96);
+      border: 1px solid var(--ink-border);
+      box-shadow: 0 4px 16px rgba(45, 40, 35, 0.14);
+      border-radius: 999px;
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .sticky-jump-nav.visible {
+      transform: translate3d(-50%, 0, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sticky-jump-nav .jump-num,
+    .sticky-jump-nav .jump-top-btn,
+    .sticky-jump-nav .jump-return-btn,
+    .sticky-jump-nav .jump-bookmark-btn {
+      width: 27px;
+      height: 27px;
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      margin-right: 0;
+      border-width: 1px;
+    }
+
+    .sticky-jump-nav .jump-num {
+      font-size: 14px;
+    }
+
+    .sticky-jump-nav .jump-bookmark-btn svg,
+    .sticky-jump-nav .jump-top-btn svg,
+    .sticky-jump-nav .jump-return-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Handout Sections */
+    .section-title {
+      font-family: var(--font-typewriter);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--ink-rule);
+      padding-bottom: 8px;
+      margin: 36px 0 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      scroll-margin-top: 62px;
+    }
+
+    .section-title-link {
+      color: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .section-title-link:hover {
+      opacity: 0.8;
+    }
+
+    .section-instructions-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--ink-main);
+      padding: 10px 16px;
+      margin: -6px 0 18px 0;
+    }
+
+    .section-instructions-content {
+      overflow: hidden;
+    }
+
+    .section-instructions-inner p {
+      margin: 0;
+      text-align: left;
+    }
+
+    .section-action-hint {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--ink-muted);
+      opacity: 0.65;
+    }
+
+    .section-title .section-num {
+      background: #e6e0d2;
+      color: var(--ink-main);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      margin-right: 0;
+      flex-shrink: 0;
+    }
+
+    /* Instructions callout (Roll-out / Roll-up) */
+    .instructions-box {
+      background-color: var(--highlight);
+      border-left: 4px solid var(--ink-rule);
+      padding: 9px 16px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: padding 0.25s ease;
+    }
+
+    .instructions-box.expanded {
+      padding: 12px 16px;
+    }
+
+    .instructions-heading {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-bottom: 0;
+      color: var(--ink-main);
+      transition: margin-bottom 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-heading {
+      margin-bottom: 8px;
+    }
+
+    .instructions-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+    }
+
+    .instructions-box.expanded .instructions-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .instructions-inner {
+      overflow: hidden;
+    }
+
+    .instructions-intro {
+      margin: 10px 0 16px 0;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-main);
+      text-align: left;
+    }
+
+    .instructions-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    .instructions-col {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink-main);
+    }
+
+    .instructions-col-title {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      color: var(--stamp-blue);
+      border-bottom: 1px dashed var(--ink-rule);
+      padding-bottom: 4px;
+    }
+
+    .instructions-col ul {
+      padding-left: 18px;
+      margin: 0;
+      list-style-type: disc;
+    }
+
+    .instructions-col li {
+      margin-bottom: 10px;
+    }
+
+    .instructions-col li:last-child {
+      margin-bottom: 0;
+    }
+
+    .instructions-col a {
+      color: var(--ink-main);
+      text-decoration: underline;
+    }
+
+    .instructions-col a:hover {
+      color: var(--stamp-blue);
+    }
+
+    /* Reading Passage */
+    .reading-content p {
+      margin-bottom: 16px;
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+
+    .vocab-in-text {
+      background-color: rgba(242, 233, 203, 0.55);
+      padding: 0 2px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .reading-word.has-bookmark {
+      white-space: nowrap;
+    }
+
+    .reading-bookmark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lang-color);
+      cursor: pointer;
+      margin-right: 3px;
+      vertical-align: -2px;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .reading-bookmark:hover {
+      transform: scale(1.18);
+      opacity: 0.85;
+    }
+
+    .reading-bookmark svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .region-card {
+      margin-bottom: 22px;
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .region-card h3 {
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+      margin-bottom: 8px;
+      text-transform: none;
+    }
+
+    /* =========================================================
+       SECTION 1: VOCABULARIO (DRAG / DROP & HINT EXERCISE)
+       ========================================================= */
+    .vocab-container {
+      margin-top: 14px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .vocab-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 580px;
+      margin: 0 auto 16px auto;
+      gap: 6px;
+      min-height: 32px;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .vocab-pool-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-chip {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 3px 8px;
+      cursor: grab;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      white-space: nowrap;
+      touch-action: none;
+    }
+
+    .vocab-chip:active {
+      cursor: grabbing;
+    }
+
+    .vocab-chip.selected {
+      border-color: var(--stamp-blue);
+      background-color: var(--highlight);
+      box-shadow: 0 0 0 2px var(--stamp-blue);
+    }
+
+    .vocab-chip.dragging {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    .vocab-targets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .vocab-targets.vocab-dragging-active .vocab-target-card:not(.state-wrong):not(.state-correct) * {
+      pointer-events: none;
+    }
+
+    .vocab-drag-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1.5px solid var(--stamp-blue);
+      box-shadow: 0 6px 18px rgba(45, 40, 35, 0.22);
+      padding: 4px 10px;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .vocab-touch-avatar {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      transform: translate(-50%, -120%);
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1px solid var(--stamp-blue);
+      box-shadow: 0 4px 14px rgba(45, 40, 35, 0.25);
+      padding: 5px 10px 3px 10px;
+      white-space: nowrap;
+      border-radius: 0;
+      line-height: 1.15;
+    }
+
+    .vocab-target-card {
+      background: var(--paper-bg);
+      border: 1px dashed var(--ink-rule);
+      border-radius: 0;
+      padding: 8px 12px;
+      transition: background-color 0.15s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .vocab-target-card.drag-over {
+      background-color: #e4dfd5 !important;
+      box-shadow: none !important;
+    }
+
+    .vocab-target-def {
+      font-size: 14px;
+      line-height: 1.35;
+      color: var(--ink-main);
+    }
+
+    /* Wrong Drop State */
+    .vocab-target-card.state-wrong {
+      background: #fbe4e4 !important;
+      border: 1px solid #eba8a8 !important;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
+      cursor: pointer;
+      padding: 18px 18px !important;
+    }
+
+    .wrong-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wrong-icon {
+      width: 18px;
+      height: 18px;
+      stroke: var(--wrong-red);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wrong-def-text {
+      font-size: 14px;
+      color: var(--wrong-red);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .wrong-hint-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.65);
+      padding: 8px 10px;
+      border-radius: 2px;
+    }
+
+    .wrong-hint-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wrong-hint-text {
+      font-size: 13.5px;
+      color: #92400e;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* Correct Drop Modal / Boxed Dictionary Card */
+    .vocab-target-card.state-correct {
+      background: #e3f5e5 !important;
+      border: 1px solid #a3d9a8 !important;
+      padding: 18px 18px !important;
+      cursor: pointer;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(45, 40, 35, 0.18);
+    }
+
+    .dict-entry-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dict-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(35, 92, 52, 0.25);
+      padding-bottom: 6px;
+    }
+
+    .dict-word-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dict-word {
+      font-family: var(--font-typewriter);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--correct-green);
+      letter-spacing: 0.3px;
+    }
+
+    .dict-pos {
+      font-size: 12.5px;
+      font-style: italic;
+      color: var(--ink-muted);
+    }
+
+    .lookup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--stamp-blue);
+      text-decoration: none;
+      padding: 2px;
+      border-radius: 2px;
+      transition: transform 0.12s, color 0.12s;
+    }
+
+    .lookup-btn:hover {
+      transform: scale(1.15);
+      color: #0c2d54;
+    }
+
+    .lookup-icon {
+      width: 15px;
+      height: 15px;
+      stroke-width: 2.3;
+    }
+
+    .dict-def-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .dict-check-icon {
+      width: 17px;
+      height: 17px;
+      stroke: var(--correct-green);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .dict-def-text {
+      font-size: 14px;
+      color: var(--ink-main);
+      line-height: 1.4;
+    }
+
+    .dict-sentence {
+      font-size: 13.5px;
+      font-style: italic;
+      color: var(--ink-muted);
+      margin-top: 4px;
+      padding-left: 25px;
+      line-height: 1.4;
+      border-left: 2px solid rgba(35, 92, 52, 0.35);
+    }
+
+    /* Completed Words Pool */
+    .vocab-completed-pool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin: 14px auto 0 auto;
+      max-width: 580px;
+    }
+
+    .vocab-completed-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .vocab-completed-pill {
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--paper-sheet);
+      color: var(--ink-main);
+      border: 1px solid #a3d9a8;
+      border-radius: 0;
+      padding: 3px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background-color 0.12s, transform 0.12s;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .vocab-completed-pill:hover {
+      background-color: #eaf6eb;
+      transform: translateY(-1px);
+    }
+
+    .vocab-completed-pill .check-icon {
+      width: 13px;
+      height: 13px;
+      stroke: var(--correct-green);
+      stroke-width: 3.2;
+    }
+
+    .vocab-completed-detail-area {
+      max-width: 580px;
+      margin: 14px auto 10px auto;
+    }
+
+    /* Backdrop overlay for elevated popups */
+    .vocab-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(35, 30, 25, 0.32);
+      backdrop-filter: blur(1.5px);
+      z-index: 40;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .vocab-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Hint popup modal */
+    .vocab-hint-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      box-shadow: 0 12px 36px rgba(45, 40, 35, 0.25);
+      padding: 18px 18px;
+      z-index: 60;
+      max-width: 440px;
+      width: 90%;
+      border-radius: 0;
+    }
+
+    .hint-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .hint-lightbulb-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .hint-text {
+      font-size: 14px;
+      color: var(--ink-main);
+      line-height: 1.45;
+    }
+
+    /* =========================================================
+       SECTION 3: COMPRENSIÓN (MULTIPLE CHOICE)
+       ========================================================= */
+    .quiz-container {
+      margin-top: 14px;
+      margin-bottom: 24px;
+    }
+
+    .question-card {
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin-bottom: 28px;
+    }
+
+    .question-prompt {
+      font-family: var(--font-body);
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--ink-main);
+      margin-bottom: 12px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .question-prompt .q-num {
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+      margin-right: 6px;
+      color: var(--stamp-blue);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-left: 28px;
+    }
+
+    .option-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      padding: 4px 6px;
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      color: var(--ink-main);
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      border-radius: 2px;
+      transition: opacity 0.12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option-item:hover {
+      opacity: 0.82;
+    }
+
+    .option-item .opt-letter {
+      font-family: var(--font-typewriter);
+      font-weight: 700;
+      color: var(--ink-main);
+      flex-shrink: 0;
+    }
+
+    .option-item.selected .opt-letter {
+      color: var(--stamp-blue);
+      font-weight: 800;
+    }
+
+    .option-item .opt-text {
+      text-align: left;
+      flex: 1;
+      line-height: 1.45;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      margin-left: 20px;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .feedback-box.show {
+      display: flex;
+    }
+
+    .feedback-box.correct-text {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+      color: var(--correct-green);
+    }
+
+    .feedback-box.wrong-text {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+      color: var(--wrong-red);
+    }
+
+    .feedback-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feedback-content {
+      flex: 1;
+      text-align: left;
+      font-family: var(--font-body);
+      color: var(--ink-main);
+    }
+
+    /* =========================================================
+       SECTION 4: PREGUNTAS ABIERTAS (DISCUSSION)
+       ========================================================= */
+    .discussion-container {
+      margin-top: 14px;
+      margin-bottom: 28px;
+    }
+
+    .open-questions-list {
+      list-style-type: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .open-question-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-main);
+      text-align: left;
+    }
+
+    .open-q-num {
+      font-family: var(--font-typewriter);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--stamp-blue);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .open-q-text {
+      flex: 1;
+    }
+
+    .question-hint-wrap {
+      white-space: nowrap;
+    }
+
+    .question-hint-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #d97706;
+      text-decoration: none;
+      vertical-align: -2px;
+      margin-left: 2px;
+      transition: transform 0.12s;
+    }
+
+    .question-hint-btn:hover {
+      transform: scale(1.15);
+    }
+
+    .question-hint-icon {
+      width: 17px;
+      height: 17px;
+    }
+
+    /* =========================================================
+       BOTTOM ACTIONS BAR & FOOTER
+       ========================================================= */
+    .bottom-actions-bar {
+      margin-top: 36px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid var(--ink-rule);
+      border-bottom: 1px solid var(--ink-rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+    }
+
+    .reset-answers-btn {
+      background: transparent;
+      border: 1px dashed var(--ink-rule);
+      color: var(--ink-muted);
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background-color 0.12s, color 0.12s, border-color 0.12s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .reset-answers-btn:hover {
+      background: var(--paper-bg);
+      color: var(--ink-main);
+      border-color: var(--ink-muted);
+    }
+
+    .reset-confirm-box {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .reset-confirm-btn {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      padding: 6px 10px 4px 10px;
+      cursor: pointer;
+      color: var(--ink-main);
+      border-radius: 2px;
+      line-height: 1;
+    }
+
+    .reset-confirm-btn.danger {
+      border-color: #eba8a8;
+      background: #fbe4e4;
+      color: var(--wrong-red);
+      font-weight: 700;
+    }
+
+    .site-footer {
+      max-width: 860px;
+      margin: 22px auto 0 auto;
+      text-align: center;
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .site-footer a {
+      color: var(--stamp-blue);
+      text-decoration: underline;
+    }
+
+    .site-footer a:hover {
+      color: var(--ink-main);
+    }
+
+    .footer-dot {
+      color: var(--ink-rule);
+    }
+
+    /* Mobile Page Whoosh Transitions */
+    @keyframes whooshInRight {
+      from { transform: translate3d(105vw, 0, 0); }
+      to { transform: translate3d(0, 0, 0); }
+    }
+    @keyframes whooshOutRight {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(105vw, 0, 0); }
+    }
+    .page-slide-in-right {
+      animation: whooshInRight 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .page-slide-out-right {
+      animation: whooshOutRight 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 680px) {
+      body {
+        padding: 0 8px 12px 8px;
+        font-size: 16px;
+      }
+
+      .utility-bar {
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 24px 0 14px 0;
+      }
+
+      .handout-sheet {
+        padding: 22px 18px;
+      }
+
+      .header-top {
+        gap: 12px;
+      }
+
+      .handout-title-group h1 {
+        font-size: 21px;
+        line-height: 1.15;
+      }
+
+      .stamp-badge {
+        font-size: 15px;
+        padding: 4px 10px;
+        margin: 4px auto 0 auto;
+        order: 3;
+      }
+
+      .handout-subtitle {
+        text-align: center;
+        font-size: 14.5px;
+        margin: 12px 0 16px 0;
+      }
+
+      .instructions-heading {
+        text-align: center;
+      }
+
+      .instructions-columns {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .section-title {
+        font-size: 15px;
+        flex-wrap: nowrap;
+      }
+
+      .hide-mobile {
+        display: none;
+      }
+
+      .vocab-targets {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .vocab-target-card {
+        padding: 6px 10px;
+      }
+
+      .vocab-target-def {
+        font-size: 12.5px;
+      }
+
+      .options-list {
+        padding-left: 24px;
+      }
+
+      .bottom-actions-bar {
+        flex-direction: column;
+        gap: 14px;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .bottom-actions-bar .reset-answers-btn {
+        padding: 0 10px;
+      }
+
+      .site-footer {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .footer-dot {
+        display: none;
+      }
+    }
+  
+    
+    /* Topic Header Icon & Clickable Navigation */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
+    .topic-header-icon-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-sheet);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      margin-right: 0;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(45, 40, 35, 0.12);
+    }
+
+    .topic-header-icon-wrap:active {
+      transform: scale(0.97);
+    }
+
+    .topic-header-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-zoom-btn {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(20, 18, 16, 0.76);
+      color: #fffdf9;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
+      z-index: 2;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .profile-zoom-btn:hover {
+      background: rgba(20, 18, 16, 0.95);
+      transform: scale(1.12);
+      border-color: rgba(255, 255, 255, 0.65);
+    }
+
+    .profile-zoom-btn:active {
+      transform: scale(0.94);
+    }
+
+    .profile-zoom-btn svg {
+      display: block;
+      pointer-events: none;
+    }
+
+    @media (hover: hover) {
+      .profile-zoom-btn {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .topic-header-icon-wrap:hover .profile-zoom-btn,
+      .activity-card-icon-wrap:hover .profile-zoom-btn {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
+    @media (hover: none) {
+      .profile-zoom-btn {
+        opacity: 0.85;
+        pointer-events: auto;
+      }
+    }
+
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: none;
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--ink-main);
+      margin-bottom: 0;
+      cursor: pointer;
+      display: inline-block;
+      transition: opacity 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .handout-title-group h1:hover {
+      opacity: 0.82;
+    }
+
+    @media (max-width: 680px) {
+      .header-top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .topic-header-icon-wrap {
+        width: 56px;
+        height: 56px;
+        flex: 0 0 56px;
+        margin: 0;
+      }
+      .profile-zoom-btn {
+        width: 19px;
+        height: 19px;
+        right: 3px;
+        bottom: 3px;
+      }
+      .profile-zoom-btn svg {
+        width: 10px;
+        height: 10px;
+      }
+      .handout-title-group {
+        flex: 1 1 calc(100% - 68px);
+        width: calc(100% - 68px);
+        min-width: 0;
+        text-align: left;
+      }
+      .handout-title-group h1 {
+        font-size: 20px;
+        line-height: 1.15;
+        letter-spacing: -0.2px;
+        text-align: left;
+      }
+      .stamp-badge {
+        width: auto;
+        max-width: max-content;
+        margin: 6px auto 0 auto;
+        order: 3;
+        text-align: center;
+      }
+    }
+
+    /* =========================================================
+       IMAGES & FULLSCREEN LIGHTBOX
+       ========================================================= */
+    .images-section {
+      margin-top: 18px;
+      margin-bottom: 24px;
+    }
+
+    .image-labels-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin: 4px 0 16px 0;
+      padding: 10px;
+      background: rgba(230, 224, 210, 0.4);
+      border: 1px dashed var(--ink-rule);
+      box-sizing: border-box;
+      min-height: 44px;
+    }
+
+    .image-label-chip {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 5px 10px 3px 10px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      box-shadow: 0 1px 3px rgba(45, 40, 35, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      line-height: 1.15;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      touch-action: manipulation;
+    }
+
+    .image-label-chip:focus {
+      outline: none;
+    }
+
+    .image-label-chip:focus-visible {
+      outline: 1px dashed var(--ink-rule);
+      outline-offset: 1px;
+    }
+
+    .image-label-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue, #1d4ed8);
+    }
+
+    .image-label-chip.is-dragging {
+      cursor: grabbing;
+      opacity: 0.4;
+    }
+
+    .image-label-chip.is-selected {
+      background-color: var(--highlight);
+      border-color: var(--stamp-blue, #1d4ed8);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.25);
+    }
+
+    .image-label-chip.is-hidden {
+      display: none !important;
+    }
+
+    .images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-thumb-wrap {
+      background: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      padding: 4px;
+      border-radius: 2px;
+      box-shadow: 0 2px 6px rgba(45, 40, 35, 0.06);
+      cursor: zoom-in;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      display: inline-flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-thumb-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(45, 40, 35, 0.12);
+      border-color: var(--stamp-blue);
+    }
+
+    .image-thumb-wrap.image-drop-hover {
+      background-color: #e4dfd5 !important;
+      border-color: var(--stamp-blue, #1d4ed8) !important;
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.3) !important;
+    }
+
+    .image-thumb {
+      height: 150px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 1px;
+      pointer-events: none;
+    }
+
+    .image-thumb-title {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      background: rgba(244, 239, 228, 0.92);
+      border-top: 1px solid rgba(138, 128, 112, 0.3);
+      color: var(--ink-main);
+      font-family: var(--font-typewriter);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px 6px;
+      line-height: 1.2;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      backdrop-filter: blur(2px);
+    }
+
+    .image-thumb-wrap:not(.is-solved) .image-thumb-title {
+      display: none !important;
+    }
+
+    .image-thumb-wrap.is-solved .image-thumb-title {
+      display: block !important;
+    }
+
+    /* Thumbnail Question/Statement Badges */
+    .image-thumb-questions {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .image-thumb-q-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+      pointer-events: none;
+    }
+
+    .image-thumb-q-badge svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      pointer-events: none;
+    }
+
+    .image-lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(24, 22, 20, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: zoom-out;
+      touch-action: none;
+    }
+
+    .image-lightbox-overlay.active {
+      display: flex;
+    }
+
+    .image-lightbox-overlay.is-zoomed {
+      cursor: grab;
+    }
+
+    .image-lightbox-overlay.is-panning {
+      cursor: grabbing;
+    }
+
+    .image-lightbox-stage {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      max-width: 94vw;
+      max-height: 92vh;
+      position: relative;
+    }
+
+    .image-lightbox-img-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+      max-width: 94vw;
+      max-height: 86vh;
+    }
+
+    .image-lightbox-img {
+      max-width: 94vw;
+      max-height: 86vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      transform-origin: center center;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      display: block;
+      cursor: pointer;
+    }
+
+    /* Lightbox Questions List Overlay in lower-left */
+    .image-lightbox-questions {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: calc(100% - 24px);
+      z-index: 5;
+      pointer-events: auto;
+      transition: opacity 0.2s ease;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-questions {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .image-lightbox-q-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(24, 22, 20, 0.82);
+      color: #fffdf9;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: left;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+      max-width: fit-content;
+    }
+
+    .image-lightbox-q-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      line-height: 1;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .image-lightbox-q-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .image-lightbox-q-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .image-lightbox-q-pill::selection,
+    .image-lightbox-q-text::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
+    }
+
+    .image-lightbox-caption {
+      margin-top: 10px;
+      font-family: var(--font-typewriter);
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      color: var(--ink-main);
+      background: rgba(244, 239, 228, 0.92);
+      border: 1px solid rgba(138, 128, 112, 0.3);
+      border-radius: 3px;
+      padding: 6px 14px;
+      text-align: right;
+      align-self: flex-end;
+      line-height: 1.2;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      transition: opacity 0.2s ease;
+      pointer-events: auto;
+      cursor: text;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .image-lightbox-caption::selection {
+      background: var(--highlight);
+      color: var(--ink-main);
+    }
+
+    @keyframes label-sparkle {
+      0% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+      35% {
+        box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 0 0 6px rgba(234, 179, 8, 0.9);
+        border-color: rgba(250, 204, 21, 0.85);
+        background: rgba(254, 249, 215, 0.98);
+        transform: scale(1.03);
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transform: scale(1);
+      }
+    }
+
+    .image-lightbox-caption.sparkle {
+      animation: label-sparkle 0.85s ease-out;
+    }
+
+    .image-lightbox-overlay.is-zoomed .image-lightbox-caption {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .mobile-only-inline {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .desktop-only-inline {
+        display: none !important;
+      }
+      .mobile-only-inline {
+        display: inline !important;
+      }
+      .image-labels-pool {
+        display: none !important;
+      }
+      .image-thumb-wrap .image-thumb-title {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Backdrop overlay for elevated popups -->
+  <div class="vocab-overlay" id="vocab-overlay" onclick="handleOverlayClick(event)"></div>
+
+<!-- Fullscreen Image Lightbox -->
+  <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
+    <div class="image-lightbox-stage" id="image-lightbox-stage">
+      <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
+        <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
+        <div class="image-lightbox-questions" id="image-lightbox-questions"></div>
+      </div>
+      <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Utility Nav -->
+  <div class="utility-bar">
+    <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
+      <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>Catalogue des activités</span>
+    </a>
+  </div>
+
+  <!-- Handout Sheet -->
+  <main class="handout-sheet">
+
+    <!-- Header -->
+    <header class="worksheet-header">
+      <div class="header-top">
+        <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
+          <img src="icon-notresalut.jpg" alt="Comprendre « Notre Salut » d'Emmanuel Marre" class="topic-header-icon">
+          <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('icon-notresalut.jpg', 'Comprendre « Notre Salut » d'Emmanuel Marre');" title="Ampliar imagen" aria-label="Ampliar imagen">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>
+          </button>
+        </div>
+        <div class="handout-title-group">
+          <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">Comprendre « Notre Salut » d'Emmanuel Marre</h1>
+        </div>
+        <div class="stamp-badge">Français B2</div>
+      </div>
+      <p class="handout-subtitle">Guide d'analyse thématique et formelle rédigé par un professeur de cinéma pour accompagner la découverte du film.</p>
+
+      <!-- Section Jump Navigation (parité 1:1 avec le menu flottant) -->
+      <nav class="jump-nav" aria-label="Navegación de secciones">
+        <a href="#seccion-1" class="jump-num" title="Aller à la section 1 : Images">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulaire">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lecture">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Compréhension">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Questions">5</a>
+      </nav>
+    </header>
+
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
+        <span class="section-num">1</span> Images
+      </a>
+      <span class="section-action-hint">cliquer pour agrandir</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="emmanuelmarre" draggable="true">Emmanuel Marre</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="emmanuelmarre" data-image-title="Emmanuel Marre" onclick="handleImageCardClick(this, 'images/fr-notresalut-emmanuelmarre.jpg', 'Emmanuel Marre', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/fr-notresalut-emmanuelmarre.jpg', 'Emmanuel Marre', '[]')">
+          <img src="images/fr-notresalut-emmanuelmarre.jpg" alt="Emmanuel Marre" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Emmanuel Marre</div>
+        </div>
+      </div>
+    </section>
+
+<!-- SECTION 1: VOCABULAIRE -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
+        <span class="section-num">1</span> Vocabulaire
+      </a>
+      <span class="section-action-hint">glisser-déposer</span>
+    </h2>
+
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Mots en attente générés dynamiquement -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Définitions cibles générées dynamiquement -->
+      </div>
+
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <div class="vocab-completed-pool" id="vocab-completed-pool">
+        <!-- Pastilles de mots validés générées dynamiquement -->
+      </div>
+    </section>
+
+    <!-- SECTION 2: LECTURE -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
+        <span class="section-num">2</span> Lecture
+      </a>
+      <span class="section-action-hint">lire à haute voix</span>
+    </h2>
+
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Lecteur audio du texte">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-notresalut.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Écouter la lecture" title="Écouter la lecture">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progression de l'audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Vitesse de lecture" title="Vitesse de lecture">1×</button>
+    </div>
+      <article class="reading-content">
+      <div class="region-card">
+        <h3>L'engrenage technocratique et la banalité de la compromission</h3>
+        <p>Chers étudiants, avant d'assister à la projection de <em>Notre Salut</em> d'Emmanuel Marre, il est utile d'en cerner les enjeux historiques et moraux afin d'éviter une lecture trop rapide. L'action débute en septembre 1940, au lendemain de l'<span class="vocab-in-text" data-key="effondrement">effondrement</span> militaire français, alors que le régime du maréchal Pétain s'installe à Vichy. Le personnage central, Henri Marre, interprété par Swann Arlaud, est un ingénieur de quarante-neuf ans, ruiné et dépourvu de soutiens politiques. Il arrive dans la nouvelle capitale avec un <span class="vocab-in-text" data-key="ouvrage">ouvrage</span> politique édité à compte d'auteur, intitulé précisément <em>Notre Salut</em>. À première vue, rien ne le prédispose à devenir une figure spectaculaire du mal historique. C'est précisément ce qui intéresse le cinéaste : plutôt que de filmer un idéologue fanatique, il observe comment un homme ordinaire, convaincu de sa propre compétence, cherche à se rendre indispensable.</p>
+        <p>Empêché d'accéder aux plus hauts postes ministériels en raison d'une condamnation passée, Henri accepte avec un <span class="vocab-in-text" data-key="empressement">empressement</span> discret un emploi de cadre au ministère du Travail. Il ne se présente pas comme un partisan zélé de l'occupant, mais comme un technicien pragmatique soucieux d'ordre, de méthode et de redressement économique. En devenant un simple <span class="vocab-in-text" data-key="rouage">rouage</span> de l'appareil administratif, il illustre ce que le cinéma contemporain interroge souvent sous le nom de banalité du mal : la façon dont la soumission à une autorité illégitime s'accomplit au nom de l'efficacité professionnelle.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>De la gestion quotidienne à la compromission morale</h3>
+        <p>Pendant le visionnage, soyez attentifs à la progression lente de cette adhésion. Le film ne repose pas sur un basculement dramatique soudain, mais sur un <span class="vocab-in-text" data-key="glissement">glissement</span> presque imperceptible. À mesure que la guerre s'enlise et que le régime de Vichy se durcit, les tâches quotidiennes d'Henri cessent d'être neutres. Pourtant, son discours intérieur reste inchangé : il continue de parler de rationalisation, de gestion et de service public. Le scénario met ainsi en lumière un profond <span class="vocab-in-text" data-key="aveuglement">aveuglement</span> moral. Lorsque l'obsession de la performance administrative remplace toute réflexion éthique, la technocratie devient un instrument capable d'aseptiser la violence politique et de transformer la collaboration en routine de bureau.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>La fracture entre l'intime et la grande Histoire</h3>
+        <p><em>Notre Salut</em> ne se limite toutefois pas à une analyse politique ; le film s'enracine dans l'histoire familiale du réalisateur, qui s'est appuyé sur la correspondance réelle échangée durant l'Occupation entre son arrière-grand-père et son arrière-grand-mère, Paulette, restée loin de Vichy avec leurs enfants. Cette dimension épistolaire révèle une <span class="vocab-in-text" data-key="déchirure">déchirure</span> progressive au sein du couple. Tandis qu'Henri s'enferme dans ses ambitions administratives et ses certitudes patriotiques, un <span class="vocab-in-text" data-key="fossé">fossé</span> se creuse entre son quotidien vichyssois et la réalité vécue par sa famille. En confrontant les lettres privées aux décisions publiques, Emmanuel Marre montre que les choix idéologiques ne restent jamais confinés à la sphère professionnelle : ils altèrent durablement les liens affectifs et la mémoire transmise aux générations suivantes.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>Une mise en scène clinique, à rebours du mélodrame</h3>
+        <p>Sur le plan formel, ne vous attendez ni aux grands élans lyriques ni aux affrontements spectaculaires du cinéma historique traditionnel. Le cinéaste choisit l'austérité du film de bureau : une lumière retenue aux teintes légèrement jaunâtres, un rythme posé qui épouse la monotonie des dossiers, et une caméra qui observe les gestes administratifs avec une distance presque documentaire. Swann Arlaud incarne Henri avec une <span class="vocab-in-text" data-key="pudeur">pudeur</span> glaciale, faite de rigidité contenue et de politesse calculée. En refusant le manichéisme facile et les effets mélodramatiques, le film dissipe tout <span class="vocab-in-text" data-key="leurre">leurre</span> consolateur pour le spectateur. Il ne vous demande pas de juger de haut un monstre d'un autre temps, mais d'examiner avec lucidité comment un individu persuadé de bien faire finit par servir l'inacceptable.</p>
+      </div>
+    </article>
+    </div>
+
+    <!-- SECTION 3: COMPRÉHENSION -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
+        <span class="section-num">3</span> Compréhension
+      </a>
+      <span class="section-action-hint">choix multiple</span>
+    </h2>
+
+    <section class="quiz-container">
+
+      <!-- Question 1 (Correct: B) -->
+      <article class="question-card" data-q="1" data-correct="B">
+        <div class="question-prompt">
+          <span class="q-num">1.</span> Pourquoi le professeur souligne-t-il qu'Henri Marre n'est pas présenté comme un idéologue fanatique ?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Parce que le personnage refuse de travailler pour l'administration de Vichy dès son arrivée.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Parce que le film s'intéresse à la manière dont un technicien ordinaire se soumet à un régime autoritaire au nom de l'efficacité.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Parce qu'Henri cherche uniquement à défendre clandestinement les intérêts de la Résistance.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('1', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Parce que l'ingénieur ne s'intéresse absolument pas aux questions politiques ni économiques.</span>
+            </button>
+            <div class="feedback-box" id="feedback-1-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 2 (Correct: D) -->
+      <article class="question-card" data-q="2" data-correct="D">
+        <div class="question-prompt">
+          <span class="q-num">2.</span> Quel rôle joue le discours sur la « gestion » et la « rationalisation » dans la trajectoire d'Henri ?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Il lui permet d'obtenir immédiatement le poste de ministre qu'il convoitait.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Il l'aide à prendre conscience très tôt des crimes commis par le régime.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Il sert de code secret dans ses lettres pour rassurer sa femme Paulette.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('2', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Il masque la portée morale de ses tâches quotidiennes et rend la collaboration acceptable à ses propres yeux.</span>
+            </button>
+            <div class="feedback-box" id="feedback-2-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 3 (Correct: A) -->
+      <article class="question-card" data-q="3" data-correct="A">
+        <div class="question-prompt">
+          <span class="q-num">3.</span> Que révèle l'utilisation de la correspondance familiale réelle dans la construction du film ?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">L'impact concret des choix professionnels et politiques sur la vie intime du couple et la mémoire familiale.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Le soutien enthousiaste de Paulette face aux ambitions ministérielles de son mari.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">La volonté du réalisateur de tourner un documentaire composé uniquement de lettres lues en voix off.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('3', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">L'impossibilité pour Henri d'écrire à sa famille depuis la ville de Vichy.</span>
+            </button>
+            <div class="feedback-box" id="feedback-3-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 4 (Correct: C) -->
+      <article class="question-card" data-q="4" data-correct="C">
+        <div class="question-prompt">
+          <span class="q-num">4.</span> Comment le professeur caractérise-t-il la mise en scène et le jeu d'acteur dans <em>Notre Salut</em> ?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Par un rythme rapide et des scènes d'action spectaculaires inspirées du thriller politique.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Par un jeu théâtral très expressif destiné à susciter la pitié immédiate pour le héros.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Par une esthétique austère de film de bureau, un rythme posé et une interprétation toute en retenue.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('4', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Par une opposition simpliste entre des personnages entièrement bons et des traîtres caricaturaux.</span>
+            </button>
+            <div class="feedback-box" id="feedback-4-D"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Question 5 (Correct: B) -->
+      <article class="question-card" data-q="5" data-correct="B">
+        <div class="question-prompt">
+          <span class="q-num">5.</span> Quelle posture critique Emmanuel Marre cherche-t-il à susciter chez le spectateur à la fin du texte ?
+        </div>
+        <div class="options-list">
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'A')">
+              <span class="opt-letter">A.</span>
+              <span class="opt-text">Un sentiment de supériorité morale qui rassure le public sur ses propres choix.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-A"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'B')">
+              <span class="opt-letter">B.</span>
+              <span class="opt-text">Une observation lucide de la manière dont l'illusion de bien faire peut conduire à servir l'inacceptable.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-B"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'C')">
+              <span class="opt-letter">C.</span>
+              <span class="opt-text">Une indulgence totale envers les fonctionnaires qui se sont contentés d'obéir aux ordres.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-C"></div>
+          </div>
+          <div class="option-wrapper">
+            <button type="button" class="option-item" onclick="selectOption('5', 'D')">
+              <span class="opt-letter">D.</span>
+              <span class="opt-text">Un rejet définitif de toute forme de cinéma historique portant sur la Seconde Guerre mondiale.</span>
+            </button>
+            <div class="feedback-box" id="feedback-5-D"></div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+<h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
+        <span class="section-num">4</span> <span>Questions<span class="hide-mobile"> ouvertes</span></span>
+      </a>
+      <span class="section-action-hint">répondre et débattre</span>
+    </h2>
+
+    <section class="discussion-container">
+      <ul class="open-questions-list">
+        <li class="open-question-item">
+          <span class="open-q-num">1.</span>
+          <div class="open-q-text">
+            Pourquoi le choix de filmer l'Occupation depuis un bureau ministériel modifie-t-il notre compréhension de la <span class="question-hint-wrap">collaboration ?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+French%2C+assume+you+are+from+Germany%3A+%22Pourquoi+le+choix+de+filmer+l%27Occupation+depuis+un+bureau+minist%C3%A9riel+modifie-t-il+notre+compr%C3%A9hension+de+la+collaboration+%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Rechercher une piste de réponse sur Google" aria-label="Rechercher une piste de réponse sur Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+        <li class="open-question-item">
+          <span class="open-q-num">2.</span>
+          <div class="open-q-text">
+            Comment le langage technique de l'efficacité et de la gestion peut-il masquer des enjeux éthiques dans une <span class="question-hint-wrap">institution ?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+French%2C+assume+you+are+from+Germany%3A+%22Comment+le+langage+technique+de+l%27efficacit%C3%A9+et+de+la+gestion+peut-il+masquer+des+enjeux+%C3%A9thiques+dans+une+institution+%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Rechercher une piste de réponse sur Google" aria-label="Rechercher une piste de réponse sur Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+        <li class="open-question-item">
+          <span class="open-q-num">3.</span>
+          <div class="open-q-text">
+            Pourquoi l'insertion d'archives intimes, comme des lettres familiales, renforce-t-elle la portée d'un récit <span class="question-hint-wrap">historique ?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+French%2C+assume+you+are+from+Germany%3A+%22Pourquoi+l%27insertion+d%27archives+intimes%2C+comme+des+lettres+familiales%2C+renforce-t-elle+la+port%C3%A9e+d%27un+r%C3%A9cit+historique+%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Rechercher une piste de réponse sur Google" aria-label="Rechercher une piste de réponse sur Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+        <li class="open-question-item">
+          <span class="open-q-num">4.</span>
+          <div class="open-q-text">
+            Comment une mise en scène sobre et sans mélodrame invite-t-elle le spectateur à réfléchir par <span class="question-hint-wrap">lui-même ?&nbsp;<a href="https://www.google.com/search?q=answer+this+question+in+three+sentences+in+French%2C+assume+you+are+from+Germany%3A+%22Comment+une+mise+en+sc%C3%A8ne+sobre+et+sans+m%C3%A9lodrame+invite-t-elle+le+spectateur+%C3%A0+r%C3%A9fl%C3%A9chir+par+lui-m%C3%AAme+%3F%22" target="_blank" rel="noopener noreferrer" class="question-hint-btn" title="Rechercher une piste de réponse sur Google" aria-label="Rechercher une piste de réponse sur Google"><svg class="question-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></a></span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Bottom Actions -->
+    <div class="bottom-actions-bar">
+      <div class="reset-control-wrap" id="reset-control-wrap">
+        <button type="button" class="reset-answers-btn" id="reset-btn" onclick="requestReset()">↺ Réinitialiser les réponses</button>
+        <div class="reset-confirm-inline" id="reset-confirm-inline">
+          <span>Confirmer la réinitialisation ?</span>
+          <button type="button" class="reset-confirm-btn" onclick="cancelReset()">Annuler</button>
+          <button type="button" class="reset-confirm-btn danger" onclick="confirmReset()">Oui, réinitialiser</button>
+        </div>
+      </div>
+
+      <a href="../../index.html" class="back-link" onclick="handleBackNavigation(event, '../../index.html')">
+        <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Catalogue des activités</span>
+      </a>
+    </div>
+
+    <footer class="worksheet-footer">
+      <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">Créez vos propres activités</a> <span class="footer-dot">•</span> <span>See more projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer">Edward</a></span>
+    </footer>
+
+  </main>
+
+  <!-- Sticky Floating Section Jump Nav (paridad 1:1 avec le menu statique) -->
+  <nav class="sticky-jump-nav" id="sticky-jump-nav" aria-label="Navigation rapide des sections"></nav>
+
+  <script>
+    // =========================================================
+    // VOCABULARY DATA (10 NON-COGNATE KEY WORDS)
+    // =========================================================
+    const vocabData = {
+      "effondrement": {
+        "word": "effondrement",
+        "pos": "nom masculin",
+        "def": "chute brutale et complète d'un édifice, d'un État ou d'un système",
+        "hint": "la chute soudaine et totale d'une armée ou d'une structure politique",
+        "sentence": "L'action débute en septembre 1940, au lendemain de l'effondrement militaire français, alors que le régime du maréchal Pétain s'installe à Vichy."
+      },
+      "ouvrage": {
+        "word": "ouvrage",
+        "pos": "nom masculin",
+        "def": "écrit ou livre élaboré, souvent de nature savante, politique ou technique",
+        "hint": "un livre ou un texte structuré rédigé par un auteur sur un sujet précis",
+        "sentence": "Il arrive dans la nouvelle capitale avec un ouvrage politique édité à compte d'auteur, intitulé précisément Notre Salut."
+      },
+      "empressement": {
+        "word": "empressement",
+        "pos": "nom masculin",
+        "def": "ardeur vive et immédiate mise à accomplir quelque chose ou à saisir une occasion",
+        "hint": "la hâte et la bonne volonté avec lesquelles on accepte une tâche",
+        "sentence": "Empêché d'accéder aux plus hauts postes ministériels en raison d'une condamnation passée, Henri accepte avec un empressement discret un emploi de cadre au ministère du Travail."
+      },
+      "rouage": {
+        "word": "rouage",
+        "pos": "nom masculin",
+        "def": "pièce dentée d'un mécanisme ou élément intermédiaire assurant la marche d'une administration",
+        "hint": "un élément modeste mais utile qui fait tourner une grande machine",
+        "sentence": "En devenant un simple rouage de l'appareil administratif, il illustre ce que le cinéma contemporain interroge souvent sous le nom de banalité du mal : la façon dont la soumission à une autorité illégitime s'accomplit au nom de l'efficacité professionnelle."
+      },
+      "glissement": {
+        "word": "glissement",
+        "pos": "nom masculin",
+        "def": "passage progressif et presque imperceptible d'une position ou d'un état moral à un autre",
+        "hint": "un changement lent et discret qui s'opère sans rupture brutale",
+        "sentence": "Le film ne repose pas sur un basculement dramatique soudain, mais sur un glissement presque imperceptible."
+      },
+      "aveuglement": {
+        "word": "aveuglement",
+        "pos": "nom masculin",
+        "def": "perte de lucidité empêchant de voir la réalité morale d'une situation",
+        "hint": "le fait de ne pas vouloir ou de ne pas pouvoir voir la vérité d'une situation",
+        "sentence": "Le scénario met ainsi en lumière un profond aveuglement moral."
+      },
+      "déchirure": {
+        "word": "déchirure",
+        "pos": "nom féminin",
+        "def": "rupture douloureuse et profonde au sein d'un lien affectif ou familial",
+        "hint": "une séparation morale douloureuse qui brise l'harmonie d'un couple",
+        "sentence": "Cette dimension épistolaire révèle une déchirure progressive au sein du couple."
+      },
+      "fossé": {
+        "word": "fossé",
+        "pos": "nom masculin",
+        "def": "écart profond ou séparation morale qui éloigne deux personnes ou deux mondes",
+        "hint": "une grande distance morale ou affective qui sépare deux êtres",
+        "sentence": "Tandis qu'Henri s'enferme dans ses ambitions administratives et ses certitudes patriotiques, un fossé se creuse entre son quotidien vichyssois et la réalité vécue par sa famille."
+      },
+      "pudeur": {
+        "word": "pudeur",
+        "pos": "nom féminin",
+        "def": "retenue et discrétion volontaire dans l'expression des sentiments",
+        "hint": "une réserve discrète qui évite toute démonstration excessive d'émotion",
+        "sentence": "Swann Arlaud incarne Henri avec une pudeur glaciale, faite de rigidité contenue et de politesse calculée."
+      },
+      "leurre": {
+        "word": "leurre",
+        "pos": "nom masculin",
+        "def": "illusion trompeuse qui détourne l'esprit de la réalité",
+        "hint": "une fausse apparence ou une illusion rassurante qui empêche de voir la vérité",
+        "sentence": "En refusant le manichéisme facile et les effets mélodramatiques, le film dissipe tout leurre consolateur pour le spectateur."
+      }
+    };
+
+    // Shuffled initial definition order
+    const vocabOrder = [
+      "glissement",
+      "pudeur",
+      "effondrement",
+      "fossé",
+      "empressement",
+      "leurre",
+      "ouvrage",
+      "déchirure",
+      "rouage",
+      "aveuglement"
+    ];
+
+    let completedVocab = [];
+    let draggedWordKey = null;
+    let activePlacedWordKey = null;
+    let activeModalCard = null;
+
+    function getGoogleSearchUrl(word) {
+      const query = `give me the definition of the word "${word}" in French, and the translation of the word in English, and then three example sentences with that word, for each example, once in French and once in English`;
+      return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    }
+
+    function formatWrongDef(def) {
+      if (!def) return '';
+      let text = def.trim();
+      text = text.charAt(0).toLowerCase() + text.slice(1);
+      return text.replace(/[.,;:]+$/, '');
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE EXPLANATIONS (NO "CORRECT !" / "INCORRECT.")
+    // =========================================================
+    const explanations = {
+      "1": {
+        "A": "Henri se rend précisément à Vichy pour intégrer la nouvelle administration, et non pour la rejeter.",
+        "B": "Le texte explique que le cinéaste s'intéresse à la banalité du mal : la soumission d'un technicien ordinaire au nom de l'efficacité professionnelle.",
+        "C": "Le personnage n'agit pas pour la Résistance ; il cherche à se rendre indispensable auprès du nouveau régime.",
+        "D": "Henri arrive à Vichy avec son propre traité politique et souhaite participer au redressement économique du pays."
+      },
+      "2": {
+        "A": "Une condamnation passée l'empêche justement d'accéder aux plus hautes fonctions ministérielles.",
+        "B": "Ce vocabulaire technique entretient au contraire son aveuglement moral et l'empêche de mesurer la gravité de ses actes.",
+        "C": "Les lettres familiales révèlent plutôt l'éloignement progressif entre Henri et sa femme Paulette.",
+        "D": "Le professeur montre que le langage de la gestion et de la rationalisation neutralise la réflexion éthique et banalise la collaboration."
+      },
+      "3": {
+        "A": "La confrontation entre lettres privées et décisions publiques met en évidence la déchirure du couple et le poids de l'héritage familial.",
+        "B": "La correspondance témoigne d'un fossé grandissant entre le quotidien d'Henri à Vichy et celui de Paulette, et non d'un soutien enthousiaste.",
+        "C": "Il s'agit d'un film de fiction interprété par des comédiens, même s'il s'inspire d'archives familiales.",
+        "D": "C'est précisément grâce aux lettres échangées avec Paulette que cette fracture intime apparaît dans le récit."
+      },
+      "4": {
+        "A": "Le film adopte un rythme posé qui reflète la monotonie administrative, loin des codes du thriller d'action.",
+        "B": "Swann Arlaud joue au contraire avec une retenue glaciale et une politesse calculée, sans chercher le mélodrame.",
+        "C": "Le texte insiste sur l'austérité du film de bureau, les teintes jaunâtres, la lenteur du rythme et le jeu contenu de Swann Arlaud.",
+        "D": "Le cinéaste refuse justement le manichéisme facile et les figures caricaturales."
+      },
+      "5": {
+        "A": "Emmanuel Marre évite de flatter le spectateur par un sentiment confortable de supériorité morale.",
+        "B": "Le texte conclut que le film invite à observer avec lucidité comment la conviction de bien faire peut mener à servir l'inacceptable.",
+        "C": "Le film ne cherche pas à excuser la compromission ; il en démonte les mécanismes psychologiques et bureaucratiques.",
+        "D": "Loin de rejeter le cinéma historique, le professeur analyse la pertinence de cette approche clinique pour comprendre l'Occupation."
+      }
+    };
+
+    let userAnswers = {};
+    let readingBookmarks = [];
+    const STORAGE_KEY = 'activity_notresalut';
+
+    // =========================================================
+    // STATE MANAGEMENT (PERSISTENCE)
+    // =========================================================
+    function loadSavedState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed === 'object') {
+            userAnswers = parsed.mc || {};
+            completedVocab = Array.isArray(parsed.vocab)
+              ? parsed.vocab.filter(k => vocabData[k])
+              : [];
+            readingBookmarks = Array.isArray(parsed.bookmarks)
+              ? parsed.bookmarks.filter(idx => Number.isInteger(idx) && idx >= 0)
+              : [];
+              solvedImageIds = Array.isArray(parsed.images) ? parsed.images : [];
+          }
+        }
+      } catch (e) {
+        console.warn("Could not load from localStorage:", e);
+      }
+
+      Object.keys(userAnswers).forEach(qNum => {
+        const val = userAnswers[qNum];
+        applyQuestionFeedback(qNum, val);
+      });
+
+      renderVocabulary();
+      renderReadingBookmarks();
+      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();
+    }
+
+    function saveState() {
+      try {
+        const state = {
+          mc: userAnswers,
+          vocab: completedVocab,
+          bookmarks: readingBookmarks,
+          images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn("Could not save to localStorage:", e);
+      }
+    }
+
+    // =========================================================
+    // READING BOOKMARKS (SHIFT + DOUBLE-CLICK ON ANY WORD)
+    // =========================================================
+    function initReadingWords() {
+      const sheet = document.querySelector('.handout-sheet');
+      if (!sheet || sheet.getAttribute('data-words-initialized') === 'true') return;
+      sheet.setAttribute('data-words-initialized', 'true');
+
+      let wordIndex = 0;
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.nodeValue;
+          if (!text || !text.trim()) return;
+          const regex = /([\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*)/gu;
+          let lastIdx = 0;
+          let match;
+          const frag = document.createDocumentFragment();
+          let found = false;
+
+          while ((match = regex.exec(text)) !== null) {
+            found = true;
+            if (match.index > lastIdx) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx, match.index)));
+            }
+            const span = document.createElement('span');
+            span.className = 'reading-word';
+            span.setAttribute('data-word-idx', String(wordIndex++));
+            span.textContent = match[0];
+            frag.appendChild(span);
+            lastIdx = regex.lastIndex;
+          }
+
+          if (found) {
+            if (lastIdx < text.length) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+            }
+            node.parentNode.replaceChild(frag, node);
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (
+            node.closest('.vocab-container') ||
+            node.closest('.jump-nav') ||
+            node.closest('.sticky-jump-nav') ||
+            node.closest('.utility-bar') ||
+            node.closest('.bottom-actions-bar') ||
+            node.closest('.lookup-btn') ||
+            node.closest('button') ||
+            node.tagName === 'BUTTON' ||
+            node.tagName === 'SVG' ||
+            node.tagName === 'SCRIPT' ||
+            node.tagName === 'STYLE' ||
+            node.classList.contains('instructions-heading') ||
+            node.classList.contains('section-num') ||
+            node.classList.contains('section-action-hint') ||
+            node.classList.contains('feedback-box')
+          ) {
+            return;
+          }
+
+          if (node.classList.contains('vocab-in-text')) {
+            const wrap = document.createElement('span');
+            wrap.className = 'reading-word';
+            wrap.setAttribute('data-word-idx', String(wordIndex++));
+            node.parentNode.replaceChild(wrap, node);
+            wrap.appendChild(node);
+            return;
+          }
+
+          const children = Array.from(node.childNodes);
+          children.forEach(processNode);
+        }
+      }
+
+      const targetAreas = sheet.querySelectorAll(
+        '.instructions-inner, .reading-content, .quiz-container, .discussion-container'
+      );
+      if (targetAreas.length > 0) {
+        targetAreas.forEach(area => processNode(area));
+      } else {
+        processNode(sheet);
+      }
+
+      sheet.addEventListener('dblclick', (e) => {
+        if (!e.shiftKey) return;
+        if (e.target && e.target.closest('.reading-bookmark')) return;
+
+        let wordEl = e.target && e.target.closest ? e.target.closest('.reading-word') : null;
+        if (!wordEl && window.getSelection) {
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const startNode = range.startContainer;
+            const startEl = startNode.nodeType === Node.ELEMENT_NODE ? startNode : startNode.parentElement;
+            if (startEl && sheet.contains(startEl)) {
+              wordEl = startEl.closest('.reading-word');
+            }
+          }
+        }
+
+        if (!wordEl) return;
+
+        const idx = parseInt(wordEl.getAttribute('data-word-idx'), 10);
+        if (isNaN(idx)) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        addReadingBookmark(idx);
+
+        const clearSel = () => {
+          if (window.getSelection) {
+            const sel = window.getSelection();
+            if (sel) sel.removeAllRanges();
+          }
+        };
+        clearSel();
+        requestAnimationFrame(clearSel);
+      });
+    }
+
+    function addReadingBookmark(idx) {
+      if (!readingBookmarks.includes(idx)) {
+        readingBookmarks.push(idx);
+        readingBookmarks.sort((a, b) => a - b);
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function removeReadingBookmark(idx) {
+      const next = readingBookmarks.filter(item => item !== idx);
+      if (next.length !== readingBookmarks.length) {
+        readingBookmarks = next;
+        saveState();
+      }
+      renderReadingBookmarks();
+    }
+
+    function updateStickyBookmarkState() {
+      const bmBtns = document.querySelectorAll('.jump-bookmark-btn');
+      if (bmBtns.length === 0) return;
+      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+      if (bookmarkEls.length === 0) {
+        bmBtns.forEach(btn => btn.classList.remove('show'));
+        return;
+      }
+      if (bookmarkEls.length === 1) {
+        const rect = bookmarkEls[0].getBoundingClientRect();
+        const isVisible = (rect.top >= 40 && rect.bottom <= window.innerHeight - 40);
+        bmBtns.forEach(btn => btn.classList.toggle('show', !isVisible));
+        return;
+      }
+      bmBtns.forEach(btn => btn.classList.add('show'));
+    }
+
+    function renderReadingBookmarks() {
+      document.querySelectorAll('.reading-bookmark').forEach(el => el.remove());
+      document.querySelectorAll('.reading-word.has-bookmark').forEach(el => el.classList.remove('has-bookmark'));
+
+      readingBookmarks.forEach(idx => {
+        const wordEl = document.querySelector(`.reading-word[data-word-idx="${idx}"]`);
+        if (!wordEl) return;
+        wordEl.classList.add('has-bookmark');
+
+        const bm = document.createElement('span');
+        bm.className = 'reading-bookmark';
+        bm.setAttribute('data-bookmark-idx', String(idx));
+        bm.setAttribute('title', 'Supprimer le signet');
+        bm.setAttribute('aria-label', 'Supprimer le signet');
+        bm.setAttribute('role', 'button');
+        bm.setAttribute('tabindex', '0');
+        bm.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
+
+        bm.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          removeReadingBookmark(idx);
+        });
+
+        bm.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            removeReadingBookmark(idx);
+          }
+        });
+
+        wordEl.insertBefore(bm, wordEl.firstChild);
+      });
+
+      updateStickyBookmarkState();
+    }
+
+    // =========================================================
+    // INSTRUCTIONS ROLL-OUT / ROLL-UP LOGIC
+    // =========================================================
+    function toggleInstructions(e) {
+      if (e && e.shiftKey) return;
+      if (e && e.target && (e.target.tagName === 'A' || e.target.closest('a'))) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      const box = document.getElementById('instructions-box');
+      if (!box) return;
+      const isExpanded = box.classList.toggle('expanded');
+      box.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    }
+
+    // =========================================================
+    // SNAPPY SCROLL & SCROLL TO TOP LOGIC
+    // =========================================================
+    let activeScrollRaf = null;
+    function snappyScrollTo(targetY, duration = 280) {
+      if (activeScrollRaf) {
+        cancelAnimationFrame(activeScrollRaf);
+        activeScrollRaf = null;
+      }
+      const startY = window.scrollY;
+      const docHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      const clampedTarget = Math.max(0, Math.min(targetY, docHeight - window.innerHeight));
+      const diff = clampedTarget - startY;
+      if (Math.abs(diff) < 2) return;
+      const startTime = performance.now();
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        window.scrollTo(0, startY + diff * easeOutCubic(progress));
+        if (progress < 1) {
+          activeScrollRaf = requestAnimationFrame(step);
+        } else {
+          activeScrollRaf = null;
+        }
+      }
+      activeScrollRaf = requestAnimationFrame(step);
+    }
+
+    window.addEventListener('wheel', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+    window.addEventListener('touchstart', () => {
+      if (activeScrollRaf) { cancelAnimationFrame(activeScrollRaf); activeScrollRaf = null; }
+    }, { passive: true });
+
+    function scrollToTop(e) {
+      if (e) e.preventDefault();
+      snappyScrollTo(0, 280);
+    }
+
+    // =========================================================
+    // VOCABULARY EXERCISE LOGIC
+    // =========================================================
+    function safeDismiss(callback, e) {
+      if (e && e.target && e.target.closest('.lookup-btn')) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      callback();
+    }
+
+    function appendBalancedRows(container, keys, createItemFn, rowClass, maxPerRow) {
+      const total = keys.length;
+      if (total === 0) return;
+
+      const availableWidth = container.clientWidth || 320;
+      let numRows = maxPerRow ? Math.ceil(total / maxPerRow) : (total >= 6 ? 2 : 1);
+
+      while (numRows <= total) {
+        container.innerHTML = '';
+        const base = Math.floor(total / numRows);
+        const remainder = total % numRows;
+
+        let startIndex = 0;
+        let overflows = false;
+
+        for (let r = 0; r < numRows; r++) {
+          const count = base + (r < remainder ? 1 : 0);
+          const rowKeys = keys.slice(startIndex, startIndex + count);
+          startIndex += count;
+
+          const row = document.createElement('div');
+          row.className = rowClass;
+          rowKeys.forEach(k => {
+            const el = createItemFn(k);
+            if (el) row.appendChild(el);
+          });
+          container.appendChild(row);
+
+          if (row.scrollWidth > availableWidth && count > 1) {
+            overflows = true;
+          }
+        }
+
+        if (!overflows || numRows >= total) {
+          break;
+        }
+        numRows++;
+      }
+    }
+
+    function renderVocabulary(animState) {
+      const prevChipRects = animState && animState.prevChipRects ? animState.prevChipRects : animState;
+      const prevCompletedOffsets = animState && animState.prevCompletedOffsets ? animState.prevCompletedOffsets : null;
+      const newlyCompletedKey = animState && animState.newlyCompletedKey ? animState.newlyCompletedKey : null;
+
+      const pool = document.getElementById('vocab-pool');
+      const targets = document.getElementById('vocab-targets');
+      const completedPool = document.getElementById('vocab-completed-pool');
+      const detailArea = document.getElementById('vocab-completed-detail');
+
+      if (!pool || !targets || !completedPool) return;
+
+      const savedScrollY = window.scrollY;
+
+      pool.innerHTML = '';
+      targets.innerHTML = '';
+      completedPool.innerHTML = '';
+      if (detailArea) detailArea.innerHTML = '';
+
+      // All keys
+      const allKeys = Object.keys(vocabData);
+      const remainingKeys = allKeys.filter(k => !completedVocab.includes(k));
+
+      // 1. Render Waiting Words Pool (horizontally centered, balanced across rows without wrapping)
+      if (remainingKeys.length === 0) {
+        pool.innerHTML = '';
+        pool.style.display = 'none';
+      } else {
+        pool.style.display = 'flex';
+        const createChip = (k) => {
+          const item = vocabData[k];
+          const chip = document.createElement('div');
+          chip.className = 'vocab-chip';
+          chip.setAttribute('draggable', 'true');
+          chip.setAttribute('data-key', k);
+          chip.textContent = item.word;
+
+          // Drag events
+          chip.addEventListener('dragstart', handleDragStart);
+          chip.addEventListener('dragend', handleDragEnd);
+
+          // Click opens hint/definition popup
+          chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (chip.getAttribute('data-just-dragged') === 'true') return;
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            showWordHintModal(k);
+          });
+
+          // Touch drag support (250ms hold-to-drag on mobile)
+          setupTouchDrag(chip, k);
+          return chip;
+        };
+
+        appendBalancedRows(pool, remainingKeys, createChip, 'vocab-pool-row');
+      }
+
+      // 2. Render Target Definitions (in predetermined shuffled order, excluding completed)
+      vocabOrder.forEach(targetKey => {
+        if (completedVocab.includes(targetKey)) return;
+
+        const item = vocabData[targetKey];
+        const card = document.createElement('div');
+        card.className = 'vocab-target-card';
+        card.setAttribute('data-target-key', targetKey);
+        card.innerHTML = `
+          <div class="vocab-target-def">${item.def}</div>
+        `;
+
+        // Drop listeners
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('dragleave', handleDragLeave);
+        card.addEventListener('drop', handleDrop);
+
+        // Click dismiss or inspect
+        card.addEventListener('click', (e) => {
+          handleTargetCardClick(card, targetKey, e);
+        });
+
+        targets.appendChild(card);
+      });
+
+      // 3. Render Completed Section Pills (centered, equally distributed across balanced rows with at most 3 per row)
+      completedPool.innerHTML = '';
+      if (completedVocab.length > 0) {
+        const createPill = (k) => {
+          const item = vocabData[k];
+          if (!item) return null;
+          const pill = document.createElement('div');
+          pill.className = 'vocab-completed-pill';
+          pill.setAttribute('data-key', k);
+          pill.innerHTML = `
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>${item.word}</span>
+          `;
+          pill.addEventListener('click', () => {
+            if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+            toggleCompletedDetail(k);
+          });
+          return pill;
+        };
+
+        appendBalancedRows(completedPool, completedVocab, createPill, 'vocab-completed-row', 3);
+      }
+
+      if (Math.abs(window.scrollY - savedScrollY) > 1) {
+        window.scrollTo(0, savedScrollY);
+      }
+
+      // 4. FLIP Animation: smoothly slide remaining waiting words into their new positions to fill the gap
+      if (prevChipRects && remainingKeys.length > 0) {
+        const chipsToAnimate = [];
+        pool.querySelectorAll('.vocab-chip').forEach(chip => {
+          const k = chip.getAttribute('data-key');
+          const oldRect = prevChipRects[k];
+          if (oldRect) {
+            const newRect = chip.getBoundingClientRect();
+            const dx = oldRect.left - newRect.left;
+            const dy = oldRect.top - newRect.top;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              chip.style.transition = 'none';
+              chip.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              chipsToAnimate.push(chip);
+            }
+          }
+        });
+        if (chipsToAnimate.length > 0) {
+          void pool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              chipsToAnimate.forEach(chip => {
+                chip.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                chip.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  chip.style.transition = '';
+                  chip.style.transform = '';
+                };
+                chip.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+            });
+          });
+        }
+      }
+
+      // 5. FLIP Animation for Completed Words Pool: existing pills slide apart to accept the new word
+      if (newlyCompletedKey && completedVocab.length > 0) {
+        const newPoolRect = completedPool.getBoundingClientRect();
+        const pillsToSlide = [];
+        let newPillEl = null;
+
+        completedPool.querySelectorAll('.vocab-completed-pill').forEach(pill => {
+          const k = pill.getAttribute('data-key');
+          if (k === newlyCompletedKey) {
+            newPillEl = pill;
+          } else if (prevCompletedOffsets && prevCompletedOffsets[k]) {
+            const r = pill.getBoundingClientRect();
+            const curLeft = r.left - newPoolRect.left;
+            const curTop = r.top - newPoolRect.top;
+            const dx = prevCompletedOffsets[k].left - curLeft;
+            const dy = prevCompletedOffsets[k].top - curTop;
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              pill.style.transition = 'none';
+              pill.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+              pillsToSlide.push(pill);
+            }
+          }
+        });
+
+        if (newPillEl) {
+          newPillEl.style.transition = 'none';
+          newPillEl.style.opacity = '0';
+          newPillEl.style.transform = 'scale(0.82)';
+        }
+
+        if (pillsToSlide.length > 0 || newPillEl) {
+          void completedPool.offsetHeight;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              pillsToSlide.forEach(pill => {
+                pill.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                pill.style.transform = 'translate3d(0, 0, 0)';
+                const cleanup = () => {
+                  pill.style.transition = '';
+                  pill.style.transform = '';
+                };
+                pill.addEventListener('transitionend', cleanup, { once: true });
+                setTimeout(cleanup, 500);
+              });
+
+              if (newPillEl) {
+                newPillEl.style.transition = 'opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                newPillEl.style.opacity = '1';
+                newPillEl.style.transform = 'scale(1)';
+                const cleanupNew = () => {
+                  newPillEl.style.transition = '';
+                  newPillEl.style.opacity = '';
+                  newPillEl.style.transform = '';
+                };
+                newPillEl.addEventListener('transitionend', cleanupNew, { once: true });
+                setTimeout(cleanupNew, 500);
+              }
+            });
+          });
+        }
+      }
+    }
+
+    function showWordHintModal(wordKey) {
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      hideModal();
+
+      const modal = document.createElement('div');
+      modal.className = 'vocab-hint-modal';
+      modal.id = 'active-hint-modal';
+      modal.innerHTML = `
+        <div class="dict-header" style="border-bottom: 1px solid var(--ink-rule); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="dict-word" style="color: var(--stamp-blue); font-size: 19px; font-weight: 700;">${item.word}</span>
+            <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+              <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 17px; height: 17px;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hint-row">
+          <svg class="hint-lightbulb-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+          </svg>
+          <div class="hint-text">${item.hint}</div>
+        </div>
+      `;
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('.lookup-btn')) return;
+        if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+        hideModal();
+      });
+
+      document.body.appendChild(modal);
+      activeModalCard = modal;
+      showOverlay();
+    }
+
+    function hideModal() {
+      const existing = document.getElementById('active-hint-modal');
+      if (existing) existing.remove();
+      hideOverlay();
+      activeModalCard = null;
+    }
+
+    function handleTargetCardClick(card, targetKey, e) {
+      if (card.classList.contains('state-wrong')) {
+        safeDismiss(() => dismissWrongState(card), e);
+        return;
+      }
+      if (card.classList.contains('state-correct')) {
+        safeDismiss(() => dismissCorrectState(card, targetKey), e);
+      }
+    }
+
+    function toggleCompletedDetail(wordKey) {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (!detailArea) return;
+
+      if (detailArea.getAttribute('data-active-key') === wordKey) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-key');
+        return;
+      }
+
+      const item = vocabData[wordKey];
+      if (!item) return;
+
+      detailArea.setAttribute('data-active-key', wordKey);
+      detailArea.innerHTML = `
+        <div class="vocab-target-card state-correct" style="border-radius: 0; margin-bottom: 8px;">
+          <div class="dict-entry-card">
+            <div class="dict-header">
+              <div class="dict-word-group">
+                <span class="dict-word">${item.word}</span>
+                <span class="dict-pos">(${item.pos})</span>
+              </div>
+              <a href="${getGoogleSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+            <div class="dict-def-row">
+              <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <div class="dict-def-text">${item.def}</div>
+            </div>
+            <div class="dict-sentence">«${item.sentence}»</div>
+          </div>
+        </div>
+      `;
+
+      const card = detailArea.querySelector('.vocab-target-card');
+      if (card) {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.lookup-btn')) return;
+          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+          detailArea.innerHTML = '';
+          detailArea.removeAttribute('data-active-key');
+        });
+      }
+    }
+
+    function showOverlay() {
+      const ov = document.getElementById('vocab-overlay');
+      if (ov) ov.classList.add('active');
+    }
+
+    function hideOverlay() {
+      const ov = document.getElementById('vocab-overlay');
+      if (ov) ov.classList.remove('active');
+    }
+
+    function handleOverlayClick(e) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (activeModalCard) {
+        if (activeModalCard.classList.contains('state-wrong')) {
+          dismissWrongState(activeModalCard);
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const key = activeModalCard.getAttribute('data-target-key');
+          dismissCorrectState(activeModalCard, key);
+        } else if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+        }
+      }
+    }
+
+    function dismissWrongState(card) {
+      if (!card) return;
+      card.classList.remove('state-wrong');
+      const targetKey = card.getAttribute('data-target-key');
+      const item = vocabData[targetKey];
+      card.innerHTML = `<div class="vocab-target-def">${item.def}</div>`;
+      hideOverlay();
+      activeModalCard = null;
+
+      if (activePlacedWordKey) {
+        const chip = document.querySelector(`.vocab-chip[data-key="${activePlacedWordKey}"]`);
+        if (chip) {
+          chip.classList.remove('dragging');
+          chip.style.opacity = '';
+          chip.style.visibility = '';
+        }
+        activePlacedWordKey = null;
+      }
+    }
+
+    function dismissCorrectState(card, key) {
+      if (!completedVocab.includes(key)) {
+        completedVocab.push(key);
+        saveState();
+      }
+      hideOverlay();
+      activeModalCard = null;
+      activePlacedWordKey = null;
+
+      const pool = document.getElementById('vocab-pool');
+      const completedPool = document.getElementById('vocab-completed-pool');
+      const prevChipRects = {};
+      if (pool) {
+        pool.querySelectorAll('.vocab-chip').forEach(c => {
+          prevChipRects[c.getAttribute('data-key')] = c.getBoundingClientRect();
+        });
+      }
+      const prevCompletedOffsets = {};
+      if (completedPool) {
+        const poolRect = completedPool.getBoundingClientRect();
+        completedPool.querySelectorAll('.vocab-completed-pill').forEach(p => {
+          const r = p.getBoundingClientRect();
+          prevCompletedOffsets[p.getAttribute('data-key')] = {
+            left: r.left - poolRect.left,
+            top: r.top - poolRect.top
+          };
+        });
+      }
+
+      renderVocabulary({ prevChipRects, prevCompletedOffsets, newlyCompletedKey: key });
+    }
+
+    function processWordPlacement(wordKey, targetKey, card) {
+      activePlacedWordKey = wordKey;
+      const targetItem = vocabData[targetKey];
+      const draggedItem = vocabData[wordKey];
+
+      if (wordKey === targetKey) {
+        // Correct drop
+        card.classList.remove('state-wrong', 'drag-over');
+        card.classList.add('state-correct');
+        card.innerHTML = `
+          <div class="dict-entry-card">
+            <div class="dict-header">
+              <div class="dict-word-group">
+                <span class="dict-word">${draggedItem.word}</span>
+                <span class="dict-pos">(${draggedItem.pos})</span>
+              </div>
+              <a href="${getGoogleSearchUrl(draggedItem.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+            <div class="dict-def-row">
+              <svg class="dict-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <div class="dict-def-text">${draggedItem.def}</div>
+            </div>
+            <div class="dict-sentence">«${draggedItem.sentence}»</div>
+          </div>
+        `;
+        activeModalCard = card;
+        showOverlay();
+      } else {
+        // Wrong drop
+        card.classList.remove('state-correct', 'drag-over');
+        card.classList.add('state-wrong');
+        card.innerHTML = `
+          <div class="dict-header" style="border-bottom: 1px solid rgba(143, 42, 36, 0.25); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="dict-word" style="color: var(--wrong-red); font-size: 17px; font-weight: 700;">${draggedItem.word}</span>
+              <a href="${getGoogleSearchUrl(draggedItem.word)}" target="_blank" rel="noopener noreferrer" class="lookup-btn" title="Buscar en Google" aria-label="Buscar en Google" onclick="event.stopPropagation()">
+                <svg class="lookup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div class="wrong-def-row">
+            <svg class="wrong-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="wrong-def-text">${formatWrongDef(targetItem.def)}</div>
+          </div>
+          <div class="wrong-hint-row">
+            <svg class="wrong-hint-icon" viewBox="0 0 24 24" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
+            <div class="wrong-hint-text">${draggedItem.hint}</div>
+          </div>
+        `;
+        activeModalCard = card;
+        showOverlay();
+      }
+    }
+
+    // Drag & Drop event handlers
+    let customDragAvatar = null;
+
+    function handleDragStart(e) {
+      if (activeModalCard) {
+        e.preventDefault();
+        return;
+      }
+      draggedWordKey = this.getAttribute('data-key');
+      try {
+        e.dataTransfer.setData('text/plain', draggedWordKey);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+
+      const chip = this;
+      setTimeout(() => {
+        chip.classList.add('dragging');
+      }, 0);
+
+      // Custom floating avatar
+      customDragAvatar = document.createElement('div');
+      customDragAvatar.className = 'vocab-drag-avatar';
+      customDragAvatar.textContent = vocabData[draggedWordKey].word;
+      document.body.appendChild(customDragAvatar);
+
+      const moveAvatar = (moveEvt) => {
+        if (customDragAvatar) {
+          customDragAvatar.style.left = moveEvt.clientX + 'px';
+          customDragAvatar.style.top = moveEvt.clientY + 'px';
+        }
+      };
+      document.addEventListener('dragover', moveAvatar);
+      chip._moveAvatarHandler = moveAvatar;
+
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+    }
+
+    function handleDragEnd(e) {
+      const chip = this;
+      if (chip._moveAvatarHandler) {
+        document.removeEventListener('dragover', chip._moveAvatarHandler);
+        chip._moveAvatarHandler = null;
+      }
+      if (customDragAvatar) {
+        customDragAvatar.remove();
+        customDragAvatar = null;
+      }
+
+      const targetsContainer = document.getElementById('vocab-targets');
+      if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+
+      document.querySelectorAll('.vocab-target-card.drag-over').forEach(card => card.classList.remove('drag-over'));
+
+      if (!activePlacedWordKey) {
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+      }
+      draggedWordKey = null;
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();
+    }
+
+    function handleDragOver(e) {
+      if (!draggedWordKey || activeModalCard) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      this.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      if (!this.contains(e.relatedTarget)) {
+        this.classList.remove('drag-over');
+      }
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      if (!draggedWordKey || activeModalCard) return;
+
+      const targetKey = this.getAttribute('data-target-key');
+      processWordPlacement(draggedWordKey, targetKey, this);
+    }
+
+    // Touch Drag support for mobile
+    function setupTouchDrag(chip, key) {
+      let isDragging = false;
+      let touchAvatar = null;
+      let startX = 0;
+      let startY = 0;
+      let lastClientX = 0;
+      let lastClientY = 0;
+      let lastTargetCard = null;
+      let autoScrollRaf = null;
+
+      function startAutoScroll() {
+        if (autoScrollRaf) return;
+        function step() {
+          if (!isDragging) {
+            autoScrollRaf = null;
+            return;
+          }
+          const edgeThreshold = 70;
+          const maxSpeed = 14;
+          const vh = window.innerHeight;
+          let scrollDelta = 0;
+
+          if (lastClientY < edgeThreshold) {
+            const ratio = (edgeThreshold - lastClientY) / edgeThreshold;
+            scrollDelta = -Math.round(ratio * maxSpeed);
+          } else if (lastClientY > vh - edgeThreshold) {
+            const ratio = (lastClientY - (vh - edgeThreshold)) / edgeThreshold;
+            scrollDelta = Math.round(ratio * maxSpeed);
+          }
+
+          if (scrollDelta !== 0) {
+            window.scrollBy(0, scrollDelta);
+            updateTargetUnderTouch(lastClientX, lastClientY);
+          }
+
+          autoScrollRaf = requestAnimationFrame(step);
+        }
+        autoScrollRaf = requestAnimationFrame(step);
+      }
+
+      function stopAutoScroll() {
+        if (autoScrollRaf) {
+          cancelAnimationFrame(autoScrollRaf);
+          autoScrollRaf = null;
+        }
+      }
+
+      function updateTargetUnderTouch(clientX, clientY) {
+        if (!isDragging) return;
+        const elem = document.elementFromPoint(clientX, clientY);
+        const card = elem ? elem.closest('.vocab-target-card') : null;
+        if (card !== lastTargetCard) {
+          if (lastTargetCard) lastTargetCard.classList.remove('drag-over');
+          if (card && !card.classList.contains('state-correct') && !card.classList.contains('state-wrong')) {
+            card.classList.add('drag-over');
+          }
+          lastTargetCard = card;
+        }
+      }
+
+      function cleanupDrag() {
+        stopAutoScroll();
+        isDragging = false;
+        draggedWordKey = null;
+        if (touchAvatar) {
+          touchAvatar.remove();
+          touchAvatar = null;
+        }
+        const targetsContainer = document.getElementById('vocab-targets');
+        if (targetsContainer) targetsContainer.classList.remove('vocab-dragging-active');
+        if (lastTargetCard) {
+          lastTargetCard.classList.remove('drag-over');
+          lastTargetCard = null;
+        }
+        chip.classList.remove('dragging');
+        chip.style.opacity = '';
+        chip.style.visibility = '';
+      }
+
+      chip.addEventListener('touchstart', (e) => {
+        if (activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        lastClientX = touch.clientX;
+        lastClientY = touch.clientY;
+        isDragging = false;
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (activeModalCard) return;
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        lastClientX = touch.clientX;
+        lastClientY = touch.clientY;
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+
+        if (!isDragging) {
+          if (dist > 8) {
+            isDragging = true;
+            draggedWordKey = key;
+            chip.setAttribute('data-just-dragged', 'true');
+            chip.classList.add('dragging');
+            chip.style.opacity = '0';
+            chip.style.visibility = 'hidden';
+
+            touchAvatar = document.createElement('div');
+            touchAvatar.className = 'vocab-touch-avatar';
+            touchAvatar.textContent = vocabData[key].word;
+            document.body.appendChild(touchAvatar);
+            touchAvatar.style.left = touch.clientX + 'px';
+            touchAvatar.style.top = touch.clientY + 'px';
+
+            const targetsContainer = document.getElementById('vocab-targets');
+            if (targetsContainer) targetsContainer.classList.add('vocab-dragging-active');
+
+            if (navigator.vibrate) {
+              try { navigator.vibrate(25); } catch (_) {}
+            }
+
+            startAutoScroll();
+          } else {
+            return;
+          }
+        }
+
+        if (isDragging) {
+          e.preventDefault();
+          if (touchAvatar) {
+            touchAvatar.style.left = touch.clientX + 'px';
+            touchAvatar.style.top = touch.clientY + 'px';
+          }
+          updateTargetUnderTouch(touch.clientX, touch.clientY);
+        }
+      }, { passive: false });
+
+      chip.addEventListener('touchend', (e) => {
+        if (isDragging) {
+          e.preventDefault();
+          const touch = e.changedTouches[0];
+          const targetElement = touch ? document.elementFromPoint(touch.clientX, touch.clientY) : null;
+          const targetCard = targetElement ? targetElement.closest('.vocab-target-card') : null;
+          const targetKey = targetCard ? targetCard.getAttribute('data-target-key') : null;
+
+          cleanupDrag();
+
+          if (targetCard && targetKey && !activeModalCard) {
+            processWordPlacement(key, targetKey, targetCard);
+          }
+          setTimeout(() => {
+            chip.removeAttribute('data-just-dragged');
+          }, 350);
+          return;
+        }
+
+        cleanupDrag();
+      }, { passive: false });
+
+      chip.addEventListener('touchcancel', () => {
+        cleanupDrag();
+        setTimeout(() => {
+          chip.removeAttribute('data-just-dragged');
+        }, 350);
+      });
+    }
+
+    // =========================================================
+    // MULTIPLE CHOICE QUIZ LOGIC (RADIO-FREE)
+    // =========================================================
+    function selectOption(qNum, value) {
+      if (window.event && window.event.shiftKey) return;
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (userAnswers[qNum] === value) {
+        delete userAnswers[qNum];
+        applyQuestionFeedback(qNum, null);
+        saveState();
+        return;
+      }
+      userAnswers[qNum] = value;
+      applyQuestionFeedback(qNum, value);
+      saveState();
+    }
+
+    function applyQuestionFeedback(qNum, value) {
+      const card = document.querySelector(`.question-card[data-q="${qNum}"]`);
+      if (!card) return;
+      const correctVal = card.getAttribute('data-correct');
+
+      const allOptionItems = card.querySelectorAll('.option-item');
+      allOptionItems.forEach(item => item.classList.remove('selected'));
+
+      const allFeedbackBoxes = card.querySelectorAll('.feedback-box');
+      allFeedbackBoxes.forEach(fb => {
+        fb.className = 'feedback-box';
+        fb.innerHTML = '';
+      });
+
+      if (!value) {
+        card.classList.remove('answered', 'correct', 'incorrect');
+        return;
+      }
+
+      const activeOption = card.querySelector(`.option-item[onclick*="'${value}'"]`);
+      if (activeOption) activeOption.classList.add('selected');
+
+      const feedbackBox = document.getElementById(`feedback-${qNum}-${value}`);
+      if (!feedbackBox) return;
+
+      const qExplanations = explanations[qNum] || {};
+      const explanation = qExplanations[value] || '';
+
+      card.classList.add('answered');
+      if (value === correctVal) {
+        card.classList.remove('incorrect');
+        card.classList.add('correct');
+        feedbackBox.className = 'feedback-box show correct-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      } else {
+        card.classList.remove('correct');
+        card.classList.add('incorrect');
+        feedbackBox.className = 'feedback-box show wrong-text';
+        feedbackBox.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <div class="feedback-content">${explanation}</div>
+        `;
+      }
+    }
+
+    // =========================================================
+    // RESET WORKSHEET
+    // =========================================================
+    let resetTimer = null;
+
+    function requestReset() {
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (!btn || !box) return;
+      btn.style.display = 'none';
+      box.style.display = 'inline-flex';
+
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        cancelReset();
+      }, 8000);
+    }
+
+    function cancelReset() {
+      if (resetTimer) {
+        clearTimeout(resetTimer);
+        resetTimer = null;
+      }
+      const btn = document.getElementById('reset-btn');
+      const box = document.getElementById('reset-confirm-box');
+      if (btn) btn.style.display = 'inline-flex';
+      if (box) box.style.display = 'none';
+    }
+
+    function confirmReset() {
+      cancelReset();
+      executeReset();
+    }
+
+    function executeReset() {
+      savedReturnScrollY = null;
+      document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
+      userAnswers = {};
+      completedVocab = [];
+      readingBookmarks = [];
+      activeModalCard = null;
+      activePlacedWordKey = null;
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+      if (window.location.hash) {
+        window.location.replace(window.location.pathname + window.location.search);
+      } else {
+        window.location.reload();
+      }
+    }
+
+    // =========================================================
+    // SECTION JUMP NAVIGATION (STATIONARY & STICKY PILL PARITY)
+    // =========================================================
+    let savedReturnScrollY = null;
+
+    function returnToPreviousSpot(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if (savedReturnScrollY !== null) {
+        const targetY = savedReturnScrollY;
+        savedReturnScrollY = null;
+        document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
+        snappyScrollTo(targetY, 280);
+      }
+    }
+
+    function handleBookmarkJump(e) {
+      if (e) e.preventDefault();
+      const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
+      if (bookmarkEls.length === 0) return;
+
+      bookmarkEls.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+      let nextBm = bookmarkEls.find(bm => bm.getBoundingClientRect().top > 120);
+      if (!nextBm) {
+        nextBm = bookmarkEls[0];
+      }
+
+      const rect = nextBm.getBoundingClientRect();
+      const targetY = window.scrollY + rect.top - 80;
+      snappyScrollTo(Math.max(0, targetY), 280);
+    }
+
+    function setupStickyJumpNav() {
+      const headerJumpNav = document.querySelector('.jump-nav');
+      const stickyNav = document.getElementById('sticky-jump-nav');
+      if (!headerJumpNav || !stickyNav) return;
+
+      const createTopBtn = () => {
+        const topBtn = document.createElement('button');
+        topBtn.type = 'button';
+        topBtn.className = 'jump-top-btn';
+        topBtn.title = 'Retour en haut';
+        topBtn.setAttribute('aria-label', 'Retour en haut');
+        topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="7"></line><polyline points="6 13 12 7 18 13"></polyline><line x1="4" y1="3" x2="20" y2="3"></line></svg>';
+        topBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (window.scrollY >= window.innerHeight * 0.85) {
+            savedReturnScrollY = window.scrollY;
+            document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
+          }
+          snappyScrollTo(0, 280);
+        });
+        return topBtn;
+      };
+
+      const createReturnBtn = () => {
+        const returnBtn = document.createElement('button');
+        returnBtn.type = 'button';
+        returnBtn.className = 'jump-return-btn' + (savedReturnScrollY !== null ? ' show' : '');
+        returnBtn.title = 'Revenir à la position précédente';
+        returnBtn.setAttribute('aria-label', 'Revenir à la position précédente');
+        returnBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
+        returnBtn.addEventListener('click', returnToPreviousSpot);
+        return returnBtn;
+      };
+
+      const createBookmarkBtn = () => {
+        const bmBtn = document.createElement('button');
+        bmBtn.type = 'button';
+        bmBtn.className = 'jump-bookmark-btn';
+        bmBtn.title = 'Aller au signet suivant';
+        bmBtn.setAttribute('aria-label', 'Aller au signet suivant');
+        bmBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>';
+        bmBtn.addEventListener('click', handleBookmarkJump);
+        return bmBtn;
+      };
+
+      const headerLinks = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
+      const sectionIds = [];
+      headerLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('#')) {
+          sectionIds.push(href.slice(1));
+        }
+      });
+
+      // Populate sticky nav with 1:1 button parity
+      stickyNav.innerHTML = '';
+      stickyNav.appendChild(createTopBtn());
+      stickyNav.appendChild(createReturnBtn());
+
+      headerLinks.forEach(link => {
+        const clone = link.cloneNode(true);
+        stickyNav.appendChild(clone);
+      });
+      stickyNav.appendChild(createBookmarkBtn());
+
+      const handleJumpClick = function(e) {
+        const href = this.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        const targetId = href.slice(1);
+        const targetEl = document.getElementById(targetId);
+        if (!targetEl) return;
+        e.preventDefault();
+
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
+
+        if ((targetId === sectionIds[0] || targetId === sectionIds[sectionIds.length - 1]) && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
+          returnToPreviousSpot();
+          return;
+        }
+
+        if (Math.abs(window.scrollY - targetTop) > 100 && window.scrollY >= window.innerHeight * 0.85) {
+          savedReturnScrollY = window.scrollY;
+          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
+        }
+
+        snappyScrollTo(Math.max(0, targetTop), 280);
+      };
+
+      headerJumpNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
+      stickyNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
+
+      const updateStickyNavState = () => {
+        // Sticky button menu appears ONLY when stationary menu is no longer visible on screen
+        const headerRect = headerJumpNav.getBoundingClientRect();
+        const shouldShow = headerRect.bottom <= 0;
+        stickyNav.classList.toggle('visible', shouldShow);
+
+        // Stationary Top button only shows when scrolled down past 30px
+        const headerTopBtn = headerJumpNav.querySelector('.jump-top-btn');
+        if (headerTopBtn) {
+          headerTopBtn.classList.toggle('show', window.scrollY > 30);
+        }
+
+        let currentSectionId = sectionIds[0];
+        const threshold = 130;
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const top = el.getBoundingClientRect().top;
+            if (top <= threshold) {
+              currentSectionId = id;
+            }
+          }
+        }
+        if ((window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 40)) {
+          currentSectionId = sectionIds[sectionIds.length - 1];
+        }
+
+        // Active section highlight on BOTH stationary and sticky menus
+        headerJumpNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
+        });
+        stickyNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
+        });
+
+        updateStickyBookmarkState();
+      };
+
+      window.addEventListener('scroll', updateStickyNavState, { passive: true });
+      updateStickyNavState();
+    }
+
+    let cachedActivityStyles = '';
+    function getPageStyles() {
+      if (!cachedActivityStyles) {
+        cachedActivityStyles = Array.from(document.querySelectorAll('style'))
+          .map(s => s.outerHTML)
+          .join('\n');
+      }
+      return cachedActivityStyles;
+    }
+
+    function prefetchUrl(url) {
+      if (!url) return;
+      if (!document.querySelector(`link[rel="prefetch"][href="${url}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    }
+
+    function captureOutgoingActivity(direction) {
+      try {
+        const styles = getPageStyles();
+        const util = document.querySelector('.utility-bar');
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          const html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          sessionStorage.setItem('nav-direction', direction);
+          sessionStorage.setItem('nav-outgoing-styles', styles);
+          sessionStorage.setItem('nav-outgoing-html', html);
+          sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
+          sessionStorage.setItem('nav-outgoing-padding', '0 8px 12px 8px');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function handleBackNavigation(e, url) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
+      const targetUrl = url || '../../index.html';
+      if (window.innerWidth <= 680) {
+        if (e) e.preventDefault();
+        captureOutgoingActivity('backward');
+        window.location.href = targetUrl;
+        return false;
+      }
+      window.location.href = targetUrl;
+      return false;
+    }
+
+    // Simultaneously whoosh outgoing main page off to the left as activity page whooshes in from the right
+    (function runIncomingTransition() {
+      try {
+        if (window.innerWidth <= 680 && sessionStorage.getItem('nav-direction') === 'forward') {
+          const outStyles = sessionStorage.getItem('nav-outgoing-styles') || '';
+          const outHtml = sessionStorage.getItem('nav-outgoing-html') || '';
+          const outScroll = parseFloat(sessionStorage.getItem('nav-outgoing-scroll') || '0');
+          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '12px 8px';
+
+          sessionStorage.removeItem('nav-direction');
+          sessionStorage.removeItem('nav-outgoing-styles');
+          sessionStorage.removeItem('nav-outgoing-html');
+          sessionStorage.removeItem('nav-outgoing-scroll');
+          sessionStorage.removeItem('nav-outgoing-padding');
+
+          const sheet = document.querySelector('.handout-sheet');
+          const util = document.querySelector('.utility-bar');
+          if (sheet) {
+            sheet.classList.remove('page-slide-out-right');
+            sheet.classList.add('page-slide-in-right');
+            const cleanupSheet = () => sheet.classList.remove('page-slide-in-right');
+            sheet.addEventListener('animationend', cleanupSheet, { once: true });
+            setTimeout(cleanupSheet, 340);
+          }
+          if (util) {
+            util.classList.remove('page-slide-out-right');
+            util.classList.add('page-slide-in-right');
+            const cleanupUtil = () => util.classList.remove('page-slide-in-right');
+            util.addEventListener('animationend', cleanupUtil, { once: true });
+            setTimeout(cleanupUtil, 340);
+          }
+
+          if (outHtml) {
+            const overlayHost = document.createElement('div');
+            overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
+            const shadow = overlayHost.attachShadow({ mode: 'open' });
+            shadow.innerHTML = `
+              ${outStyles}
+              <style>
+                :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+                .outgoing-stage {
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: ${outPadding};
+                  transform: translate3d(0, -${outScroll}px, 0);
+                  animation: whooshOutLeft 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                }
+                @keyframes whooshOutLeft {
+                  from { transform: translate3d(0, -${outScroll}px, 0); }
+                  to { transform: translate3d(-105vw, -${outScroll}px, 0); }
+                }
+              </style>
+              <div class="outgoing-stage">${outHtml}</div>
+            `;
+            document.body.appendChild(overlayHost);
+            setTimeout(() => {
+              overlayHost.remove();
+            }, 240);
+          }
+        }
+      } catch (e) {}
+    })();
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      getPageStyles();
+      initReadingWords();
+      loadSavedState();
+      setupStickyJumpNav();
+
+      // Keyboard support for instructions box
+      const box = document.getElementById('instructions-box');
+      if (box) {
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleInstructions(e);
+          }
+        });
+      }
+
+      // Prefetch back navigation on touch/pointer down for instant switching
+      document.querySelectorAll('.back-link').forEach(link => {
+        const url = link.getAttribute('href') || '../../index.html';
+        link.addEventListener('pointerdown', () => prefetchUrl(url), { passive: true });
+        link.addEventListener('touchstart', () => prefetchUrl(url), { passive: true });
+      });
+
+      // Click on vocabulary words in reading text opens hint modal
+      document.querySelectorAll('.vocab-in-text').forEach(span => {
+        span.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (e.shiftKey) return;
+          if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+          const key = span.getAttribute('data-key') || span.textContent.trim().toLowerCase();
+          if (vocabData[key]) {
+            showWordHintModal(key);
+          }
+        });
+      });
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          if (!activeModalCard) renderVocabulary();
+        });
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (!activeModalCard) renderVocabulary();
+    });
+
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const sheet = document.querySelector('.handout-sheet');
+        const util = document.querySelector('.utility-bar');
+        if (sheet) sheet.classList.remove('page-slide-out-right', 'page-slide-in-right');
+        if (util) util.classList.remove('page-slide-out-right', 'page-slide-in-right');
+      }
+    });
+
+    
+
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+    // =========================================================
+    // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
+    // =========================================================
+    let lbScale = 1;
+    let lbTranslateX = 0;
+    let lbTranslateY = 0;
+    let lbPinchStartDist = 0;
+    let lbPinchStartScale = 1;
+    let lbPanStartX = 0;
+    let lbPanStartY = 0;
+    let lbLastTouchX = 0;
+    let lbLastTouchY = 0;
+    let lbMouseDown = false;
+    let lbSelectingCaption = false;
+    let lbLastMouseX = 0;
+    let lbLastMouseY = 0;
+    let lbGestureMoved = false;
+    let lbIgnoreNextClick = false;
+    const LB_MAX_SCALE = 50;
+
+    function applyLightboxTransform() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      if (img) {
+        img.style.transform = `translate3d(${lbTranslateX}px, ${lbTranslateY}px, 0) scale(${lbScale})`;
+      }
+      if (overlay) {
+        overlay.classList.toggle('is-zoomed', lbScale > 1.01);
+      }
+    }
+
+    function openImageLightbox(src, alt, questionsJson, isSparkle) {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay || !img) return;
+      img.src = src;
+      img.alt = alt || '';
+      if (caption) {
+        caption.textContent = alt || '';
+        caption.classList.remove('sparkle');
+        if (isSparkle) {
+          void caption.offsetWidth;
+          caption.classList.add('sparkle');
+        }
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+        let qList = [];
+        try {
+          if (Array.isArray(questionsJson)) qList = questionsJson;
+          else if (typeof questionsJson === 'string' && questionsJson) qList = JSON.parse(questionsJson);
+        } catch (e) {}
+        if (qList && qList.length > 0) {
+          const pillBubbleSvg = '<svg viewBox="0 0 20 20" width="16" height="16" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg>';
+          qList.forEach(q => {
+            const pill = document.createElement('div');
+            pill.className = 'image-lightbox-q-pill';
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'image-lightbox-q-icon';
+            iconSpan.innerHTML = pillBubbleSvg;
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'image-lightbox-q-text';
+            textSpan.textContent = q;
+
+            pill.appendChild(iconSpan);
+            pill.appendChild(textSpan);
+            questionsContainer.appendChild(pill);
+          });
+          questionsContainer.style.display = 'flex';
+        } else {
+          questionsContainer.style.display = 'none';
+        }
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+      lbGestureMoved = false;
+      lbIgnoreNextClick = false;
+      overlay.classList.remove('is-zoomed', 'is-panning');
+      applyLightboxTransform();
+      overlay.classList.add('active');
+    }
+
+    function closeImageLightbox() {
+      const overlay = document.getElementById('image-lightbox');
+      const img = document.getElementById('image-lightbox-img');
+      const caption = document.getElementById('image-lightbox-caption');
+      const questionsContainer = document.getElementById('image-lightbox-questions');
+      if (!overlay) return;
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
+          sel.removeAllRanges();
+        }
+      }
+      overlay.classList.remove('active', 'is-zoomed', 'is-panning');
+      if (img) {
+        img.src = '';
+        img.style.transform = '';
+      }
+      if (caption) {
+        caption.textContent = '';
+        caption.classList.remove('sparkle');
+      }
+      if (questionsContainer) {
+        questionsContainer.innerHTML = '';
+      }
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      lbMouseDown = false;
+      lbSelectingCaption = false;
+    }
+
+    function handleLightboxClick(e) {
+      if (lbIgnoreNextClick) {
+        lbIgnoreNextClick = false;
+        return;
+      }
+      if (e && e.target && (e.target.closest('.image-lightbox-caption') || e.target.closest('.image-lightbox-questions'))) {
+        return;
+      }
+      const isImgClick = e && e.target && (e.target.id === 'image-lightbox-img' || e.target.closest('#image-lightbox-img'));
+      if (isImgClick) {
+        const questionsContainer = document.getElementById('image-lightbox-questions');
+        const hasQuestions = questionsContainer && questionsContainer.children.length > 0;
+        if (hasQuestions) {
+          questionsContainer.style.display = questionsContainer.style.display === 'none' ? 'flex' : 'none';
+        } else {
+          closeImageLightbox();
+        }
+        return;
+      }
+      closeImageLightbox();
+    }
+
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+
+    (function setupLightboxTouchZoom() {
+      document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('image-lightbox');
+        if (!overlay) return;
+
+        overlay.addEventListener('wheel', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          e.preventDefault();
+          const zoomFactor = Math.exp(-e.deltaY * 0.0022);
+          const newScale = Math.min(Math.max(1, lbScale * zoomFactor), LB_MAX_SCALE);
+
+          if (newScale > 1.005) {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const offsetX = e.clientX - cx;
+            const offsetY = e.clientY - cy;
+            const ratio = newScale / lbScale;
+            lbTranslateX = offsetX - (offsetX - lbTranslateX) * ratio;
+            lbTranslateY = offsetY - (offsetY - lbTranslateY) * ratio;
+            lbScale = newScale;
+          } else {
+            lbScale = 1;
+            lbTranslateX = 0;
+            lbTranslateY = 0;
+          }
+          applyLightboxTransform();
+        }, { passive: false });
+
+        overlay.addEventListener('touchstart', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2) {
+            e.preventDefault();
+            lbGestureMoved = false;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            lbPinchStartDist = Math.hypot(dx, dy);
+            lbPinchStartScale = lbScale;
+            lbLastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            lbLastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          } else if (e.touches.length === 1) {
+            lbPanStartX = e.touches[0].clientX;
+            lbPanStartY = e.touches[0].clientY;
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+            lbGestureMoved = false;
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchmove', (e) => {
+          if (!overlay.classList.contains('active')) return;
+          if (e.touches.length === 2 && lbPinchStartDist > 0) {
+            e.preventDefault();
+            lbGestureMoved = true;
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.hypot(dx, dy);
+            lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), LB_MAX_SCALE);
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            if (lbScale > 1) {
+              lbTranslateX += (midX - lbLastTouchX);
+              lbTranslateY += (midY - lbLastTouchY);
+            } else {
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+            }
+            lbLastTouchX = midX;
+            lbLastTouchY = midY;
+            applyLightboxTransform();
+          } else if (e.touches.length === 1) {
+            const curX = e.touches[0].clientX;
+            const curY = e.touches[0].clientY;
+            if (Math.hypot(curX - lbPanStartX, curY - lbPanStartY) > 8) {
+              lbGestureMoved = true;
+            }
+            if (lbScale > 1 && lbGestureMoved) {
+              e.preventDefault();
+              lbTranslateX += (curX - lbLastTouchX);
+              lbTranslateY += (curY - lbLastTouchY);
+              lbLastTouchX = curX;
+              lbLastTouchY = curY;
+              applyLightboxTransform();
+            }
+          }
+        }, { passive: false });
+
+        overlay.addEventListener('touchend', (e) => {
+          if (e.touches.length < 2) {
+            lbPinchStartDist = 0;
+          }
+          if (e.touches.length === 1) {
+            lbLastTouchX = e.touches[0].clientX;
+            lbLastTouchY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 0) {
+            if (lbScale <= 1.02) {
+              lbScale = 1;
+              lbTranslateX = 0;
+              lbTranslateY = 0;
+              applyLightboxTransform();
+            }
+            if (lbGestureMoved) {
+              lbIgnoreNextClick = true;
+              setTimeout(() => { lbIgnoreNextClick = false; }, 350);
+            }
+          }
+        });
+      });
+    })();
+
+    // =========================================================
+    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
+    // =========================================================
+    let solvedImageIds = [];
+    let draggedImageId = null;
+    let selectedImageLabelChip = null;
+
+    function handleImageLabelDragStart(e, chip) {
+      draggedImageId = chip.getAttribute('data-image-id');
+      try {
+        e.dataTransfer.setData('text/plain', draggedImageId);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) {}
+      chip.classList.add('is-dragging');
+      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
+        selectedImageLabelChip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      }
+    }
+
+    function handleImageLabelDragEnd(e, chip) {
+      chip.classList.remove('is-dragging');
+      draggedImageId = null;
+      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
+    }
+
+    function handleImageLabelClick(chip) {
+      if (selectedImageLabelChip === chip) {
+        chip.classList.remove('is-selected');
+        selectedImageLabelChip = null;
+      } else {
+        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
+        chip.classList.add('is-selected');
+        selectedImageLabelChip = chip;
+      }
+    }
+
+    function setupImageTouchDrag(chip) {
+      let touchMoved = false;
+      let ghost = null;
+      let startX = 0;
+      let startY = 0;
+
+      chip.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        touchMoved = false;
+        draggedImageId = chip.getAttribute('data-image-id');
+      }, { passive: true });
+
+      chip.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1 || !draggedImageId) return;
+        const touch = e.touches[0];
+        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
+        if (dist > 8) {
+          touchMoved = true;
+          if (!ghost) {
+            ghost = chip.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.zIndex = '9999';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.opacity = '0.85';
+            ghost.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ghost);
+            chip.classList.add('is-dragging');
+          }
+          ghost.style.left = touch.clientX + 'px';
+          ghost.style.top = touch.clientY + 'px';
+
+          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
+            if (c !== card) c.classList.remove('image-drop-hover');
+          });
+          if (card && !card.classList.contains('is-solved')) {
+            card.classList.add('image-drop-hover');
+          }
+        }
+      }, { passive: true });
+
+      chip.addEventListener('touchend', (e) => {
+        if (ghost) {
+          ghost.remove();
+          ghost = null;
+        }
+        chip.classList.remove('is-dragging');
+        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
+
+        if (touchMoved && draggedImageId) {
+          const changedTouch = e.changedTouches[0];
+          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          const card = elem ? elem.closest('.image-thumb-wrap') : null;
+          if (card && !card.classList.contains('is-solved')) {
+            const cardId = card.getAttribute('data-image-id');
+            if (cardId === draggedImageId) {
+              const img = card.querySelector('img');
+              const src = img ? img.getAttribute('src') : '';
+              const alt = card.getAttribute('data-image-title') || '';
+              solveImage(card, chip, src, alt);
+            }
+          }
+          draggedImageId = null;
+        }
+      });
+    }
+
+    function handleImageCardDragOver(e, card) {
+      if (card.classList.contains('is-solved')) return;
+      e.preventDefault();
+      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+      card.classList.add('image-drop-hover');
+    }
+
+    function handleImageCardDragLeave(e, card) {
+      if (!card.contains(e.relatedTarget)) {
+        card.classList.remove('image-drop-hover');
+      }
+    }
+
+    function handleImageCardDrop(e, card, src, alt, questionsJson) {
+      e.preventDefault();
+      card.classList.remove('image-drop-hover');
+      if (card.classList.contains('is-solved')) return;
+      let droppedId = '';
+      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
+      if (!droppedId) droppedId = draggedImageId;
+      const cardId = card.getAttribute('data-image-id');
+      if (droppedId && droppedId === cardId) {
+        const pool = document.getElementById('image-labels-pool');
+        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
+        solveImage(card, chip, src, alt, questionsJson);
+      }
+    }
+
+    function handleImageCardClick(card, src, alt, questionsJson) {
+      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
+        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
+        const cardId = card.getAttribute('data-image-id');
+        if (selectedId === cardId) {
+          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
+          return;
+        } else {
+          selectedImageLabelChip.classList.remove('is-selected');
+          selectedImageLabelChip = null;
+        }
+      }
+      openImageLightbox(src, alt, questionsJson);
+    }
+
+    function solveImage(card, chip, src, alt, questionsJson) {
+      if (!card) return;
+      const imageId = card.getAttribute('data-image-id');
+      card.classList.add('is-solved');
+      if (chip) {
+        chip.classList.remove('is-selected', 'is-dragging');
+        chip.classList.add('is-hidden');
+      }
+      if (selectedImageLabelChip === chip) {
+        selectedImageLabelChip = null;
+      }
+      if (imageId && !solvedImageIds.includes(imageId)) {
+        solvedImageIds.push(imageId);
+        if (typeof saveState === 'function') {
+          saveState();
+        }
+      }
+      const pool = document.getElementById('image-labels-pool');
+      if (pool) {
+        const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+        if (remainingChips.length === 0) {
+          pool.style.display = 'none';
+        }
+      }
+      openImageLightbox(src, alt, questionsJson, true);
+    }
+
+    function initImageLabelsGame() {
+      const pool = document.getElementById('image-labels-pool');
+      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
+      if (!pool || cards.length === 0) return;
+
+      // 1. Gather existing chips in pool and deduplicate
+      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
+      const seenIds = new Set();
+      const validChips = [];
+
+      chips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          validChips.push(chip);
+        } else {
+          chip.remove();
+        }
+      });
+
+      // 2. If pool was empty, generate from cards
+      if (validChips.length === 0) {
+        cards.forEach(card => {
+          const id = card.getAttribute('data-image-id');
+          const title = card.getAttribute('data-image-title');
+          if (id && title && !seenIds.has(id)) {
+            seenIds.add(id);
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'image-label-chip';
+            chip.setAttribute('data-image-id', id);
+            chip.setAttribute('draggable', 'true');
+            chip.textContent = title;
+            pool.appendChild(chip);
+            validChips.push(chip);
+          }
+        });
+      }
+
+      // 3. Fisher-Yates shuffle order in pool
+      for (let i = validChips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = validChips[i];
+        validChips[i] = validChips[j];
+        validChips[j] = temp;
+      }
+      validChips.forEach(chip => pool.appendChild(chip));
+
+      // 4. Attach event listeners and sync solved state
+      validChips.forEach(chip => {
+        const id = chip.getAttribute('data-image-id');
+        const isSolved = solvedImageIds.includes(id);
+        chip.classList.toggle('is-hidden', isSolved);
+        chip.classList.remove('is-selected', 'is-dragging');
+
+        if (!chip.dataset.bound) {
+          chip.dataset.bound = 'true';
+          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
+          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
+          chip.addEventListener('click', () => handleImageLabelClick(chip));
+          setupImageTouchDrag(chip);
+        }
+      });
+
+      // 5. Update cards solved state and pool visibility
+      cards.forEach(card => {
+        const id = card.getAttribute('data-image-id');
+        if (id && solvedImageIds.includes(id)) {
+          card.classList.add('is-solved');
+        } else {
+          card.classList.remove('is-solved');
+        }
+      });
+
+      const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
+      pool.style.display = (validChips.length > 0 && remainingChips.length === 0) ? 'none' : 'flex';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initImageLabelsGame();
+    });
+
+    function dismissActiveVocabModal() {
+      const detailArea = document.getElementById('vocab-completed-detail');
+      if (detailArea && detailArea.getAttribute('data-active-word')) {
+        detailArea.innerHTML = '';
+        detailArea.removeAttribute('data-active-word');
+        return true;
+      }
+      if (typeof activeModalCard !== 'undefined' && activeModalCard) {
+        if (activeModalCard.id === 'active-hint-modal') {
+          hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-wrong')) {
+          if (typeof dismissWrongState === 'function') dismissWrongState(activeModalCard);
+          else hideModal();
+          return true;
+        } else if (activeModalCard.classList.contains('state-correct')) {
+          const targetKey = activeModalCard.getAttribute('data-target-key');
+          if (typeof dismissCorrectState === 'function') dismissCorrectState(targetKey);
+          else hideModal();
+          return true;
+        } else {
+          hideModal();
+          return true;
+        }
+      }
+      const existingHint = document.getElementById('active-hint-modal');
+      if (existingHint) {
+        hideModal();
+        return true;
+      }
+      return false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const overlay = document.getElementById('image-lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+          if (typeof closeImageLightbox === 'function') closeImageLightbox();
+          return;
+        }
+        if (typeof dismissActiveVocabModal === 'function') {
+          dismissActiveVocabModal();
+        }
+      }
+    });
+
+  
+    (function initLecturaAudioPlayer() {
+      const player = document.getElementById('lectura-audio-player');
+      const audio = document.getElementById('lectura-audio');
+      const playBtn = document.getElementById('lectura-play-btn');
+      const range = document.getElementById('lectura-audio-range');
+      const timeEl = document.getElementById('lectura-audio-time');
+      const speedBtn = document.getElementById('lectura-speed-btn');
+      if (!player || !audio || !playBtn || !range || !timeEl || !speedBtn) return;
+
+      const playIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>';
+      const pauseIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12"></rect><rect x="9.5" y="2" width="3.5" height="12"></rect></svg>';
+      const speeds = [1, 0.85, 0.75, 1.15];
+      let speedIndex = 0;
+      let isSeeking = false;
+
+      function formatTime(sec) {
+        if (!isFinite(sec) || sec < 0) return '0:00';
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+      }
+
+      function updateTimeDisplay() {
+        const cur = formatTime(audio.currentTime);
+        const dur = formatTime(audio.duration);
+        timeEl.textContent = cur + ' / ' + dur;
+        if (!isSeeking && isFinite(audio.duration) && audio.duration > 0) {
+          range.value = String((audio.currentTime / audio.duration) * 100);
+        }
+      }
+
+      function updateStuckState() {
+        if (!player.classList.contains('is-active-sticky')) {
+          player.classList.remove('is-stuck');
+          return;
+        }
+        const rect = player.getBoundingClientRect();
+        player.classList.toggle('is-stuck', rect.top <= 59);
+      }
+
+      function setPlayingState(playing) {
+        playBtn.classList.toggle('is-playing', playing);
+        playBtn.innerHTML = playing ? pauseIcon : playIcon;
+        const label = playing ? 'Mettre la lecture en pause' : 'Écouter la lecture';
+        playBtn.setAttribute('aria-label', label);
+        playBtn.setAttribute('title', label);
+      }
+
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play().catch(() => {});
+        } else {
+          audio.pause();
+        }
+      });
+
+      audio.addEventListener('play', () => {
+        player.classList.add('is-active-sticky');
+        setPlayingState(true);
+        updateStuckState();
+      });
+      audio.addEventListener('pause', () => setPlayingState(false));
+      audio.addEventListener('ended', () => {
+        player.classList.remove('is-active-sticky', 'is-stuck');
+        setPlayingState(false);
+        range.value = '0';
+        audio.currentTime = 0;
+        updateTimeDisplay();
+      });
+      audio.addEventListener('loadedmetadata', updateTimeDisplay);
+      audio.addEventListener('timeupdate', updateTimeDisplay);
+
+      window.addEventListener('scroll', updateStuckState, { passive: true });
+
+      range.addEventListener('input', () => {
+        isSeeking = true;
+        if (isFinite(audio.duration) && audio.duration > 0) {
+          const previewTime = (parseFloat(range.value) / 100) * audio.duration;
+          timeEl.textContent = formatTime(previewTime) + ' / ' + formatTime(audio.duration);
+        }
+      });
+
+      range.addEventListener('change', () => {
+        if (isFinite(audio.duration) && audio.duration > 0) {
+          audio.currentTime = (parseFloat(range.value) / 100) * audio.duration;
+        }
+        isSeeking = false;
+      });
+
+      speedBtn.addEventListener('click', () => {
+        speedIndex = (speedIndex + 1) % speeds.length;
+        const rate = speeds[speedIndex];
+        audio.playbackRate = rate;
+        speedBtn.textContent = rate + '×';
+      });
+    })();
+  </script>
+</body>
+</html>
