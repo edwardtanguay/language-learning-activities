@@ -2075,6 +2075,115 @@
         display: block !important;
       }
     }
+    /* Simple Audio Player in Lectura */
+    .lectura-section-body {
+      position: relative;
+    }
+    .lectura-audio-player {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 18px 0;
+      padding: 8px 12px;
+      background-color: rgba(249, 246, 239, 0.96);
+      border: 1px solid var(--ink-rule);
+      border-radius: 10px;
+      font-family: var(--font-typewriter);
+      color: var(--ink-main);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .lectura-audio-player.is-active-sticky {
+      position: sticky;
+      top: 58px;
+      z-index: 870;
+      backdrop-filter: blur(4px);
+    }
+    .lectura-audio-player.is-active-sticky.is-stuck {
+      box-shadow: 0 4px 14px rgba(45, 40, 35, 0.12);
+      border-color: var(--ink-muted);
+    }
+    .lectura-audio-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-muted);
+      border-radius: 50%;
+      color: var(--ink-main);
+      cursor: pointer;
+      padding: 0;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lectura-audio-btn:hover {
+      background-color: var(--highlight);
+    }
+    .lectura-audio-btn.is-playing {
+      background-color: var(--ink-muted);
+      border-color: var(--ink-main);
+      color: #ffffff;
+    }
+    .lectura-audio-btn svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+      display: block;
+    }
+    .lectura-audio-range {
+      flex: 1;
+      min-width: 80px;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--ink-rule);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+    .lectura-audio-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+      border: 1.5px solid var(--ink-main);
+      cursor: pointer;
+    }
+    .lectura-audio-range::-moz-range-thumb {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+      border: 1.5px solid var(--ink-main);
+      cursor: pointer;
+    }
+    .lectura-audio-time {
+      font-size: 12px;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: -0.2px;
+    }
+    .lectura-audio-speed {
+      font-family: var(--font-typewriter);
+      font-size: 11.5px;
+      line-height: 1;
+      padding: 5px 8px 4px 8px;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 6px;
+      color: var(--ink-main);
+      cursor: pointer;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lectura-audio-speed:hover {
+      background-color: var(--highlight);
+    }
   </style>
 </head>
 <body>
