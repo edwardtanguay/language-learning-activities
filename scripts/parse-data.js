@@ -1903,8 +1903,8 @@ function ensureLightboxAssets(html) {
   out = out.replace(/<head>\s*<script>[\s\S]*?<\/script>/i, `<head>\n  ${redirectScript}`);
 
   // 2. Ensure CSS contains the latest images & lightbox CSS
-  const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===|\s*\/\* Topic Header Icon|\s*\/\* Responsive)/;
-  const legacyLightboxCssRegex = /\/\* Fullscreen Image Lightbox & Zoom Overlay \*\/[\s\S]*?(?=\s*\/\* Responsive|\s*@media \(max-width: 680px\)|\s*<\/style>)/;
+  const imagesCssRegex = /\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX[\s\S]*?(?=\s*<\/style>|\s*\/\* ===|\s*\/\* Topic Header Icon|\s*\/\* Responsive|\s*\/\* Simple Audio Player)/;
+  const legacyLightboxCssRegex = /\/\* Fullscreen Image Lightbox & Zoom Overlay \*\/[\s\S]*?(?=\s*\/\* Responsive|\s*@media \(max-width: 680px\)|\s*\/\* Simple Audio Player|\s*<\/style>)/;
   if (imagesCssRegex.test(out)) {
     out = out.replace(imagesCssRegex, SECTION_IMAGES_CSS.trim());
   } else if (legacyLightboxCssRegex.test(out)) {
@@ -1970,7 +1970,7 @@ function ensureLightboxAssets(html) {
 function updateAllSectionHeadings(html, nums) {
   return html.replace(/<h2 class="section-title"[^>]*>[\s\S]*?<\/h2>/g, (headingHtml) => {
     // 1. Questions for teacher
-    if (headingHtml.includes('Preguntas para el profesor') || headingHtml.includes('Questions for the Teacher') || headingHtml.includes('revisar en clase')) {
+    if (headingHtml.includes('Preguntas para el profesor') || headingHtml.includes('Questions for the Teacher') || headingHtml.includes('Questions pour le professeur') || headingHtml.includes('revisar en clase') || headingHtml.includes('réviser en cours')) {
       if (!nums.questionsNum) return headingHtml;
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.questionsNum}"`)
@@ -1978,7 +1978,7 @@ function updateAllSectionHeadings(html, nums) {
     }
 
     // 2. Images
-    if (headingHtml.includes('Imágenes') || headingHtml.includes('Images') || headingHtml.includes('clic para ampliar') || headingHtml.includes('click to enlarge')) {
+    if (headingHtml.includes('Imágenes') || headingHtml.includes('Images') || headingHtml.includes('clic para ampliar') || headingHtml.includes('click to enlarge') || headingHtml.includes('cliquer pour agrandir')) {
       if (!nums.imagesNum) return headingHtml;
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.imagesNum}"`)
@@ -1986,28 +1986,28 @@ function updateAllSectionHeadings(html, nums) {
     }
 
     // 3. Reading
-    if (headingHtml.includes('leer en voz alta') || headingHtml.includes('read aloud') || headingHtml.includes('Lectura') || headingHtml.includes('Reading')) {
+    if (headingHtml.includes('leer en voz alta') || headingHtml.includes('read aloud') || headingHtml.includes('lire à haute voix') || headingHtml.includes('Lectura') || headingHtml.includes('Reading') || headingHtml.includes('Lecture')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.readingNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.readingNum}</span>`);
     }
 
     // 4. Vocabulary
-    if (headingHtml.includes('arrastrar y soltar') || headingHtml.includes('drag and drop') || headingHtml.includes('Vocabulario') || headingHtml.includes('Vocabulary')) {
+    if (headingHtml.includes('arrastrar y soltar') || headingHtml.includes('drag and drop') || headingHtml.includes('glisser-déposer') || headingHtml.includes('Vocabulario') || headingHtml.includes('Vocabulary') || headingHtml.includes('Vocabulaire')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.vocabNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.vocabNum}</span>`);
     }
 
     // 5. Quiz / Comprehension
-    if (headingHtml.includes('opción múltiple') || headingHtml.includes('multiple choice') || headingHtml.includes('Comprensión') || headingHtml.includes('Comprehension')) {
+    if (headingHtml.includes('opción múltiple') || headingHtml.includes('multiple choice') || headingHtml.includes('choix multiple') || headingHtml.includes('Comprensión') || headingHtml.includes('Comprehension') || headingHtml.includes('Compréhension')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.quizNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.quizNum}</span>`);
     }
 
     // 6. Discussion / Open Questions
-    if (headingHtml.includes('responder y debatir') || headingHtml.includes('answer and discuss') || headingHtml.includes('abiertas')) {
+    if (headingHtml.includes('responder y debatir') || headingHtml.includes('answer and discuss') || headingHtml.includes('répondre et débattre') || headingHtml.includes('abiertas') || headingHtml.includes('ouvertes')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.discussNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.discussNum}</span>`);
@@ -2039,7 +2039,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
       }
     } else {
       html = html.replace(
-        /\/\* Topic Header Icon[\s\S]*?(?=\s*<\/style>|\s*\/\* ===)/,
+        /\/\* Topic Header Icon[\s\S]*?(?=\s*<\/style>|\s*\/\* ===|\s*\/\* Simple Audio Player)/,
         TOPIC_HEADER_ICON_CSS.trim()
       );
     }
