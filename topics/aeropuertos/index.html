@@ -2026,6 +2026,116 @@
         text-align: center;
       }
     }
+  
+    /* Simple Audio Player in Lectura */
+    .lectura-section-body {
+      position: relative;
+    }
+    .lectura-audio-player {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 18px 0;
+      padding: 8px 12px;
+      background-color: rgba(249, 246, 239, 0.96);
+      border: 1px solid var(--ink-rule);
+      border-radius: 10px;
+      font-family: var(--font-typewriter);
+      color: var(--ink-main);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .lectura-audio-player.is-active-sticky {
+      position: sticky;
+      top: 58px;
+      z-index: 870;
+      backdrop-filter: blur(4px);
+    }
+    .lectura-audio-player.is-active-sticky.is-stuck {
+      box-shadow: 0 4px 14px rgba(45, 40, 35, 0.12);
+      border-color: var(--ink-muted);
+    }
+    .lectura-audio-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-muted);
+      border-radius: 50%;
+      color: var(--ink-main);
+      cursor: pointer;
+      padding: 0;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lectura-audio-btn:hover {
+      background-color: var(--highlight);
+    }
+    .lectura-audio-btn.is-playing {
+      background-color: var(--ink-muted);
+      border-color: var(--ink-main);
+      color: #ffffff;
+    }
+    .lectura-audio-btn svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+      display: block;
+    }
+    .lectura-audio-range {
+      flex: 1;
+      min-width: 80px;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--ink-rule);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+    .lectura-audio-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+      border: 1.5px solid var(--ink-main);
+      cursor: pointer;
+    }
+    .lectura-audio-range::-moz-range-thumb {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+      border: 1.5px solid var(--ink-main);
+      cursor: pointer;
+    }
+    .lectura-audio-time {
+      font-size: 12px;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: -0.2px;
+    }
+    .lectura-audio-speed {
+      font-family: var(--font-typewriter);
+      font-size: 11.5px;
+      line-height: 1;
+      padding: 5px 8px 4px 8px;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 6px;
+      color: var(--ink-main);
+      cursor: pointer;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lectura-audio-speed:hover {
+      background-color: var(--highlight);
+    }
   </style>
 </head>
 <body id="top">
@@ -2169,7 +2279,17 @@
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
       <span class="section-action-hint">leer en voz alta</span>
     </h2>
-    <article class="reading-content">
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-aeropuertos.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
       <div class="region-card">
         <h3>Bogotá: Conexiones y Mostradores</h3>
         <p>
@@ -2205,6 +2325,7 @@
         </p>
       </div>
     </article>
+    </div>
 
 <!-- Section 3: Interactive Comprehension Questions -->
     <h2 class="section-title" id="seccion-4">
@@ -4907,6 +5028,103 @@
         if (util) util.classList.remove('page-slide-out-right', 'page-slide-in-right');
       }
     });
+  
+    (function initLecturaAudioPlayer() {
+      const player = document.getElementById('lectura-audio-player');
+      const audio = document.getElementById('lectura-audio');
+      const playBtn = document.getElementById('lectura-play-btn');
+      const range = document.getElementById('lectura-audio-range');
+      const timeEl = document.getElementById('lectura-audio-time');
+      const speedBtn = document.getElementById('lectura-speed-btn');
+      if (!player || !audio || !playBtn || !range || !timeEl || !speedBtn) return;
+
+      const playIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>';
+      const pauseIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12"></rect><rect x="9.5" y="2" width="3.5" height="12"></rect></svg>';
+      const speeds = [1, 0.85, 0.75, 1.15];
+      let speedIndex = 0;
+      let isSeeking = false;
+
+      function formatTime(sec) {
+        if (!isFinite(sec) || sec < 0) return '0:00';
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+      }
+
+      function updateTimeDisplay() {
+        const cur = formatTime(audio.currentTime);
+        const dur = formatTime(audio.duration);
+        timeEl.textContent = cur + ' / ' + dur;
+        if (!isSeeking && isFinite(audio.duration) && audio.duration > 0) {
+          range.value = String((audio.currentTime / audio.duration) * 100);
+        }
+      }
+
+      function updateStuckState() {
+        if (!player.classList.contains('is-active-sticky')) {
+          player.classList.remove('is-stuck');
+          return;
+        }
+        const rect = player.getBoundingClientRect();
+        player.classList.toggle('is-stuck', rect.top <= 59);
+      }
+
+      function setPlayingState(playing) {
+        playBtn.classList.toggle('is-playing', playing);
+        playBtn.innerHTML = playing ? pauseIcon : playIcon;
+        const label = playing ? 'Pausar lectura' : 'Reproducir lectura';
+        playBtn.setAttribute('aria-label', label);
+        playBtn.setAttribute('title', label);
+      }
+
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play().catch(() => {});
+        } else {
+          audio.pause();
+        }
+      });
+
+      audio.addEventListener('play', () => {
+        player.classList.add('is-active-sticky');
+        setPlayingState(true);
+        updateStuckState();
+      });
+      audio.addEventListener('pause', () => setPlayingState(false));
+      audio.addEventListener('ended', () => {
+        player.classList.remove('is-active-sticky', 'is-stuck');
+        setPlayingState(false);
+        range.value = '0';
+        audio.currentTime = 0;
+        updateTimeDisplay();
+      });
+      audio.addEventListener('loadedmetadata', updateTimeDisplay);
+      audio.addEventListener('timeupdate', updateTimeDisplay);
+
+      window.addEventListener('scroll', updateStuckState, { passive: true });
+
+      range.addEventListener('input', () => {
+        isSeeking = true;
+        if (isFinite(audio.duration) && audio.duration > 0) {
+          const previewTime = (parseFloat(range.value) / 100) * audio.duration;
+          timeEl.textContent = formatTime(previewTime) + ' / ' + formatTime(audio.duration);
+        }
+      });
+
+      range.addEventListener('change', () => {
+        if (isFinite(audio.duration) && audio.duration > 0) {
+          audio.currentTime = (parseFloat(range.value) / 100) * audio.duration;
+        }
+        isSeeking = false;
+      });
+
+      speedBtn.addEventListener('click', () => {
+        speedIndex = (speedIndex + 1) % speeds.length;
+        const rate = speeds[speedIndex];
+        audio.playbackRate = rate;
+        speedBtn.textContent = rate + '×';
+      });
+    })();
   </script>
 </body>
 </html>
