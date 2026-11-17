@@ -275,13 +275,13 @@ function stripTags(html) {
 function formatImageTitle(rawName) {
   return String(rawName || '')
     .normalize('NFC')
-    .split(/[_\s-]+/)
+    .split(/[_\s]+/)
     .filter(Boolean)
     .join(' ');
 }
 
 function cleanImageSlug(rawName) {
-  return normalize(rawName).replace(/[_\s-]+/g, '');
+  return normalize(rawName).replace(/[_\s()]+/g, '');
 }
 
 function ensureNoHyphenTopicDirs() {
@@ -2017,6 +2017,27 @@ function updateAllSectionHeadings(html, nums) {
   });
 }
 
+function normalizePunctuationSpacesInHtml(html) {
+  const bodyMatch = html.match(/<body\b[^>]*>[\s\S]*<\/body>/i);
+  if (!bodyMatch) return html;
+
+  const bodyStart = bodyMatch.index;
+  const bodyEnd = bodyStart + bodyMatch[0].length;
+  const bodyHtml = bodyMatch[0];
+
+  const normalizedBody = bodyHtml
+    .split(/(<script\b[^>]*>[\s\S]*?<\/script>|<style\b[^>]*>[\s\S]*?<\/style>|<!--[\s\S]*?-->|<[^>]+>)/gi)
+    .map(part => {
+      if (!part || part.startsWith('<')) return part;
+      return part
+        .replace(/(^|[^\r\n\t ])[ \t]+(?=[;:!?%»]|&raquo;)/g, '$1&nbsp;')
+        .replace(/(«|&laquo;)[ \t]+/g, '$1&nbsp;');
+    })
+    .join('');
+
+  return html.slice(0, bodyStart) + normalizedBody + html.slice(bodyEnd);
+}
+
 function updateActivityHtml(activity, rawQuestions, imageFiles) {
   const originalHtml = fs.readFileSync(activity.indexPath, 'utf8');
   let html = originalHtml;
@@ -2338,6 +2359,8 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     );
   }
   html = html.replace(/(?:[ \t]*if \(typeof initImageLabelsGame === 'function'\) initImageLabelsGame\(\);[\r\n]*){2,}/g, "      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();\n");
+
+  html = normalizePunctuationSpacesInHtml(html);
 
   if (html !== originalHtml) {
     fs.writeFileSync(activity.indexPath, html, 'utf8');
