@@ -216,8 +216,7 @@
       color: var(--ink-main);
     }
 
-    .jump-top-btn,
-    .jump-return-btn {
+    .jump-top-btn {
       background: var(--highlight);
       color: var(--ink-main);
       border: 1px solid var(--ink-rule);
@@ -261,16 +260,8 @@
       border-width: 1px;
     }
 
-    .jump-return-btn {
-      display: none;
-    }
 
-    .jump-return-btn.show {
-      display: inline-flex;
-    }
-
-    .jump-top-btn:hover,
-    .jump-return-btn:hover {
+    .jump-top-btn:hover {
       background-color: #e6dbb8;
       transform: translateY(-1px);
       box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
@@ -303,14 +294,13 @@
     }
 
     .jump-bookmark-btn svg,
-    .jump-top-btn svg,
-    .jump-return-btn svg {
+    .jump-top-btn svg {
       width: 15px;
       height: 15px;
       display: block;
     }
 
-    /* Sticky Section Jump Pill & Return to Reading */
+    /* Sticky Section Jump Pill */
     .sticky-jump-nav {
       position: fixed;
       top: 10px;
@@ -339,7 +329,6 @@
 
     .sticky-jump-nav .jump-num,
     .sticky-jump-nav .jump-top-btn,
-    .sticky-jump-nav .jump-return-btn,
     .sticky-jump-nav .jump-bookmark-btn {
       width: 27px;
       height: 27px;
@@ -355,8 +344,7 @@
     }
 
     .sticky-jump-nav .jump-bookmark-btn svg,
-    .sticky-jump-nav .jump-top-btn svg,
-    .sticky-jump-nav .jump-return-btn svg {
+    .sticky-jump-nav .jump-top-btn svg {
       width: 14px;
       height: 14px;
     }
@@ -1344,7 +1332,6 @@
       }
       .jump-nav .jump-num,
       .jump-nav .jump-top-btn.show,
-      .jump-nav .jump-return-btn,
       .jump-nav .jump-bookmark-btn {
         width: 28px;
         height: 28px;
@@ -1360,8 +1347,7 @@
         font-size: 15px;
       }
       .jump-nav .jump-bookmark-btn svg,
-      .jump-nav .jump-top-btn svg,
-      .jump-nav .jump-return-btn svg {
+      .jump-nav .jump-top-btn svg {
         width: 14px;
         height: 14px;
       }
@@ -4212,8 +4198,6 @@ let draggedImageId = null;
     }
 
     function executeReset() {
-      savedReturnScrollY = null;
-      document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
       userAnswers = {};
       completedVocab = [];
       readingBookmarks = [];
@@ -4238,8 +4222,6 @@ let draggedImageId = null;
     // =========================================================
     // SECTION JUMP NAVIGATION (STATIONARY & STICKY PILL PARITY)
     // =========================================================
-    let savedReturnScrollY = null;
-
     function setupStickyJumpNav() {
       const headerJumpNav = document.querySelector('.jump-nav');
       const stickyNav = document.getElementById('sticky-jump-nav');
@@ -4254,38 +4236,12 @@ let draggedImageId = null;
         topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="7"></line><polyline points="6 13 12 7 18 13"></polyline><line x1="4" y1="3" x2="20" y2="3"></line></svg>';
         topBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (window.scrollY >= window.innerHeight * 0.85) {
-            savedReturnScrollY = window.scrollY;
-            document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
-          }
           snappyScrollTo(0, 280);
         });
         return topBtn;
       };
 
-      const returnToPreviousSpot = () => {
-        if (savedReturnScrollY !== null) {
-          const targetY = savedReturnScrollY;
-          savedReturnScrollY = null;
-          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
-          snappyScrollTo(targetY, 280);
-        }
-      };
 
-      const createReturnBtn = () => {
-        const returnBtn = document.createElement('button');
-        returnBtn.type = 'button';
-        returnBtn.className = 'jump-return-btn' + (savedReturnScrollY !== null ? ' show' : '');
-        returnBtn.title = 'Volver al punto anterior';
-        returnBtn.setAttribute('aria-label', 'Volver al punto anterior');
-        returnBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
-        returnBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          returnToPreviousSpot();
-        });
-        return returnBtn;
-      };
 
       const handleBookmarkJump = () => {
         const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
@@ -4328,10 +4284,7 @@ let draggedImageId = null;
 
       // Populate stationary nav extra buttons if not already present
       if (!headerJumpNav.querySelector('.jump-top-btn')) {
-        const topBtnHeader = createTopBtn();
-        const returnBtnHeader = createReturnBtn();
-        headerJumpNav.insertBefore(returnBtnHeader, headerLinks[0] || null);
-        headerJumpNav.insertBefore(topBtnHeader, returnBtnHeader);
+        headerJumpNav.insertBefore(createTopBtn(), headerLinks[0] || null);
       }
       if (!headerJumpNav.querySelector('.jump-bookmark-btn')) {
         headerJumpNav.appendChild(createBookmarkBtn());
@@ -4340,7 +4293,6 @@ let draggedImageId = null;
       // Populate sticky nav with 1:1 button parity
       stickyNav.innerHTML = '';
       stickyNav.appendChild(createTopBtn());
-      stickyNav.appendChild(createReturnBtn());
 
       headerLinks.forEach(link => {
         const clone = link.cloneNode(true);
@@ -4358,16 +4310,7 @@ let draggedImageId = null;
 
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
 
-        // If tapping 1 or last section while already there and a return spot exists, toggle back!
-        if ((targetId === sectionIds[0] || targetId === sectionIds[sectionIds.length - 1]) && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
-          returnToPreviousSpot();
-          return;
-        }
 
-        if (Math.abs(window.scrollY - targetTop) > 100 && window.scrollY >= window.innerHeight * 0.85) {
-          savedReturnScrollY = window.scrollY;
-          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
-        }
 
         snappyScrollTo(Math.max(0, targetTop), 280);
       };

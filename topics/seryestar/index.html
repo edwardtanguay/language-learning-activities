@@ -191,7 +191,6 @@
 
     .jump-nav .jump-num,
     .jump-nav .jump-top-btn,
-    .jump-nav .jump-return-btn,
     .jump-nav .jump-bookmark-btn {
       width: 32px;
       height: 32px;
@@ -231,23 +230,6 @@
       margin-right: 0;
     }
 
-    .jump-nav .jump-return-btn {
-      background-color: var(--highlight);
-      width: 0;
-      opacity: 0;
-      pointer-events: none;
-      overflow: hidden;
-      border: none;
-      margin-right: -12px;
-    }
-
-    .jump-nav .jump-return-btn.show {
-      width: 32px;
-      opacity: 1;
-      pointer-events: auto;
-      border: 1px solid var(--ink-rule);
-      margin-right: 0;
-    }
 
     .jump-nav .jump-bookmark-btn {
       background-color: #e6e0d2;
@@ -277,7 +259,6 @@
 
     .jump-nav .jump-num:hover,
     .jump-nav .jump-top-btn:hover,
-    .jump-nav .jump-return-btn:hover,
     .jump-nav .jump-bookmark-btn:hover {
       background-color: #d8d0bf;
       color: var(--ink-main);
@@ -286,7 +267,6 @@
 
     .jump-nav .jump-num:active,
     .jump-nav .jump-top-btn:active,
-    .jump-nav .jump-return-btn:active,
     .jump-nav .jump-bookmark-btn:active {
       transform: scale(0.95);
     }
@@ -297,8 +277,7 @@
       border-color: #9c927f;
     }
 
-    .jump-nav .jump-top-btn svg,
-    .jump-nav .jump-return-btn svg {
+    .jump-nav .jump-top-btn svg {
       width: 15px;
       height: 15px;
       display: block;
@@ -336,7 +315,6 @@
     }
 
     .sticky-jump-nav .jump-top-btn,
-    .sticky-jump-nav .jump-return-btn,
     .sticky-jump-nav .jump-bookmark-btn {
       width: 27px;
       height: 27px;
@@ -355,30 +333,14 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .sticky-jump-nav .jump-top-btn svg,
-    .sticky-jump-nav .jump-return-btn svg {
+    .sticky-jump-nav .jump-top-btn svg {
       width: 14px;
       height: 14px;
       display: block;
       pointer-events: none;
     }
 
-    .sticky-jump-nav .jump-return-btn {
-      width: 0;
-      opacity: 0;
-      pointer-events: none;
-      overflow: hidden;
-      border: none;
-      margin-left: -10px;
-    }
 
-    .sticky-jump-nav .jump-return-btn.show {
-      width: 27px;
-      opacity: 1;
-      pointer-events: auto;
-      border: 1px solid var(--ink-rule);
-      margin-left: 0;
-    }
 
     .sticky-jump-nav .jump-bookmark-btn {
       background-color: #e6e0d2;
@@ -407,14 +369,12 @@
     }
 
     .sticky-jump-nav .jump-top-btn:hover,
-    .sticky-jump-nav .jump-return-btn:hover,
     .sticky-jump-nav .jump-bookmark-btn:hover {
       background-color: #e6dfcb;
       transform: scale(1.08);
     }
 
     .sticky-jump-nav .jump-top-btn:active,
-    .sticky-jump-nav .jump-return-btn:active,
     .sticky-jump-nav .jump-bookmark-btn:active {
       transform: scale(0.94);
     }
@@ -2151,9 +2111,6 @@
     <button type="button" class="jump-top-btn" id="sticky-jump-top-btn" onclick="handleTopButtonClick(event)" title="Subir al inicio" aria-label="Subir al inicio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline><line x1="5" y1="2" x2="19" y2="2"></line></svg>
     </button>
-    <button type="button" class="jump-return-btn" id="sticky-jump-return-btn" onclick="handleReturnButtonClick(event)" title="Volver a la posición anterior" aria-label="Volver a la posición anterior">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
-    </button>
     <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Vocabulario">1</a>
     <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
     <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión">3</a>
@@ -3745,8 +3702,6 @@ function loadSavedState() {
     // =========================================================
     // SECTION JUMP NAVIGATION (STATIONARY & STICKY PILL PARITY)
     // =========================================================
-    let savedReturnScrollY = null;
-
     function setupStickyJumpNav() {
       const headerJumpNav = document.querySelector('.jump-nav');
       const stickyNav = document.getElementById('sticky-jump-nav');
@@ -3761,38 +3716,12 @@ function loadSavedState() {
         topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="7"></line><polyline points="6 13 12 7 18 13"></polyline><line x1="4" y1="3" x2="20" y2="3"></line></svg>';
         topBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (window.scrollY >= window.innerHeight * 0.85) {
-            savedReturnScrollY = window.scrollY;
-            document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
-          }
           snappyScrollTo(0, 280);
         });
         return topBtn;
       };
 
-      const returnToPreviousSpot = () => {
-        if (savedReturnScrollY !== null) {
-          const targetY = savedReturnScrollY;
-          savedReturnScrollY = null;
-          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.remove('show'));
-          snappyScrollTo(targetY, 280);
-        }
-      };
 
-      const createReturnBtn = () => {
-        const returnBtn = document.createElement('button');
-        returnBtn.type = 'button';
-        returnBtn.className = 'jump-return-btn' + (savedReturnScrollY !== null ? ' show' : '');
-        returnBtn.title = 'Volver al punto anterior';
-        returnBtn.setAttribute('aria-label', 'Volver al punto anterior');
-        returnBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>';
-        returnBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          returnToPreviousSpot();
-        });
-        return returnBtn;
-      };
 
       const handleBookmarkJump = () => {
         const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
@@ -3835,10 +3764,7 @@ function loadSavedState() {
 
       // Populate stationary nav extra buttons if not already present
       if (!headerJumpNav.querySelector('.jump-top-btn')) {
-        const topBtnHeader = createTopBtn();
-        const returnBtnHeader = createReturnBtn();
-        headerJumpNav.insertBefore(returnBtnHeader, headerLinks[0] || null);
-        headerJumpNav.insertBefore(topBtnHeader, returnBtnHeader);
+        headerJumpNav.insertBefore(createTopBtn(), headerLinks[0] || null);
       }
       if (!headerJumpNav.querySelector('.jump-bookmark-btn')) {
         headerJumpNav.appendChild(createBookmarkBtn());
@@ -3847,7 +3773,6 @@ function loadSavedState() {
       // Populate sticky nav with 1:1 button parity
       stickyNav.innerHTML = '';
       stickyNav.appendChild(createTopBtn());
-      stickyNav.appendChild(createReturnBtn());
 
       headerLinks.forEach(link => {
         const clone = link.cloneNode(true);
@@ -3865,15 +3790,7 @@ function loadSavedState() {
 
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
 
-        if ((targetId === sectionIds[0] || targetId === sectionIds[sectionIds.length - 1]) && savedReturnScrollY !== null && Math.abs(window.scrollY - targetTop) < 120) {
-          returnToPreviousSpot();
-          return;
-        }
 
-        if (Math.abs(window.scrollY - targetTop) > 100 && window.scrollY >= window.innerHeight * 0.85) {
-          savedReturnScrollY = window.scrollY;
-          document.querySelectorAll('.jump-return-btn').forEach(btn => btn.classList.add('show'));
-        }
 
         snappyScrollTo(Math.max(0, targetTop), 280);
       };
