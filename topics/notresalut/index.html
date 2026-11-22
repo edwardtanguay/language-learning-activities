@@ -983,6 +983,188 @@
     /* =========================================================
        SECTION 3: COMPRENSIÓN (MULTIPLE CHOICE)
        ========================================================= */
+
+    /* Quick Comprehension (20 Rapid-Fire Fact Questions, 2x2 Grid) */
+    .quick-quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .quick-q-card {
+      background-color: var(--paper-bg);
+      padding: 13px 16px 14px 16px;
+      border: none;
+    }
+
+    .quick-q-prompt {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      line-height: 1.4;
+    }
+
+    .quick-q-number {
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      min-width: 22px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .quick-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding-left: 32px;
+    }
+
+    .quick-opt-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 7px 11px;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      color: var(--ink-main);
+      text-align: left;
+      cursor: pointer;
+      line-height: 1.25;
+      transition: background-color 0.14s, border-color 0.14s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .quick-opt-item:hover {
+      background-color: #f3efe4;
+    }
+
+    .quick-opt-letter {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+
+    .quick-opt-text {
+      text-align: left;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .quick-opt-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      display: none;
+    }
+
+    .quick-opt-item.is-correct {
+      background-color: #e3f5e5;
+      border-color: #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-letter {
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-icon {
+      display: block;
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-wrong {
+      background-color: #fbe4e4;
+      border-color: #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-letter {
+      color: #b91c1c;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-icon {
+      display: block;
+      color: #b91c1c;
+    }
+
+    .quick-feedback-box {
+      display: none;
+      margin-top: 9px;
+      margin-left: 32px;
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .quick-feedback-box.visible {
+      display: flex;
+    }
+
+    .quick-feedback-box.is-correct {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-feedback-box.is-wrong {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-feedback-box svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    @media (max-width: 680px) {
+      .quick-q-card {
+        padding: 11px 12px 12px 12px;
+      }
+      .quick-q-prompt {
+        font-size: 15px;
+        gap: 8px;
+      }
+      .quick-q-number {
+        min-width: 18px;
+        font-size: 14.5px;
+      }
+      .quick-options-grid {
+        padding-left: 26px;
+        gap: 6px;
+      }
+      .quick-opt-item {
+        padding: 7px 8px;
+        font-size: 13.5px;
+        gap: 5px;
+      }
+      .quick-feedback-box {
+        margin-left: 26px;
+        font-size: 13.5px;
+      }
+    }
+
     .quiz-container {
       margin-top: 14px;
       margin-bottom: 24px;
@@ -2078,8 +2260,9 @@
         <a href="#seccion-1" class="jump-num" title="Aller à la section 1 : Images">1</a>
         <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulaire">2</a>
         <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lecture">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Compréhension">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Questions">5</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Compréhension rapide">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Compréhension">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Questions">6</a>
       </nav>
     </header>
 
@@ -2115,6 +2298,613 @@
         </div>
       </div>
     </section>
+
+<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut"><span class="section-num">4</span> Compréhension rapide</a>
+      <span class="section-action-hint">choix multiple</span>
+    </h2>
+    <div class="quick-quiz-container" id="quick-quiz-container">
+      <div class="quick-q-card" data-qq="1" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">1</span>
+          <span>Qui est le réalisateur du film Notre Salut&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(1, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Emmanuel Marre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(1, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Henri Marre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(1, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Swann Arlaud</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(1, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Philippe Pétain</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-1"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="2" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">2</span>
+          <span>En quel mois et quelle année l'action débute-t-elle&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(2, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Juin 1940</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(2, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Septembre 1940</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(2, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Octobre 1941</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(2, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Mai 1940</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-2"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="3" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">3</span>
+          <span>Dans quelle ville le régime du maréchal Pétain s'installe-t-il&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(3, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Paris</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(3, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Lyon</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(3, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Vichy</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(3, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Bordeaux</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-3"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="4" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">4</span>
+          <span>Quel est le nom du personnage central du film&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(4, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Emmanuel Marre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(4, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Swann Arlaud</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(4, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Paul Pétain</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(4, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Henri Marre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-4"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="5" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">5</span>
+          <span>Quel acteur interprète Henri Marre&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(5, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Emmanuel Marre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(5, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Swann Arlaud</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(5, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Jean Gabin</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(5, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Louis Jouvet</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-5"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="6" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">6</span>
+          <span>Quelle est la profession d'Henri Marre&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(6, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Ingénieur</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(6, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Avocat</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(6, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Médecin</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(6, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Journaliste</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-6"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="7" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">7</span>
+          <span>Quel âge a Henri Marre au début du film&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(7, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Trente-neuf ans</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(7, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Quarante-cinq ans</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(7, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Cinquante-deux ans</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(7, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Quarante-neuf ans</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-7"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="8" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">8</span>
+          <span>Quel est le titre de l'ouvrage politique qu'Henri apporte à Vichy&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(8, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Le Redressement</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(8, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">La France nouvelle</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(8, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Notre Salut</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(8, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Service public</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-8"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="9" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">9</span>
+          <span>Comment l'ouvrage politique d'Henri a-t-il été édité&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(9, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">À compte d'auteur</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(9, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Par l'État</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(9, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">En feuilleton</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(9, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">En cachette</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-9"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="10" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">10</span>
+          <span>Qu'est-ce qui empêche Henri d'accéder aux plus hauts postes ministériels&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(10, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Son âge</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(10, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Sa santé</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(10, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Une condamnation passée</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(10, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Son manque d'études</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-10"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="11" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">11</span>
+          <span>Dans quel ministère Henri accepte-t-il un emploi de cadre&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(11, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Intérieur</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(11, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Travail</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(11, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Finances</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(11, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Justice</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-11"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="12" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">12</span>
+          <span>Comment Henri se présente-t-il plutôt que comme un partisan zélé&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(12, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Un artiste libre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(12, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Un soldat fidèle</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(12, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Un juge impartial</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(12, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Un technicien pragmatique</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-12"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="13" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">13</span>
+          <span>Quelle notion célèbre le parcours d'Henri illustre-t-il&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(13, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">La raison d'État</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(13, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">L'esprit de résistance</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(13, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">La banalité du mal</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(13, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">La tragédie antique</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-13"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="14" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">14</span>
+          <span>Comment le film montre-t-il l'adhésion d'Henri au régime&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(14, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Un glissement imperceptible</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(14, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Un basculement soudain</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(14, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Une révolte ouverte</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(14, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Un coup de théâtre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-14"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="15" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">15</span>
+          <span>En quoi la technocratie finit-elle par transformer la collaboration&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(15, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">En victoire morale</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(15, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">En débat public</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(15, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">En spectacle tragique</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(15, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">En routine de bureau</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-15"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="16" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">16</span>
+          <span>Sur quelle source réelle le réalisateur s'est-il appuyé&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(16, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Des journaux officiels</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(16, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Une correspondance familiale</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(16, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Un procès d'après-guerre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(16, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Un roman historique</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-16"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="17" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">17</span>
+          <span>Quel est le prénom de l'arrière-grand-mère du réalisateur&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(17, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Jeanne</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(17, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Simone</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(17, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Marguerite</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(17, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Paulette</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-17"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="18" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">18</span>
+          <span>Avec qui Paulette est-elle restée loin de Vichy&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(18, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Ses parents</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(18, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Ses voisins</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(18, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Leurs enfants</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(18, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Des collègues</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-18"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="19" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">19</span>
+          <span>Quelle teinte caractérise la lumière retenue du film&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(19, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Légèrement jaunâtre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(19, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Bleu glacier</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(19, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Rouge vif</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(19, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Noir et blanc</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-19"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="20" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">20</span>
+          <span>Quelle distance la caméra adopte-t-elle pour observer les gestes administratifs&nbsp;?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(20, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Lyrique</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(20, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Presque documentaire</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(20, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Mélodramatique</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(20, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Comique</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-20"></div>
+      </div>
+    </div>
 
 <!-- SECTION 2: VOCABULAIRE -->
     <h2 class="section-title" id="seccion-2">
@@ -2183,9 +2973,9 @@
     </div>
 
     <!-- SECTION 4: COMPRÉHENSION -->
-    <h2 class="section-title" id="seccion-4">
+    <h2 class="section-title" id="seccion-5">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
-        <span class="section-num">4</span> Compréhension
+        <span class="section-num">5</span> Compréhension approfondie
       </a>
       <span class="section-action-hint">choix multiple</span>
     </h2>
@@ -2379,9 +3169,9 @@
 
     </section>
 
-<h2 class="section-title" id="seccion-5">
+<h2 class="section-title" id="seccion-6">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
-        <span class="section-num">5</span> <span>Questions<span class="hide-mobile"> ouvertes</span></span>
+        <span class="section-num">6</span> <span>Questions<span class="hide-mobile"> ouvertes</span></span>
       </a>
       <span class="section-action-hint">répondre et débattre</span>
     </h2>
@@ -2585,6 +3375,86 @@
       }
     };
 
+
+    // =========================================================
+    // QUICK COMPREHENSION (20 RAPID-FIRE FACT QUESTIONS)
+    // =========================================================
+    const quickFacts = {
+          "1": "Le film Notre Salut est réalisé par Emmanuel Marre.",
+          "2": "L'action du film débute en septembre 1940, au lendemain de l'effondrement militaire français.",
+          "3": "Le régime du maréchal Pétain s'installe à Vichy.",
+          "4": "Le personnage central du film s'appelle Henri Marre.",
+          "5": "Henri Marre est interprété par Swann Arlaud.",
+          "6": "Henri Marre est un ingénieur ruiné et dépourvu de soutiens politiques.",
+          "7": "Henri Marre est un ingénieur de quarante-neuf ans.",
+          "8": "Henri arrive dans la nouvelle capitale avec un ouvrage politique intitulé Notre Salut.",
+          "9": "L'ouvrage politique d'Henri a été édité à compte d'auteur.",
+          "10": "Henri est empêché d'accéder aux plus hauts postes ministériels en raison d'une condamnation passée.",
+          "11": "Henri accepte un emploi de cadre au ministère du Travail.",
+          "12": "Henri se présente comme un technicien pragmatique soucieux d'ordre, de méthode et de redressement économique.",
+          "13": "En devenant un simple rouage de l'appareil administratif, Henri illustre la banalité du mal.",
+          "14": "Le film ne repose pas sur un basculement dramatique soudain, mais sur un glissement presque imperceptible.",
+          "15": "La technocratie devient un instrument capable de transformer la collaboration en routine de bureau.",
+          "16": "Le réalisateur s'est appuyé sur la correspondance réelle échangée durant l'Occupation entre ses arrière-grands-parents.",
+          "17": "L'arrière-grand-mère du réalisateur se prénomme Paulette.",
+          "18": "Paulette est restée loin de Vichy avec leurs enfants.",
+          "19": "Le cinéaste choisit une lumière retenue aux teintes légèrement jaunâtres.",
+          "20": "La caméra observe les gestes administratifs avec une distance presque documentaire."
+    };
+    let quickUserAnswers = {};
+
+    function selectQuickOption(qNum, letter) {
+      if (window.event && window.event.shiftKey) return;
+      const key = String(qNum);
+      if (quickUserAnswers[key] === letter) {
+        delete quickUserAnswers[key];
+        applyQuickFeedback(key, null);
+      } else {
+        quickUserAnswers[key] = letter;
+        applyQuickFeedback(key, letter);
+      }
+      saveState();
+    }
+
+    function applyQuickFeedback(qNum, selectedLetter) {
+      const card = document.querySelector(`.quick-q-card[data-qq="${qNum}"]`);
+      if (!card) return;
+      const correctLetter = card.getAttribute('data-correct');
+      const feedbackBox = document.getElementById(`quick-feedback-${qNum}`);
+      const buttons = card.querySelectorAll('.quick-opt-item');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('is-correct', 'is-wrong');
+        const icon = btn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      if (!selectedLetter) {
+        if (feedbackBox) {
+          feedbackBox.className = 'quick-feedback-box';
+          feedbackBox.innerHTML = '';
+        }
+        return;
+      }
+
+      const isCorrect = selectedLetter === correctLetter;
+      const activeBtn = card.querySelector(`.quick-opt-item[data-opt="${selectedLetter}"]`);
+      const checkSvg = '<polyline points="20 6 9 17 4 12"></polyline>';
+      const crossSvg = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+
+      if (activeBtn) {
+        activeBtn.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+        const icon = activeBtn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = isCorrect ? checkSvg : crossSvg;
+      }
+
+      if (feedbackBox) {
+        const factText = quickFacts[String(qNum)] || '';
+        feedbackBox.className = 'quick-feedback-box visible ' + (isCorrect ? 'is-correct' : 'is-wrong');
+        feedbackBox.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isCorrect ? checkSvg : crossSvg}</svg><span>${factText}</span>`;
+      }
+    }
+
     let userAnswers = {};
     let readingBookmarks = [];
     const STORAGE_KEY = 'activity_notresalut';
@@ -2599,6 +3469,7 @@
           const parsed = JSON.parse(saved);
           if (parsed && typeof parsed === 'object') {
             userAnswers = parsed.mc || {};
+              quickUserAnswers = parsed.quickMc || {};
             completedVocab = Array.isArray(parsed.vocab)
               ? parsed.vocab.filter(k => vocabData[k])
               : [];
@@ -2626,6 +3497,7 @@
       try {
         const state = {
           mc: userAnswers,
+          quickMc: quickUserAnswers,
           vocab: completedVocab,
           bookmarks: readingBookmarks,
           images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])

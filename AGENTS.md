@@ -55,12 +55,13 @@ Each activity lives in `topics/<foldername>/index.html`:
       2. **Vocabulario** (`arrastrar y soltar`)
       3. **Preguntas para el profesor** (`revisar en clase`, if present)
       4. **Lectura** (`leer en voz alta`)
-      5. **Comprensión** (`opción múltiple`)
-      6. **Preguntas abiertas** (`responder y debatir`)
-    - **When images and teacher questions exist**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Preguntas para el profesor, Section 4 is Lectura, Section 5 is Comprensión, Section 6 is Preguntas abiertas.
-    - **When images exist (without teacher questions)**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Lectura, Section 4 is Comprensión, Section 5 is Preguntas abiertas.
-    - **When teacher questions exist (without images)**: Section 1 is Vocabulario, Section 2 is Preguntas para el profesor, Section 3 is Lectura, Section 4 is Comprensión, Section 5 is Preguntas abiertas.
-    - **When neither images nor teacher questions exist**: Section 1 is Vocabulario, Section 2 is Lectura, Section 3 is Comprensión, Section 4 is Preguntas abiertas.
+      5. **Comprensión rápida** (`opción múltiple` — 20 rapid-fire fact questions in a compact 2×2 grid)
+      6. **Comprensión profunda** (`opción múltiple` — 4–6 analytical comprehension questions)
+      7. **Preguntas abiertas** (`responder y debatir`)
+    - **When images and teacher questions exist**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Preguntas para el profesor, Section 4 is Lectura, Section 5 is Comprensión rápida, Section 6 is Comprensión profunda, Section 7 is Preguntas abiertas.
+    - **When images exist (without teacher questions)**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Lectura, Section 4 is Comprensión rápida, Section 5 is Comprensión profunda, Section 6 is Preguntas abiertas.
+    - **When teacher questions exist (without images)**: Section 1 is Vocabulario, Section 2 is Preguntas para el profesor, Section 3 is Lectura, Section 4 is Comprensión rápida, Section 5 is Comprensión profunda, Section 6 is Preguntas abiertas.
+    - **When neither images nor teacher questions exist**: Section 1 is Vocabulario, Section 2 is Lectura, Section 3 is Comprensión rápida, Section 4 is Comprensión profunda, Section 5 is Preguntas abiertas.
   - Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside the comprehension quiz are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page without adding `#top` to the URL bar.
   - **No Section Instruction Boxes**: Do not include `.section-instructions-box` blocks below section headers.
@@ -131,8 +132,15 @@ Each activity lives in `topics/<foldername>/index.html`:
   - Learners must be able to select and copy text anywhere on the page without restriction (reading passage, word chips, definition cards, completed word pills, popup dictionary entries, quiz questions, options, and feedback explanations).
   - Do not apply `user-select: none;` to text-bearing elements.
   - On modal and popup cards, clicking or selecting text inside the card must NEVER accidentally dismiss or close it. Dismissing via click must ignore clicks where text is currently selected (`window.getSelection().toString().trim().length > 0`) or clicks on lookup buttons.
-- **Section 3: Comprehension Questions & Neutral Radio-Free Option Styling**:
-  - Heading standardized to "Comprehension" in the target language (e.g., `<span class="section-num">3</span> Comprensión` in Spanish), paired with right-aligned action hint "multiple choice" in the target language.
+- **Quick Comprehension (Comprensión rápida — 20 Rapid-Fire Fact Questions)**:
+  - Positioned immediately after the reading passage (`Lectura`) and before Deep Comprehension (`Comprensión profunda`).
+  - Heading translated into the target language (e.g., `Comprensión rápida` in Spanish, `Comprensione rapida` in Italian, `Compréhension rapide` in French, `Quick Comprehension` in English), paired with right-aligned action hint "multiple choice" in the target language.
+  - Features **20 simple, direct factual multiple-choice questions** strictly grounded in concrete facts from the reading passage, with crisp **1–3 word answer choices** (`A.`, `B.`, `C.`, `D.`).
+  - **Randomized and Balanced Correct Answers**: Exactly 5×`A`, 5×`B`, 5×`C`, 5×`D` across the 20 questions, with no consecutive duplicates.
+  - **Compact 2×2 Grid & Instant Feedback**: Rendered inside `<div class="quick-quiz-container" id="quick-quiz-container">` using borderless `.quick-q-card` containers and a 2-column `.quick-options-grid` of square-cornered `<button type="button" class="quick-opt-item">` pills (left-aligned text, zero tap flash). Clicking an option immediately highlights it in rich pastel green (`#e3f5e5`, border `#a3d9a8`) with a check SVG if correct, or pastel red (`#fbe4e4`, border `#eba8a8`) with an X SVG if wrong, and displays a brief 1-line fact confirmation banner (`.quick-feedback-box`, no `"¡Correcto!"`/`"Incorrecto."` prefixes) directly beneath the grid. Clicking the selected option again deselects it; clicking any other choice switches immediately.
+  - Persisted in `localStorage` under the activity's `STORAGE_KEY` (`quickMc` object) and cleared on reset.
+- **Deep Comprehension Questions (Comprensión profunda) & Neutral Radio-Free Option Styling**:
+  - Heading translated into the target language (e.g., `Comprensión profunda` in Spanish, `Comprensione approfondita` in Italian, `Compréhension approfondie` in French, `Deep Comprehension` in English), paired with right-aligned action hint "multiple choice" in the target language.
   - **Randomized and Balanced Correct Answers**: The correct answer position must NEVER always be A or follow a predictable pattern. Across the 4–6 questions, distribute correct answer letters evenly across choices (A, B, C, D) so each letter is represented at least once, no single letter dominates, and no consecutive questions share the same correct letter (e.g., a mix like B, D, A, C, B or C, A, D, B, C).
   - Do NOT include generic instructions like "Elige la respuesta correcta para cada pregunta...".
   - NO radio buttons (`<input type="radio">` removed completely).

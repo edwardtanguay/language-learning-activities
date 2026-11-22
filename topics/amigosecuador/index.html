@@ -961,6 +961,188 @@
     /* =========================================================
        SECTION 3: COMPREHENSION QUIZ (MULTIPLE CHOICE)
        ========================================================= */
+
+    /* Quick Comprehension (20 Rapid-Fire Fact Questions, 2x2 Grid) */
+    .quick-quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .quick-q-card {
+      background-color: var(--paper-bg);
+      padding: 13px 16px 14px 16px;
+      border: none;
+    }
+
+    .quick-q-prompt {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      line-height: 1.4;
+    }
+
+    .quick-q-number {
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      min-width: 22px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .quick-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding-left: 32px;
+    }
+
+    .quick-opt-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 7px 11px;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      color: var(--ink-main);
+      text-align: left;
+      cursor: pointer;
+      line-height: 1.25;
+      transition: background-color 0.14s, border-color 0.14s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .quick-opt-item:hover {
+      background-color: #f3efe4;
+    }
+
+    .quick-opt-letter {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+
+    .quick-opt-text {
+      text-align: left;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .quick-opt-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      display: none;
+    }
+
+    .quick-opt-item.is-correct {
+      background-color: #e3f5e5;
+      border-color: #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-letter {
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-icon {
+      display: block;
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-wrong {
+      background-color: #fbe4e4;
+      border-color: #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-letter {
+      color: #b91c1c;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-icon {
+      display: block;
+      color: #b91c1c;
+    }
+
+    .quick-feedback-box {
+      display: none;
+      margin-top: 9px;
+      margin-left: 32px;
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .quick-feedback-box.visible {
+      display: flex;
+    }
+
+    .quick-feedback-box.is-correct {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-feedback-box.is-wrong {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-feedback-box svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    @media (max-width: 680px) {
+      .quick-q-card {
+        padding: 11px 12px 12px 12px;
+      }
+      .quick-q-prompt {
+        font-size: 15px;
+        gap: 8px;
+      }
+      .quick-q-number {
+        min-width: 18px;
+        font-size: 14.5px;
+      }
+      .quick-options-grid {
+        padding-left: 26px;
+        gap: 6px;
+      }
+      .quick-opt-item {
+        padding: 7px 8px;
+        font-size: 13.5px;
+        gap: 5px;
+      }
+      .quick-feedback-box {
+        margin-left: 26px;
+        font-size: 13.5px;
+      }
+    }
+
     .quiz-container {
       margin-top: 20px;
     }
@@ -2178,8 +2360,9 @@
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
         <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
         <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
@@ -2189,6 +2372,613 @@
 
 
 
+
+<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+      <span class="section-action-hint">opción múltiple</span>
+    </h2>
+    <div class="quick-quiz-container" id="quick-quiz-container">
+      <div class="quick-q-card" data-qq="1" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">1</span>
+          <span>¿Cómo se llaman los dos estudiantes que se reencuentran en la cafetería?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(1, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Lucas y Sofía</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(1, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Diego y Elena</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(1, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Mateo y Valeria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(1, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Martín y Paula</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-1"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="2" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">2</span>
+          <span>¿Después de qué evento académico se reúnen Mateo y Valeria?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(2, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Exámenes finales</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(2, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Vacaciones de verano</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(2, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">La graduación</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(2, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Prácticas laborales</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-2"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="3" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">3</span>
+          <span>¿De qué material es la mesa donde colocan sus tazas en la terraza?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(3, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Metal</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(3, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Vidrio</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(3, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Piedra</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(3, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Madera</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-3"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="4" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">4</span>
+          <span>¿Cómo se conoce popularmente a la ciudad de Ibarra?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(4, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Ciudad Verde</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(4, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Ciudad Blanca</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(4, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Ciudad Dorada</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(4, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Ciudad Antigua</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-4"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="5" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">5</span>
+          <span>¿En qué provincia ecuatoriana se encuentra Ibarra?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(5, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">El Oro</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(5, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Manabí</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(5, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Imbabura</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(5, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Pastaza</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-5"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="6" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">6</span>
+          <span>¿Junto a qué laguna descansaba Valeria durante sus vacaciones en Ibarra?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(6, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Cuicocha</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(6, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Quilotoa</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(6, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">San Pablo</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(6, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Yahuarcocha</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-6"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="7" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">7</span>
+          <span>¿Quién le compraba siempre a Valeria ceviche de chochos en el mercado?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(7, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Su abuela</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(7, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Su madre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(7, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Su tía</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(7, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Su hermana</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-7"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="8" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">8</span>
+          <span>¿Con qué jugo se sirve el ceviche de chochos mencionado por Valeria?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(8, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">De maracuyá</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(8, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">De tomate de árbol</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(8, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">De naranja</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(8, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">De mora</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-8"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="9" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">9</span>
+          <span>¿En qué mes se celebra la Fiesta del Yamor en Imbabura?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(9, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Junio</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(9, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Agosto</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(9, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Noviembre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(9, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Septiembre</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-9"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="10" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">10</span>
+          <span>¿En agradecimiento a qué cosecha se celebra la Fiesta del Yamor?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(10, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Del maíz</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(10, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Del cacao</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(10, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Del café</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(10, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Del banano</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-10"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="11" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">11</span>
+          <span>¿Qué llevan en equilibrio sobre la cabeza las bailarinas de la Bomba del Chota?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(11, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Canastas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(11, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Sombreros</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(11, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Botellas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(11, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Flores</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-11"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="12" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">12</span>
+          <span>¿Qué instrumentos acompañan la Bomba del Chota además de las guitarras andinas?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(12, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Flautas dulces</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(12, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Tambores africanos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(12, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Arpas clásicas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(12, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Trompetas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-12"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="13" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">13</span>
+          <span>¿Qué tipo de pueblo es Zaruma según Mateo?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(13, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Un pueblo minero</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(13, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Un puerto pesquero</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(13, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Una ciudad fronteriza</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(13, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Un pueblo ganadero</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-13"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="14" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">14</span>
+          <span>¿Con qué ingrediente principal se prepara el tigrillo que desayunaba Mateo?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(14, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Yuca cocida</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(14, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Papa molida</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(14, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Plátano verde</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(14, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Arroz blanco</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-14"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="15" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">15</span>
+          <span>¿Sobre qué cocinaban el tigrillo en casa de los tíos de Mateo?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(15, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Estufa eléctrica</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(15, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Horno de barro</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(15, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Parrilla metálica</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(15, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Fogón de leña</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-15"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="16" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">16</span>
+          <span>¿Qué recitan los campesinos durante el Rodeo Montuvio?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(16, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Leyendas antiguas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(16, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Alegres amorfinos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(16, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Poemas épicos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(16, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Cantos religiosos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-16"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="17" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">17</span>
+          <span>¿En qué se envuelve la tonga manabita?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(17, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Papel aluminio</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(17, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Hojas de maíz</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(17, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Hojas de plátano</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(17, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Tela de algodón</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-17"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="18" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">18</span>
+          <span>¿Hacia qué región es puerta de entrada la ciudad de Puyo?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(18, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">La selva amazónica</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(18, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">La sierra norte</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(18, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">El océano Pacífico</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(18, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Las islas Galápagos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-18"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="19" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">19</span>
+          <span>¿Bajo qué se refugiaron Mateo y Valeria del aguacero tropical en Puyo?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(19, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Un puente</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(19, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Una cabaña</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(19, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Una cueva</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(19, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Un quiosco de paja</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-19"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="20" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">20</span>
+          <span>¿Qué bebida caliente tomaron en Puyo mientras contemplaban el río?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(20, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Café pasado</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(20, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Té de guayusa</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(20, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Chocolate caliente</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(20, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Infusión de menta</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-20"></div>
+      </div>
+    </div>
 
     <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
@@ -2339,8 +3129,8 @@
     </div>
 
     <!-- SECTION 3: COMPREHENSION QUESTIONS -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión</a>
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Comprensión profunda</a>
         </h2>
       <div class="quiz-container" id="quiz-container">
 
@@ -2537,8 +3327,8 @@
     </div>
 
     <!-- SECTION 4: OPEN QUESTIONS -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+    <h2 class="section-title" id="seccion-6">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
         </h2>
       <section class="discussion-container">
       <ol class="discussion-questions">
@@ -2734,6 +3524,86 @@
         D: "Los estudiantes no sufrieron ningún extravío ni robo; disfrutaron de la lluvia resguardados en tranquilidad."
       }
     };
+
+
+    // =========================================================
+    // QUICK COMPREHENSION (20 RAPID-FIRE FACT QUESTIONS)
+    // =========================================================
+    const quickFacts = {
+          "1": "Mateo y Valeria celebraron su esperado reencuentro en la cafetería universitaria.",
+          "2": "Mateo y Valeria celebraron su reencuentro tras varias semanas de exámenes finales.",
+          "3": "Colocaron dos humeantes tazas sobre la mesa de madera en la terraza universitaria.",
+          "4": "Valeria recordó sus vacaciones en Ibarra, la famosa «Ciudad Blanca».",
+          "5": "Ibarra se encuentra en la provincia de Imbabura.",
+          "6": "Valeria descansaba junto a la laguna de Yahuarcocha.",
+          "7": "En el mercado del centro, su abuela siempre le compraba un plato de ceviche de chochos.",
+          "8": "El ceviche de chochos se sirve con jugo de tomate de árbol, tostado crujiente y choclo desgranado.",
+          "9": "Durante septiembre la provincia vive la Fiesta del Yamor.",
+          "10": "La Fiesta del Yamor es un antiguo festejo en agradecimiento a la cosecha del maíz.",
+          "11": "En la Bomba del Chota, mujeres talentosas danzan con botellas en equilibrio sobre la cabeza.",
+          "12": "Las bailarinas danzan al compás de tambores africanos y guitarras andinas.",
+          "13": "Mateo habló con orgullo de Zaruma, un pintoresco pueblo minero ubicado en las montañas de El Oro.",
+          "14": "El tigrillo se prepara triturando plátano verde cocido con queso fresco y chicharrón.",
+          "15": "Preparaban el tigrillo sobre un tradicional fogón de leña.",
+          "16": "En el Rodeo Montuvio, los campesinos recitan alegres amorfinos mientras los jinetes doman potros chúcaros.",
+          "17": "La tonga manabita consiste en arroz con pollo bañado en salsa de maní y envuelto en grandes hojas de plátano.",
+          "18": "Puyo es la puerta de entrada hacia la selva amazónica.",
+          "19": "Un repentino aguacero tropical los obligó a refugiarse bajo un quiosco de paja.",
+          "20": "Se refugiaron bebiendo té de guayusa caliente mientras contemplaban el río."
+    };
+    let quickUserAnswers = {};
+
+    function selectQuickOption(qNum, letter) {
+      if (window.event && window.event.shiftKey) return;
+      const key = String(qNum);
+      if (quickUserAnswers[key] === letter) {
+        delete quickUserAnswers[key];
+        applyQuickFeedback(key, null);
+      } else {
+        quickUserAnswers[key] = letter;
+        applyQuickFeedback(key, letter);
+      }
+      saveState();
+    }
+
+    function applyQuickFeedback(qNum, selectedLetter) {
+      const card = document.querySelector(`.quick-q-card[data-qq="${qNum}"]`);
+      if (!card) return;
+      const correctLetter = card.getAttribute('data-correct');
+      const feedbackBox = document.getElementById(`quick-feedback-${qNum}`);
+      const buttons = card.querySelectorAll('.quick-opt-item');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('is-correct', 'is-wrong');
+        const icon = btn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      if (!selectedLetter) {
+        if (feedbackBox) {
+          feedbackBox.className = 'quick-feedback-box';
+          feedbackBox.innerHTML = '';
+        }
+        return;
+      }
+
+      const isCorrect = selectedLetter === correctLetter;
+      const activeBtn = card.querySelector(`.quick-opt-item[data-opt="${selectedLetter}"]`);
+      const checkSvg = '<polyline points="20 6 9 17 4 12"></polyline>';
+      const crossSvg = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+
+      if (activeBtn) {
+        activeBtn.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+        const icon = activeBtn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = isCorrect ? checkSvg : crossSvg;
+      }
+
+      if (feedbackBox) {
+        const factText = quickFacts[String(qNum)] || '';
+        feedbackBox.className = 'quick-feedback-box visible ' + (isCorrect ? 'is-correct' : 'is-wrong');
+        feedbackBox.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isCorrect ? checkSvg : crossSvg}</svg><span>${factText}</span>`;
+      }
+    }
 
     let userAnswers = {};
     let readingBookmarks = [];

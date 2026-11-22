@@ -175,6 +175,20 @@ const SECTION_VOCAB_I18N = {
   da: 'Ordforråd'
 };
 
+const SECTION_QUICK_QUIZ_I18N = {
+  es: 'Comprensión rápida',
+  en: 'Quick Comprehension',
+  de: 'Schnellverständnis',
+  fr: 'Compréhension rapide',
+  it: 'Comprensione rapida',
+  nl: 'Snel begrip',
+  pl: 'Szybkie rozumienie',
+  ru: 'Быстрое понимание',
+  el: 'Γρήγορη κατανόηση',
+  is: 'Fljótlegur skilningur',
+  da: 'Hurtig forståelse'
+};
+
 const SECTION_QUIZ_I18N = {
   es: 'Comprensión',
   en: 'Comprehension',
@@ -2000,7 +2014,7 @@ function updateAllSectionHeadings(html, nums) {
     }
 
     // 5a. Quick Comprehension (when present)
-    if (nums.quickQuizNum && (headingHtml.includes('Comprensione rapida') || headingHtml.includes('Comprensión rápida') || headingHtml.includes('Quick Comprehension'))) {
+    if (nums.quickQuizNum && (headingHtml.includes('Comprensione rapida') || headingHtml.includes('Comprensión rápida') || headingHtml.includes('Compréhension rapide') || headingHtml.includes('Quick Comprehension') || headingHtml.includes('Schnellverständnis'))) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.quickQuizNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.quickQuizNum}</span>`);
@@ -2173,7 +2187,8 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   }
   jumpLinks.push(`<a href="#seccion-${readingNum}" class="jump-num" title="Ir a Sección ${readingNum}: ${readingTitle}">${readingNum}</a>`);
   if (hasQuickQuiz) {
-    jumpLinks.push(`<a href="#seccion-${quickQuizNum}" class="jump-num" title="Vai alla Sezione ${quickQuizNum}: Comprensione rapida">${quickQuizNum}</a>`);
+    const quickQuizTitle = SECTION_QUICK_QUIZ_I18N[activity.lang] || SECTION_QUICK_QUIZ_I18N.es;
+    jumpLinks.push(`<a href="#seccion-${quickQuizNum}" class="jump-num" title="Ir a Sección ${quickQuizNum}: ${quickQuizTitle}">${quickQuizNum}</a>`);
   }
   jumpLinks.push(`<a href="#seccion-${quizNum}" class="jump-num" title="Ir a Sección ${quizNum}: ${quizTitle}">${quizNum}</a>`);
   jumpLinks.push(`<a href="#seccion-${discussNum}" class="jump-num" title="Ir a Sección ${discussNum}: ${discussTitle}">${discussNum}</a>`);

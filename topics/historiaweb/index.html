@@ -983,6 +983,188 @@
     /* =========================================================
        SECTION 3: COMPRENSIÓN (MULTIPLE CHOICE)
        ========================================================= */
+
+    /* Quick Comprehension (20 Rapid-Fire Fact Questions, 2x2 Grid) */
+    .quick-quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .quick-q-card {
+      background-color: var(--paper-bg);
+      padding: 13px 16px 14px 16px;
+      border: none;
+    }
+
+    .quick-q-prompt {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      line-height: 1.4;
+    }
+
+    .quick-q-number {
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      min-width: 22px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .quick-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding-left: 32px;
+    }
+
+    .quick-opt-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 7px 11px;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      color: var(--ink-main);
+      text-align: left;
+      cursor: pointer;
+      line-height: 1.25;
+      transition: background-color 0.14s, border-color 0.14s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .quick-opt-item:hover {
+      background-color: #f3efe4;
+    }
+
+    .quick-opt-letter {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+
+    .quick-opt-text {
+      text-align: left;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .quick-opt-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      display: none;
+    }
+
+    .quick-opt-item.is-correct {
+      background-color: #e3f5e5;
+      border-color: #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-letter {
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-icon {
+      display: block;
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-wrong {
+      background-color: #fbe4e4;
+      border-color: #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-letter {
+      color: #b91c1c;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-icon {
+      display: block;
+      color: #b91c1c;
+    }
+
+    .quick-feedback-box {
+      display: none;
+      margin-top: 9px;
+      margin-left: 32px;
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .quick-feedback-box.visible {
+      display: flex;
+    }
+
+    .quick-feedback-box.is-correct {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-feedback-box.is-wrong {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-feedback-box svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    @media (max-width: 680px) {
+      .quick-q-card {
+        padding: 11px 12px 12px 12px;
+      }
+      .quick-q-prompt {
+        font-size: 15px;
+        gap: 8px;
+      }
+      .quick-q-number {
+        min-width: 18px;
+        font-size: 14.5px;
+      }
+      .quick-options-grid {
+        padding-left: 26px;
+        gap: 6px;
+      }
+      .quick-opt-item {
+        padding: 7px 8px;
+        font-size: 13.5px;
+        gap: 5px;
+      }
+      .quick-feedback-box {
+        margin-left: 26px;
+        font-size: 13.5px;
+      }
+    }
+
     .quiz-container {
       margin-top: 14px;
       margin-bottom: 24px;
@@ -2078,10 +2260,618 @@
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
         <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
         <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Preguntas">5</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
+
+<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+      <span class="section-action-hint">opción múltiple</span>
+    </h2>
+    <div class="quick-quiz-container" id="quick-quiz-container">
+      <div class="quick-q-card" data-qq="1" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">1</span>
+          <span>¿En qué década empezó el autor a crear páginas web?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(1, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">En los setenta</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(1, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">En los ochenta</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(1, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">En los dos mil</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(1, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">En los noventa</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-1"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="2" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">2</span>
+          <span>¿Cómo se conectaban las computadoras a la web en los años noventa según el texto?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(2, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Por fibra óptica</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(2, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Por teléfono</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(2, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Por satélite</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(2, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Por wifi</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-2"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="3" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">3</span>
+          <span>¿En qué programa se escribía código HTML a mano en aquella época?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(3, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Un navegador web</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(3, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Una hoja de cálculo</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(3, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Un editor básico</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(3, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Un compilador visual</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-3"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="4" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">4</span>
+          <span>¿Para qué llegaron las hojas de estilo CSS?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(4, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Separar diseño visual</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(4, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Guardar bases de datos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(4, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Enviar correos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(4, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Compilar servidores</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-4"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="5" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">5</span>
+          <span>¿Qué lenguaje servía al inicio para dar vida a la página con pequeñas animaciones?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(5, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">PHP</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(5, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">SQL</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(5, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Python</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(5, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">JavaScript</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-5"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="6" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">6</span>
+          <span>¿Qué base de datos relacional se menciona junto a PHP?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(6, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Oracle</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(6, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">MongoDB</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(6, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">MySQL</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(6, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Redis</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-6"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="7" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">7</span>
+          <span>¿Qué tipo de sitio web se pudo crear con PHP y MySQL además de foros y registros?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(7, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Videojuegos 3D</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(7, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Tiendas virtuales</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(7, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Sistemas operativos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(7, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Mapas satelitales</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-7"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="8" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">8</span>
+          <span>¿Cuándo llegó AJAX según el texto?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(8, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Mediados de 2000</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(8, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Finales de 1990</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(8, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Principios de 2015</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(8, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Mediados de 2020</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-8"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="9" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">9</span>
+          <span>¿Qué permitía pedir AJAX al servidor sin recargar toda la página?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(9, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Videos en vivo</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(9, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Archivos de audio</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(9, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Datos en segundo plano</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(9, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Fuentes tipográficas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-9"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="10" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">10</span>
+          <span>¿Qué dos navegadores antiguos causaban incompatibilidades técnicas?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(10, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Chrome y Safari</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(10, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Firefox y Opera</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(10, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Edge y Brave</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(10, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Netscape e Internet Explorer</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-10"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="11" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">11</span>
+          <span>¿Qué librería escondía las incompatibilidades entre navegadores con una sintaxis simple?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(11, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Bootstrap</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(11, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">jQuery</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(11, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">React</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(11, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Lodash</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-11"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="12" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">12</span>
+          <span>¿Mediante qué programas se subían antes archivos sueltos a los servidores?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(12, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Programas de FTP</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(12, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Correos electrónicos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(12, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Discos duros</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(12, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Mensajes de texto</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-12"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="13" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">13</span>
+          <span>¿Qué herramienta y plataforma trajeron control de versiones y orden al trabajo en equipo?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(13, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">PHP y MySQL</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(13, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">HTML y CSS</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(13, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">React y Vue</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(13, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Git y GitHub</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-13"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="14" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">14</span>
+          <span>¿Qué dispositivos impulsaron el diseño web adaptable?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(14, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Televisores planos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(14, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Teléfonos inteligentes</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(14, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Relojes digitales</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(14, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Consolas portátiles</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-14"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="15" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">15</span>
+          <span>¿Qué consultas de CSS enseña a usar el diseño web adaptable junto a las rejillas fluidas?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(15, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Consultas SQL</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(15, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Consultas HTTP</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(15, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Consultas de medios</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(15, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Consultas de datos</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-15"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="16" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">16</span>
+          <span>¿En qué año apareció Node.js?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(16, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">2009</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(16, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">2005</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(16, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">2012</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(16, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">2015</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-16"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="17" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">17</span>
+          <span>¿En qué dividen las interfaces complejas los frameworks React, Vue y Angular?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(17, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">En tablas fijas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(17, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">En componentes reutilizables</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(17, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">En archivos FTP</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(17, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">En hojas estáticas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-17"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="18" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">18</span>
+          <span>¿Qué añade TypeScript al código además de autocompletado inteligente?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(18, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Animaciones 3D</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(18, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Consultas de medios</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(18, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Control de versiones</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(18, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Tipado estático</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-18"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="19" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">19</span>
+          <span>¿Cuántas décadas lleva el autor en la profesión de desarrollo web?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(19, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Tres décadas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(19, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Dos décadas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(19, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Cuatro décadas</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(19, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Una década</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-19"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="20" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">20</span>
+          <span>¿Qué cualidad es la única «tecnología» que nunca pasa de moda según el cierre del texto?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(20, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">La velocidad</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(20, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">La memoria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(20, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">La curiosidad constante</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(20, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">La paciencia infinita</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-20"></div>
+      </div>
+    </div>
 
     <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
@@ -2255,9 +3045,9 @@
     </div>
 
     <!-- SECTION 3: COMPRENSIÓN -->
-    <h2 class="section-title" id="seccion-4">
+    <h2 class="section-title" id="seccion-5">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">4</span> Comprensión
+        <span class="section-num">5</span> Comprensión profunda
       </a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
@@ -2452,9 +3242,9 @@
     </section>
 
     <!-- SECTION 4: PREGUNTAS ABIERTAS -->
-    <h2 class="section-title" id="seccion-5">
+    <h2 class="section-title" id="seccion-6">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">5</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+        <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
       </a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
@@ -2668,6 +3458,86 @@
       }
     };
 
+
+    // =========================================================
+    // QUICK COMPREHENSION (20 RAPID-FIRE FACT QUESTIONS)
+    // =========================================================
+    const quickFacts = {
+          "1": "El autor empezó a crear páginas a mediados de los noventa.",
+          "2": "Las computadoras hacían ruidos extraños al conectarse por teléfono.",
+          "3": "El cimiento de todo era escribir código HTML a mano en un editor de texto básico.",
+          "4": "Las hojas de estilo CSS llegaron para separar el diseño visual de la estructura.",
+          "5": "JavaScript llegó como un lenguaje sencillo para dar vida a la página con pequeñas animaciones.",
+          "6": "Gracias a PHP y a bases de datos relacionales como MySQL, se conectaron páginas con usuarios reales.",
+          "7": "Se pudieron crear foros de discusión, tiendas virtuales y formularios de registro.",
+          "8": "La llegada de AJAX a mediados de los años dos mil cambió las reglas del juego.",
+          "9": "AJAX permitió pedir datos al servidor en segundo plano y actualizar la vista sin retrasos molestos.",
+          "10": "Lograr que un sitio funcionara igual en Netscape e Internet Explorer era una pesadilla técnica.",
+          "11": "La librería jQuery ofrecía una sintaxis simple que escondía las incompatibilidades entre navegadores.",
+          "12": "Antes tenían la costumbre arriesgada de subir archivos sueltos a los servidores mediante programas de FTP.",
+          "13": "La llegada del control de versiones con Git y la plataforma GitHub trajo disciplina, orden y un historial transparente.",
+          "14": "La masificación de los teléfonos inteligentes impulsó el diseño web adaptable.",
+          "15": "El diseño web adaptable enseñó a usar rejillas fluidas y consultas de medios en CSS (Media Queries).",
+          "16": "En 2009 apareció Node.js y llevó el motor de JavaScript fuera del navegador a los servidores.",
+          "17": "React, Vue y Angular permitieron dividir interfaces complejas en componentes independientes y reutilizables.",
+          "18": "TypeScript se adoptó para añadir tipado estático y autocompletado inteligente al código.",
+          "19": "El autor afirma haber aprendido esta lección después de tres décadas en esta profesión.",
+          "20": "El autor aprendió que la curiosidad constante es la única tecnología que nunca pasa de moda."
+    };
+    let quickUserAnswers = {};
+
+    function selectQuickOption(qNum, letter) {
+      if (window.event && window.event.shiftKey) return;
+      const key = String(qNum);
+      if (quickUserAnswers[key] === letter) {
+        delete quickUserAnswers[key];
+        applyQuickFeedback(key, null);
+      } else {
+        quickUserAnswers[key] = letter;
+        applyQuickFeedback(key, letter);
+      }
+      saveState();
+    }
+
+    function applyQuickFeedback(qNum, selectedLetter) {
+      const card = document.querySelector(`.quick-q-card[data-qq="${qNum}"]`);
+      if (!card) return;
+      const correctLetter = card.getAttribute('data-correct');
+      const feedbackBox = document.getElementById(`quick-feedback-${qNum}`);
+      const buttons = card.querySelectorAll('.quick-opt-item');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('is-correct', 'is-wrong');
+        const icon = btn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      if (!selectedLetter) {
+        if (feedbackBox) {
+          feedbackBox.className = 'quick-feedback-box';
+          feedbackBox.innerHTML = '';
+        }
+        return;
+      }
+
+      const isCorrect = selectedLetter === correctLetter;
+      const activeBtn = card.querySelector(`.quick-opt-item[data-opt="${selectedLetter}"]`);
+      const checkSvg = '<polyline points="20 6 9 17 4 12"></polyline>';
+      const crossSvg = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+
+      if (activeBtn) {
+        activeBtn.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+        const icon = activeBtn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = isCorrect ? checkSvg : crossSvg;
+      }
+
+      if (feedbackBox) {
+        const factText = quickFacts[String(qNum)] || '';
+        feedbackBox.className = 'quick-feedback-box visible ' + (isCorrect ? 'is-correct' : 'is-wrong');
+        feedbackBox.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isCorrect ? checkSvg : crossSvg}</svg><span>${factText}</span>`;
+      }
+    }
+
     let userAnswers = {};
     let readingBookmarks = [];
     const STORAGE_KEY = 'activity_historiaweb';
@@ -2682,6 +3552,7 @@
           const parsed = JSON.parse(saved);
           if (parsed && typeof parsed === 'object') {
             userAnswers = parsed.mc || {};
+              quickUserAnswers = parsed.quickMc || {};
             completedVocab = Array.isArray(parsed.vocab)
               ? parsed.vocab.filter(k => vocabData[k])
               : [];
@@ -2694,6 +3565,11 @@
       } catch (e) {
         console.warn("Could not load from localStorage:", e);
       }
+
+      // Restore Quick Comprehension answers
+      Object.keys(quickUserAnswers).forEach(qNum => {
+        applyQuickFeedback(qNum, quickUserAnswers[qNum]);
+      });
 
       // Restore Multiple Choice answers
       Object.keys(userAnswers).forEach(qNum => {
@@ -2711,6 +3587,7 @@
       try {
         const state = {
           mc: userAnswers,
+          quickMc: quickUserAnswers,
           vocab: completedVocab,
           bookmarks: readingBookmarks,
           images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
