@@ -1986,28 +1986,35 @@ function updateAllSectionHeadings(html, nums) {
     }
 
     // 3. Reading
-    if (headingHtml.includes('leer en voz alta') || headingHtml.includes('read aloud') || headingHtml.includes('lire à haute voix') || headingHtml.includes('Lectura') || headingHtml.includes('Reading') || headingHtml.includes('Lecture')) {
+    if (headingHtml.includes('leer en voz alta') || headingHtml.includes('read aloud') || headingHtml.includes('lire à haute voix') || headingHtml.includes('leggi ad alta voce') || headingHtml.includes('Lectura') || headingHtml.includes('Reading') || headingHtml.includes('Lecture') || headingHtml.includes('Lettura')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.readingNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.readingNum}</span>`);
     }
 
     // 4. Vocabulary
-    if (headingHtml.includes('arrastrar y soltar') || headingHtml.includes('drag and drop') || headingHtml.includes('glisser-déposer') || headingHtml.includes('Vocabulario') || headingHtml.includes('Vocabulary') || headingHtml.includes('Vocabulaire')) {
+    if (headingHtml.includes('arrastrar y soltar') || headingHtml.includes('drag and drop') || headingHtml.includes('glisser-déposer') || headingHtml.includes('trascina e rilascia') || headingHtml.includes('Vocabulario') || headingHtml.includes('Vocabulary') || headingHtml.includes('Vocabulaire') || headingHtml.includes('Vocabolario')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.vocabNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.vocabNum}</span>`);
     }
 
-    // 5. Quiz / Comprehension
-    if (headingHtml.includes('opción múltiple') || headingHtml.includes('multiple choice') || headingHtml.includes('choix multiple') || headingHtml.includes('Comprensión') || headingHtml.includes('Comprehension') || headingHtml.includes('Compréhension')) {
+    // 5a. Quick Comprehension (when present)
+    if (nums.quickQuizNum && (headingHtml.includes('Comprensione rapida') || headingHtml.includes('Comprensión rápida') || headingHtml.includes('Quick Comprehension'))) {
+      return headingHtml
+        .replace(/id="seccion-\d+"/, `id="seccion-${nums.quickQuizNum}"`)
+        .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.quickQuizNum}</span>`);
+    }
+
+    // 5b. Quiz / Comprehension
+    if (headingHtml.includes('opción múltiple') || headingHtml.includes('multiple choice') || headingHtml.includes('choix multiple') || headingHtml.includes('scelta multipla') || headingHtml.includes('Comprensión') || headingHtml.includes('Comprehension') || headingHtml.includes('Compréhension') || headingHtml.includes('Comprensione')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.quizNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.quizNum}</span>`);
     }
 
     // 6. Discussion / Open Questions
-    if (headingHtml.includes('responder y debatir') || headingHtml.includes('answer and discuss') || headingHtml.includes('répondre et débattre') || headingHtml.includes('abiertas') || headingHtml.includes('ouvertes')) {
+    if (headingHtml.includes('responder y debatir') || headingHtml.includes('answer and discuss') || headingHtml.includes('répondre et débattre') || headingHtml.includes('rispondi e discuti') || headingHtml.includes('abiertas') || headingHtml.includes('ouvertes') || headingHtml.includes('aperte')) {
       return headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.discussNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.discussNum}</span>`);
@@ -2141,7 +2148,9 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     questionsNum = currentNum++;
   }
 
+  const hasQuickQuiz = html.includes('id="quick-quiz-container"');
   const readingNum = currentNum++;
+  const quickQuizNum = hasQuickQuiz ? currentNum++ : null;
   const quizNum = currentNum++;
   const discussNum = currentNum++;
   const totalSections = discussNum;
@@ -2163,6 +2172,9 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     jumpLinks.push(`<a href="#seccion-${questionsNum}" class="jump-num" title="${qI18n.jumpTitle.replace('{N}', questionsNum)}">${questionsNum}</a>`);
   }
   jumpLinks.push(`<a href="#seccion-${readingNum}" class="jump-num" title="Ir a Sección ${readingNum}: ${readingTitle}">${readingNum}</a>`);
+  if (hasQuickQuiz) {
+    jumpLinks.push(`<a href="#seccion-${quickQuizNum}" class="jump-num" title="Vai alla Sezione ${quickQuizNum}: Comprensione rapida">${quickQuizNum}</a>`);
+  }
   jumpLinks.push(`<a href="#seccion-${quizNum}" class="jump-num" title="Ir a Sección ${quizNum}: ${quizTitle}">${quizNum}</a>`);
   jumpLinks.push(`<a href="#seccion-${discussNum}" class="jump-num" title="Ir a Sección ${discussNum}: ${discussTitle}">${discussNum}</a>`);
 
@@ -2203,6 +2215,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     imagesNum,
     readingNum,
     vocabNum,
+    quickQuizNum,
     quizNum,
     discussNum
   });

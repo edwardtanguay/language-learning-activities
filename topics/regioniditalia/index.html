@@ -950,6 +950,188 @@
     /* =========================================================
        SECTION 3: COMPREHENSION QUIZ (MULTIPLE CHOICE)
        ========================================================= */
+
+    /* Quick Comprehension (20 Rapid-Fire Fact Questions, 2x2 Grid) */
+    .quick-quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .quick-q-card {
+      background-color: var(--paper-bg);
+      padding: 13px 16px 14px 16px;
+      border: none;
+    }
+
+    .quick-q-prompt {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      line-height: 1.4;
+    }
+
+    .quick-q-number {
+      font-family: var(--font-typewriter);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      min-width: 22px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .quick-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding-left: 32px;
+    }
+
+    .quick-opt-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+      background-color: var(--paper-sheet);
+      border: 1px solid var(--ink-rule);
+      border-radius: 0;
+      padding: 7px 11px;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      color: var(--ink-main);
+      text-align: left;
+      cursor: pointer;
+      line-height: 1.25;
+      transition: background-color 0.14s, border-color 0.14s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .quick-opt-item:hover {
+      background-color: #f3efe4;
+    }
+
+    .quick-opt-letter {
+      font-family: var(--font-typewriter);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+
+    .quick-opt-text {
+      text-align: left;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .quick-opt-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      display: none;
+    }
+
+    .quick-opt-item.is-correct {
+      background-color: #e3f5e5;
+      border-color: #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-letter {
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-correct .quick-opt-icon {
+      display: block;
+      color: #15803d;
+    }
+
+    .quick-opt-item.is-wrong {
+      background-color: #fbe4e4;
+      border-color: #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-letter {
+      color: #b91c1c;
+    }
+
+    .quick-opt-item.is-wrong .quick-opt-icon {
+      display: block;
+      color: #b91c1c;
+    }
+
+    .quick-feedback-box {
+      display: none;
+      margin-top: 9px;
+      margin-left: 32px;
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.4;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .quick-feedback-box.visible {
+      display: flex;
+    }
+
+    .quick-feedback-box.is-correct {
+      background-color: #e3f5e5;
+      border: 1px solid #a3d9a8;
+      color: #164e24;
+    }
+
+    .quick-feedback-box.is-wrong {
+      background-color: #fbe4e4;
+      border: 1px solid #eba8a8;
+      color: #7f1d1d;
+    }
+
+    .quick-feedback-box svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    @media (max-width: 680px) {
+      .quick-q-card {
+        padding: 11px 12px 12px 12px;
+      }
+      .quick-q-prompt {
+        font-size: 15px;
+        gap: 8px;
+      }
+      .quick-q-number {
+        min-width: 18px;
+        font-size: 14.5px;
+      }
+      .quick-options-grid {
+        padding-left: 26px;
+        gap: 6px;
+      }
+      .quick-opt-item {
+        padding: 7px 8px;
+        font-size: 13.5px;
+        gap: 5px;
+      }
+      .quick-feedback-box {
+        margin-left: 26px;
+        font-size: 13.5px;
+      }
+    }
+
     .quiz-container {
       margin-top: 20px;
     }
@@ -2166,8 +2348,9 @@
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Vocabolario">1</a>
         <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lettura">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensione">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Domande">4</a>
+        <a href="#seccion-3" class="jump-num" title="Vai alla Sezione 3: Comprensione rapida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensione">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Domande">5</a>
       </nav>
     </header>
 
@@ -2293,8 +2476,615 @@
     </div>
 
     <!-- Section 3: Interactive Comprehension Questions -->
+        <!-- Section 3: Quick Comprehension (20 Rapid-Fire Fact Questions) -->
     <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">3</span> Comprensione</a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">3</span> Comprensione rapida</a>
+      <span class="section-action-hint">scelta multipla</span>
+    </h2>
+    <div class="quick-quiz-container" id="quick-quiz-container">
+      <div class="quick-q-card" data-qq="1" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">1</span>
+          <span>Quale città è stata la prima capitale del Regno d'Italia?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(1, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Milano</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(1, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Torino</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(1, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Firenze</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(1, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Venezia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-1"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="2" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">2</span>
+          <span>In quale anno l'Italia è stata unificata come Stato?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(2, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">1815</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(2, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">1848</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(2, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">1870</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(2, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">1861</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-2"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="3" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">3</span>
+          <span>Qual è la regione più piccola d'Italia?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(3, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Valle d'Aosta</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(3, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Molise</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(3, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Liguria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(3, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Umbria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-3"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="4" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">4</span>
+          <span>Quale regione è famosa per l'industria motoristica e la gastronomia?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(4, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Piemonte</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(4, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Veneto</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(4, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Emilia-Romagna</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(4, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Lombardia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-4"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="5" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">5</span>
+          <span>Quale città ospita la più antica università del mondo occidentale?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(5, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Padova</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(5, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Bologna</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(5, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Perugia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(5, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Pisa</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-5"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="6" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">6</span>
+          <span>Quale regione è la più popolosa ed economicamente dinamica d'Italia?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(6, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Lazio</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(6, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Campania</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(6, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Veneto</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(6, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Lombardia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-6"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="7" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">7</span>
+          <span>In quale regione si sente il fenomeno linguistico chiamato «gorgia»?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(7, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Toscana</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(7, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Lazio</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(7, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Umbria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(7, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Marche</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-7"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="8" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">8</span>
+          <span>Quale città è considerata la capitale della finanza, della moda e del design?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(8, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Torino</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(8, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Roma</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(8, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Milano</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(8, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Firenze</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-8"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="9" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">9</span>
+          <span>Quale regione è conosciuta come il «cuore verde d'Italia»?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(9, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Abruzzo</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(9, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Umbria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(9, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Basilicata</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(9, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Molise</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-9"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="10" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">10</span>
+          <span>Quale città lucana, scavata nella roccia, è stata capitale europea della cultura nel 2019?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(10, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Potenza</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(10, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Lecce</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(10, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Urbino</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(10, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Matera</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-10"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="11" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">11</span>
+          <span>In quale regione si trovano i celebri Bronzi di Riace?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(11, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Calabria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(11, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Sicilia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(11, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Puglia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(11, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Campania</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-11"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="12" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">12</span>
+          <span>Quale isola è la più grande del Mediterraneo?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(12, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Sardegna</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(12, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Corsica</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(12, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Sicilia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(12, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Elba</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-12"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="13" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">13</span>
+          <span>Quale regione è legata alla battuta affettuosa di internet «non esiste»?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(13, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Basilicata</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(13, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Molise</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(13, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Umbria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(13, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Abruzzo</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-13"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="14" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">14</span>
+          <span>Quale vulcano domina il golfo di Napoli?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(14, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Etna</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(14, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Stromboli</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(14, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Gran Sasso</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(14, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Vesuvio</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-14"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="15" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">15</span>
+          <span>Quale regione è celebre per i trulli e le distese infinite di uliveti?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(15, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Puglia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(15, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Calabria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(15, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Sicilia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(15, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Marche</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-15"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="16" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">16</span>
+          <span>In quale città del Trentino-Alto Adige la maggioranza parla tedesco?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(16, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Trento</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(16, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Trieste</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(16, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Bolzano</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(16, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Aosta</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-16"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="17" data-correct="B">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">17</span>
+          <span>Quale lingua regionale è considerata tra le più vicine al latino antico?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(17, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Veneto</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(17, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Sardo</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(17, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Genovese</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(17, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Piemontese</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-17"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="18" data-correct="D">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">18</span>
+          <span>Quale elegante porto mitteleuropeo si trova in Friuli-Venezia Giulia?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(18, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Genova</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(18, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Ancona</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(18, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Bari</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(18, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Trieste</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-18"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="19" data-correct="A">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">19</span>
+          <span>Come vengono spesso definiti gli abruzzesi?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(19, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Forti e gentili</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(19, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Falsi e cortesi</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(19, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Pochi e fieri</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(19, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Calmi e diretti</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-19"></div>
+      </div>
+
+      <div class="quick-q-card" data-qq="20" data-correct="C">
+        <div class="quick-q-prompt">
+          <span class="quick-q-number">20</span>
+          <span>Quale regione fu governata per oltre mille anni dalla Serenissima Repubblica?</span>
+        </div>
+        <div class="quick-options-grid">
+          <button type="button" class="quick-opt-item" data-opt="A" onclick="selectQuickOption(20, 'A')">
+            <span class="quick-opt-letter">A.</span>
+            <span class="quick-opt-text">Liguria</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="B" onclick="selectQuickOption(20, 'B')">
+            <span class="quick-opt-letter">B.</span>
+            <span class="quick-opt-text">Lombardia</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="C" onclick="selectQuickOption(20, 'C')">
+            <span class="quick-opt-letter">C.</span>
+            <span class="quick-opt-text">Veneto</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+          <button type="button" class="quick-opt-item" data-opt="D" onclick="selectQuickOption(20, 'D')">
+            <span class="quick-opt-letter">D.</span>
+            <span class="quick-opt-text">Piemonte</span>
+            <svg class="quick-opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          </button>
+        </div>
+        <div class="quick-feedback-box" id="quick-feedback-20"></div>
+      </div>
+    </div>
+
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">4</span> Comprensione approfondita</a>
       <span class="section-action-hint">scelta multipla</span>
     </h2>
     <div class="quiz-container" id="quiz-container">
@@ -2492,8 +3282,8 @@
     </div>
 
     <!-- Section 4: Open Questions Section -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">4</span> <span>Domande<span class="hide-mobile"> aperte</span></span></a>
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">5</span> <span>Domande<span class="hide-mobile"> aperte</span></span></a>
       <span class="section-action-hint">rispondi e discuti</span>
     </h2>
     <section class="discussion-container">
@@ -2687,6 +3477,86 @@
           }
     };
 
+
+    // =========================================================
+    // QUICK COMPREHENSION (20 RAPID-FIRE FACT QUESTIONS)
+    // =========================================================
+    const quickFacts = {
+          "1": "Torino, capoluogo del Piemonte, è stata la prima capitale del Regno d'Italia.",
+          "2": "La penisola è stata unificata come Stato soltanto nel 1861.",
+          "3": "La Valle d'Aosta, incastonata tra il Monte Bianco e il Cervino, è la regione più piccola d'Italia.",
+          "4": "L'Emilia-Romagna è celebre per la gastronomia, l'industria motoristica e la cooperazione sociale.",
+          "5": "Bologna, in Emilia-Romagna, è sede della più antica università occidentale.",
+          "6": "La Lombardia, guidata da Milano, è la regione più popolosa ed economicamente dinamica d'Italia.",
+          "7": "L'accento toscano si riconosce dalla «gorgia», l'aspirazione della «c» tra due vocali.",
+          "8": "Milano guida la Lombardia come capitale della finanza, della moda e del design.",
+          "9": "L'Umbria è chiamata il «cuore verde d'Italia» per le sue colline e foreste.",
+          "10": "Matera, in Basilicata, è scavata nella roccia ed è stata capitale europea della cultura nel 2019.",
+          "11": "I Bronzi di Riace testimoniano la storia millenaria della Calabria legata alla Magna Grecia.",
+          "12": "La Sicilia è l'isola più grande del Mediterraneo.",
+          "13": "La battuta «il Molise non esiste» nasce dalla sua natura discreta e lontana dal turismo di massa.",
+          "14": "La Campania è dominata dal profilo del Vesuvio e dal golfo di Napoli.",
+          "15": "La Puglia è una terra luminosa di muretti a secco, trulli e distese infinite di uliveto.",
+          "16": "A Bolzano la maggioranza degli abitanti parla tedesco, mentre a Trento si parla italiano.",
+          "17": "Il sardo è una vera lingua romanza autonoma considerata tra le più vicine al latino antico.",
+          "18": "Trieste è l'elegante porto mitteleuropeo del Friuli-Venezia Giulia sull'Adriatico.",
+          "19": "Gli abruzzesi vengono spesso definiti «forti e gentili».",
+          "20": "Il Veneto è stato dominato per oltre mille anni dalla Serenissima Repubblica di Venezia."
+    };
+    let quickUserAnswers = {};
+
+    function selectQuickOption(qNum, letter) {
+      if (window.event && window.event.shiftKey) return;
+      const key = String(qNum);
+      if (quickUserAnswers[key] === letter) {
+        delete quickUserAnswers[key];
+        applyQuickFeedback(key, null);
+      } else {
+        quickUserAnswers[key] = letter;
+        applyQuickFeedback(key, letter);
+      }
+      saveState();
+    }
+
+    function applyQuickFeedback(qNum, selectedLetter) {
+      const card = document.querySelector(`.quick-q-card[data-qq="${qNum}"]`);
+      if (!card) return;
+      const correctLetter = card.getAttribute('data-correct');
+      const feedbackBox = document.getElementById(`quick-feedback-${qNum}`);
+      const buttons = card.querySelectorAll('.quick-opt-item');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('is-correct', 'is-wrong');
+        const icon = btn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      if (!selectedLetter) {
+        if (feedbackBox) {
+          feedbackBox.className = 'quick-feedback-box';
+          feedbackBox.innerHTML = '';
+        }
+        return;
+      }
+
+      const isCorrect = selectedLetter === correctLetter;
+      const activeBtn = card.querySelector(`.quick-opt-item[data-opt="${selectedLetter}"]`);
+      const checkSvg = '<polyline points="20 6 9 17 4 12"></polyline>';
+      const crossSvg = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+
+      if (activeBtn) {
+        activeBtn.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+        const icon = activeBtn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = isCorrect ? checkSvg : crossSvg;
+      }
+
+      if (feedbackBox) {
+        const factText = quickFacts[String(qNum)] || '';
+        feedbackBox.className = 'quick-feedback-box visible ' + (isCorrect ? 'is-correct' : 'is-wrong');
+        feedbackBox.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isCorrect ? checkSvg : crossSvg}</svg><span>${factText}</span>`;
+      }
+    }
+
     let userAnswers = {};
     let readingBookmarks = [];
     const STORAGE_KEY = 'activity_regioniditalia';
@@ -2700,8 +3570,9 @@
         if (saved) {
           const parsed = JSON.parse(saved);
           if (parsed && typeof parsed === 'object') {
-            if (parsed.mc || parsed.vocab || parsed.bookmarks) {
+            if (parsed.mc || parsed.quickMc || parsed.vocab || parsed.bookmarks) {
               userAnswers = parsed.mc || {};
+              quickUserAnswers = parsed.quickMc || {};
               completedVocab = Array.isArray(parsed.vocab)
                 ? parsed.vocab.filter(k => vocabData[k])
                 : [];
@@ -2721,6 +3592,11 @@
         console.warn("Could not load from localStorage:", e);
       }
 
+      // Restore Quick Comprehension answers
+      Object.keys(quickUserAnswers).forEach(qNum => {
+        applyQuickFeedback(qNum, quickUserAnswers[qNum]);
+      });
+
       // Restore Multiple Choice answers
       Object.keys(userAnswers).forEach(qNum => {
         const val = userAnswers[qNum];
@@ -2737,6 +3613,7 @@
       try {
         const state = {
           mc: userAnswers,
+          quickMc: quickUserAnswers,
           vocab: completedVocab,
           bookmarks: readingBookmarks,
           images: (typeof solvedImageIds !== 'undefined' ? solvedImageIds : [])
