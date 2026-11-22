@@ -341,7 +341,6 @@
     }
 
 
-
     .sticky-jump-nav .jump-bookmark-btn {
       background-color: #e6e0d2;
       color: var(--lang-color);
@@ -3722,7 +3721,6 @@ function loadSavedState() {
       };
 
 
-
       const handleBookmarkJump = () => {
         const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
         if (bookmarkEls.length === 0) return;
@@ -3789,7 +3787,6 @@ function loadSavedState() {
         e.preventDefault();
 
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
-
 
 
         snappyScrollTo(Math.max(0, targetTop), 280);

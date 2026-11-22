@@ -4698,7 +4698,6 @@
       };
 
 
-
       const handleBookmarkJump = () => {
         const bookmarkEls = Array.from(document.querySelectorAll('.reading-bookmark'));
         if (bookmarkEls.length === 0) return;
@@ -4765,7 +4764,6 @@
         e.preventDefault();
 
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
-
 
 
         snappyScrollTo(Math.max(0, targetTop), 280);
