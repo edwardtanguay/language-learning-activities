@@ -50,18 +50,16 @@ Each activity lives in `topics/<foldername>/index.html`:
   - Desktop retains standard instant navigation without sliding transitions.
 - **Section Numbering, Title Link to Top & Right-Side Action Hints**:
   - Main sections across the worksheet are designated with clean numbers without periods, placed inside a light gray/warm-parchment circle (`<span class="section-num">1</span>`, `2`, `3`, etc.):
-    - **Canonical Section Order**:
-      1. **Imágenes** (`clic para ampliar`, if present)
-      2. **Vocabulario** (`arrastrar y soltar`)
-      3. **Preguntas para el profesor** (`revisar en clase`, if present)
-      4. **Lectura** (`leer en voz alta`)
-      5. **Comprensión rápida** (`opción múltiple` — 20 rapid-fire fact questions in a compact 2×2 grid)
-      6. **Comprensión profunda** (`opción múltiple` — 4–6 analytical comprehension questions)
-      7. **Preguntas abiertas** (`responder y debatir`)
-    - **When images and teacher questions exist**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Preguntas para el profesor, Section 4 is Lectura, Section 5 is Comprensión rápida, Section 6 is Comprensión profunda, Section 7 is Preguntas abiertas.
-    - **When images exist (without teacher questions)**: Section 1 is Imágenes, Section 2 is Vocabulario, Section 3 is Lectura, Section 4 is Comprensión rápida, Section 5 is Comprensión profunda, Section 6 is Preguntas abiertas.
-    - **When teacher questions exist (without images)**: Section 1 is Vocabulario, Section 2 is Preguntas para el profesor, Section 3 is Lectura, Section 4 is Comprensión rápida, Section 5 is Comprensión profunda, Section 6 is Preguntas abiertas.
-    - **When neither images nor teacher questions exist**: Section 1 is Vocabulario, Section 2 is Lectura, Section 3 is Comprensión rápida, Section 4 is Comprensión profunda, Section 5 is Preguntas abiertas.
+    - **Canonical Section Order** (every title exclusively in the target language):
+      1. **Images** (`Imágenes` / `Immagini` / `Images`, `clic para ampliar`) — **always displayed**; if no images exist yet, displays a subtle localized `"no images yet"` note (`Todavía no hay imágenes.`, `Non ci sono ancora immagini.`, `Pas encore d'images.`, `No images yet.`).
+      2. *(Optional, only if teacher questions exist)* **Questions for the Teacher** (`Preguntas para el profesor`, `revisar en clase`).
+      3. **Reading** (`Lectura` / `Lettura` / `Lecture`, `leer en voz alta`).
+      4. **Rapid Comprehension** (`Comprensión rápida` / `Comprensione rapida` / `Compréhension rapide`, `opción múltiple` — 20 rapid-fire fact questions in a compact 2×2 grid).
+      5. **Deep Comprehension** (`Comprensión profunda` / `Comprensione approfondita` / `Compréhension approfondie`, `opción múltiple` — 4–6 analytical comprehension questions).
+      6. **Vocabulary** (`Vocabulario` / `Vocabolario` / `Vocabulaire`, `arrastrar y soltar`).
+      7. **Discussion Questions** (`Preguntas de debate` / `Domande di discussione` / `Questions de discussion`, `responder y debatir`; on mobile hides the modifier so it displays just `Preguntas` / `Domande` / `Questions`).
+    - **Standard 6-section numbering (when no teacher questions exist)**: `1` Images, `2` Reading, `3` Rapid Comprehension, `4` Deep Comprehension, `5` Vocabulary, `6` Discussion Questions.
+    - **7-section numbering (when teacher questions exist)**: `1` Images, `2` Questions for the Teacher, `3` Reading, `4` Rapid Comprehension, `5` Deep Comprehension, `6` Vocabulary, `7` Discussion Questions.
   - Circular badge is styled cleanly (~32px diameter, background `#e6e0d2`, dark charcoal number centered). Questions nested inside the comprehension quiz are clearly numbered 1, 2, 3... without ambiguity.
   - **Title Link Back to Top**: The section title and number are wrapped in `<a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">`, allowing learners to click any section header to smoothly scroll all the way back to the very top (pixel 0) of the page without adding `#top` to the URL bar.
   - **No Section Instruction Boxes**: Do not include `.section-instructions-box` blocks below section headers.
@@ -153,8 +151,8 @@ Each activity lives in `topics/<foldername>/index.html`:
     - Inside the feedback box, display a thick green check SVG icon (✓) for correct answers or a thick red X SVG icon (✗) for incorrect answers alongside the explanation text.
     - Do NOT include status text words like "¡Correcto!" or "Incorrecto.", and do NOT prefix explanations with option letters.
     - Keep question cards clean and neutral; do NOT color the entire question card green or red.
-- **Section 4: Open Questions Section (Preguntas abiertas)**:
-  - Heading standardized to "Open Questions" in the target language on desktop (e.g., `<span class="section-num">4</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>` in Spanish, `<span><span class="hide-mobile">Offene </span>Fragen</span>` in German, `<span>Questions<span class="hide-mobile"> ouvertes</span></span>` in French), paired with right-aligned action hint "answer and discuss" in the target language (e.g., `responder y debatir`). On mobile (`max-width: 680px`), `.hide-mobile` is hidden (`display: none;`) so Section 4 displays just "Preguntas" (or equivalent single word) and "responder y debatir" stays on the same line.
+- **Discussion Questions Section (Preguntas de debate)**:
+  - Heading standardized to "Discussion Questions" in the target language on desktop (e.g., `<span>Preguntas<span class="hide-mobile"> de debate</span></span>` in Spanish, `<span>Domande<span class="hide-mobile"> di discussione</span></span>` in Italian, `<span>Questions<span class="hide-mobile"> de discussion</span></span>` in French, `<span>Discussion<span class="hide-mobile"> Questions</span></span>` in English, `<span>Diskussions<span class="hide-mobile">fragen</span></span>` in German), paired with right-aligned action hint "answer and discuss" in the target language (e.g., `responder y debatir`). On mobile (`max-width: 680px`), `.hide-mobile` is hidden (`display: none;`) so it displays just `Preguntas` (or equivalent single word) and keeps the action hint on the same line.
   - Borderless and transparent container (remove dashed or solid outline boxes).
   - No boilerplate introductory instructions.
   - **"How" and "Why" Questions (Never Yes/No)**: Write 4–5 open-ended conversation questions formulated strictly as "how" and "why" questions (avoid yes/no questions, binary choices, or prompts that can be answered with a short phrase) so that both tutor and student must provide longer, more thoughtful answers with reasons, cultural comparisons, or personal experiences.

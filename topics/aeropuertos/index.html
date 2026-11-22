@@ -2358,17 +2358,122 @@
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="aeropuertodebogota" draggable="true">Aeropuerto de Bogotá</button>
+        <button type="button" class="image-label-chip" data-image-id="aeropuertodebuenosaires" draggable="true">Aeropuerto de Buenos Aires</button>
+        <button type="button" class="image-label-chip" data-image-id="aeropuertodelima" draggable="true">Aeropuerto de Lima</button>
+        <button type="button" class="image-label-chip" data-image-id="aeropuertodequito" draggable="true">Aeropuerto de Quito</button>
+        <button type="button" class="image-label-chip" data-image-id="aeropuertodesantiago" draggable="true">Aeropuerto de Santiago</button>
+        <button type="button" class="image-label-chip" data-image-id="mapadesudamerica" draggable="true">Mapa de Sudamérica</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="aeropuertodebogota" data-image-title="Aeropuerto de Bogotá" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodebogota.jpg', 'Aeropuerto de Bogotá', '[&quot;¿Cuánto tiempo se tarda en volar de Quito a Bogotá?&quot;,&quot;¿Cuánto cuesta? ¿Y hay aerolíneas de bajo coste, como EasyJet?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodebogota.jpg', 'Aeropuerto de Bogotá', '[&quot;¿Cuánto tiempo se tarda en volar de Quito a Bogotá?&quot;,&quot;¿Cuánto cuesta? ¿Y hay aerolíneas de bajo coste, como EasyJet?&quot;]')">
+          <img src="images/es-aeropuertos-aeropuertodebogota.jpg" alt="Aeropuerto de Bogotá" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Aeropuerto de Bogotá</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="aeropuertodebuenosaires" data-image-title="Aeropuerto de Buenos Aires" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodebuenosaires.jpg', 'Aeropuerto de Buenos Aires', '[&quot;¿Has estado alguna vez en Buenos Aires?&quot;,&quot;¿Dirías que en Argentina se habla un español distinto al de Ecuador?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodebuenosaires.jpg', 'Aeropuerto de Buenos Aires', '[&quot;¿Has estado alguna vez en Buenos Aires?&quot;,&quot;¿Dirías que en Argentina se habla un español distinto al de Ecuador?&quot;]')">
+          <img src="images/es-aeropuertos-aeropuertodebuenosaires.jpg" alt="Aeropuerto de Buenos Aires" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Aeropuerto de Buenos Aires</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="aeropuertodelima" data-image-title="Aeropuerto de Lima" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodelima.jpg', 'Aeropuerto de Lima', '[&quot;¿Has estado alguna vez en Lima?&quot;,&quot;¿Cómo son las relaciones entre Ecuador y Perú? ¿Mucha gente viaja allí?&quot;,&quot;La costa de Perú tiene un aspecto muy árido.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodelima.jpg', 'Aeropuerto de Lima', '[&quot;¿Has estado alguna vez en Lima?&quot;,&quot;¿Cómo son las relaciones entre Ecuador y Perú? ¿Mucha gente viaja allí?&quot;,&quot;La costa de Perú tiene un aspecto muy árido.&quot;]')">
+          <img src="images/es-aeropuertos-aeropuertodelima.jpg" alt="Aeropuerto de Lima" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Aeropuerto de Lima</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="aeropuertodequito" data-image-title="Aeropuerto de Quito" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodequito.jpg', 'Aeropuerto de Quito', '[&quot;Cuando sales en avión desde este aeropuerto, ¿tienes una buena vista de las montañas?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodequito.jpg', 'Aeropuerto de Quito', '[&quot;Cuando sales en avión desde este aeropuerto, ¿tienes una buena vista de las montañas?&quot;]')">
+          <img src="images/es-aeropuertos-aeropuertodequito.jpg" alt="Aeropuerto de Quito" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Aeropuerto de Quito</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="aeropuertodesantiago" data-image-title="Aeropuerto de Santiago" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodesantiago.jpg', 'Aeropuerto de Santiago', '[&quot;¿Has estado alguna vez en Santiago?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodesantiago.jpg', 'Aeropuerto de Santiago', '[&quot;¿Has estado alguna vez en Santiago?&quot;]')">
+          <img src="images/es-aeropuertos-aeropuertodesantiago.jpg" alt="Aeropuerto de Santiago" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Aeropuerto de Santiago</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="mapadesudamerica" data-image-title="Mapa de Sudamérica" onclick="handleImageCardClick(this, 'images/es-aeropuertos-mapadesudamerica.jpg', 'Mapa de Sudamérica', '[&quot;¿Es común que la gente en Ecuador viaje por Sudamérica?&quot;,&quot;¿Es más difícil viajar a países donde no se habla español, como Brasil, Guyana, Surinam o la Guayana Francesa?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-mapadesudamerica.jpg', 'Mapa de Sudamérica', '[&quot;¿Es común que la gente en Ecuador viaje por Sudamérica?&quot;,&quot;¿Es más difícil viajar a países donde no se habla español, como Brasil, Guyana, Surinam o la Guayana Francesa?&quot;]')">
+          <img src="images/es-aeropuertos-mapadesudamerica.jpg" alt="Mapa de Sudamérica" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Mapa de Sudamérica</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+      </div>
+    </section>
+
+<!-- Section 2: Reading Text -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-aeropuertos.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
+      <div class="region-card">
+        <h3>Bogotá: Conexiones y Mostradores</h3>
+        <p>
+          Martín, gestor de proyectos en una empresa de software de Múnich, aterriza en Bogotá para reunirse con clientes bancarios. Tras pasar el control migratorio con su pasaporte sellado, se dirige a las conexiones nacionales. Frente al concurrido <span class="vocab-in-text" data-key="mostrador">mostrador</span> de atención al viajero, una empleada revisa su tarjeta de embarque y le informa que la puerta de salida ha cambiado debido al tráfico aéreo matutino. Con las indicaciones hacia la terminal, Martín consulta las pantallas informativas y continúa su camino.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>Quito: Tránsito y Orientación</h3>
+        <p>
+          La siguiente parada del itinerario lleva a Martín a Quito. En el vestíbulo de salidas, un pasajero con evidente <span class="vocab-in-text" data-key="apuro">apuro</span> busca la zona de inspección aduanera y control migratorio para no perder su vuelo. Como Martín acaba de realizar ese mismo trámite, le indica con claridad la dirección hacia los accesos de seguridad y las salas de embarque. Tras ayudarlo, Martín revisa los detalles de su agenda antes de continuar su viaje hacia el sur.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>Lima: Tránsito y Controles</h3>
+        <p>
+          En Lima, el movimiento de pasajeros en tránsito hacia otros destinos del continente es continuo. Al pasar por los filtros de inspección, Martín observa a una anciana con dificultades para levantar su maleta sobre la <span class="vocab-in-text" data-key="báscula">báscula</span> del control de seguridad. Se acerca para ayudarla con la carga y luego recoge sus bandejas del escáner. Más tarde, mientras espera un café, entabla una breve <span class="vocab-in-text" data-key="charla">charla</span> con otro pasajero sobre computación en la nube y procesamiento de pagos en América Latina, antes de dirigirse a su puerta.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>Santiago de Chile: Reclamo de Equipaje</h3>
+        <p>
+          Al llegar a Santiago de Chile, Martín espera su equipaje junto a la cinta transportadora. Al notar que su maletín técnico parece haberse <span class="vocab-in-text" data-key="extraviado">extraviado</span> durante la escala, acude a la oficina de reclamos. Un empleado escanea el código de barras del comprobante y localiza el bulto en el almacén de tránsito inmediato. Recuperar el maletín representa un gran <span class="vocab-in-text" data-key="alivio">alivio</span> para Martín, pues contiene los servidores portátiles que necesita para su presentación de esa tarde.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>Buenos Aires: Espera y Embarque</h3>
+        <p>
+          En Buenos Aires, Martín recorre el amplio <span class="vocab-in-text" data-key="pasillo">pasillo</span> hacia la sala de embarque internacional tras concluir sus reuniones de trabajo en la región. En la zona de espera, observa a un joven programador que trabaja en su ordenador portátil. Atraído por el código visible en pantalla, Martín le pregunta sobre la arquitectura del sistema y ambos debaten sobre micropagos y latencia en despliegues en la nube. Poco después, acomodado en su <span class="vocab-in-text" data-key="asiento">asiento</span> junto a la ventanilla, el avión inicia las maniobras previas al <span class="vocab-in-text" data-key="despegue">despegue</span> con <span class="vocab-in-text" data-key="rumbo">rumbo</span> a Fráncfort, completando su viaje de negocios.
+        </p>
+      </div>
+    </article>
+    </div>
+
 <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2973,138 +3078,9 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="aeropuertodebogota" draggable="true">Aeropuerto de Bogotá</button>
-        <button type="button" class="image-label-chip" data-image-id="aeropuertodebuenosaires" draggable="true">Aeropuerto de Buenos Aires</button>
-        <button type="button" class="image-label-chip" data-image-id="aeropuertodelima" draggable="true">Aeropuerto de Lima</button>
-        <button type="button" class="image-label-chip" data-image-id="aeropuertodequito" draggable="true">Aeropuerto de Quito</button>
-        <button type="button" class="image-label-chip" data-image-id="aeropuertodesantiago" draggable="true">Aeropuerto de Santiago</button>
-        <button type="button" class="image-label-chip" data-image-id="mapadesudamerica" draggable="true">Mapa de Sudamérica</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="aeropuertodebogota" data-image-title="Aeropuerto de Bogotá" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodebogota.jpg', 'Aeropuerto de Bogotá', '[&quot;¿Cuánto tiempo se tarda en volar de Quito a Bogotá?&quot;,&quot;¿Cuánto cuesta? ¿Y hay aerolíneas de bajo coste, como EasyJet?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodebogota.jpg', 'Aeropuerto de Bogotá', '[&quot;¿Cuánto tiempo se tarda en volar de Quito a Bogotá?&quot;,&quot;¿Cuánto cuesta? ¿Y hay aerolíneas de bajo coste, como EasyJet?&quot;]')">
-          <img src="images/es-aeropuertos-aeropuertodebogota.jpg" alt="Aeropuerto de Bogotá" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Aeropuerto de Bogotá</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="aeropuertodebuenosaires" data-image-title="Aeropuerto de Buenos Aires" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodebuenosaires.jpg', 'Aeropuerto de Buenos Aires', '[&quot;¿Has estado alguna vez en Buenos Aires?&quot;,&quot;¿Dirías que en Argentina se habla un español distinto al de Ecuador?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodebuenosaires.jpg', 'Aeropuerto de Buenos Aires', '[&quot;¿Has estado alguna vez en Buenos Aires?&quot;,&quot;¿Dirías que en Argentina se habla un español distinto al de Ecuador?&quot;]')">
-          <img src="images/es-aeropuertos-aeropuertodebuenosaires.jpg" alt="Aeropuerto de Buenos Aires" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Aeropuerto de Buenos Aires</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="aeropuertodelima" data-image-title="Aeropuerto de Lima" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodelima.jpg', 'Aeropuerto de Lima', '[&quot;¿Has estado alguna vez en Lima?&quot;,&quot;¿Cómo son las relaciones entre Ecuador y Perú? ¿Mucha gente viaja allí?&quot;,&quot;La costa de Perú tiene un aspecto muy árido.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodelima.jpg', 'Aeropuerto de Lima', '[&quot;¿Has estado alguna vez en Lima?&quot;,&quot;¿Cómo son las relaciones entre Ecuador y Perú? ¿Mucha gente viaja allí?&quot;,&quot;La costa de Perú tiene un aspecto muy árido.&quot;]')">
-          <img src="images/es-aeropuertos-aeropuertodelima.jpg" alt="Aeropuerto de Lima" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Aeropuerto de Lima</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="aeropuertodequito" data-image-title="Aeropuerto de Quito" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodequito.jpg', 'Aeropuerto de Quito', '[&quot;Cuando sales en avión desde este aeropuerto, ¿tienes una buena vista de las montañas?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodequito.jpg', 'Aeropuerto de Quito', '[&quot;Cuando sales en avión desde este aeropuerto, ¿tienes una buena vista de las montañas?&quot;]')">
-          <img src="images/es-aeropuertos-aeropuertodequito.jpg" alt="Aeropuerto de Quito" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Aeropuerto de Quito</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="aeropuertodesantiago" data-image-title="Aeropuerto de Santiago" onclick="handleImageCardClick(this, 'images/es-aeropuertos-aeropuertodesantiago.jpg', 'Aeropuerto de Santiago', '[&quot;¿Has estado alguna vez en Santiago?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-aeropuertodesantiago.jpg', 'Aeropuerto de Santiago', '[&quot;¿Has estado alguna vez en Santiago?&quot;]')">
-          <img src="images/es-aeropuertos-aeropuertodesantiago.jpg" alt="Aeropuerto de Santiago" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Aeropuerto de Santiago</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="mapadesudamerica" data-image-title="Mapa de Sudamérica" onclick="handleImageCardClick(this, 'images/es-aeropuertos-mapadesudamerica.jpg', 'Mapa de Sudamérica', '[&quot;¿Es común que la gente en Ecuador viaje por Sudamérica?&quot;,&quot;¿Es más difícil viajar a países donde no se habla español, como Brasil, Guyana, Surinam o la Guayana Francesa?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-aeropuertos-mapadesudamerica.jpg', 'Mapa de Sudamérica', '[&quot;¿Es común que la gente en Ecuador viaje por Sudamérica?&quot;,&quot;¿Es más difícil viajar a países donde no se habla español, como Brasil, Guyana, Surinam o la Guayana Francesa?&quot;]')">
-          <img src="images/es-aeropuertos-mapadesudamerica.jpg" alt="Mapa de Sudamérica" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Mapa de Sudamérica</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-      </div>
-    </section>
-
-<!-- Section 1: Vocabulary Drag & Drop -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
-      <span class="section-action-hint">arrastrar y soltar</span>
-    </h2>
-      <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- Section 2: Reading Text -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
-      <span class="section-action-hint">leer en voz alta</span>
-    </h2>
-    <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-aeropuertos.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-    </div>
-      <article class="reading-content">
-      <div class="region-card">
-        <h3>Bogotá: Conexiones y Mostradores</h3>
-        <p>
-          Martín, gestor de proyectos en una empresa de software de Múnich, aterriza en Bogotá para reunirse con clientes bancarios. Tras pasar el control migratorio con su pasaporte sellado, se dirige a las conexiones nacionales. Frente al concurrido <span class="vocab-in-text" data-key="mostrador">mostrador</span> de atención al viajero, una empleada revisa su tarjeta de embarque y le informa que la puerta de salida ha cambiado debido al tráfico aéreo matutino. Con las indicaciones hacia la terminal, Martín consulta las pantallas informativas y continúa su camino.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>Quito: Tránsito y Orientación</h3>
-        <p>
-          La siguiente parada del itinerario lleva a Martín a Quito. En el vestíbulo de salidas, un pasajero con evidente <span class="vocab-in-text" data-key="apuro">apuro</span> busca la zona de inspección aduanera y control migratorio para no perder su vuelo. Como Martín acaba de realizar ese mismo trámite, le indica con claridad la dirección hacia los accesos de seguridad y las salas de embarque. Tras ayudarlo, Martín revisa los detalles de su agenda antes de continuar su viaje hacia el sur.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>Lima: Tránsito y Controles</h3>
-        <p>
-          En Lima, el movimiento de pasajeros en tránsito hacia otros destinos del continente es continuo. Al pasar por los filtros de inspección, Martín observa a una anciana con dificultades para levantar su maleta sobre la <span class="vocab-in-text" data-key="báscula">báscula</span> del control de seguridad. Se acerca para ayudarla con la carga y luego recoge sus bandejas del escáner. Más tarde, mientras espera un café, entabla una breve <span class="vocab-in-text" data-key="charla">charla</span> con otro pasajero sobre computación en la nube y procesamiento de pagos en América Latina, antes de dirigirse a su puerta.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>Santiago de Chile: Reclamo de Equipaje</h3>
-        <p>
-          Al llegar a Santiago de Chile, Martín espera su equipaje junto a la cinta transportadora. Al notar que su maletín técnico parece haberse <span class="vocab-in-text" data-key="extraviado">extraviado</span> durante la escala, acude a la oficina de reclamos. Un empleado escanea el código de barras del comprobante y localiza el bulto en el almacén de tránsito inmediato. Recuperar el maletín representa un gran <span class="vocab-in-text" data-key="alivio">alivio</span> para Martín, pues contiene los servidores portátiles que necesita para su presentación de esa tarde.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>Buenos Aires: Espera y Embarque</h3>
-        <p>
-          En Buenos Aires, Martín recorre el amplio <span class="vocab-in-text" data-key="pasillo">pasillo</span> hacia la sala de embarque internacional tras concluir sus reuniones de trabajo en la región. En la zona de espera, observa a un joven programador que trabaja en su ordenador portátil. Atraído por el código visible en pantalla, Martín le pregunta sobre la arquitectura del sistema y ambos debaten sobre micropagos y latencia en despliegues en la nube. Poco después, acomodado en su <span class="vocab-in-text" data-key="asiento">asiento</span> junto a la ventanilla, el avión inicia las maniobras previas al <span class="vocab-in-text" data-key="despegue">despegue</span> con <span class="vocab-in-text" data-key="rumbo">rumbo</span> a Fráncfort, completando su viaje de negocios.
-        </p>
-      </div>
-    </article>
-    </div>
-
-<!-- Section 3: Interactive Comprehension Questions -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Comprensión profunda</a>
+    <!-- Section 3: Interactive Comprehension Questions -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión profunda</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quiz-container" id="quiz-container">
@@ -3300,9 +3276,35 @@
       </div>
 
     </div>
+
+    <!-- Section 1: Vocabulary Drag & Drop -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Vocabulario</a>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+      <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
     <!-- Section 4: Open Questions Section -->
     <h2 class="section-title" id="seccion-6">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span></a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
     <section class="discussion-container">

@@ -2326,17 +2326,84 @@
       <!-- Centered Jump Links -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
-<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="cheatsheet" draggable="true">Cheat Sheet</button>
+        <button type="button" class="image-label-chip" data-image-id="doctorplace" draggable="true">Doctor Place</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="cheatsheet" data-image-title="Cheat Sheet" onclick="handleImageCardClick(this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')">
+          <img src="images/es-seryestar-cheatsheet.jpg" alt="Cheat Sheet" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cheat Sheet</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="doctorplace" data-image-title="Doctor Place" onclick="handleImageCardClick(this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')">
+          <img src="images/es-seryestar-doctorplace.jpg" alt="Doctor Place" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Doctor Place</div>
+        </div>
+      </div>
+    </section>
+
+<!-- SECTION 2: READING PASSAGE -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">2</span> Lectura
+      </a>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-seryestar.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
+      <h3>El gran enigma de dos verbos</h3>
+      <p>
+        Comprender la frontera entre «ser» y «estar» suele convertirse en un dolor de cabeza para muchos estudiantes extranjeros. En mi clase siempre explico este dilema con sumo <span class="vocab-in-text" data-key="esmero">esmero</span>, pues memorizar reglas rígidas suele causar más confusiones que soluciones. A menudo, los libros de texto afirman que «ser» expresa lo permanente y «estar» lo temporal. Sin embargo, esa fórmula falla de inmediato: decimos «está muerto», que es definitivo, y «es joven», que pasará pronto.
+      </p>
+
+      <h3>La esencia frente al cambio continuo</h3>
+      <p>
+        La clave pedagógica reside más bien en distinguir la naturaleza intrínseca frente al estado circunstancial. Empleamos «ser» para definir la identidad, el origen y las propiedades que otorgan <span class="vocab-in-text" data-key="firmeza">firmeza</span> a un sujeto: «María es ingeniera» o «el agua es transparente». Con ello brindamos una <span class="vocab-in-text" data-key="certeza">certeza</span> conceptual sobre lo que algo es en su raíz. En cambio, «estar» refleja el <span class="vocab-in-text" data-key="vaivén">vaivén</span> de la realidad y las transformaciones pasajeras. Si dices «el agua está fría», aludes a una condición alterada, no a su esencia original. Del mismo modo, una persona puede manifestar súbita <span class="vocab-in-text" data-key="desazón">desazón</span> tras recibir malas noticias, indicando un estado anímico mudable.
+      </p>
+
+      <h3>Adjetivos movedizos y sorpresas cómicas</h3>
+      <p>
+        Donde más se tropieza es ante aquellos adjetivos que cambian radicalmente según el verbo elegido. Decir «él es listo» elogia su inteligencia, mientras que «él está listo» anuncia que ya terminó de prepararse. Un alumno distraído puede llevarse un auténtico <span class="vocab-in-text" data-key="chasco">chasco</span> al confundir ambas frases en una reunión de trabajo. Algo similar ocurre en la mesa: un plato bien cocinado se describe como un suculento <span class="vocab-in-text" data-key="manjar">manjar</span> diciendo «la sopa está muy rica», pues se valora la degustación presente, mientras que afirmar «la sopa es rica» calificaría el alimento de manera general y abstracta.
+      </p>
+
+      <h3>Ubicaciones y contrastes entre continentes</h3>
+      <p>
+        Conviene hacer particular <span class="vocab-in-text" data-key="hincapié">hincapié</span> en la localización física. Tanto en Madrid como en Bogotá, para señalar el <span class="vocab-in-text" data-key="paradero">paradero</span> de un objeto o persona usamos siempre «estar»: «el museo está en el centro». Pero si aludimos a un acontecimiento o celebración, empleamos «ser»: «la fiesta es en la casa de Carlos». No obstante, asoman interesantes divergencias a ambos lados del Atlántico. En España es habitual escuchar «estoy de acuerdo», mientras que en varios países hispanoamericanos convive con «concuerdo» o giros propios. Asimismo, ante estados civiles, en España predomina «está casado», mientras que en regiones de México o Centroamérica se oye frecuentemente «es casado» como parte de la filiación personal. Conocer estos contrastes evita cualquier <span class="vocab-in-text" data-key="resbalón">resbalón</span> en conversaciones cotidianas y enriquece tu oído internacional.
+      </p>
+    </article>
+    </div>
+
+    <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2941,104 +3008,10 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="cheatsheet" draggable="true">Cheat Sheet</button>
-        <button type="button" class="image-label-chip" data-image-id="doctorplace" draggable="true">Doctor Place</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="cheatsheet" data-image-title="Cheat Sheet" onclick="handleImageCardClick(this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')">
-          <img src="images/es-seryestar-cheatsheet.jpg" alt="Cheat Sheet" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Cheat Sheet</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="doctorplace" data-image-title="Doctor Place" onclick="handleImageCardClick(this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')">
-          <img src="images/es-seryestar-doctorplace.jpg" alt="Doctor Place" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Doctor Place</div>
-        </div>
-      </div>
-    </section>
-
-<!-- SECTION 1: VOCABULARY DRAG & DROP -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">2</span> Vocabulario
-      </a>
-      <span class="section-action-hint">arrastrar y soltar</span>
-    </h2>
-
-    <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- SECTION 2: READING PASSAGE -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">3</span> Lectura
-      </a>
-      <span class="section-action-hint">leer en voz alta</span>
-    </h2>
-
-    <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-seryestar.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-    </div>
-      <article class="reading-content">
-      <h3>El gran enigma de dos verbos</h3>
-      <p>
-        Comprender la frontera entre «ser» y «estar» suele convertirse en un dolor de cabeza para muchos estudiantes extranjeros. En mi clase siempre explico este dilema con sumo <span class="vocab-in-text" data-key="esmero">esmero</span>, pues memorizar reglas rígidas suele causar más confusiones que soluciones. A menudo, los libros de texto afirman que «ser» expresa lo permanente y «estar» lo temporal. Sin embargo, esa fórmula falla de inmediato: decimos «está muerto», que es definitivo, y «es joven», que pasará pronto.
-      </p>
-
-      <h3>La esencia frente al cambio continuo</h3>
-      <p>
-        La clave pedagógica reside más bien en distinguir la naturaleza intrínseca frente al estado circunstancial. Empleamos «ser» para definir la identidad, el origen y las propiedades que otorgan <span class="vocab-in-text" data-key="firmeza">firmeza</span> a un sujeto: «María es ingeniera» o «el agua es transparente». Con ello brindamos una <span class="vocab-in-text" data-key="certeza">certeza</span> conceptual sobre lo que algo es en su raíz. En cambio, «estar» refleja el <span class="vocab-in-text" data-key="vaivén">vaivén</span> de la realidad y las transformaciones pasajeras. Si dices «el agua está fría», aludes a una condición alterada, no a su esencia original. Del mismo modo, una persona puede manifestar súbita <span class="vocab-in-text" data-key="desazón">desazón</span> tras recibir malas noticias, indicando un estado anímico mudable.
-      </p>
-
-      <h3>Adjetivos movedizos y sorpresas cómicas</h3>
-      <p>
-        Donde más se tropieza es ante aquellos adjetivos que cambian radicalmente según el verbo elegido. Decir «él es listo» elogia su inteligencia, mientras que «él está listo» anuncia que ya terminó de prepararse. Un alumno distraído puede llevarse un auténtico <span class="vocab-in-text" data-key="chasco">chasco</span> al confundir ambas frases en una reunión de trabajo. Algo similar ocurre en la mesa: un plato bien cocinado se describe como un suculento <span class="vocab-in-text" data-key="manjar">manjar</span> diciendo «la sopa está muy rica», pues se valora la degustación presente, mientras que afirmar «la sopa es rica» calificaría el alimento de manera general y abstracta.
-      </p>
-
-      <h3>Ubicaciones y contrastes entre continentes</h3>
-      <p>
-        Conviene hacer particular <span class="vocab-in-text" data-key="hincapié">hincapié</span> en la localización física. Tanto en Madrid como en Bogotá, para señalar el <span class="vocab-in-text" data-key="paradero">paradero</span> de un objeto o persona usamos siempre «estar»: «el museo está en el centro». Pero si aludimos a un acontecimiento o celebración, empleamos «ser»: «la fiesta es en la casa de Carlos». No obstante, asoman interesantes divergencias a ambos lados del Atlántico. En España es habitual escuchar «estoy de acuerdo», mientras que en varios países hispanoamericanos convive con «concuerdo» o giros propios. Asimismo, ante estados civiles, en España predomina «está casado», mientras que en regiones de México o Centroamérica se oye frecuentemente «es casado» como parte de la filiación personal. Conocer estos contrastes evita cualquier <span class="vocab-in-text" data-key="resbalón">resbalón</span> en conversaciones cotidianas y enriquece tu oído internacional.
-      </p>
-    </article>
-    </div>
-
     <!-- SECTION 3: COMPREHENSION QUESTIONS -->
-    <h2 class="section-title" id="seccion-5">
+    <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">5</span> Comprensión profunda
+        <span class="section-num">4</span> Comprensión profunda
       </a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
@@ -3235,10 +3208,39 @@
       </div>
     </section>
 
+
+    <!-- SECTION 1: VOCABULARY DRAG & DROP -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">5</span> Vocabulario
+      </a>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION 4: OPEN QUESTIONS -->
     <h2 class="section-title" id="seccion-6">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+        <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span>
       </a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>

@@ -2376,17 +2376,100 @@
       <!-- Centered Jump Links -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
-<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="quedarvsquedarseejemplos" draggable="true">quedar vs quedarse ejemplos</button>
+        <button type="button" class="image-label-chip" data-image-id="quedarvsquedarsevsquedaren" draggable="true">quedar vs quedarse vs quedar en</button>
+        <button type="button" class="image-label-chip" data-image-id="stayvsmeet" draggable="true">stay vs meet</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="quedarvsquedarseejemplos" data-image-title="quedar vs quedarse ejemplos" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg', 'quedar vs quedarse ejemplos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg', 'quedar vs quedarse ejemplos', '[]')">
+          <img src="images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg" alt="quedar vs quedarse ejemplos" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">quedar vs quedarse ejemplos</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="quedarvsquedarsevsquedaren" data-image-title="quedar vs quedarse vs quedar en" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg', 'quedar vs quedarse vs quedar en', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg', 'quedar vs quedarse vs quedar en', '[]')">
+          <img src="images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg" alt="quedar vs quedarse vs quedar en" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">quedar vs quedarse vs quedar en</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="stayvsmeet" data-image-title="stay vs meet" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-stayvsmeet.jpg', 'stay vs meet', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-stayvsmeet.jpg', 'stay vs meet', '[]')">
+          <img src="images/es-quedaryquedarse-stayvsmeet.jpg" alt="stay vs meet" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">stay vs meet</div>
+        </div>
+      </div>
+    </section>
+
+<!-- SECTION 2: READING PASSAGE -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">2</span> Lectura
+      </a>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-quedaryquedarse.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
+      <p>
+        Para cualquier persona que aprende español desde el inglés, los verbos «quedar» y «quedarse» representan uno de los mayores desafíos comunicativos. Un primer <span class="vocab-in-text" data-key="despiste">despiste</span> recurrente es relacionar este verbo con el inglés <em>to quit</em>, cuando en realidad abandonar un trabajo o un hábito se expresa con «dejar» o «renunciar». Para alcanzar verdadera <span class="vocab-in-text" data-key="soltura">soltura</span> y precisión al hablar, es imprescindible descomponer sus múltiples funciones según la presencia o ausencia del pronombre reflexivo.
+      </p>
+
+      <h3>Quedarse: El principio del anclaje y los estados involuntarios</h3>
+      <p>
+        El secreto para dominar la forma pronominal «quedarse» (me quedo, te quedas, se queda...) consiste en comprender el concepto de <span class="vocab-in-text" data-key="anclaje">anclaje</span>. Cuando el sujeto decide no desplazarse y permanecer en un lugar físico, el verbo echa el ancla: «Hoy no voy a salir; me quedo en casa descansando». Este mismo anclaje se traslada al ámbito psicológico o físico cuando una persona cae de forma imprevista o involuntaria en un estado nuevo. Por ejemplo, si el cansancio te vence durante una película, dices «me quedé dormido en el sofá» (te dormiste sin planearlo). Si un examen te paraliza de sorpresa, «te quedas en blanco». Si una noticia te deja boquiabierto, «te quedas de piedra» o «te quedas helado». E incluso ante una avería técnica cotidiana, este verbo señala el <span class="vocab-in-text" data-key="desenlace">desenlace</span> repentino de perder un recurso vital: «¡Vaya, el teléfono se ha quedado sin batería!» o «Nos hemos quedado sin gasolina en medio de la carretera».
+      </p>
+
+      <h3>Quedar con y quedar en: Citas, planes y acuerdos</h3>
+      <p>
+        Por el contrario, cuando «quedar» no lleva pronombre reflexivo, el verbo mira hacia afuera y conecta con otras personas para coordinar actividades sociales. Si tienes la tarde ocupada pero encuentras un pequeño <span class="vocab-in-text" data-key="hueco">hueco</span> libre entre tus tareas, le escribes a un amigo: «¿Quedamos a tomar un café a las seis?». En España, este encuentro amistoso e informal se denomina habitualmente una <span class="vocab-in-text" data-key="quedada">quedada</span>.
+      </p>
+      <p>
+        En este ámbito social, la preposición elegida cambia el sentido de la frase de manera decisiva. La estructura «quedar con» identifica a la persona con quien vas a reunirte: «El sábado quedé con Elena para ir al cine». En cambio, «quedar en» introduce el <span class="vocab-in-text" data-key="acuerdo">acuerdo</span> mutuo o el contenido de la decisión compartida: «Quedamos en comprar las entradas juntos por internet». Si surge un imprevisto de última hora y necesitáis cambiar la cita, basta con negociar un nuevo <span class="vocab-in-text" data-key="arreglo">arreglo</span> entre vosotros: «Al final quedamos en posponer la cena para el domingo».
+      </p>
+
+      <h3>Ubicación, distancias y disponibilidad restante</h3>
+      <p>
+        Asimismo, «quedar» cumple dos funciones esenciales de orientación y contabilidad. Primero, sirve para indicar dónde se sitúa un edificio o a qué distancia se encuentra: «¿Dónde queda la estación de tren? Queda a solo tres manzanas de aquí». Segundo, sigue una estructura idéntica a la del verbo <em>gustar</em> para señalar lo que todavía resta o permanece de <span class="vocab-in-text" data-key="sobra">sobra</span>: «Solo me quedan diez euros en la cartera» o «¿Cuánto tiempo nos queda antes de que salga el tren?». Observa que lo que queda es el sujeto gramatical («diez euros quedan»), mientras que la persona afectada se indica con el pronombre indirecto (me, te, le, nos, os, les).
+      </p>
+
+      <h3>Ropa y apariencia: Sentar bien o mal</h3>
+      <p>
+        Finalmente, al valorar una <span class="vocab-in-text" data-key="prenda">prenda</span> de ropa o el corte de pelo de alguien, la expresión «quedar bien» o «quedar mal» describe si la talla y el estilo favorecen a la persona: «Esa chaqueta verde te queda estupenda; resalta el color de tus ojos». Esta misma fórmula se extiende a las normas sociales de cortesía: si alguien llega una hora tarde a un compromiso formal, «queda muy mal» con los demás; pero si lleva un detalle de agradecimiento a los anfitriones, «queda fenomenal».
+      </p>
+
+      <p>
+        Como regla mnemotécnica para angloparlantes: si la acción te retiene o te transforma por dentro, piensa en <em>quedarse</em> (<em>to stay</em> o <em>to end up</em>); si organizas una cita, preguntas por un lugar o cuentas lo que resta, recurre al verbo simple <em>quedar</em> (<em>to meet</em>, <em>to be located</em>, <em>to have left</em>). Dominar estas distinciones convertirá la vacilación en absoluta soltura al hablar.
+      </p>
+    </article>
+    </div>
+
+    <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2991,120 +3074,10 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="quedarvsquedarseejemplos" draggable="true">quedar vs quedarse ejemplos</button>
-        <button type="button" class="image-label-chip" data-image-id="quedarvsquedarsevsquedaren" draggable="true">quedar vs quedarse vs quedar en</button>
-        <button type="button" class="image-label-chip" data-image-id="stayvsmeet" draggable="true">stay vs meet</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="quedarvsquedarseejemplos" data-image-title="quedar vs quedarse ejemplos" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg', 'quedar vs quedarse ejemplos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg', 'quedar vs quedarse ejemplos', '[]')">
-          <img src="images/es-quedaryquedarse-quedarvsquedarseejemplos.jpg" alt="quedar vs quedarse ejemplos" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">quedar vs quedarse ejemplos</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="quedarvsquedarsevsquedaren" data-image-title="quedar vs quedarse vs quedar en" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg', 'quedar vs quedarse vs quedar en', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg', 'quedar vs quedarse vs quedar en', '[]')">
-          <img src="images/es-quedaryquedarse-quedarvsquedarsevsquedaren.jpg" alt="quedar vs quedarse vs quedar en" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">quedar vs quedarse vs quedar en</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="stayvsmeet" data-image-title="stay vs meet" onclick="handleImageCardClick(this, 'images/es-quedaryquedarse-stayvsmeet.jpg', 'stay vs meet', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-quedaryquedarse-stayvsmeet.jpg', 'stay vs meet', '[]')">
-          <img src="images/es-quedaryquedarse-stayvsmeet.jpg" alt="stay vs meet" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">stay vs meet</div>
-        </div>
-      </div>
-    </section>
-
-<!-- SECTION 1: VOCABULARY DRAG & DROP -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">2</span> Vocabulario
-      </a>
-      <span class="section-action-hint">arrastrar y soltar</span>
-    </h2>
-
-    <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- SECTION 2: READING PASSAGE -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">3</span> Lectura
-      </a>
-      <span class="section-action-hint">leer en voz alta</span>
-    </h2>
-
-    <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-quedaryquedarse.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-    </div>
-      <article class="reading-content">
-      <p>
-        Para cualquier persona que aprende español desde el inglés, los verbos «quedar» y «quedarse» representan uno de los mayores desafíos comunicativos. Un primer <span class="vocab-in-text" data-key="despiste">despiste</span> recurrente es relacionar este verbo con el inglés <em>to quit</em>, cuando en realidad abandonar un trabajo o un hábito se expresa con «dejar» o «renunciar». Para alcanzar verdadera <span class="vocab-in-text" data-key="soltura">soltura</span> y precisión al hablar, es imprescindible descomponer sus múltiples funciones según la presencia o ausencia del pronombre reflexivo.
-      </p>
-
-      <h3>Quedarse: El principio del anclaje y los estados involuntarios</h3>
-      <p>
-        El secreto para dominar la forma pronominal «quedarse» (me quedo, te quedas, se queda...) consiste en comprender el concepto de <span class="vocab-in-text" data-key="anclaje">anclaje</span>. Cuando el sujeto decide no desplazarse y permanecer en un lugar físico, el verbo echa el ancla: «Hoy no voy a salir; me quedo en casa descansando». Este mismo anclaje se traslada al ámbito psicológico o físico cuando una persona cae de forma imprevista o involuntaria en un estado nuevo. Por ejemplo, si el cansancio te vence durante una película, dices «me quedé dormido en el sofá» (te dormiste sin planearlo). Si un examen te paraliza de sorpresa, «te quedas en blanco». Si una noticia te deja boquiabierto, «te quedas de piedra» o «te quedas helado». E incluso ante una avería técnica cotidiana, este verbo señala el <span class="vocab-in-text" data-key="desenlace">desenlace</span> repentino de perder un recurso vital: «¡Vaya, el teléfono se ha quedado sin batería!» o «Nos hemos quedado sin gasolina en medio de la carretera».
-      </p>
-
-      <h3>Quedar con y quedar en: Citas, planes y acuerdos</h3>
-      <p>
-        Por el contrario, cuando «quedar» no lleva pronombre reflexivo, el verbo mira hacia afuera y conecta con otras personas para coordinar actividades sociales. Si tienes la tarde ocupada pero encuentras un pequeño <span class="vocab-in-text" data-key="hueco">hueco</span> libre entre tus tareas, le escribes a un amigo: «¿Quedamos a tomar un café a las seis?». En España, este encuentro amistoso e informal se denomina habitualmente una <span class="vocab-in-text" data-key="quedada">quedada</span>.
-      </p>
-      <p>
-        En este ámbito social, la preposición elegida cambia el sentido de la frase de manera decisiva. La estructura «quedar con» identifica a la persona con quien vas a reunirte: «El sábado quedé con Elena para ir al cine». En cambio, «quedar en» introduce el <span class="vocab-in-text" data-key="acuerdo">acuerdo</span> mutuo o el contenido de la decisión compartida: «Quedamos en comprar las entradas juntos por internet». Si surge un imprevisto de última hora y necesitáis cambiar la cita, basta con negociar un nuevo <span class="vocab-in-text" data-key="arreglo">arreglo</span> entre vosotros: «Al final quedamos en posponer la cena para el domingo».
-      </p>
-
-      <h3>Ubicación, distancias y disponibilidad restante</h3>
-      <p>
-        Asimismo, «quedar» cumple dos funciones esenciales de orientación y contabilidad. Primero, sirve para indicar dónde se sitúa un edificio o a qué distancia se encuentra: «¿Dónde queda la estación de tren? Queda a solo tres manzanas de aquí». Segundo, sigue una estructura idéntica a la del verbo <em>gustar</em> para señalar lo que todavía resta o permanece de <span class="vocab-in-text" data-key="sobra">sobra</span>: «Solo me quedan diez euros en la cartera» o «¿Cuánto tiempo nos queda antes de que salga el tren?». Observa que lo que queda es el sujeto gramatical («diez euros quedan»), mientras que la persona afectada se indica con el pronombre indirecto (me, te, le, nos, os, les).
-      </p>
-
-      <h3>Ropa y apariencia: Sentar bien o mal</h3>
-      <p>
-        Finalmente, al valorar una <span class="vocab-in-text" data-key="prenda">prenda</span> de ropa o el corte de pelo de alguien, la expresión «quedar bien» o «quedar mal» describe si la talla y el estilo favorecen a la persona: «Esa chaqueta verde te queda estupenda; resalta el color de tus ojos». Esta misma fórmula se extiende a las normas sociales de cortesía: si alguien llega una hora tarde a un compromiso formal, «queda muy mal» con los demás; pero si lleva un detalle de agradecimiento a los anfitriones, «queda fenomenal».
-      </p>
-
-      <p>
-        Como regla mnemotécnica para angloparlantes: si la acción te retiene o te transforma por dentro, piensa en <em>quedarse</em> (<em>to stay</em> o <em>to end up</em>); si organizas una cita, preguntas por un lugar o cuentas lo que resta, recurre al verbo simple <em>quedar</em> (<em>to meet</em>, <em>to be located</em>, <em>to have left</em>). Dominar estas distinciones convertirá la vacilación en absoluta soltura al hablar.
-      </p>
-    </article>
-    </div>
-
     <!-- SECTION 3: COMPREHENSION QUESTIONS -->
-    <h2 class="section-title" id="seccion-5">
+    <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">5</span> Comprensión profunda
+        <span class="section-num">4</span> Comprensión profunda
       </a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
@@ -3301,10 +3274,39 @@
       </div>
     </section>
 
+
+    <!-- SECTION 1: VOCABULARY DRAG & DROP -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">5</span> Vocabulario
+      </a>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION 4: OPEN QUESTIONS -->
     <h2 class="section-title" id="seccion-6">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+        <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span>
       </a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>

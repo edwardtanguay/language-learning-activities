@@ -2346,37 +2346,24 @@
 
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Vocabolario">1</a>
+        <a href="#seccion-1" class="jump-num" title="Vai alla sezione 1: Immagini">1</a>
         <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lettura">2</a>
         <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensione rapida">3</a>
         <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensione">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Domande">5</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabolario">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Domande">6</a>
       </nav>
     </header>
 
-<!-- Section 1: Vocabulary Drag & Drop -->
+    <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">1</span> Vocabolario</a>
-      <span class="section-action-hint">trascina e rilascia</span>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna su">
+        <span class="section-num">1</span> Immagini
+      </a>
     </h2>
-    <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
 
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
+    <section class="images-section" id="images-section">
+      <p class="images-empty-note" style="font-style: italic; color: var(--ink-muted); margin: 4px 0 24px 0;">Non ci sono ancora immagini.</p>
     </section>
 
 <!-- Section 2: Reading Text -->
@@ -2475,8 +2462,7 @@
       </article>
     </div>
 
-    <!-- Section 3: Interactive Comprehension Questions -->
-        <!-- Section 3: Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <!-- Section 3: Quick Comprehension (20 Rapid-Fire Fact Questions) -->
     <h2 class="section-title" id="seccion-3">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">3</span> Comprensione rapida</a>
       <span class="section-action-hint">scelta multipla</span>
@@ -3083,6 +3069,8 @@
       </div>
     </div>
 
+    <!-- Section 3: Interactive Comprehension Questions -->
+
     <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">4</span> Comprensione approfondita</a>
       <span class="section-action-hint">scelta multipla</span>
@@ -3281,9 +3269,34 @@
 
     </div>
 
-    <!-- Section 4: Open Questions Section -->
+    <!-- Section 1: Vocabulary Drag & Drop -->
     <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">5</span> <span>Domande<span class="hide-mobile"> aperte</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">5</span> Vocabolario</a>
+      <span class="section-action-hint">trascina e rilascia</span>
+    </h2>
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Open Questions Section -->
+    <h2 class="section-title" id="seccion-6">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">6</span> <span>Domande<span class="hide-mobile"> di discussione</span></span></a>
       <span class="section-action-hint">rispondi e discuti</span>
     </h2>
     <section class="discussion-container">

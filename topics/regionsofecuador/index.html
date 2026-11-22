@@ -2388,17 +2388,167 @@
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="blickaufdenbergsantaanaguayaquil" draggable="true">Blick auf den Berg Santa Ana Guayaquil</button>
+        <button type="button" class="image-label-chip" data-image-id="bolondeverde" draggable="true">Bolón de Verde</button>
+        <button type="button" class="image-label-chip" data-image-id="centrohistoricocolonialdequito" draggable="true">Centro historico colonial de quito</button>
+        <button type="button" class="image-label-chip" data-image-id="cotopaxi" draggable="true">Cotopaxi</button>
+        <button type="button" class="image-label-chip" data-image-id="encebollado" draggable="true">Encebollado</button>
+        <button type="button" class="image-label-chip" data-image-id="guayaquil" draggable="true">Guayaquil</button>
+        <button type="button" class="image-label-chip" data-image-id="iguanasmarinascapacesdenadar" draggable="true">iguanas marinas capaces de nadar</button>
+        <button type="button" class="image-label-chip" data-image-id="lalagunadequilotoa" draggable="true">La Laguna de Quilotoa</button>
+        <button type="button" class="image-label-chip" data-image-id="losriosnapoypastaza" draggable="true">los ríos Napo y Pastaza</button>
+        <button type="button" class="image-label-chip" data-image-id="mapadelecuadorconciudades" draggable="true">Mapa del Ecuador con ciudades</button>
+        <button type="button" class="image-label-chip" data-image-id="mercadodeotavalo" draggable="true">mercado de Otavalo</button>
+        <button type="button" class="image-label-chip" data-image-id="piquerosdepatasazules" draggable="true">piqueros de patas azules</button>
+        <button type="button" class="image-label-chip" data-image-id="plantain" draggable="true">plantain</button>
+        <button type="button" class="image-label-chip" data-image-id="quito" draggable="true">Quito</button>
+        <button type="button" class="image-label-chip" data-image-id="regionesdelecuador" draggable="true">Regiones del Ecuador</button>
+        <button type="button" class="image-label-chip" data-image-id="tortugasgigantesterrestres" draggable="true">tortugas gigantes terrestres</button>
+        <button type="button" class="image-label-chip" data-image-id="tostonesdeplatanoverde" draggable="true">Tostones de plátano verde</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="blickaufdenbergsantaanaguayaquil" data-image-title="Blick auf den Berg Santa Ana Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')">
+          <img src="images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg" alt="Blick auf den Berg Santa Ana Guayaquil" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Blick auf den Berg Santa Ana Guayaquil</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="bolondeverde" data-image-title="Bolón de Verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')">
+          <img src="images/es-regionsofecuador-bolondeverde.jpg" alt="Bolón de Verde" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Bolón de Verde</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="centrohistoricocolonialdequito" data-image-title="Centro historico colonial de quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')">
+          <img src="images/es-regionsofecuador-centrohistoricocolonialdequito.jpg" alt="Centro historico colonial de quito" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Centro historico colonial de quito</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="cotopaxi" data-image-title="Cotopaxi" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')">
+          <img src="images/es-regionsofecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cotopaxi</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="encebollado" data-image-title="Encebollado" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')">
+          <img src="images/es-regionsofecuador-encebollado.jpg" alt="Encebollado" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Encebollado</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="guayaquil" data-image-title="Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')">
+          <img src="images/es-regionsofecuador-guayaquil.jpg" alt="Guayaquil" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Guayaquil</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="iguanasmarinascapacesdenadar" data-image-title="iguanas marinas capaces de nadar" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')">
+          <img src="images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg" alt="iguanas marinas capaces de nadar" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">iguanas marinas capaces de nadar</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="lalagunadequilotoa" data-image-title="La Laguna de Quilotoa" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')">
+          <img src="images/es-regionsofecuador-lalagunadequilotoa.jpg" alt="La Laguna de Quilotoa" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">La Laguna de Quilotoa</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="losriosnapoypastaza" data-image-title="los ríos Napo y Pastaza" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')">
+          <img src="images/es-regionsofecuador-losriosnapoypastaza.jpg" alt="los ríos Napo y Pastaza" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">los ríos Napo y Pastaza</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="mapadelecuadorconciudades" data-image-title="Mapa del Ecuador con ciudades" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')">
+          <img src="images/es-regionsofecuador-mapadelecuadorconciudades.jpg" alt="Mapa del Ecuador con ciudades" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Mapa del Ecuador con ciudades</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="mercadodeotavalo" data-image-title="mercado de Otavalo" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')">
+          <img src="images/es-regionsofecuador-mercadodeotavalo.jpg" alt="mercado de Otavalo" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">mercado de Otavalo</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="piquerosdepatasazules" data-image-title="piqueros de patas azules" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')">
+          <img src="images/es-regionsofecuador-piquerosdepatasazules.jpg" alt="piqueros de patas azules" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">piqueros de patas azules</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="plantain" data-image-title="plantain" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')">
+          <img src="images/es-regionsofecuador-plantain.jpg" alt="plantain" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">plantain</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="quito" data-image-title="Quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')">
+          <img src="images/es-regionsofecuador-quito.jpg" alt="Quito" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Quito</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="regionesdelecuador" data-image-title="Regiones del Ecuador" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')">
+          <img src="images/es-regionsofecuador-regionesdelecuador.jpg" alt="Regiones del Ecuador" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Regiones del Ecuador</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="tortugasgigantesterrestres" data-image-title="tortugas gigantes terrestres" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')">
+          <img src="images/es-regionsofecuador-tortugasgigantesterrestres.jpg" alt="tortugas gigantes terrestres" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">tortugas gigantes terrestres</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="tostonesdeplatanoverde" data-image-title="Tostones de plátano verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')">
+          <img src="images/es-regionsofecuador-tostonesdeplatanoverde.jpg" alt="Tostones de plátano verde" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Tostones de plátano verde</div>
+        </div>
+      </div>
+    </section>
+
+<!-- Section 2: Reading Text -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
+        </h2>
+      <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-regionsofecuador.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
+      <p>
+        Ecuador es uno de los países con mayor biodiversidad por kilómetro cuadrado en todo el planeta. A pesar de su tamaño relativamente compacto en comparación con sus vecinos Perú y Colombia, este país sudamericano alberga una asombrosa variedad de climas, paisajes y tradiciones. La geografía ecuatoriana se divide tradicionalmente en cuatro regiones naturales muy distintas entre sí:
+      </p>
+
+      <div class="region-card">
+        <h3>La Costa (Región Litoral)</h3>
+        <p>
+          Ubicada entre el océano Pacífico y las <span class="vocab-in-text" data-key="faldas">faldas</span> occidentales de los Andes, la Costa se caracteriza por su clima <span class="vocab-in-text" data-key="calido">cálido</span> y tropical. En esta región se encuentra Guayaquil, la ciudad más poblada del país y su principal puerto comercial. La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los <span class="vocab-in-text" data-key="mariscos">mariscos</span> frescos, el verde (plátano verde <span class="vocab-in-text" data-key="machacado">machacado</span>) y platos típicos como el <em>bolón de verde</em> y el <em>encebollado</em>.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>La Sierra (Región Interandina)</h3>
+        <p>
+          La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la imponente Cordillera de los Andes. Aquí se sitúa Quito, la capital histórica del país a 2.850 metros sobre el nivel del mar, cuyo centro colonial fue declarado el primer Patrimonio de la Humanidad por la UNESCO en 1978. La región está <span class="vocab-in-text" data-key="rodeada">rodeada</span> por la famosa «Avenida de los Volcanes», que incluye gigantes <span class="vocab-in-text" data-key="nevados">nevados</span> como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra). El clima es fresco o templado, y las comunidades indígenas conservan ricas tradiciones textiles y ferias vibrantes como el mercado de Otavalo.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>El Oriente (Región Amazónica)</h3>
+        <p>
+          Hacia el este de los Andes se extiende la <span class="vocab-in-text" data-key="selva">selva</span> amazónica ecuatoriana. Es una región densa, <span class="vocab-in-text" data-key="calurosa">calurosa</span> y húmeda, regada por <span class="vocab-in-text" data-key="caudalosos">caudalosos</span> ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas. El Oriente representa casi la mitad del territorio nacional, pero concentra un porcentaje muy reducido de la población. Aquí habitan nacionalidades indígenas como los Kichwa, Shuar y Waorani, quienes protegen un ecosistema único lleno de miles de especies de aves, insectos, anfibios y plantas medicinales.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>Las Islas Galápagos (Región Insular)</h3>
+        <p>
+          Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y <span class="vocab-in-text" data-key="decenas">decenas</span> de islotes. Este rincón del mundo inspiró al naturalista británico Charles Darwin a formular su teoría de la evolución por selección natural en 1835. Gran parte de su flora y fauna es endémica, lo que significa que no existe de manera natural en ningún otro lugar: tortugas gigantes terrestres, iguanas marinas capaces de nadar, y los curiosos piqueros de patas azules.
+        </p>
+      </div>
+    </article>
+    </div>
+
 <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -3003,182 +3153,9 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="blickaufdenbergsantaanaguayaquil" draggable="true">Blick auf den Berg Santa Ana Guayaquil</button>
-        <button type="button" class="image-label-chip" data-image-id="bolondeverde" draggable="true">Bolón de Verde</button>
-        <button type="button" class="image-label-chip" data-image-id="centrohistoricocolonialdequito" draggable="true">Centro historico colonial de quito</button>
-        <button type="button" class="image-label-chip" data-image-id="cotopaxi" draggable="true">Cotopaxi</button>
-        <button type="button" class="image-label-chip" data-image-id="encebollado" draggable="true">Encebollado</button>
-        <button type="button" class="image-label-chip" data-image-id="guayaquil" draggable="true">Guayaquil</button>
-        <button type="button" class="image-label-chip" data-image-id="iguanasmarinascapacesdenadar" draggable="true">iguanas marinas capaces de nadar</button>
-        <button type="button" class="image-label-chip" data-image-id="lalagunadequilotoa" draggable="true">La Laguna de Quilotoa</button>
-        <button type="button" class="image-label-chip" data-image-id="losriosnapoypastaza" draggable="true">los ríos Napo y Pastaza</button>
-        <button type="button" class="image-label-chip" data-image-id="mapadelecuadorconciudades" draggable="true">Mapa del Ecuador con ciudades</button>
-        <button type="button" class="image-label-chip" data-image-id="mercadodeotavalo" draggable="true">mercado de Otavalo</button>
-        <button type="button" class="image-label-chip" data-image-id="piquerosdepatasazules" draggable="true">piqueros de patas azules</button>
-        <button type="button" class="image-label-chip" data-image-id="plantain" draggable="true">plantain</button>
-        <button type="button" class="image-label-chip" data-image-id="quito" draggable="true">Quito</button>
-        <button type="button" class="image-label-chip" data-image-id="regionesdelecuador" draggable="true">Regiones del Ecuador</button>
-        <button type="button" class="image-label-chip" data-image-id="tortugasgigantesterrestres" draggable="true">tortugas gigantes terrestres</button>
-        <button type="button" class="image-label-chip" data-image-id="tostonesdeplatanoverde" draggable="true">Tostones de plátano verde</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="blickaufdenbergsantaanaguayaquil" data-image-title="Blick auf den Berg Santa Ana Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg', 'Blick auf den Berg Santa Ana Guayaquil', '[]')">
-          <img src="images/es-regionsofecuador-blickaufdenbergsantaanaguayaquil.jpg" alt="Blick auf den Berg Santa Ana Guayaquil" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Blick auf den Berg Santa Ana Guayaquil</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="bolondeverde" data-image-title="Bolón de Verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-bolondeverde.jpg', 'Bolón de Verde', '[]')">
-          <img src="images/es-regionsofecuador-bolondeverde.jpg" alt="Bolón de Verde" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Bolón de Verde</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="centrohistoricocolonialdequito" data-image-title="Centro historico colonial de quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-centrohistoricocolonialdequito.jpg', 'Centro historico colonial de quito', '[]')">
-          <img src="images/es-regionsofecuador-centrohistoricocolonialdequito.jpg" alt="Centro historico colonial de quito" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Centro historico colonial de quito</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="cotopaxi" data-image-title="Cotopaxi" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-cotopaxi.jpg', 'Cotopaxi', '[]')">
-          <img src="images/es-regionsofecuador-cotopaxi.jpg" alt="Cotopaxi" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Cotopaxi</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="encebollado" data-image-title="Encebollado" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-encebollado.jpg', 'Encebollado', '[]')">
-          <img src="images/es-regionsofecuador-encebollado.jpg" alt="Encebollado" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Encebollado</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="guayaquil" data-image-title="Guayaquil" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-guayaquil.jpg', 'Guayaquil', '[]')">
-          <img src="images/es-regionsofecuador-guayaquil.jpg" alt="Guayaquil" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Guayaquil</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="iguanasmarinascapacesdenadar" data-image-title="iguanas marinas capaces de nadar" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg', 'iguanas marinas capaces de nadar', '[]')">
-          <img src="images/es-regionsofecuador-iguanasmarinascapacesdenadar.jpg" alt="iguanas marinas capaces de nadar" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">iguanas marinas capaces de nadar</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="lalagunadequilotoa" data-image-title="La Laguna de Quilotoa" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-lalagunadequilotoa.jpg', 'La Laguna de Quilotoa', '[]')">
-          <img src="images/es-regionsofecuador-lalagunadequilotoa.jpg" alt="La Laguna de Quilotoa" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">La Laguna de Quilotoa</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="losriosnapoypastaza" data-image-title="los ríos Napo y Pastaza" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-losriosnapoypastaza.jpg', 'los ríos Napo y Pastaza', '[]')">
-          <img src="images/es-regionsofecuador-losriosnapoypastaza.jpg" alt="los ríos Napo y Pastaza" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">los ríos Napo y Pastaza</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="mapadelecuadorconciudades" data-image-title="Mapa del Ecuador con ciudades" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mapadelecuadorconciudades.jpg', 'Mapa del Ecuador con ciudades', '[]')">
-          <img src="images/es-regionsofecuador-mapadelecuadorconciudades.jpg" alt="Mapa del Ecuador con ciudades" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Mapa del Ecuador con ciudades</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="mercadodeotavalo" data-image-title="mercado de Otavalo" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-mercadodeotavalo.jpg', 'mercado de Otavalo', '[]')">
-          <img src="images/es-regionsofecuador-mercadodeotavalo.jpg" alt="mercado de Otavalo" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">mercado de Otavalo</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="piquerosdepatasazules" data-image-title="piqueros de patas azules" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-piquerosdepatasazules.jpg', 'piqueros de patas azules', '[]')">
-          <img src="images/es-regionsofecuador-piquerosdepatasazules.jpg" alt="piqueros de patas azules" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">piqueros de patas azules</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="plantain" data-image-title="plantain" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-plantain.jpg', 'plantain', '[]')">
-          <img src="images/es-regionsofecuador-plantain.jpg" alt="plantain" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">plantain</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="quito" data-image-title="Quito" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-quito.jpg', 'Quito', '[]')">
-          <img src="images/es-regionsofecuador-quito.jpg" alt="Quito" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Quito</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="regionesdelecuador" data-image-title="Regiones del Ecuador" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-regionesdelecuador.jpg', 'Regiones del Ecuador', '[]')">
-          <img src="images/es-regionsofecuador-regionesdelecuador.jpg" alt="Regiones del Ecuador" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Regiones del Ecuador</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="tortugasgigantesterrestres" data-image-title="tortugas gigantes terrestres" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tortugasgigantesterrestres.jpg', 'tortugas gigantes terrestres', '[]')">
-          <img src="images/es-regionsofecuador-tortugasgigantesterrestres.jpg" alt="tortugas gigantes terrestres" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">tortugas gigantes terrestres</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="tostonesdeplatanoverde" data-image-title="Tostones de plátano verde" onclick="handleImageCardClick(this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-regionsofecuador-tostonesdeplatanoverde.jpg', 'Tostones de plátano verde', '[]')">
-          <img src="images/es-regionsofecuador-tostonesdeplatanoverde.jpg" alt="Tostones de plátano verde" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Tostones de plátano verde</div>
-        </div>
-      </div>
-    </section>
-
-<!-- Section 3: Vocabulary Drag & Drop -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
-        </h2>
-      <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- Section 2: Reading Text -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
-        </h2>
-      <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-regionsofecuador.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-    </div>
-      <article class="reading-content">
-      <p>
-        Ecuador es uno de los países con mayor biodiversidad por kilómetro cuadrado en todo el planeta. A pesar de su tamaño relativamente compacto en comparación con sus vecinos Perú y Colombia, este país sudamericano alberga una asombrosa variedad de climas, paisajes y tradiciones. La geografía ecuatoriana se divide tradicionalmente en cuatro regiones naturales muy distintas entre sí:
-      </p>
-
-      <div class="region-card">
-        <h3>La Costa (Región Litoral)</h3>
-        <p>
-          Ubicada entre el océano Pacífico y las <span class="vocab-in-text" data-key="faldas">faldas</span> occidentales de los Andes, la Costa se caracteriza por su clima <span class="vocab-in-text" data-key="calido">cálido</span> y tropical. En esta región se encuentra Guayaquil, la ciudad más poblada del país y su principal puerto comercial. La Costa es famosa por sus extensas playas, sus plantaciones de banano y cacao, y una gastronomía exquisita donde predominan los <span class="vocab-in-text" data-key="mariscos">mariscos</span> frescos, el verde (plátano verde <span class="vocab-in-text" data-key="machacado">machacado</span>) y platos típicos como el <em>bolón de verde</em> y el <em>encebollado</em>.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>La Sierra (Región Interandina)</h3>
-        <p>
-          La Sierra atraviesa el centro de Ecuador de norte a sur, dominada por la imponente Cordillera de los Andes. Aquí se sitúa Quito, la capital histórica del país a 2.850 metros sobre el nivel del mar, cuyo centro colonial fue declarado el primer Patrimonio de la Humanidad por la UNESCO en 1978. La región está <span class="vocab-in-text" data-key="rodeada">rodeada</span> por la famosa «Avenida de los Volcanes», que incluye gigantes <span class="vocab-in-text" data-key="nevados">nevados</span> como el Cotopaxi y el Chimborazo (el punto más cercano al sol desde el centro de la Tierra). El clima es fresco o templado, y las comunidades indígenas conservan ricas tradiciones textiles y ferias vibrantes como el mercado de Otavalo.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>El Oriente (Región Amazónica)</h3>
-        <p>
-          Hacia el este de los Andes se extiende la <span class="vocab-in-text" data-key="selva">selva</span> amazónica ecuatoriana. Es una región densa, <span class="vocab-in-text" data-key="calurosa">calurosa</span> y húmeda, regada por <span class="vocab-in-text" data-key="caudalosos">caudalosos</span> ríos como el Napo y el Pastaza que fluyen hacia el río Amazonas. El Oriente representa casi la mitad del territorio nacional, pero concentra un porcentaje muy reducido de la población. Aquí habitan nacionalidades indígenas como los Kichwa, Shuar y Waorani, quienes protegen un ecosistema único lleno de miles de especies de aves, insectos, anfibios y plantas medicinales.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>Las Islas Galápagos (Región Insular)</h3>
-        <p>
-          Situado a unos 1.000 kilómetros de la costa continental en pleno océano Pacífico, el archipiélago de Galápagos consta de 13 islas volcánicas principales y <span class="vocab-in-text" data-key="decenas">decenas</span> de islotes. Este rincón del mundo inspiró al naturalista británico Charles Darwin a formular su teoría de la evolución por selección natural en 1835. Gran parte de su flora y fauna es endémica, lo que significa que no existe de manera natural en ningún otro lugar: tortugas gigantes terrestres, iguanas marinas capaces de nadar, y los curiosos piqueros de patas azules.
-        </p>
-      </div>
-    </article>
-    </div>
-
-<!-- Section 4: Interactive Comprehension Questions -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Comprensión profunda</a>
+    <!-- Section 4: Interactive Comprehension Questions -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión profunda</a>
         </h2>
       <div class="quiz-container" id="quiz-container">
 
@@ -3374,9 +3351,34 @@
 
     </div>
 
+
+    <!-- Section 3: Vocabulary Drag & Drop -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Vocabulario</a>
+        </h2>
+      <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
     <!-- Section 5: Discussion Questions Section -->
     <h2 class="section-title" id="seccion-6">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span></a>
         </h2>
       <section class="discussion-container">
       <ol class="discussion-questions">

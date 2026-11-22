@@ -1828,8 +1828,50 @@ function matchQuestionsToImages(rawQuestions, imageFiles, activity) {
   return { teacherQuestions, imageQuestions };
 }
 
+const NO_IMAGES_YET_I18N = {
+  es: 'Todavía no hay imágenes.',
+  en: 'No images yet.',
+  de: 'Noch keine Bilder.',
+  fr: 'Pas encore d\'images.',
+  it: 'Non ci sono ancora immagini.',
+  nl: 'Nog geen afbeeldingen.',
+  pl: 'Brak jeszcze obrazów.',
+  ru: 'Изображений пока нет.',
+  el: 'Δεν υπάρχουν εικόνες ακόμα.',
+  is: 'Engar myndir ennþá.',
+  da: 'Ingen billeder endnu.'
+};
+
+const SECTION_DISCUSS_HEADING_I18N = {
+  es: '<span>Preguntas<span class="hide-mobile"> de debate</span></span>',
+  en: '<span>Discussion<span class="hide-mobile"> Questions</span></span>',
+  de: '<span>Diskussions<span class="hide-mobile">fragen</span></span>',
+  fr: '<span>Questions<span class="hide-mobile"> de discussion</span></span>',
+  it: '<span>Domande<span class="hide-mobile"> di discussione</span></span>',
+  nl: '<span>Discussie<span class="hide-mobile">vragen</span></span>',
+  pl: '<span>Pytania<span class="hide-mobile"> do dyskusji</span></span>',
+  ru: '<span>Вопросы<span class="hide-mobile"> для обсуждения</span></span>',
+  el: '<span>Ερωτήσεις<span class="hide-mobile"> συζήτησης</span></span>',
+  is: '<span>Umræðu<span class="hide-mobile">spurningar</span></span>',
+  da: '<span>Diskussions<span class="hide-mobile">spørgsmål</span></span>'
+};
+
 function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, sectionNum) {
   const i18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
+
+  if (!imageFiles || imageFiles.length === 0) {
+    const emptyText = NO_IMAGES_YET_I18N[activity.lang] || NO_IMAGES_YET_I18N.es;
+    return `    <!-- SECTION ${sectionNum}: IMAGES -->
+    <h2 class="section-title" id="seccion-${sectionNum}">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="${i18n.topTitle}">
+        <span class="section-num">${sectionNum}</span> ${i18n.sectionTitle}
+      </a>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <p class="images-empty-note" style="font-style: italic; color: var(--ink-muted); margin: 4px 0 24px 0;">${emptyText}</p>
+    </section>`;
+  }
   const labelChips = [];
   const seenSlugs = new Set();
 
@@ -2027,11 +2069,18 @@ function updateAllSectionHeadings(html, nums) {
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.quizNum}</span>`);
     }
 
-    // 6. Discussion / Open Questions
-    if (headingHtml.includes('responder y debatir') || headingHtml.includes('answer and discuss') || headingHtml.includes('répondre et débattre') || headingHtml.includes('rispondi e discuti') || headingHtml.includes('abiertas') || headingHtml.includes('ouvertes') || headingHtml.includes('aperte')) {
-      return headingHtml
+    // 6. Discussion Questions (also normalize old "Open Questions" headings to "Discussion Questions")
+    if (headingHtml.includes('responder y debatir') || headingHtml.includes('answer and discuss') || headingHtml.includes('répondre et débattre') || headingHtml.includes('rispondi e discuti') || headingHtml.includes('abiertas') || headingHtml.includes('ouvertes') || headingHtml.includes('aperte') || headingHtml.includes('de debate') || headingHtml.includes('di discussione') || headingHtml.includes('de discussion') || headingHtml.includes('Discussion')) {
+      let updated = headingHtml
         .replace(/id="seccion-\d+"/, `id="seccion-${nums.discussNum}"`)
         .replace(/<span class="section-num">\d+<\/span>/, `<span class="section-num">${nums.discussNum}</span>`);
+      if (nums.discussHeadingHtml) {
+        updated = updated.replace(
+          /(<span class="section-num">\d+<\/span>\s*)[\s\S]*?(\s*<\/a>)/,
+          `$1${nums.discussHeadingHtml}$2`
+        );
+      }
+      return updated;
     }
 
     return headingHtml;
@@ -2113,10 +2162,10 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     html = ensureLightboxAssets(html);
   }
 
-  // 3. Strip any existing Questions and Images sections so core sections (Reading, Vocab, Quiz, Discuss) can be cleanly placed
+  // 3. Strip any existing Questions and Images sections so core sections can be cleanly placed
   html = html.replace(/[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:IMAGES|QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*/gi, '');
   html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Preguntas para el profesor|Questions for the Teacher|revisar en clase)[\s\S]*?<\/h2>\s*/gi, '');
-  html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Images|clic para ampliar|click to enlarge)[\s\S]*?<\/h2>\s*/gi, '');
+  html = html.replace(/<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Imágenes|Immagini|Images|Bilder|clic para ampliar|clicca per ingrandire|cliquer pour agrandir|click to enlarge)[\s\S]*?<\/h2>\s*/gi, '');
   html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:images-instructions|cosas y conceptos|places and things|Orten und Dingen|lugares, cosas y conceptos|usos y contrastes|fotos correctas|correct photos|passenden Fotos)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
   html = html.replace(/<div class="section-instructions-box[^>]*>[\s\S]*?(?:preguntas generales sobre el texto|general questions about the text|allgemeine Fragen zum Text)[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
   html = html.replace(/[ \t]*<!-- Section 5: Images -->[\s\S]*?<\/section>\s*/gi, '');
@@ -2132,9 +2181,9 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     html = cleanedHead + restPart;
   }
 
-  // Extract vocab section if present
+  // Extract vocab section cleanly regardless of its current position
   let vocabBlock = '';
-  const vocabRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*Vocab[^\r\n]*-->\s*)?(?:<section class="vocab-section">[\s\S]*?<\/section>|<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Vocabulario|Vocabulary|Wortschatz)[\s\S]*?(?=(?:<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:READING|Reading)|<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Lectura|Reading|Lesetext))))/i;
+  const vocabRegex = /(?:[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*Vocab[^\r\n]*-->\s*)?(?:<section class="vocab-section">[\s\S]*?<\/section>|<section>\s*<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Vocabulario|Vocabolario|Vocabulaire|Vocabulary|Wortschatz)[\s\S]*?<\/section>|<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Vocabulario|Vocabolario|Vocabulaire|Vocabulary|Wortschatz)[\s\S]*?<\/h2>\s*<section class="vocab-container"[^>]*>[\s\S]*?<\/section>)/i;
 
   const vocabMatch = html.match(vocabRegex);
   if (vocabMatch) {
@@ -2142,30 +2191,56 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     html = html.replace(vocabRegex, '');
   }
 
-  // 4. Calculate section numbering according to new order:
-  // 1. Imágenes (if present)
-  // 2. Vocabulario
-  // 3. Preguntas para el profesor (if present)
-  // 4. Lectura
-  // 5. Comprensión
-  // 6. Preguntas abiertas
-  let currentNum = 1;
-  let imagesNum = null;
-  let vocabNum = null;
-  let questionsNum = null;
-
-  if (hasImages) {
-    imagesNum = currentNum++;
+  // Extract quick-quiz section cleanly regardless of its current position
+  let quickQuizBlock = '';
+  const quickQuizStartRegex = /(?:[ \t]*<!--[ \t]*(?:Section \d+:\s*)?Quick Comprehension[^\r\n]*-->\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Comprensión rápida|Comprensione rapida|Compréhension rapide|Quick Comprehension|Schnellverständnis)[\s\S]*?<\/h2>\s*<div class="quick-quiz-container" id="quick-quiz-container">/i;
+  const qqStartMatch = html.match(quickQuizStartRegex);
+  if (qqStartMatch) {
+    const startIdx = qqStartMatch.index;
+    const containerOpenIdx = html.indexOf('<div class="quick-quiz-container" id="quick-quiz-container">', startIdx);
+    // Find matching closing </div> for quick-quiz-container by counting nested <div / </div
+    let depth = 0;
+    const divTokenRegex = /<div\b|<\/div>/gi;
+    divTokenRegex.lastIndex = containerOpenIdx;
+    let endIdx = -1;
+    let tok;
+    while ((tok = divTokenRegex.exec(html)) !== null) {
+      if (tok[0].toLowerCase().startsWith('<div')) {
+        depth++;
+      } else {
+        depth--;
+        if (depth === 0) {
+          endIdx = tok.index + tok[0].length;
+          break;
+        }
+      }
+    }
+    if (endIdx !== -1) {
+      quickQuizBlock = html.slice(startIdx, endIdx).trim();
+      html = html.slice(0, startIdx) + html.slice(endIdx);
+    }
   }
-  vocabNum = currentNum++;
+
+  // 4. Calculate section numbering according to canonical order:
+  // 1. Images (ALWAYS shown; displays localized "no images yet" when empty)
+  // [optional] Questions for the Teacher (if present)
+  // 2. Reading (Lectura / Lettura / Lecture)
+  // 3. Rapid Comprehension (Comprensión rápida / Comprensione rapida / Compréhension rapide)
+  // 4. Deep Comprehension (Comprensión profunda / Comprensione approfondita / Compréhension approfondie)
+  // 5. Vocabulary (Vocabulario / Vocabolario / Vocabulaire)
+  // 6. Discussion Questions (Preguntas de debate / Domande di discussione / Questions de discussion)
+  let currentNum = 1;
+  const imagesNum = currentNum++;
+  let questionsNum = null;
   if (hasQuestions) {
     questionsNum = currentNum++;
   }
 
-  const hasQuickQuiz = html.includes('id="quick-quiz-container"');
+  const hasQuickQuiz = Boolean(quickQuizBlock) || html.includes('id="quick-quiz-container"');
   const readingNum = currentNum++;
   const quickQuizNum = hasQuickQuiz ? currentNum++ : null;
   const quizNum = currentNum++;
+  const vocabNum = currentNum++;
   const discussNum = currentNum++;
   const totalSections = discussNum;
 
@@ -2178,10 +2253,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   const quizTitle = SECTION_QUIZ_I18N[activity.lang] || SECTION_QUIZ_I18N.es;
   const discussTitle = SECTION_DISCUSS_I18N[activity.lang] || SECTION_DISCUSS_I18N.es;
 
-  if (hasImages) {
-    jumpLinks.push(`<a href="#seccion-${imagesNum}" class="jump-num" title="${imgI18n.jumpTitle.replace('{N}', imagesNum)}">${imagesNum}</a>`);
-  }
-  jumpLinks.push(`<a href="#seccion-${vocabNum}" class="jump-num" title="Ir a Sección ${vocabNum}: ${vocabTitle}">${vocabNum}</a>`);
+  jumpLinks.push(`<a href="#seccion-${imagesNum}" class="jump-num" title="${imgI18n.jumpTitle.replace('{N}', imagesNum)}">${imagesNum}</a>`);
   if (hasQuestions) {
     jumpLinks.push(`<a href="#seccion-${questionsNum}" class="jump-num" title="${qI18n.jumpTitle.replace('{N}', questionsNum)}">${questionsNum}</a>`);
   }
@@ -2191,26 +2263,21 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     jumpLinks.push(`<a href="#seccion-${quickQuizNum}" class="jump-num" title="Ir a Sección ${quickQuizNum}: ${quickQuizTitle}">${quickQuizNum}</a>`);
   }
   jumpLinks.push(`<a href="#seccion-${quizNum}" class="jump-num" title="Ir a Sección ${quizNum}: ${quizTitle}">${quizNum}</a>`);
+  jumpLinks.push(`<a href="#seccion-${vocabNum}" class="jump-num" title="Ir a Sección ${vocabNum}: ${vocabTitle}">${vocabNum}</a>`);
   jumpLinks.push(`<a href="#seccion-${discussNum}" class="jump-num" title="Ir a Sección ${discussNum}: ${discussTitle}">${discussNum}</a>`);
 
   const jumpNavHtml = `<nav class="jump-nav" aria-label="Navegación de secciones">\n        ${jumpLinks.join('\n        ')}\n      </nav>`;
   html = html.replace(/<nav class="jump-nav"[^>]*>[\s\S]*?<\/nav>/i, jumpNavHtml);
 
   // 6. Build and inject prefix blocks before Reading:
-  // Order: Images -> Vocab -> Questions
-  let prefixBlocks = '';
-  if (hasImages) {
-    prefixBlocks += buildSectionImagesHtml(activity, imageFiles, imageQuestions, imagesNum) + '\n\n';
-  }
-  if (vocabBlock) {
-    prefixBlocks += vocabBlock + '\n\n';
-  }
+  // Order: Images -> [Questions if present] -> Reading -> Rapid Comp -> Deep Comp -> Vocab -> Discussion Questions
+  let prefixBlocks = buildSectionImagesHtml(activity, imageFiles, imageQuestions, imagesNum) + '\n\n';
   if (hasQuestions) {
     prefixBlocks += buildSectionQuestionsHtml(activity, questions, questionsNum) + '\n\n';
   }
 
-  // Find the start of Reading section (e.g. <!-- SECTION ...: READING or <h2 class="section-title" id="seccion-...)
-  const readingMarkerRegex = /(?:<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:READING|Reading)[^\r\n]*-->\s*)?(?:<section[^>]*>\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Lectura|Reading|Lesetext)[\s\S]*?<\/h2>/i;
+  // Find the start of Reading section
+  const readingMarkerRegex = /(?:<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:READING|Reading)[^\r\n]*-->\s*)?(?:<section[^>]*>\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Lectura|Lettura|Lecture|Reading|Lesetext)[\s\S]*?<\/h2>/i;
   if (prefixBlocks) {
     const match = html.match(readingMarkerRegex);
     if (match) {
@@ -2218,6 +2285,26 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
       html = html.slice(0, idx) + prefixBlocks + html.slice(idx);
     } else {
       html = html.replace(/(<\/header>\s*)/, `$1\n${prefixBlocks}`);
+    }
+  }
+
+  // Inject Quick Comprehension right before Deep Comprehension
+  if (quickQuizBlock) {
+    const deepCompMarkerRegex = /(?:<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:Interactive\s+)?(?:COMPREHENSION|Comprehension)[^\r\n]*-->\s*)?(?:<section[^>]*>\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:Comprensión profunda|Comprensione approfondita|Compréhension approfondie|Deep Comprehension|Comprensión|Comprensione|Compréhension|Comprehension)[\s\S]*?<\/h2>/i;
+    const dcMatch = html.match(deepCompMarkerRegex);
+    if (dcMatch) {
+      const idx = dcMatch.index;
+      html = html.slice(0, idx) + quickQuizBlock + '\n\n    ' + html.slice(idx);
+    }
+  }
+
+  // Inject Vocabulary right before Discussion Questions
+  if (vocabBlock) {
+    const discussMarkerRegex = /(?:<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:OPEN|Open|DISCUSSION|Discussion)[^\r\n]*-->\s*)?(?:<section[^>]*>\s*)?<h2 class="section-title"[^>]*>(?:(?!<\/h2>)[\s\S])*?(?:responder y debatir|rispondi e discuti|répondre et débattre|answer and discuss|abiertas|aperte|ouvertes|de debate|di discussione|de discussion|Discussion)[\s\S]*?<\/h2>/i;
+    const dMatch = html.match(discussMarkerRegex);
+    if (dMatch) {
+      const idx = dMatch.index;
+      html = html.slice(0, idx) + vocabBlock + '\n\n    ' + html.slice(idx);
     }
   }
 
@@ -2232,7 +2319,8 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     vocabNum,
     quickQuizNum,
     quizNum,
-    discussNum
+    discussNum,
+    discussHeadingHtml: SECTION_DISCUSS_HEADING_I18N[activity.lang] || SECTION_DISCUSS_HEADING_I18N.es
   });
 
   // Ensure dismissActiveVocabModal and Escape listener are in every activity script

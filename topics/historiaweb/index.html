@@ -2258,17 +2258,168 @@
       <!-- Section Jump Navigation (paridad 1:1 con el menú flotante) -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
-<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+
+
+
+    <!-- SECTION 2: LECTURA -->
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="ajax" draggable="true">AJAX</button>
+        <button type="button" class="image-label-chip" data-image-id="angularreactvue" draggable="true">Angular React Vue</button>
+        <button type="button" class="image-label-chip" data-image-id="gitgithub" draggable="true">Git GitHub</button>
+        <button type="button" class="image-label-chip" data-image-id="htmlcssjavascript" draggable="true">HTML CSS JavaScript</button>
+        <button type="button" class="image-label-chip" data-image-id="inteligenciaartificial" draggable="true">Inteligencia Artificial</button>
+        <button type="button" class="image-label-chip" data-image-id="jquery" draggable="true">jQuery</button>
+        <button type="button" class="image-label-chip" data-image-id="node.js" draggable="true">Node.js</button>
+        <button type="button" class="image-label-chip" data-image-id="php" draggable="true">PHP</button>
+        <button type="button" class="image-label-chip" data-image-id="responsivedesign" draggable="true">Responsive Design</button>
+        <button type="button" class="image-label-chip" data-image-id="typescript" draggable="true">TypeScript</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="ajax" data-image-title="AJAX" onclick="handleImageCardClick(this, 'images/es-historiaweb-ajax.jpg', 'AJAX', '[&quot;Recuerdo que, hacia 2001, XMLHttpRequest estaba disponible en los navegadores, lo que nos permitía contactar con un servidor mediante JavaScript para actualizar la página de forma dinámica.&quot;,&quot;Así, podrías crear un botón que envía un texto del usuario a una URL, reciba una respuesta y la muestre en la página, sin necesidad de recargar el navegador.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-ajax.jpg', 'AJAX', '[&quot;Recuerdo que, hacia 2001, XMLHttpRequest estaba disponible en los navegadores, lo que nos permitía contactar con un servidor mediante JavaScript para actualizar la página de forma dinámica.&quot;,&quot;Así, podrías crear un botón que envía un texto del usuario a una URL, reciba una respuesta y la muestre en la página, sin necesidad de recargar el navegador.&quot;]')">
+          <img src="images/es-historiaweb-ajax.jpg" alt="AJAX" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">AJAX</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="angularreactvue" data-image-title="Angular React Vue" onclick="handleImageCardClick(this, 'images/es-historiaweb-angularreactvue.jpg', 'Angular React Vue', '[&quot;Con qué frameworks has creado sitios web?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-angularreactvue.jpg', 'Angular React Vue', '[&quot;Con qué frameworks has creado sitios web?&quot;]')">
+          <img src="images/es-historiaweb-angularreactvue.jpg" alt="Angular React Vue" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Angular React Vue</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="gitgithub" data-image-title="Git GitHub" onclick="handleImageCardClick(this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[&quot;Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[&quot;Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.&quot;]')">
+          <img src="images/es-historiaweb-gitgithub.jpg" alt="Git GitHub" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Git GitHub</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="htmlcssjavascript" data-image-title="HTML CSS JavaScript" onclick="handleImageCardClick(this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[&quot;Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.&quot;,&quot;¿Dónde aprendiste HTML, CSS y JavaScript?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[&quot;Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.&quot;,&quot;¿Dónde aprendiste HTML, CSS y JavaScript?&quot;]')">
+          <img src="images/es-historiaweb-htmlcssjavascript.jpg" alt="HTML CSS JavaScript" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">HTML CSS JavaScript</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="inteligenciaartificial" data-image-title="Inteligencia Artificial" onclick="handleImageCardClick(this, 'images/es-historiaweb-inteligenciaartificial.jpg', 'Inteligencia Artificial', '[&quot;La IA ha transformado por completo el desarrollo de software; el trabajo de un desarrollador es ahora totalmente distinto.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-inteligenciaartificial.jpg', 'Inteligencia Artificial', '[&quot;La IA ha transformado por completo el desarrollo de software; el trabajo de un desarrollador es ahora totalmente distinto.&quot;]')">
+          <img src="images/es-historiaweb-inteligenciaartificial.jpg" alt="Inteligencia Artificial" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Inteligencia Artificial</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="jquery" data-image-title="jQuery" onclick="handleImageCardClick(this, 'images/es-historiaweb-jquery.jpg', 'jQuery', '[&quot;jQuery simplificó enormemente la sintaxis de JavaScript, lo que hace que sea mucho más fácil de leer y escribir.&quot;,&quot;Hizo que AJAX, CSS y las animaciones fueran sencillos.&quot;,&quot;Convertía los elementos HTML en objetos con propiedades y permitía encadenarlos (chaining).&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-jquery.jpg', 'jQuery', '[&quot;jQuery simplificó enormemente la sintaxis de JavaScript, lo que hace que sea mucho más fácil de leer y escribir.&quot;,&quot;Hizo que AJAX, CSS y las animaciones fueran sencillos.&quot;,&quot;Convertía los elementos HTML en objetos con propiedades y permitía encadenarlos (chaining).&quot;]')">
+          <img src="images/es-historiaweb-jquery.jpg" alt="jQuery" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">jQuery</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="node.js" data-image-title="Node.js" onclick="handleImageCardClick(this, 'images/es-historiaweb-node.js.jpg', 'Node.js', '[&quot;Con Node, puedes programar en JavaScript tanto en el frontend como en el backend.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-node.js.jpg', 'Node.js', '[&quot;Con Node, puedes programar en JavaScript tanto en el frontend como en el backend.&quot;]')">
+          <img src="images/es-historiaweb-node.js.jpg" alt="Node.js" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Node.js</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="php" data-image-title="PHP" onclick="handleImageCardClick(this, 'images/es-historiaweb-php.jpg', 'PHP', '[&quot;En los años 90, creé mis primeros sitios web basados ​​en bases de datos con ASP/ODBC/Access; más tarde, pasé a utilizar PHP/MySQL.&quot;,&quot;¿Has programado alguna vez con PHP?&quot;,&quot;Siempre decíamos: Lo mejor de PHP es que paga mi alquiler.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-php.jpg', 'PHP', '[&quot;En los años 90, creé mis primeros sitios web basados ​​en bases de datos con ASP/ODBC/Access; más tarde, pasé a utilizar PHP/MySQL.&quot;,&quot;¿Has programado alguna vez con PHP?&quot;,&quot;Siempre decíamos: Lo mejor de PHP es que paga mi alquiler.&quot;]')">
+          <img src="images/es-historiaweb-php.jpg" alt="PHP" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">PHP</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="responsivedesign" data-image-title="Responsive Design" onclick="handleImageCardClick(this, 'images/es-historiaweb-responsivedesign.jpg', 'Responsive Design', '[&quot;Algo que la gente olvida es que, hasta alrededor de 2008, solo creábamos sitios web para pantallas de computadora.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-responsivedesign.jpg', 'Responsive Design', '[&quot;Algo que la gente olvida es que, hasta alrededor de 2008, solo creábamos sitios web para pantallas de computadora.&quot;]')">
+          <img src="images/es-historiaweb-responsivedesign.jpg" alt="Responsive Design" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Responsive Design</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="typescript" data-image-title="TypeScript" onclick="handleImageCardClick(this, 'images/es-historiaweb-typescript.jpg', 'TypeScript', '[&quot;TypeScript convirtió a JavaScript en un lenguaje profesional y de nivel empresarial.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-typescript.jpg', 'TypeScript', '[&quot;TypeScript convirtió a JavaScript en un lenguaje profesional y de nivel empresarial.&quot;]')">
+          <img src="images/es-historiaweb-typescript.jpg" alt="TypeScript" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">TypeScript</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+      </div>
+    </section>
+
+<h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">2</span> Lectura
+      </a>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-historiaweb.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
+      <div class="region-card">
+        <h3>1. HTML, CSS, JavaScript</h3>
+        <p>Empecé a crear páginas a mediados de los noventa, cuando la World Wide Web era una silenciosa promesa y las computadoras hacían ruidos extraños al conectarse por teléfono. En aquella época, el <span class="vocab-in-text" data-key="cimiento">cimiento</span> de todo era escribir código HTML a mano en un editor de texto básico. Poco después llegaron las hojas de estilo CSS para separar el diseño visual de la estructura, y un lenguaje sencillo llamado JavaScript para dar vida a la página con pequeñas animaciones.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>2. PHP y bases de datos relacionales</h3>
+        <p>Al poco tiempo, los sitios puramente estáticos ya no eran suficientes para lo que queríamos construir. Gracias a lenguajes del lado del servidor como PHP y a bases de datos relacionales como MySQL, aprendimos a conectar nuestras páginas con usuarios reales. Por primera vez, pudimos mostrar contenido personalizado en la <span class="vocab-in-text" data-key="pantalla">pantalla</span> según las acciones de cada visitante, creando foros de discusión, tiendas virtuales y formularios de registro.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>3. AJAX</h3>
+        <p>A pesar del avance de las bases de datos, navegar por la web seguía siendo una experiencia lenta y fragmentada. Cada vez que el usuario enviaba un formulario o hacía clic en un botón, la pantalla se ponía en blanco para recargar toda la página desde cero. La llegada de AJAX a mediados de los años dos mil cambió las reglas del juego: de repente, podíamos pedir datos al servidor en segundo plano y actualizar la vista sin ningún <span class="vocab-in-text" data-key="retraso">retraso</span> molesto.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>4. jQuery</h3>
+        <p>Sin embargo, programar con JavaScript en esos años tenía un lado oscuro que ponía a prueba nuestra paciencia. Durante años, lograr que un sitio se viera y funcionara exactamente igual en Netscape e Internet Explorer era una auténtica <span class="vocab-in-text" data-key="pesadilla">pesadilla</span> técnica. La librería jQuery se convirtió en nuestra salvación diaria, porque ofrecía una sintaxis simple que escondía todas esas molestas incompatibilidades entre navegadores detrás de un código limpio.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>5. Git y GitHub</h3>
+        <p>En los primeros tiempos, el flujo de trabajo en equipo era extremadamente caótico y peligroso. Teníamos la costumbre arriesgada de <span class="vocab-in-text" data-key="subir">subir</span> archivos sueltos a los servidores mediante programas de FTP, rezando para no sobreescribir por accidente el trabajo de algún colega. La llegada del control de versiones con Git y la plataforma GitHub trajo disciplina, orden y la tranquilidad de colaborar en equipo con un historial transparente de cada cambio.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>6. Diseño web adaptable (Responsive Design)</h3>
+        <p>Con la masificación de los teléfonos inteligentes, la experiencia de navegar por sitios pensados únicamente para computadoras de escritorio se sintió de pronto <span class="vocab-in-text" data-key="torpe">torpe</span> y pesada. Nadie quería hacer zoom constante con los dedos para leer un párrafo. El diseño web adaptable nos enseñó a usar rejillas fluidas y consultas de medios en CSS (Media Queries) para que las páginas respondieran con elegancia a cualquier pantalla táctil.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>7. Node.js</h3>
+        <p>En 2009 ocurrió un giro histórico que muy pocos programadores veteranos anticipamos: apareció Node.js y llevó el motor de JavaScript fuera del navegador directamente a los servidores. Aquello unificó nuestro lenguaje de trabajo y dio origen a miles de <span class="vocab-in-text" data-key="herramientas">herramientas</span> que transformaron para siempre la manera de compilar, empaquetar y gestionar dependencias en proyectos modernos.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>8. Frameworks SPA (React, Vue, Angular)</h3>
+        <p>A medida que la web se volvió más ambiciosa, manipular el documento a mano con jQuery ya no era suficiente para crear aplicaciones complejas. La aparición de React, Vue y Angular consolidó las aplicaciones de una sola página (SPA). Para los desarrolladores, dividir las interfaces complejas en componentes independientes y reutilizables representó un inmenso <span class="vocab-in-text" data-key="alivio">alivio</span> que cambió la arquitectura del software web para siempre.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>9. TypeScript</h3>
+        <p>Con equipos de cientos de ingenieros construyendo aplicaciones web gigantescas, la flexibilidad de JavaScript empezó a causar errores difíciles de detectar en producción. Adoptamos TypeScript para añadir tipado estático y autocompletado inteligente a nuestro código. Aunque hoy en día el ecosistema nos bombardea con constantes <span class="vocab-in-text" data-key="novedades">novedades</span> en librerías y utilidades, contar con un compilador estricto nos devolvió la confianza al refactorizar sistemas grandes.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>10. Inteligencia Artificial</h3>
+        <p>Hoy en día vivimos la transformación más rápida de todas: la integración de la Inteligencia Artificial en nuestro flujo diario. Ahora programamos junto a asistentes inteligentes capaces de sugerir funciones completas, detectar errores y generar interfaces en cuestión de segundos. Aceptar cada nueva etapa técnica siempre ha sido un <span class="vocab-in-text" data-key="reto">reto</span>, pero después de tres décadas en esta profesión, aprendí que la curiosidad constante es la única tecnología que nunca pasa de moda.</p>
+      </div>
+    </article>
+    </div>
+
+    <!-- SECTION 3: COMPRENSIÓN -->
+    <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2873,181 +3024,9 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
+    <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="ajax" draggable="true">AJAX</button>
-        <button type="button" class="image-label-chip" data-image-id="angularreactvue" draggable="true">Angular React Vue</button>
-        <button type="button" class="image-label-chip" data-image-id="gitgithub" draggable="true">Git GitHub</button>
-        <button type="button" class="image-label-chip" data-image-id="htmlcssjavascript" draggable="true">HTML CSS JavaScript</button>
-        <button type="button" class="image-label-chip" data-image-id="inteligenciaartificial" draggable="true">Inteligencia Artificial</button>
-        <button type="button" class="image-label-chip" data-image-id="jquery" draggable="true">jQuery</button>
-        <button type="button" class="image-label-chip" data-image-id="node.js" draggable="true">Node.js</button>
-        <button type="button" class="image-label-chip" data-image-id="php" draggable="true">PHP</button>
-        <button type="button" class="image-label-chip" data-image-id="responsivedesign" draggable="true">Responsive Design</button>
-        <button type="button" class="image-label-chip" data-image-id="typescript" draggable="true">TypeScript</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="ajax" data-image-title="AJAX" onclick="handleImageCardClick(this, 'images/es-historiaweb-ajax.jpg', 'AJAX', '[&quot;Recuerdo que, hacia 2001, XMLHttpRequest estaba disponible en los navegadores, lo que nos permitía contactar con un servidor mediante JavaScript para actualizar la página de forma dinámica.&quot;,&quot;Así, podrías crear un botón que envía un texto del usuario a una URL, reciba una respuesta y la muestre en la página, sin necesidad de recargar el navegador.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-ajax.jpg', 'AJAX', '[&quot;Recuerdo que, hacia 2001, XMLHttpRequest estaba disponible en los navegadores, lo que nos permitía contactar con un servidor mediante JavaScript para actualizar la página de forma dinámica.&quot;,&quot;Así, podrías crear un botón que envía un texto del usuario a una URL, reciba una respuesta y la muestre en la página, sin necesidad de recargar el navegador.&quot;]')">
-          <img src="images/es-historiaweb-ajax.jpg" alt="AJAX" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">AJAX</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="angularreactvue" data-image-title="Angular React Vue" onclick="handleImageCardClick(this, 'images/es-historiaweb-angularreactvue.jpg', 'Angular React Vue', '[&quot;Con qué frameworks has creado sitios web?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-angularreactvue.jpg', 'Angular React Vue', '[&quot;Con qué frameworks has creado sitios web?&quot;]')">
-          <img src="images/es-historiaweb-angularreactvue.jpg" alt="Angular React Vue" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Angular React Vue</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="gitgithub" data-image-title="Git GitHub" onclick="handleImageCardClick(this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[&quot;Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-gitgithub.jpg', 'Git GitHub', '[&quot;Antes de Git y GitHub, utilizábamos CVS y SVN, ambos con una estructura centralizada, frágiles y difíciles de usar.&quot;]')">
-          <img src="images/es-historiaweb-gitgithub.jpg" alt="Git GitHub" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Git GitHub</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="htmlcssjavascript" data-image-title="HTML CSS JavaScript" onclick="handleImageCardClick(this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[&quot;Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.&quot;,&quot;¿Dónde aprendiste HTML, CSS y JavaScript?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-htmlcssjavascript.jpg', 'HTML CSS JavaScript', '[&quot;Recuerdo haber utilizado un software de hipervínculos en 1994 que no era muy bueno. Luego vi el HTML y la etiqueta `<a>`, y me quedé maravillado.&quot;,&quot;¿Dónde aprendiste HTML, CSS y JavaScript?&quot;]')">
-          <img src="images/es-historiaweb-htmlcssjavascript.jpg" alt="HTML CSS JavaScript" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">HTML CSS JavaScript</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="inteligenciaartificial" data-image-title="Inteligencia Artificial" onclick="handleImageCardClick(this, 'images/es-historiaweb-inteligenciaartificial.jpg', 'Inteligencia Artificial', '[&quot;La IA ha transformado por completo el desarrollo de software; el trabajo de un desarrollador es ahora totalmente distinto.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-inteligenciaartificial.jpg', 'Inteligencia Artificial', '[&quot;La IA ha transformado por completo el desarrollo de software; el trabajo de un desarrollador es ahora totalmente distinto.&quot;]')">
-          <img src="images/es-historiaweb-inteligenciaartificial.jpg" alt="Inteligencia Artificial" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Inteligencia Artificial</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="jquery" data-image-title="jQuery" onclick="handleImageCardClick(this, 'images/es-historiaweb-jquery.jpg', 'jQuery', '[&quot;jQuery simplificó enormemente la sintaxis de JavaScript, lo que hace que sea mucho más fácil de leer y escribir.&quot;,&quot;Hizo que AJAX, CSS y las animaciones fueran sencillos.&quot;,&quot;Convertía los elementos HTML en objetos con propiedades y permitía encadenarlos (chaining).&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-jquery.jpg', 'jQuery', '[&quot;jQuery simplificó enormemente la sintaxis de JavaScript, lo que hace que sea mucho más fácil de leer y escribir.&quot;,&quot;Hizo que AJAX, CSS y las animaciones fueran sencillos.&quot;,&quot;Convertía los elementos HTML en objetos con propiedades y permitía encadenarlos (chaining).&quot;]')">
-          <img src="images/es-historiaweb-jquery.jpg" alt="jQuery" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">jQuery</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="node.js" data-image-title="Node.js" onclick="handleImageCardClick(this, 'images/es-historiaweb-node.js.jpg', 'Node.js', '[&quot;Con Node, puedes programar en JavaScript tanto en el frontend como en el backend.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-node.js.jpg', 'Node.js', '[&quot;Con Node, puedes programar en JavaScript tanto en el frontend como en el backend.&quot;]')">
-          <img src="images/es-historiaweb-node.js.jpg" alt="Node.js" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Node.js</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="php" data-image-title="PHP" onclick="handleImageCardClick(this, 'images/es-historiaweb-php.jpg', 'PHP', '[&quot;En los años 90, creé mis primeros sitios web basados ​​en bases de datos con ASP/ODBC/Access; más tarde, pasé a utilizar PHP/MySQL.&quot;,&quot;¿Has programado alguna vez con PHP?&quot;,&quot;Siempre decíamos: Lo mejor de PHP es que paga mi alquiler.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-php.jpg', 'PHP', '[&quot;En los años 90, creé mis primeros sitios web basados ​​en bases de datos con ASP/ODBC/Access; más tarde, pasé a utilizar PHP/MySQL.&quot;,&quot;¿Has programado alguna vez con PHP?&quot;,&quot;Siempre decíamos: Lo mejor de PHP es que paga mi alquiler.&quot;]')">
-          <img src="images/es-historiaweb-php.jpg" alt="PHP" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">PHP</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="responsivedesign" data-image-title="Responsive Design" onclick="handleImageCardClick(this, 'images/es-historiaweb-responsivedesign.jpg', 'Responsive Design', '[&quot;Algo que la gente olvida es que, hasta alrededor de 2008, solo creábamos sitios web para pantallas de computadora.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-responsivedesign.jpg', 'Responsive Design', '[&quot;Algo que la gente olvida es que, hasta alrededor de 2008, solo creábamos sitios web para pantallas de computadora.&quot;]')">
-          <img src="images/es-historiaweb-responsivedesign.jpg" alt="Responsive Design" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Responsive Design</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="typescript" data-image-title="TypeScript" onclick="handleImageCardClick(this, 'images/es-historiaweb-typescript.jpg', 'TypeScript', '[&quot;TypeScript convirtió a JavaScript en un lenguaje profesional y de nivel empresarial.&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-historiaweb-typescript.jpg', 'TypeScript', '[&quot;TypeScript convirtió a JavaScript en un lenguaje profesional y de nivel empresarial.&quot;]')">
-          <img src="images/es-historiaweb-typescript.jpg" alt="TypeScript" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">TypeScript</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-      </div>
-    </section>
-
-<!-- SECTION 1: VOCABULARIO -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">2</span> Vocabulario
-      </a>
-      <span class="section-action-hint">arrastrar y soltar</span>
-    </h2>
-
-    <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Palabras en espera renderizadas dinámicamente -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Definiciones objetivo renderizadas dinámicamente -->
-      </div>
-
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <div class="vocab-completed-pool" id="vocab-completed-pool">
-        <!-- Píldoras de palabras resueltas renderizadas dinámicamente -->
-      </div>
-    </section>
-
-    <!-- SECTION 2: LECTURA -->
-
-<h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">3</span> Lectura
-      </a>
-      <span class="section-action-hint">leer en voz alta</span>
-    </h2>
-
-    <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-historiaweb.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-    </div>
-      <article class="reading-content">
-      <div class="region-card">
-        <h3>1. HTML, CSS, JavaScript</h3>
-        <p>Empecé a crear páginas a mediados de los noventa, cuando la World Wide Web era una silenciosa promesa y las computadoras hacían ruidos extraños al conectarse por teléfono. En aquella época, el <span class="vocab-in-text" data-key="cimiento">cimiento</span> de todo era escribir código HTML a mano en un editor de texto básico. Poco después llegaron las hojas de estilo CSS para separar el diseño visual de la estructura, y un lenguaje sencillo llamado JavaScript para dar vida a la página con pequeñas animaciones.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>2. PHP y bases de datos relacionales</h3>
-        <p>Al poco tiempo, los sitios puramente estáticos ya no eran suficientes para lo que queríamos construir. Gracias a lenguajes del lado del servidor como PHP y a bases de datos relacionales como MySQL, aprendimos a conectar nuestras páginas con usuarios reales. Por primera vez, pudimos mostrar contenido personalizado en la <span class="vocab-in-text" data-key="pantalla">pantalla</span> según las acciones de cada visitante, creando foros de discusión, tiendas virtuales y formularios de registro.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>3. AJAX</h3>
-        <p>A pesar del avance de las bases de datos, navegar por la web seguía siendo una experiencia lenta y fragmentada. Cada vez que el usuario enviaba un formulario o hacía clic en un botón, la pantalla se ponía en blanco para recargar toda la página desde cero. La llegada de AJAX a mediados de los años dos mil cambió las reglas del juego: de repente, podíamos pedir datos al servidor en segundo plano y actualizar la vista sin ningún <span class="vocab-in-text" data-key="retraso">retraso</span> molesto.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>4. jQuery</h3>
-        <p>Sin embargo, programar con JavaScript en esos años tenía un lado oscuro que ponía a prueba nuestra paciencia. Durante años, lograr que un sitio se viera y funcionara exactamente igual en Netscape e Internet Explorer era una auténtica <span class="vocab-in-text" data-key="pesadilla">pesadilla</span> técnica. La librería jQuery se convirtió en nuestra salvación diaria, porque ofrecía una sintaxis simple que escondía todas esas molestas incompatibilidades entre navegadores detrás de un código limpio.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>5. Git y GitHub</h3>
-        <p>En los primeros tiempos, el flujo de trabajo en equipo era extremadamente caótico y peligroso. Teníamos la costumbre arriesgada de <span class="vocab-in-text" data-key="subir">subir</span> archivos sueltos a los servidores mediante programas de FTP, rezando para no sobreescribir por accidente el trabajo de algún colega. La llegada del control de versiones con Git y la plataforma GitHub trajo disciplina, orden y la tranquilidad de colaborar en equipo con un historial transparente de cada cambio.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>6. Diseño web adaptable (Responsive Design)</h3>
-        <p>Con la masificación de los teléfonos inteligentes, la experiencia de navegar por sitios pensados únicamente para computadoras de escritorio se sintió de pronto <span class="vocab-in-text" data-key="torpe">torpe</span> y pesada. Nadie quería hacer zoom constante con los dedos para leer un párrafo. El diseño web adaptable nos enseñó a usar rejillas fluidas y consultas de medios en CSS (Media Queries) para que las páginas respondieran con elegancia a cualquier pantalla táctil.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>7. Node.js</h3>
-        <p>En 2009 ocurrió un giro histórico que muy pocos programadores veteranos anticipamos: apareció Node.js y llevó el motor de JavaScript fuera del navegador directamente a los servidores. Aquello unificó nuestro lenguaje de trabajo y dio origen a miles de <span class="vocab-in-text" data-key="herramientas">herramientas</span> que transformaron para siempre la manera de compilar, empaquetar y gestionar dependencias en proyectos modernos.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>8. Frameworks SPA (React, Vue, Angular)</h3>
-        <p>A medida que la web se volvió más ambiciosa, manipular el documento a mano con jQuery ya no era suficiente para crear aplicaciones complejas. La aparición de React, Vue y Angular consolidó las aplicaciones de una sola página (SPA). Para los desarrolladores, dividir las interfaces complejas en componentes independientes y reutilizables representó un inmenso <span class="vocab-in-text" data-key="alivio">alivio</span> que cambió la arquitectura del software web para siempre.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>9. TypeScript</h3>
-        <p>Con equipos de cientos de ingenieros construyendo aplicaciones web gigantescas, la flexibilidad de JavaScript empezó a causar errores difíciles de detectar en producción. Adoptamos TypeScript para añadir tipado estático y autocompletado inteligente a nuestro código. Aunque hoy en día el ecosistema nos bombardea con constantes <span class="vocab-in-text" data-key="novedades">novedades</span> en librerías y utilidades, contar con un compilador estricto nos devolvió la confianza al refactorizar sistemas grandes.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>10. Inteligencia Artificial</h3>
-        <p>Hoy en día vivimos la transformación más rápida de todas: la integración de la Inteligencia Artificial en nuestro flujo diario. Ahora programamos junto a asistentes inteligentes capaces de sugerir funciones completas, detectar errores y generar interfaces en cuestión de segundos. Aceptar cada nueva etapa técnica siempre ha sido un <span class="vocab-in-text" data-key="reto">reto</span>, pero después de tres décadas en esta profesión, aprendí que la curiosidad constante es la única tecnología que nunca pasa de moda.</p>
-      </div>
-    </article>
-    </div>
-
-    <!-- SECTION 3: COMPRENSIÓN -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">5</span> Comprensión profunda
+        <span class="section-num">4</span> Comprensión profunda
       </a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
@@ -3242,9 +3221,34 @@
     </section>
 
     <!-- SECTION 4: PREGUNTAS ABIERTAS -->
+
+    <!-- SECTION 1: VOCABULARIO -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">5</span> Vocabulario
+      </a>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Palabras en espera renderizadas dinámicamente -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Definiciones objetivo renderizadas dinámicamente -->
+      </div>
+
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <div class="vocab-completed-pool" id="vocab-completed-pool">
+        <!-- Píldoras de palabras resueltas renderizadas dinámicamente -->
+      </div>
+    </section>
+
     <h2 class="section-title" id="seccion-6">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span>
+        <span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span>
       </a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>

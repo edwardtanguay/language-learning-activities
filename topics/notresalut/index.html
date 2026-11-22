@@ -2258,16 +2258,19 @@
       <!-- Section Jump Navigation (parité 1:1 avec le menu flottant) -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Aller à la section 1 : Images">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulaire">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lecture">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Compréhension rapide">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Compréhension">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lecture">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Compréhension rapide">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Compréhension">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulaire">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Questions">6</a>
       </nav>
     </header>
 
 
 
+
+
+    <!-- SECTION 3: LECTURE -->
     <!-- SECTION 1: IMAGES -->
     <h2 class="section-title" id="seccion-1">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
@@ -2299,9 +2302,51 @@
       </div>
     </section>
 
-<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut"><span class="section-num">4</span> Compréhension rapide</a>
+<h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
+        <span class="section-num">2</span> Lecture
+      </a>
+      <span class="section-action-hint">lire à haute voix</span>
+    </h2>
+
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Lecteur audio du texte">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-notresalut.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Écouter la lecture" title="Écouter la lecture">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progression de l'audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Vitesse de lecture" title="Vitesse de lecture">1×</button>
+    </div>
+      <article class="reading-content">
+      <div class="region-card">
+        <h3>L'engrenage technocratique et la banalité de la compromission</h3>
+        <p>Chers étudiants, avant d'assister à la projection de <em>Notre Salut</em> d'Emmanuel Marre, il est utile d'en cerner les enjeux historiques et moraux afin d'éviter une lecture trop rapide. L'action débute en septembre 1940, au lendemain de l'<span class="vocab-in-text" data-key="effondrement">effondrement</span> militaire français, alors que le régime du maréchal Pétain s'installe à Vichy. Le personnage central, Henri Marre, interprété par Swann Arlaud, est un ingénieur de quarante-neuf ans, ruiné et dépourvu de soutiens politiques. Il arrive dans la nouvelle capitale avec un <span class="vocab-in-text" data-key="ouvrage">ouvrage</span> politique édité à compte d'auteur, intitulé précisément <em>Notre Salut</em>. À première vue, rien ne le prédispose à devenir une figure spectaculaire du mal historique. C'est précisément ce qui intéresse le cinéaste&nbsp;: plutôt que de filmer un idéologue fanatique, il observe comment un homme ordinaire, convaincu de sa propre compétence, cherche à se rendre indispensable.</p>
+        <p>Empêché d'accéder aux plus hauts postes ministériels en raison d'une condamnation passée, Henri accepte avec un <span class="vocab-in-text" data-key="empressement">empressement</span> discret un emploi de cadre au ministère du Travail. Il ne se présente pas comme un partisan zélé de l'occupant, mais comme un technicien pragmatique soucieux d'ordre, de méthode et de redressement économique. En devenant un simple <span class="vocab-in-text" data-key="rouage">rouage</span> de l'appareil administratif, il illustre ce que le cinéma contemporain interroge souvent sous le nom de banalité du mal&nbsp;: la façon dont la soumission à une autorité illégitime s'accomplit au nom de l'efficacité professionnelle.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>De la gestion quotidienne à la compromission morale</h3>
+        <p>Pendant le visionnage, soyez attentifs à la progression lente de cette adhésion. Le film ne repose pas sur un basculement dramatique soudain, mais sur un <span class="vocab-in-text" data-key="glissement">glissement</span> presque imperceptible. À mesure que la guerre s'enlise et que le régime de Vichy se durcit, les tâches quotidiennes d'Henri cessent d'être neutres. Pourtant, son discours intérieur reste inchangé&nbsp;: il continue de parler de rationalisation, de gestion et de service public. Le scénario met ainsi en lumière un profond <span class="vocab-in-text" data-key="aveuglement">aveuglement</span> moral. Lorsque l'obsession de la performance administrative remplace toute réflexion éthique, la technocratie devient un instrument capable d'aseptiser la violence politique et de transformer la collaboration en routine de bureau.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>La fracture entre l'intime et la grande Histoire</h3>
+        <p><em>Notre Salut</em> ne se limite toutefois pas à une analyse politique&nbsp;; le film s'enracine dans l'histoire familiale du réalisateur, qui s'est appuyé sur la correspondance réelle échangée durant l'Occupation entre son arrière-grand-père et son arrière-grand-mère, Paulette, restée loin de Vichy avec leurs enfants. Cette dimension épistolaire révèle une <span class="vocab-in-text" data-key="déchirure">déchirure</span> progressive au sein du couple. Tandis qu'Henri s'enferme dans ses ambitions administratives et ses certitudes patriotiques, un <span class="vocab-in-text" data-key="fossé">fossé</span> se creuse entre son quotidien vichyssois et la réalité vécue par sa famille. En confrontant les lettres privées aux décisions publiques, Emmanuel Marre montre que les choix idéologiques ne restent jamais confinés à la sphère professionnelle&nbsp;: ils altèrent durablement les liens affectifs et la mémoire transmise aux générations suivantes.</p>
+      </div>
+
+      <div class="region-card">
+        <h3>Une mise en scène clinique, à rebours du mélodrame</h3>
+        <p>Sur le plan formel, ne vous attendez ni aux grands élans lyriques ni aux affrontements spectaculaires du cinéma historique traditionnel. Le cinéaste choisit l'austérité du film de bureau&nbsp;: une lumière retenue aux teintes légèrement jaunâtres, un rythme posé qui épouse la monotonie des dossiers, et une caméra qui observe les gestes administratifs avec une distance presque documentaire. Swann Arlaud incarne Henri avec une <span class="vocab-in-text" data-key="pudeur">pudeur</span> glaciale, faite de rigidité contenue et de politesse calculée. En refusant le manichéisme facile et les effets mélodramatiques, le film dissipe tout <span class="vocab-in-text" data-key="leurre">leurre</span> consolateur pour le spectateur. Il ne vous demande pas de juger de haut un monstre d'un autre temps, mais d'examiner avec lucidité comment un individu persuadé de bien faire finit par servir l'inacceptable.</p>
+      </div>
+    </article>
+    </div>
+
+    <!-- SECTION 4: COMPRÉHENSION -->
+    <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut"><span class="section-num">3</span> Compréhension rapide</a>
       <span class="section-action-hint">choix multiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2906,76 +2951,9 @@
       </div>
     </div>
 
-<!-- SECTION 2: VOCABULAIRE -->
-    <h2 class="section-title" id="seccion-2">
+    <h2 class="section-title" id="seccion-4">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
-        <span class="section-num">2</span> Vocabulaire
-      </a>
-      <span class="section-action-hint">glisser-déposer</span>
-    </h2>
-
-    <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Mots en attente générés dynamiquement -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Définitions cibles générées dynamiquement -->
-      </div>
-
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <div class="vocab-completed-pool" id="vocab-completed-pool">
-        <!-- Pastilles de mots validés générées dynamiquement -->
-      </div>
-    </section>
-
-    <!-- SECTION 3: LECTURE -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
-        <span class="section-num">3</span> Lecture
-      </a>
-      <span class="section-action-hint">lire à haute voix</span>
-    </h2>
-
-    <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Lecteur audio du texte">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-notresalut.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Écouter la lecture" title="Écouter la lecture">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progression de l'audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Vitesse de lecture" title="Vitesse de lecture">1×</button>
-    </div>
-      <article class="reading-content">
-      <div class="region-card">
-        <h3>L'engrenage technocratique et la banalité de la compromission</h3>
-        <p>Chers étudiants, avant d'assister à la projection de <em>Notre Salut</em> d'Emmanuel Marre, il est utile d'en cerner les enjeux historiques et moraux afin d'éviter une lecture trop rapide. L'action débute en septembre 1940, au lendemain de l'<span class="vocab-in-text" data-key="effondrement">effondrement</span> militaire français, alors que le régime du maréchal Pétain s'installe à Vichy. Le personnage central, Henri Marre, interprété par Swann Arlaud, est un ingénieur de quarante-neuf ans, ruiné et dépourvu de soutiens politiques. Il arrive dans la nouvelle capitale avec un <span class="vocab-in-text" data-key="ouvrage">ouvrage</span> politique édité à compte d'auteur, intitulé précisément <em>Notre Salut</em>. À première vue, rien ne le prédispose à devenir une figure spectaculaire du mal historique. C'est précisément ce qui intéresse le cinéaste&nbsp;: plutôt que de filmer un idéologue fanatique, il observe comment un homme ordinaire, convaincu de sa propre compétence, cherche à se rendre indispensable.</p>
-        <p>Empêché d'accéder aux plus hauts postes ministériels en raison d'une condamnation passée, Henri accepte avec un <span class="vocab-in-text" data-key="empressement">empressement</span> discret un emploi de cadre au ministère du Travail. Il ne se présente pas comme un partisan zélé de l'occupant, mais comme un technicien pragmatique soucieux d'ordre, de méthode et de redressement économique. En devenant un simple <span class="vocab-in-text" data-key="rouage">rouage</span> de l'appareil administratif, il illustre ce que le cinéma contemporain interroge souvent sous le nom de banalité du mal&nbsp;: la façon dont la soumission à une autorité illégitime s'accomplit au nom de l'efficacité professionnelle.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>De la gestion quotidienne à la compromission morale</h3>
-        <p>Pendant le visionnage, soyez attentifs à la progression lente de cette adhésion. Le film ne repose pas sur un basculement dramatique soudain, mais sur un <span class="vocab-in-text" data-key="glissement">glissement</span> presque imperceptible. À mesure que la guerre s'enlise et que le régime de Vichy se durcit, les tâches quotidiennes d'Henri cessent d'être neutres. Pourtant, son discours intérieur reste inchangé&nbsp;: il continue de parler de rationalisation, de gestion et de service public. Le scénario met ainsi en lumière un profond <span class="vocab-in-text" data-key="aveuglement">aveuglement</span> moral. Lorsque l'obsession de la performance administrative remplace toute réflexion éthique, la technocratie devient un instrument capable d'aseptiser la violence politique et de transformer la collaboration en routine de bureau.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>La fracture entre l'intime et la grande Histoire</h3>
-        <p><em>Notre Salut</em> ne se limite toutefois pas à une analyse politique&nbsp;; le film s'enracine dans l'histoire familiale du réalisateur, qui s'est appuyé sur la correspondance réelle échangée durant l'Occupation entre son arrière-grand-père et son arrière-grand-mère, Paulette, restée loin de Vichy avec leurs enfants. Cette dimension épistolaire révèle une <span class="vocab-in-text" data-key="déchirure">déchirure</span> progressive au sein du couple. Tandis qu'Henri s'enferme dans ses ambitions administratives et ses certitudes patriotiques, un <span class="vocab-in-text" data-key="fossé">fossé</span> se creuse entre son quotidien vichyssois et la réalité vécue par sa famille. En confrontant les lettres privées aux décisions publiques, Emmanuel Marre montre que les choix idéologiques ne restent jamais confinés à la sphère professionnelle&nbsp;: ils altèrent durablement les liens affectifs et la mémoire transmise aux générations suivantes.</p>
-      </div>
-
-      <div class="region-card">
-        <h3>Une mise en scène clinique, à rebours du mélodrame</h3>
-        <p>Sur le plan formel, ne vous attendez ni aux grands élans lyriques ni aux affrontements spectaculaires du cinéma historique traditionnel. Le cinéaste choisit l'austérité du film de bureau&nbsp;: une lumière retenue aux teintes légèrement jaunâtres, un rythme posé qui épouse la monotonie des dossiers, et une caméra qui observe les gestes administratifs avec une distance presque documentaire. Swann Arlaud incarne Henri avec une <span class="vocab-in-text" data-key="pudeur">pudeur</span> glaciale, faite de rigidité contenue et de politesse calculée. En refusant le manichéisme facile et les effets mélodramatiques, le film dissipe tout <span class="vocab-in-text" data-key="leurre">leurre</span> consolateur pour le spectateur. Il ne vous demande pas de juger de haut un monstre d'un autre temps, mais d'examiner avec lucidité comment un individu persuadé de bien faire finit par servir l'inacceptable.</p>
-      </div>
-    </article>
-    </div>
-
-    <!-- SECTION 4: COMPRÉHENSION -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
-        <span class="section-num">5</span> Compréhension approfondie
+        <span class="section-num">4</span> Compréhension approfondie
       </a>
       <span class="section-action-hint">choix multiple</span>
     </h2>
@@ -3169,9 +3147,34 @@
 
     </section>
 
-<h2 class="section-title" id="seccion-6">
+
+    <!-- SECTION 2: VOCABULAIRE -->
+    <h2 class="section-title" id="seccion-5">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
-        <span class="section-num">6</span> <span>Questions<span class="hide-mobile"> ouvertes</span></span>
+        <span class="section-num">5</span> Vocabulaire
+      </a>
+      <span class="section-action-hint">glisser-déposer</span>
+    </h2>
+
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Mots en attente générés dynamiquement -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Définitions cibles générées dynamiquement -->
+      </div>
+
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <div class="vocab-completed-pool" id="vocab-completed-pool">
+        <!-- Pastilles de mots validés générées dynamiquement -->
+      </div>
+    </section>
+
+    <h2 class="section-title" id="seccion-6">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Retour en haut">
+        <span class="section-num">6</span> <span>Questions<span class="hide-mobile"> de discussion</span></span>
       </a>
       <span class="section-action-hint">répondre et débattre</span>
     </h2>

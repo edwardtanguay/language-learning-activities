@@ -2353,17 +2353,99 @@
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
-<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="comoformar" draggable="true">como formar</button>
+        <button type="button" class="image-label-chip" data-image-id="conjugarimp.subj." draggable="true">conjugar imp. subj.</button>
+        <button type="button" class="image-label-chip" data-image-id="ejemplos" draggable="true">ejemplos</button>
+        <button type="button" class="image-label-chip" data-image-id="imperfectodesubjuntivoirregulares" draggable="true">imperfecto de subjuntivo irregulares</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="comoformar" data-image-title="como formar" onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-comoformar.jpg', 'como formar', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-comoformar.jpg', 'como formar', '[]')">
+          <img src="images/es-presenteeimperfecto-comoformar.jpg" alt="como formar" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">como formar</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="conjugarimp.subj." data-image-title="conjugar imp. subj." onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-conjugarimp.subj..jpg', 'conjugar imp. subj.', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-conjugarimp.subj..jpg', 'conjugar imp. subj.', '[]')">
+          <img src="images/es-presenteeimperfecto-conjugarimp.subj..jpg" alt="conjugar imp. subj." class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">conjugar imp. subj.</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="ejemplos" data-image-title="ejemplos" onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-ejemplos.jpg', 'ejemplos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-ejemplos.jpg', 'ejemplos', '[]')">
+          <img src="images/es-presenteeimperfecto-ejemplos.jpg" alt="ejemplos" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">ejemplos</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="imperfectodesubjuntivoirregulares" data-image-title="imperfecto de subjuntivo irregulares" onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-imperfectodesubjuntivoirregulares.jpg', 'imperfecto de subjuntivo irregulares', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-imperfectodesubjuntivoirregulares.jpg', 'imperfecto de subjuntivo irregulares', '[]')">
+          <img src="images/es-presenteeimperfecto-imperfectodesubjuntivoirregulares.jpg" alt="imperfecto de subjuntivo irregulares" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">imperfecto de subjuntivo irregulares</div>
+        </div>
+      </div>
+    </section>
+
+<!-- Section 2: Reading Text -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+    <div class="lectura-section-body">
+      <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+        <audio id="lectura-audio" preload="metadata" src="audio/lectura-presenteeimperfecto.mp3"></audio>
+        <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+        </button>
+        <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+        <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+        <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+      </div>
+      <article class="reading-content">
+      <p>
+        Buenas tardes. En la clase de hoy vamos a analizar las diferencias gramaticales y prácticas entre el presente de subjuntivo y el imperfecto de subjuntivo. Muchos estudiantes de nivel intermedio reconocen ambos tiempos cuando leen un texto, pero dudan al elegir entre uno y otro en una conversación real. El <span class="vocab-in-text" data-key="eje">eje</span> de esta distinción no es únicamente formal, sino también temporal y comunicativo. Elegir uno u otro depende sobre todo del <span class="vocab-in-text" data-key="marco">marco</span> temporal de la oración principal y de la distancia que el hablante percibe frente a la realidad.
+      </p>
+
+      <h3>Cómo se forman ambos tiempos</h3>
+      <p>
+        Antes de ver sus usos, conviene recordar brevemente su formación. Para el presente de subjuntivo, se parte de la primera persona del singular del presente de indicativo, se quita la «-o» para conservar la <span class="vocab-in-text" data-key="raíz">raíz</span> y se añaden las terminaciones opuestas: «-e» para los verbos en «-ar» (<em>hable, trabajes</em>) y «-a» para los verbos en «-er» e «-ir» (<em>tenga, salgas, vivamos</em>). Para el imperfecto de subjuntivo, en cambio, se toma la tercera persona del plural del pretérito indefinido (<em>hablaron, tuvieron, fueron</em>), se elimina «-ron» y se añaden las terminaciones en «-ra» (<em>hablara, tuviera, fuera</em>) o en «-se» (<em>hablase, tuviese, fuese</em>). Ambas variantes son gramaticalmente equivalentes en todo el mundo hispanohablante; sin embargo, la forma en «-ra» predomina claramente en el habla cotidiana, mientras que «-se» aparece con mayor frecuencia en registros escritos o formales.
+      </p>
+
+      <h3>La correlación de tiempos en la conversación diaria</h3>
+      <p>
+        En la conversación diaria, el <span class="vocab-in-text" data-key="vínculo">vínculo</span> entre el verbo principal y el verbo subordinado guía la elección del tiempo. Cuando el verbo principal está en presente, futuro o imperativo, usamos el presente de subjuntivo para expresar deseos, dudas, emociones o algún <span class="vocab-in-text" data-key="consejo">consejo</span> referido al presente o al futuro: «Espero que llegues a tiempo», «Te recomiendo que descanses hoy» o «Dudo que tengan mesas libres esta noche». Si trasladamos ese mismo verbo principal al pasado (pretérito indefinido o imperfecto) o al condicional, la cláusula subordinada pasa normalmente al imperfecto de subjuntivo: «Esperaba que llegaras a tiempo», «Me recomendó que descansara» o «Me gustaría que vinieras a cenar». También es muy común reaccionar en presente ante algo ya ocurrido en el pasado: «Me alegro de que ayer encontraras el documento».
+      </p>
+
+      <h3>Condiciones reales frente a situaciones hipotéticas</h3>
+      <p>
+        En las oraciones condicionales introducidas por «si», la elección del tiempo verbal indica si consideramos una situación posible o si la percibimos como algo hipotético o <span class="vocab-in-text" data-key="lejano">lejano</span>. Cuando hablamos de una condición real y probable en el presente o el futuro, el español usa «si» más presente de indicativo, nunca presente de subjuntivo: «Si tienes tiempo mañana, revisamos el informe». En cambio, cuando planteamos una condición improbable o contraria a un <span class="vocab-in-text" data-key="hecho">hecho</span> actual, empleamos «si» seguido del imperfecto de subjuntivo junto con el condicional: «Si tuviera más tiempo libre, estudiaría otro idioma» o «Si vivieras más cerca, nos veríamos cada semana». Esta misma estructura resulta muy útil para dar recomendaciones hipotéticas: «Si yo fuera tú, aceptaría la propuesta».
+      </p>
+
+      <h3>Cortesía cotidiana y comparaciones con «como si»</h3>
+      <p>
+        Por último, existen dos usos muy frecuentes en los que el imperfecto de subjuntivo aparece referido al momento presente. En primer lugar, sirve para <span class="vocab-in-text" data-key="suavizar">suavizar</span> una petición, una pregunta o una sugerencia, sobre todo con los verbos «querer», «poder» y «deber». Decir «quisiera pedir un café, por favor» o «¿pudiera usted repetir el número?» transmite mayor <span class="vocab-in-text" data-key="amabilidad">amabilidad</span> que el presente de indicativo. En una tienda, una oficina o un <span class="vocab-in-text" data-key="entorno">entorno</span> universitario, este recurso permite formular solicitudes sin sonar imperativo. En segundo lugar, la expresión «como si» exige siempre el imperfecto de subjuntivo (o el pluscuamperfecto) porque introduce una comparación irreal: «Habla como si conociera toda la ciudad» o «Gasta dinero como si no trabajara».
+      </p>
+
+      <p>
+        En resumen, el presente de subjuntivo sitúa deseos, dudas y recomendaciones en el plano actual o futuro, mientras que el imperfecto de subjuntivo los desplaza al pasado, al terreno de la hipótesis o a la distancia cortés. Practicar pares breves de oraciones en voz alta les ayudará a aplicar este contraste con seguridad en sus conversaciones diarias.
+      </p>
+      </article>
+    </div>
+
+    <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2968,115 +3050,9 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="comoformar" draggable="true">como formar</button>
-        <button type="button" class="image-label-chip" data-image-id="conjugarimp.subj." draggable="true">conjugar imp. subj.</button>
-        <button type="button" class="image-label-chip" data-image-id="ejemplos" draggable="true">ejemplos</button>
-        <button type="button" class="image-label-chip" data-image-id="imperfectodesubjuntivoirregulares" draggable="true">imperfecto de subjuntivo irregulares</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="comoformar" data-image-title="como formar" onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-comoformar.jpg', 'como formar', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-comoformar.jpg', 'como formar', '[]')">
-          <img src="images/es-presenteeimperfecto-comoformar.jpg" alt="como formar" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">como formar</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="conjugarimp.subj." data-image-title="conjugar imp. subj." onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-conjugarimp.subj..jpg', 'conjugar imp. subj.', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-conjugarimp.subj..jpg', 'conjugar imp. subj.', '[]')">
-          <img src="images/es-presenteeimperfecto-conjugarimp.subj..jpg" alt="conjugar imp. subj." class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">conjugar imp. subj.</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="ejemplos" data-image-title="ejemplos" onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-ejemplos.jpg', 'ejemplos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-ejemplos.jpg', 'ejemplos', '[]')">
-          <img src="images/es-presenteeimperfecto-ejemplos.jpg" alt="ejemplos" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">ejemplos</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="imperfectodesubjuntivoirregulares" data-image-title="imperfecto de subjuntivo irregulares" onclick="handleImageCardClick(this, 'images/es-presenteeimperfecto-imperfectodesubjuntivoirregulares.jpg', 'imperfecto de subjuntivo irregulares', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-presenteeimperfecto-imperfectodesubjuntivoirregulares.jpg', 'imperfecto de subjuntivo irregulares', '[]')">
-          <img src="images/es-presenteeimperfecto-imperfectodesubjuntivoirregulares.jpg" alt="imperfecto de subjuntivo irregulares" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">imperfecto de subjuntivo irregulares</div>
-        </div>
-      </div>
-    </section>
-
-<!-- Section 1: Vocabulary Drag & Drop -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
-      <span class="section-action-hint">arrastrar y soltar</span>
-    </h2>
-    <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- Section 2: Reading Text -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
-      <span class="section-action-hint">leer en voz alta</span>
-    </h2>
-    <div class="lectura-section-body">
-      <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-        <audio id="lectura-audio" preload="metadata" src="audio/lectura-presenteeimperfecto.mp3"></audio>
-        <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-        </button>
-        <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-        <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-        <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-      </div>
-      <article class="reading-content">
-      <p>
-        Buenas tardes. En la clase de hoy vamos a analizar las diferencias gramaticales y prácticas entre el presente de subjuntivo y el imperfecto de subjuntivo. Muchos estudiantes de nivel intermedio reconocen ambos tiempos cuando leen un texto, pero dudan al elegir entre uno y otro en una conversación real. El <span class="vocab-in-text" data-key="eje">eje</span> de esta distinción no es únicamente formal, sino también temporal y comunicativo. Elegir uno u otro depende sobre todo del <span class="vocab-in-text" data-key="marco">marco</span> temporal de la oración principal y de la distancia que el hablante percibe frente a la realidad.
-      </p>
-
-      <h3>Cómo se forman ambos tiempos</h3>
-      <p>
-        Antes de ver sus usos, conviene recordar brevemente su formación. Para el presente de subjuntivo, se parte de la primera persona del singular del presente de indicativo, se quita la «-o» para conservar la <span class="vocab-in-text" data-key="raíz">raíz</span> y se añaden las terminaciones opuestas: «-e» para los verbos en «-ar» (<em>hable, trabajes</em>) y «-a» para los verbos en «-er» e «-ir» (<em>tenga, salgas, vivamos</em>). Para el imperfecto de subjuntivo, en cambio, se toma la tercera persona del plural del pretérito indefinido (<em>hablaron, tuvieron, fueron</em>), se elimina «-ron» y se añaden las terminaciones en «-ra» (<em>hablara, tuviera, fuera</em>) o en «-se» (<em>hablase, tuviese, fuese</em>). Ambas variantes son gramaticalmente equivalentes en todo el mundo hispanohablante; sin embargo, la forma en «-ra» predomina claramente en el habla cotidiana, mientras que «-se» aparece con mayor frecuencia en registros escritos o formales.
-      </p>
-
-      <h3>La correlación de tiempos en la conversación diaria</h3>
-      <p>
-        En la conversación diaria, el <span class="vocab-in-text" data-key="vínculo">vínculo</span> entre el verbo principal y el verbo subordinado guía la elección del tiempo. Cuando el verbo principal está en presente, futuro o imperativo, usamos el presente de subjuntivo para expresar deseos, dudas, emociones o algún <span class="vocab-in-text" data-key="consejo">consejo</span> referido al presente o al futuro: «Espero que llegues a tiempo», «Te recomiendo que descanses hoy» o «Dudo que tengan mesas libres esta noche». Si trasladamos ese mismo verbo principal al pasado (pretérito indefinido o imperfecto) o al condicional, la cláusula subordinada pasa normalmente al imperfecto de subjuntivo: «Esperaba que llegaras a tiempo», «Me recomendó que descansara» o «Me gustaría que vinieras a cenar». También es muy común reaccionar en presente ante algo ya ocurrido en el pasado: «Me alegro de que ayer encontraras el documento».
-      </p>
-
-      <h3>Condiciones reales frente a situaciones hipotéticas</h3>
-      <p>
-        En las oraciones condicionales introducidas por «si», la elección del tiempo verbal indica si consideramos una situación posible o si la percibimos como algo hipotético o <span class="vocab-in-text" data-key="lejano">lejano</span>. Cuando hablamos de una condición real y probable en el presente o el futuro, el español usa «si» más presente de indicativo, nunca presente de subjuntivo: «Si tienes tiempo mañana, revisamos el informe». En cambio, cuando planteamos una condición improbable o contraria a un <span class="vocab-in-text" data-key="hecho">hecho</span> actual, empleamos «si» seguido del imperfecto de subjuntivo junto con el condicional: «Si tuviera más tiempo libre, estudiaría otro idioma» o «Si vivieras más cerca, nos veríamos cada semana». Esta misma estructura resulta muy útil para dar recomendaciones hipotéticas: «Si yo fuera tú, aceptaría la propuesta».
-      </p>
-
-      <h3>Cortesía cotidiana y comparaciones con «como si»</h3>
-      <p>
-        Por último, existen dos usos muy frecuentes en los que el imperfecto de subjuntivo aparece referido al momento presente. En primer lugar, sirve para <span class="vocab-in-text" data-key="suavizar">suavizar</span> una petición, una pregunta o una sugerencia, sobre todo con los verbos «querer», «poder» y «deber». Decir «quisiera pedir un café, por favor» o «¿pudiera usted repetir el número?» transmite mayor <span class="vocab-in-text" data-key="amabilidad">amabilidad</span> que el presente de indicativo. En una tienda, una oficina o un <span class="vocab-in-text" data-key="entorno">entorno</span> universitario, este recurso permite formular solicitudes sin sonar imperativo. En segundo lugar, la expresión «como si» exige siempre el imperfecto de subjuntivo (o el pluscuamperfecto) porque introduce una comparación irreal: «Habla como si conociera toda la ciudad» o «Gasta dinero como si no trabajara».
-      </p>
-
-      <p>
-        En resumen, el presente de subjuntivo sitúa deseos, dudas y recomendaciones en el plano actual o futuro, mientras que el imperfecto de subjuntivo los desplaza al pasado, al terreno de la hipótesis o a la distancia cortés. Practicar pares breves de oraciones en voz alta les ayudará a aplicar este contraste con seguridad en sus conversaciones diarias.
-      </p>
-      </article>
-    </div>
-
     <!-- Section 3: Interactive Comprehension Questions -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Comprensión profunda</a>
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión profunda</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quiz-container" id="quiz-container">
@@ -3273,9 +3249,35 @@
 
     </div>
 
+
+    <!-- Section 1: Vocabulary Drag & Drop -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Vocabulario</a>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
     <!-- Section 4: Open Questions Section -->
     <h2 class="section-title" id="seccion-6">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span></a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
     <section class="discussion-container">

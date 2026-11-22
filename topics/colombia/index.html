@@ -2358,17 +2358,145 @@
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="cabosanjuanenelparquetayrona" draggable="true">Cabo San Juan en el Parque Tayrona</button>
+        <button type="button" class="image-label-chip" data-image-id="cafetero" draggable="true">Cafetero</button>
+        <button type="button" class="image-label-chip" data-image-id="cartagenaciudadamurallada" draggable="true">Cartagena Ciudad Amurallada</button>
+        <button type="button" class="image-label-chip" data-image-id="guatape" draggable="true">Guatapé</button>
+        <button type="button" class="image-label-chip" data-image-id="laamazoniacolombiana" draggable="true">La Amazonía Colombiana</button>
+        <button type="button" class="image-label-chip" data-image-id="losbalconesfloridosdecartagena" draggable="true">Los Balcones Floridos De Cartagena</button>
+        <button type="button" class="image-label-chip" data-image-id="losllanos" draggable="true">Los Llanos</button>
+        <button type="button" class="image-label-chip" data-image-id="mapwithnatureareas" draggable="true">Map With Nature Areas</button>
+        <button type="button" class="image-label-chip" data-image-id="parquetayrona" draggable="true">Parque Tayrona</button>
+        <button type="button" class="image-label-chip" data-image-id="regionesdecolumbia" draggable="true">Regiones de Columbia</button>
+        <button type="button" class="image-label-chip" data-image-id="tatacoadesert" draggable="true">Tatacoadesert</button>
+        <button type="button" class="image-label-chip" data-image-id="topomap" draggable="true">Topomap</button>
+        <button type="button" class="image-label-chip" data-image-id="topomapclear" draggable="true">Topomapclear</button>
+        <button type="button" class="image-label-chip" data-image-id="valledecocora" draggable="true">Valle de Cocora</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="cabosanjuanenelparquetayrona" data-image-title="Cabo San Juan en el Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')">
+          <img src="images/es-colombia-cabosanjuanenelparquetayrona.jpg" alt="Cabo San Juan en el Parque Tayrona" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cabo San Juan en el Parque Tayrona</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="cafetero" data-image-title="Cafetero" onclick="handleImageCardClick(this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')">
+          <img src="images/es-colombia-cafetero.jpg" alt="Cafetero" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cafetero</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="cartagenaciudadamurallada" data-image-title="Cartagena Ciudad Amurallada" onclick="handleImageCardClick(this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')">
+          <img src="images/es-colombia-cartagenaciudadamurallada.jpg" alt="Cartagena Ciudad Amurallada" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Cartagena Ciudad Amurallada</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="guatape" data-image-title="Guatapé" onclick="handleImageCardClick(this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')">
+          <img src="images/es-colombia-guatape.jpg" alt="Guatapé" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Guatapé</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="laamazoniacolombiana" data-image-title="La Amazonía Colombiana" onclick="handleImageCardClick(this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')">
+          <img src="images/es-colombia-laamazoniacolombiana.jpg" alt="La Amazonía Colombiana" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">La Amazonía Colombiana</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="losbalconesfloridosdecartagena" data-image-title="Los Balcones Floridos De Cartagena" onclick="handleImageCardClick(this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')">
+          <img src="images/es-colombia-losbalconesfloridosdecartagena.jpg" alt="Los Balcones Floridos De Cartagena" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Los Balcones Floridos De Cartagena</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="losllanos" data-image-title="Los Llanos" onclick="handleImageCardClick(this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')">
+          <img src="images/es-colombia-losllanos.jpg" alt="Los Llanos" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Los Llanos</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="mapwithnatureareas" data-image-title="Map With Nature Areas" onclick="handleImageCardClick(this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')">
+          <img src="images/es-colombia-mapwithnatureareas.jpg" alt="Map With Nature Areas" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Map With Nature Areas</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="parquetayrona" data-image-title="Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')">
+          <img src="images/es-colombia-parquetayrona.jpg" alt="Parque Tayrona" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Parque Tayrona</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="regionesdecolumbia" data-image-title="Regiones de Columbia" onclick="handleImageCardClick(this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')">
+          <img src="images/es-colombia-regionesdecolumbia.jpg" alt="Regiones de Columbia" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Regiones de Columbia</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="tatacoadesert" data-image-title="Tatacoadesert" onclick="handleImageCardClick(this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')">
+          <img src="images/es-colombia-tatacoadesert.jpg" alt="Tatacoadesert" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Tatacoadesert</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="topomap" data-image-title="Topomap" onclick="handleImageCardClick(this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')">
+          <img src="images/es-colombia-topomap.jpg" alt="Topomap" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Topomap</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="topomapclear" data-image-title="Topomapclear" onclick="handleImageCardClick(this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')">
+          <img src="images/es-colombia-topomapclear.jpg" alt="Topomapclear" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Topomapclear</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="valledecocora" data-image-title="Valle de Cocora" onclick="handleImageCardClick(this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')">
+          <img src="images/es-colombia-valledecocora.jpg" alt="Valle de Cocora" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Valle de Cocora</div>
+        </div>
+      </div>
+    </section>
+
+<!-- Section 2: Reading Text -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
+        </h2>
+      <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-colombia.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
+      <p>
+        Colombia es un país fascinante situado en el extremo noroccidental de América del Sur, que sirve como puerta de entrada entre Centroamérica y el continente sudamericano. Es la única nación de la región que posee costas tanto en el mar Caribe como en el océano Pacífico. Además, su territorio está <span class="vocab-in-text" data-key="atravesado">atravesado</span> por tres grandes cordilleras andinas, lo que crea una extraordinaria variedad de climas, paisajes y tradiciones.
+      </p>
+
+      <div class="region-card">
+        <h3>El Eje Cafetero y la Región Andina</h3>
+        <p>
+          En el corazón montañoso del país se encuentran ciudades muy dinámicas como Bogotá, la extensa capital situada a 2.600 metros de altitud, y Medellín, conocida como la «Ciudad de la Eterna Primavera» por su agradable clima templado durante todo el año. Más hacia el centro se extiende el famoso Eje Cafetero, declarado Patrimonio de la Humanidad. En las verdes <span class="vocab-in-text" data-key="laderas">laderas</span> de estas montañas, miles de familias <span class="vocab-in-text" data-key="campesinas">campesinas</span> cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta. Durante la época de <span class="vocab-in-text" data-key="cosecha">cosecha</span>, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más <span class="vocab-in-text" data-key="maduros">maduros</span>.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>La Costa Caribe y Cartagena de Indias</h3>
+        <p>
+          Hacia el norte, el paisaje cambia por completo al llegar a las aguas cálidas del mar Caribe. Allí brilla Cartagena de Indias, una joya histórica famosa por su antigua ciudad <span class="vocab-in-text" data-key="amurallada">amurallada</span> y sus balcones coloniales cubiertos de flores tropicales. Muy cerca se encuentra también el Parque Nacional Tayrona, donde la sierra nevada y la selva húmeda se encuentran directamente con playas de arena <span class="vocab-in-text" data-key="dorada">dorada</span>. En toda la costa se respira un ambiente alegre marcado por ritmos musicales tradicionales como la cumbia y el vallenato, mientras se disfrutan platos típicos como la arepa de huevo y el pescado frito con arroz de coco.
+        </p>
+      </div>
+
+      <div class="region-card">
+        <h3>Los Llanos, la Amazonía y el Encanto Colombiano</h3>
+        <p>
+          Al oriente de los Andes se abren las inmensas <span class="vocab-in-text" data-key="llanuras">llanuras</span> de la Orinoquía y la profunda selva amazónica, territorios de ríos gigantescos y una naturaleza casi virgen. Sin embargo, más allá de su geografía y de sus mundialmente famosas esmeraldas, el mayor tesoro de Colombia es su gente <span class="vocab-in-text" data-key="acogedora">acogedora</span>. Desde los coloridos zócalos de pueblos como Guatapé hasta el emblemático Valle de Cocora, hogar de las palmas de <span class="vocab-in-text" data-key="cera">cera</span> más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.
+        </p>
+      </div>
+    </article>
+    </div>
+
 <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2973,160 +3101,9 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="cabosanjuanenelparquetayrona" draggable="true">Cabo San Juan en el Parque Tayrona</button>
-        <button type="button" class="image-label-chip" data-image-id="cafetero" draggable="true">Cafetero</button>
-        <button type="button" class="image-label-chip" data-image-id="cartagenaciudadamurallada" draggable="true">Cartagena Ciudad Amurallada</button>
-        <button type="button" class="image-label-chip" data-image-id="guatape" draggable="true">Guatapé</button>
-        <button type="button" class="image-label-chip" data-image-id="laamazoniacolombiana" draggable="true">La Amazonía Colombiana</button>
-        <button type="button" class="image-label-chip" data-image-id="losbalconesfloridosdecartagena" draggable="true">Los Balcones Floridos De Cartagena</button>
-        <button type="button" class="image-label-chip" data-image-id="losllanos" draggable="true">Los Llanos</button>
-        <button type="button" class="image-label-chip" data-image-id="mapwithnatureareas" draggable="true">Map With Nature Areas</button>
-        <button type="button" class="image-label-chip" data-image-id="parquetayrona" draggable="true">Parque Tayrona</button>
-        <button type="button" class="image-label-chip" data-image-id="regionesdecolumbia" draggable="true">Regiones de Columbia</button>
-        <button type="button" class="image-label-chip" data-image-id="tatacoadesert" draggable="true">Tatacoadesert</button>
-        <button type="button" class="image-label-chip" data-image-id="topomap" draggable="true">Topomap</button>
-        <button type="button" class="image-label-chip" data-image-id="topomapclear" draggable="true">Topomapclear</button>
-        <button type="button" class="image-label-chip" data-image-id="valledecocora" draggable="true">Valle de Cocora</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="cabosanjuanenelparquetayrona" data-image-title="Cabo San Juan en el Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cabosanjuanenelparquetayrona.jpg', 'Cabo San Juan en el Parque Tayrona', '[]')">
-          <img src="images/es-colombia-cabosanjuanenelparquetayrona.jpg" alt="Cabo San Juan en el Parque Tayrona" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Cabo San Juan en el Parque Tayrona</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="cafetero" data-image-title="Cafetero" onclick="handleImageCardClick(this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cafetero.jpg', 'Cafetero', '[]')">
-          <img src="images/es-colombia-cafetero.jpg" alt="Cafetero" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Cafetero</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="cartagenaciudadamurallada" data-image-title="Cartagena Ciudad Amurallada" onclick="handleImageCardClick(this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-cartagenaciudadamurallada.jpg', 'Cartagena Ciudad Amurallada', '[]')">
-          <img src="images/es-colombia-cartagenaciudadamurallada.jpg" alt="Cartagena Ciudad Amurallada" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Cartagena Ciudad Amurallada</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="guatape" data-image-title="Guatapé" onclick="handleImageCardClick(this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-guatape.jpg', 'Guatapé', '[]')">
-          <img src="images/es-colombia-guatape.jpg" alt="Guatapé" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Guatapé</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="laamazoniacolombiana" data-image-title="La Amazonía Colombiana" onclick="handleImageCardClick(this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-laamazoniacolombiana.jpg', 'La Amazonía Colombiana', '[]')">
-          <img src="images/es-colombia-laamazoniacolombiana.jpg" alt="La Amazonía Colombiana" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">La Amazonía Colombiana</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="losbalconesfloridosdecartagena" data-image-title="Los Balcones Floridos De Cartagena" onclick="handleImageCardClick(this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losbalconesfloridosdecartagena.jpg', 'Los Balcones Floridos De Cartagena', '[]')">
-          <img src="images/es-colombia-losbalconesfloridosdecartagena.jpg" alt="Los Balcones Floridos De Cartagena" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Los Balcones Floridos De Cartagena</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="losllanos" data-image-title="Los Llanos" onclick="handleImageCardClick(this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-losllanos.jpg', 'Los Llanos', '[]')">
-          <img src="images/es-colombia-losllanos.jpg" alt="Los Llanos" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Los Llanos</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="mapwithnatureareas" data-image-title="Map With Nature Areas" onclick="handleImageCardClick(this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-mapwithnatureareas.jpg', 'Map With Nature Areas', '[]')">
-          <img src="images/es-colombia-mapwithnatureareas.jpg" alt="Map With Nature Areas" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Map With Nature Areas</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="parquetayrona" data-image-title="Parque Tayrona" onclick="handleImageCardClick(this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-parquetayrona.jpg', 'Parque Tayrona', '[]')">
-          <img src="images/es-colombia-parquetayrona.jpg" alt="Parque Tayrona" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Parque Tayrona</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="regionesdecolumbia" data-image-title="Regiones de Columbia" onclick="handleImageCardClick(this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-regionesdecolumbia.jpg', 'Regiones de Columbia', '[]')">
-          <img src="images/es-colombia-regionesdecolumbia.jpg" alt="Regiones de Columbia" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Regiones de Columbia</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="tatacoadesert" data-image-title="Tatacoadesert" onclick="handleImageCardClick(this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-tatacoadesert.jpg', 'Tatacoadesert', '[]')">
-          <img src="images/es-colombia-tatacoadesert.jpg" alt="Tatacoadesert" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Tatacoadesert</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="topomap" data-image-title="Topomap" onclick="handleImageCardClick(this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomap.jpg', 'Topomap', '[]')">
-          <img src="images/es-colombia-topomap.jpg" alt="Topomap" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Topomap</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="topomapclear" data-image-title="Topomapclear" onclick="handleImageCardClick(this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-topomapclear.jpg', 'Topomapclear', '[]')">
-          <img src="images/es-colombia-topomapclear.jpg" alt="Topomapclear" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Topomapclear</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="valledecocora" data-image-title="Valle de Cocora" onclick="handleImageCardClick(this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-colombia-valledecocora.jpg', 'Valle de Cocora', '[]')">
-          <img src="images/es-colombia-valledecocora.jpg" alt="Valle de Cocora" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">Valle de Cocora</div>
-        </div>
-      </div>
-    </section>
-
-<!-- Section 3: Vocabulary Drag & Drop -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
-        </h2>
-      <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- Section 2: Reading Text -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
-        </h2>
-      <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-colombia.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-    </div>
-      <article class="reading-content">
-      <p>
-        Colombia es un país fascinante situado en el extremo noroccidental de América del Sur, que sirve como puerta de entrada entre Centroamérica y el continente sudamericano. Es la única nación de la región que posee costas tanto en el mar Caribe como en el océano Pacífico. Además, su territorio está <span class="vocab-in-text" data-key="atravesado">atravesado</span> por tres grandes cordilleras andinas, lo que crea una extraordinaria variedad de climas, paisajes y tradiciones.
-      </p>
-
-      <div class="region-card">
-        <h3>El Eje Cafetero y la Región Andina</h3>
-        <p>
-          En el corazón montañoso del país se encuentran ciudades muy dinámicas como Bogotá, la extensa capital situada a 2.600 metros de altitud, y Medellín, conocida como la «Ciudad de la Eterna Primavera» por su agradable clima templado durante todo el año. Más hacia el centro se extiende el famoso Eje Cafetero, declarado Patrimonio de la Humanidad. En las verdes <span class="vocab-in-text" data-key="laderas">laderas</span> de estas montañas, miles de familias <span class="vocab-in-text" data-key="campesinas">campesinas</span> cultivan con dedicación uno de los cafés más suaves y aromáticos del planeta. Durante la época de <span class="vocab-in-text" data-key="cosecha">cosecha</span>, los cafetales se llenan de trabajadores que seleccionan a mano únicamente los granos rojos más <span class="vocab-in-text" data-key="maduros">maduros</span>.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>La Costa Caribe y Cartagena de Indias</h3>
-        <p>
-          Hacia el norte, el paisaje cambia por completo al llegar a las aguas cálidas del mar Caribe. Allí brilla Cartagena de Indias, una joya histórica famosa por su antigua ciudad <span class="vocab-in-text" data-key="amurallada">amurallada</span> y sus balcones coloniales cubiertos de flores tropicales. Muy cerca se encuentra también el Parque Nacional Tayrona, donde la sierra nevada y la selva húmeda se encuentran directamente con playas de arena <span class="vocab-in-text" data-key="dorada">dorada</span>. En toda la costa se respira un ambiente alegre marcado por ritmos musicales tradicionales como la cumbia y el vallenato, mientras se disfrutan platos típicos como la arepa de huevo y el pescado frito con arroz de coco.
-        </p>
-      </div>
-
-      <div class="region-card">
-        <h3>Los Llanos, la Amazonía y el Encanto Colombiano</h3>
-        <p>
-          Al oriente de los Andes se abren las inmensas <span class="vocab-in-text" data-key="llanuras">llanuras</span> de la Orinoquía y la profunda selva amazónica, territorios de ríos gigantescos y una naturaleza casi virgen. Sin embargo, más allá de su geografía y de sus mundialmente famosas esmeraldas, el mayor tesoro de Colombia es su gente <span class="vocab-in-text" data-key="acogedora">acogedora</span>. Desde los coloridos zócalos de pueblos como Guatapé hasta el emblemático Valle de Cocora, hogar de las palmas de <span class="vocab-in-text" data-key="cera">cera</span> más altas del mundo, este país cautiva a cada visitante con su hospitalidad, el legado literario de Gabriel García Márquez y su inconfundible alegría de vivir.
-        </p>
-      </div>
-    </article>
-    </div>
-
-<!-- Section 4: Interactive Comprehension Questions -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Comprensión profunda</a>
+    <!-- Section 4: Interactive Comprehension Questions -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión profunda</a>
         </h2>
       <div class="quiz-container" id="quiz-container">
 
@@ -3322,9 +3299,34 @@
 
     </div>
 
+
+    <!-- Section 3: Vocabulary Drag & Drop -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Vocabulario</a>
+        </h2>
+      <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
     <!-- Section 5: Open Questions Section -->
     <h2 class="section-title" id="seccion-6">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span></a>
         </h2>
       <section class="discussion-container">
       <ol class="discussion-questions">

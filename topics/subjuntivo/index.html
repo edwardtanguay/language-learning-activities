@@ -2354,17 +2354,84 @@
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
-<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="images-grid">
+        <div class="image-thumb-wrap is-solved" data-image-id="amarcomervivir" data-image-title="amar comer vivir" onclick="openImageLightbox('images/es-subjuntivo-amarcomervivir.jpg', 'amar comer vivir')">
+          <img src="images/es-subjuntivo-amarcomervivir.jpg" alt="amar comer vivir" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">amar comer vivir</div>
+        </div>
+        <div class="image-thumb-wrap is-solved" data-image-id="diezfrasescomunes" data-image-title="diez frases comunes" onclick="openImageLightbox('images/es-subjuntivo-diezfrasescomunes.jpg', 'diez frases comunes')">
+          <img src="images/es-subjuntivo-diezfrasescomunes.jpg" alt="diez frases comunes" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">diez frases comunes</div>
+        </div>
+        <div class="image-thumb-wrap is-solved" data-image-id="dishes" data-image-title="dishes" onclick="openImageLightbox('images/es-subjuntivo-dishes.jpg', 'dishes')">
+          <img src="images/es-subjuntivo-dishes.jpg" alt="dishes" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">dishes</div>
+        </div>
+        <div class="image-thumb-wrap is-solved" data-image-id="frasesdesencadenantes" data-image-title="frases desencadenantes" onclick="openImageLightbox('images/es-subjuntivo-frasesdesencadenantes.jpg', 'frases desencadenantes')">
+          <img src="images/es-subjuntivo-frasesdesencadenantes.jpg" alt="frases desencadenantes" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">frases desencadenantes</div>
+        </div>
+        <div class="image-thumb-wrap is-solved" data-image-id="weirdo" data-image-title="weirdo" onclick="openImageLightbox('images/es-subjuntivo-weirdo.jpg', 'weirdo')">
+          <img src="images/es-subjuntivo-weirdo.jpg" alt="weirdo" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">weirdo</div>
+        </div>
+      </div>
+    </section>
+
+<!-- SECTION 3: READING PASSAGE -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
+    </h2>
+    <div class="lectura-section-body">
+    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+      <audio id="lectura-audio" preload="metadata" src="audio/lectura-subjuntivo.mp3"></audio>
+      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+      </button>
+      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+    </div>
+      <article class="reading-content">
+      <p>
+        Muchos estudiantes sienten un tremendo <span class="vocab-in-text" data-key="enredo">enredo</span> cuando se enfrentan al subjuntivo, pero en realidad este modo verbal no es un <span class="vocab-in-text" data-key="reto">reto</span> inalcanzable, sino una herramienta que responde a una lógica comunicativa muy precisa. La regla de oro que debes recordar es sencilla: el modo indicativo es el territorio de los hechos comprobados y de la realidad objetiva que puedes afirmar con seguridad; en cambio, el subjuntivo es el mundo de la subjetividad, donde habitan tus opiniones personales, tus dudas, tus emociones y las situaciones que aún no han ocurrido. Cuando dices «sé que mañana llueve», afirmas un hecho seguro; pero si dices «espero que mañana no llueva», entras de lleno en tu propia perspectiva, y por esa razón el verbo subordinado cambia de modo.
+      </p>
+
+      <p>
+        Un requisito fundamental para que el subjuntivo entre en acción en la mayoría de las oraciones es la presencia de dos sujetos distintos vinculados por la conjunción «que». Si una sola persona realiza ambas acciones en la frase, empleamos el infinitivo: «quiero descansar». Sin embargo, en cuanto tu voluntad o tu opinión se proyecta hacia la conducta de otra persona, surge de inmediato la necesidad de este modo: «quiero que tú descanses» o «te aconsejo que tomes una pausa». Tu intención influye directamente en lo que hace otra persona, y esa influencia sobre una acción ajena constituye un <span class="vocab-in-text" data-key="rasgo">rasgo</span> definitorio de esta estructura.
+      </p>
+
+      <p>
+        Para dominar su empleo cotidiano, conviene agrupar los detonantes del subjuntivo en cuatro categorías prácticas. La primera abarca los <span class="vocab-in-text" data-key="anhelo">anhelos</span> y la voluntad mediante verbos como querer, desear, esperar o la clásica partícula ojalá («ojalá tengamos buen tiempo»). La segunda engloba las reacciones afectivas y los juicios de valor, como alegrarse, temer o frases valorativas del tipo «es una <span class="vocab-in-text" data-key="lástima">lástima</span> que no vengas». La tercera reúne las recomendaciones y peticiones hacia alguien, como sugerir, aconsejar o expresar un <span class="vocab-in-text" data-key="ruego">ruego</span> cordial. Por último, encontramos la duda, el <span class="vocab-in-text" data-key="recelo">recelo</span> y la incertidumbre, donde el hablante suspende la seguridad sobre lo que afirma.
+      </p>
+
+      <p>
+        El contraste más revelador ocurre con los verbos de pensamiento y convicción: cuando afirmas con certeza usamos indicativo, como en «creo que el examen es fácil»; pero en cuanto niegas esa convicción con «no creo que sea fácil», la frase pierde su carácter factual y exige el subjuntivo. Un <span class="vocab-in-text" data-key="desacierto">desacierto</span> habitual entre quienes aprenden español consiste en memorizar largas tablas de conjugación sin reflexionar sobre la intención del mensaje. En lugar de ver el subjuntivo como una trampa gramatical, considéralo una valiosa <span class="vocab-in-text" data-key="pauta">pauta</span> que te permitirá enriquecer tus conversaciones con los <span class="vocab-in-text" data-key="matiz">matices</span> exactos de cortesía, duda y deseo.
+      </p>
+    </article>
+    </div>
+
+        <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2969,99 +3036,9 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="images-grid">
-        <div class="image-thumb-wrap is-solved" data-image-id="amarcomervivir" data-image-title="amar comer vivir" onclick="openImageLightbox('images/es-subjuntivo-amarcomervivir.jpg', 'amar comer vivir')">
-          <img src="images/es-subjuntivo-amarcomervivir.jpg" alt="amar comer vivir" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">amar comer vivir</div>
-        </div>
-        <div class="image-thumb-wrap is-solved" data-image-id="diezfrasescomunes" data-image-title="diez frases comunes" onclick="openImageLightbox('images/es-subjuntivo-diezfrasescomunes.jpg', 'diez frases comunes')">
-          <img src="images/es-subjuntivo-diezfrasescomunes.jpg" alt="diez frases comunes" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">diez frases comunes</div>
-        </div>
-        <div class="image-thumb-wrap is-solved" data-image-id="dishes" data-image-title="dishes" onclick="openImageLightbox('images/es-subjuntivo-dishes.jpg', 'dishes')">
-          <img src="images/es-subjuntivo-dishes.jpg" alt="dishes" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">dishes</div>
-        </div>
-        <div class="image-thumb-wrap is-solved" data-image-id="frasesdesencadenantes" data-image-title="frases desencadenantes" onclick="openImageLightbox('images/es-subjuntivo-frasesdesencadenantes.jpg', 'frases desencadenantes')">
-          <img src="images/es-subjuntivo-frasesdesencadenantes.jpg" alt="frases desencadenantes" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">frases desencadenantes</div>
-        </div>
-        <div class="image-thumb-wrap is-solved" data-image-id="weirdo" data-image-title="weirdo" onclick="openImageLightbox('images/es-subjuntivo-weirdo.jpg', 'weirdo')">
-          <img src="images/es-subjuntivo-weirdo.jpg" alt="weirdo" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">weirdo</div>
-        </div>
-      </div>
-    </section>
-
-<!-- Section 3: Vocabulary Drag & Drop -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
-        </h2>
-      <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- SECTION 3: READING PASSAGE -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
-    </h2>
-    <div class="lectura-section-body">
-    <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-      <audio id="lectura-audio" preload="metadata" src="audio/lectura-subjuntivo.mp3"></audio>
-      <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-      </button>
-      <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-      <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-      <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-    </div>
-      <article class="reading-content">
-      <p>
-        Muchos estudiantes sienten un tremendo <span class="vocab-in-text" data-key="enredo">enredo</span> cuando se enfrentan al subjuntivo, pero en realidad este modo verbal no es un <span class="vocab-in-text" data-key="reto">reto</span> inalcanzable, sino una herramienta que responde a una lógica comunicativa muy precisa. La regla de oro que debes recordar es sencilla: el modo indicativo es el territorio de los hechos comprobados y de la realidad objetiva que puedes afirmar con seguridad; en cambio, el subjuntivo es el mundo de la subjetividad, donde habitan tus opiniones personales, tus dudas, tus emociones y las situaciones que aún no han ocurrido. Cuando dices «sé que mañana llueve», afirmas un hecho seguro; pero si dices «espero que mañana no llueva», entras de lleno en tu propia perspectiva, y por esa razón el verbo subordinado cambia de modo.
-      </p>
-
-      <p>
-        Un requisito fundamental para que el subjuntivo entre en acción en la mayoría de las oraciones es la presencia de dos sujetos distintos vinculados por la conjunción «que». Si una sola persona realiza ambas acciones en la frase, empleamos el infinitivo: «quiero descansar». Sin embargo, en cuanto tu voluntad o tu opinión se proyecta hacia la conducta de otra persona, surge de inmediato la necesidad de este modo: «quiero que tú descanses» o «te aconsejo que tomes una pausa». Tu intención influye directamente en lo que hace otra persona, y esa influencia sobre una acción ajena constituye un <span class="vocab-in-text" data-key="rasgo">rasgo</span> definitorio de esta estructura.
-      </p>
-
-      <p>
-        Para dominar su empleo cotidiano, conviene agrupar los detonantes del subjuntivo en cuatro categorías prácticas. La primera abarca los <span class="vocab-in-text" data-key="anhelo">anhelos</span> y la voluntad mediante verbos como querer, desear, esperar o la clásica partícula ojalá («ojalá tengamos buen tiempo»). La segunda engloba las reacciones afectivas y los juicios de valor, como alegrarse, temer o frases valorativas del tipo «es una <span class="vocab-in-text" data-key="lástima">lástima</span> que no vengas». La tercera reúne las recomendaciones y peticiones hacia alguien, como sugerir, aconsejar o expresar un <span class="vocab-in-text" data-key="ruego">ruego</span> cordial. Por último, encontramos la duda, el <span class="vocab-in-text" data-key="recelo">recelo</span> y la incertidumbre, donde el hablante suspende la seguridad sobre lo que afirma.
-      </p>
-
-      <p>
-        El contraste más revelador ocurre con los verbos de pensamiento y convicción: cuando afirmas con certeza usamos indicativo, como en «creo que el examen es fácil»; pero en cuanto niegas esa convicción con «no creo que sea fácil», la frase pierde su carácter factual y exige el subjuntivo. Un <span class="vocab-in-text" data-key="desacierto">desacierto</span> habitual entre quienes aprenden español consiste en memorizar largas tablas de conjugación sin reflexionar sobre la intención del mensaje. En lugar de ver el subjuntivo como una trampa gramatical, considéralo una valiosa <span class="vocab-in-text" data-key="pauta">pauta</span> que te permitirá enriquecer tus conversaciones con los <span class="vocab-in-text" data-key="matiz">matices</span> exactos de cortesía, duda y deseo.
-      </p>
-    </article>
-    </div>
-
-        <!-- SECTION 4: COMPREHENSION -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Comprensión profunda</a>
+    <!-- SECTION 4: COMPREHENSION -->
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión profunda</a>
     </h2>
     <div class="quiz-container" id="quiz-container">
 
@@ -3451,9 +3428,34 @@
         </ul>
       </div>
 
-        <!-- SECTION 5: OPEN QUESTIONS -->
+
+    <!-- Section 3: Vocabulary Drag & Drop -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Vocabulario</a>
+        </h2>
+      <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: OPEN QUESTIONS -->
     <h2 class="section-title" id="seccion-6">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span></a>
     </h2>
     <section class="discussion-container">
       <ol class="discussion-questions">

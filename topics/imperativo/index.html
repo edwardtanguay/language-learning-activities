@@ -2353,17 +2353,93 @@
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
         <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
-        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Vocabulario">2</a>
-        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Lectura">3</a>
-        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión rápida">4</a>
-        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Comprensión">5</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
         <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
-<!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
-    <h2 class="section-title" id="seccion-4">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión rápida</a>
+    <!-- SECTION 1: IMAGES -->
+    <h2 class="section-title" id="seccion-1">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
+        <span class="section-num">1</span> Imágenes
+      </a>
+      <span class="section-action-hint">clic para ampliar</span>
+    </h2>
+
+    <section class="images-section" id="images-section">
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="afirmativo-y-negativo" draggable="true">afirmativo-y-negativo</button>
+        <button type="button" class="image-label-chip" data-image-id="de-los-verbos-regulares" draggable="true">de-los-verbos-regulares</button>
+        <button type="button" class="image-label-chip" data-image-id="trabajar-aprender-abrir" draggable="true">trabajar-aprender-abrir</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="afirmativo-y-negativo" data-image-title="afirmativo-y-negativo" onclick="handleImageCardClick(this, 'images/es-imperativo-afirmativo-y-negativo.png', 'afirmativo-y-negativo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-imperativo-afirmativo-y-negativo.png', 'afirmativo-y-negativo', '[]')">
+          <img src="images/es-imperativo-afirmativo-y-negativo.png" alt="afirmativo-y-negativo" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">afirmativo-y-negativo</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="de-los-verbos-regulares" data-image-title="de-los-verbos-regulares" onclick="handleImageCardClick(this, 'images/es-imperativo-de-los-verbos-regulares.png', 'de-los-verbos-regulares', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-imperativo-de-los-verbos-regulares.png', 'de-los-verbos-regulares', '[]')">
+          <img src="images/es-imperativo-de-los-verbos-regulares.png" alt="de-los-verbos-regulares" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">de-los-verbos-regulares</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="trabajar-aprender-abrir" data-image-title="trabajar-aprender-abrir" onclick="handleImageCardClick(this, 'images/es-imperativo-trabajar-aprender-abrir.jpg', 'trabajar-aprender-abrir', '[&quot;¿Son correctas las conjugaciones para «vos»?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-imperativo-trabajar-aprender-abrir.jpg', 'trabajar-aprender-abrir', '[&quot;¿Son correctas las conjugaciones para «vos»?&quot;]')">
+          <img src="images/es-imperativo-trabajar-aprender-abrir.jpg" alt="trabajar-aprender-abrir" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">trabajar-aprender-abrir</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
+        </div>
+      </div>
+    </section>
+
+<!-- Section 2: Reading Text -->
+    <h2 class="section-title" id="seccion-2">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Lectura</a>
+      <span class="section-action-hint">leer en voz alta</span>
+    </h2>
+    <div class="lectura-section-body">
+      <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
+        <audio id="lectura-audio" preload="metadata" src="audio/lectura-imperativo.mp3"></audio>
+        <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
+        </button>
+        <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
+        <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
+        <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+      </div>
+      <article class="reading-content">
+      <p>
+        Buenos días a todos. En la clase de hoy vamos a estudiar el modo imperativo en español, una herramienta imprescindible para desenvolverse en la vida cotidiana. Muchos estudiantes sienten inseguridad porque sus formas cambian según la persona y según si la frase es afirmativa o negativa. Sin embargo, nuestro objetivo hoy es <span class="vocab-in-text" data-key="despejar">despejar</span> todas esas dudas y demostrar que el sistema tiene mucha más lógica y <span class="vocab-in-text" data-key="sencillez">sencillez</span> de lo que parece a primera vista.
+      </p>
+
+      <h3>Cómo formar el imperativo afirmativo en todas las personas</h3>
+      <p>
+        Como el imperativo sirve para dirigirnos directamente a alguien, solo se conjuga en cinco personas: <em>tú, usted, nosotros, vosotros</em> y <em>ustedes</em>. En la forma afirmativa de <em>tú</em>, la regla general es muy directa: coincide con la tercera persona del singular del presente de indicativo (<em>habla, come, escribe</em>). Solo existen ocho verbos irregulares breves que conviene aprender bien: <em>ven</em> (venir), <em>di</em> (decir), <em>sal</em> (salir), <em>haz</em> (hacer), <em>ten</em> (tener), <em>ve</em> (ir), <em>pon</em> (poner) y <em>sé</em> (ser).
+      </p>
+      <p>
+        Para <em>vosotros</em>, la forma plural informal habitual en España, la regla no tiene ninguna excepción: basta con sustituir la «-r» final del infinitivo por una «-d» (<em>hablad, comed, escribid, venid, haced</em>). Si el verbo es reflexivo, se elimina esa «-d» antes de añadir «-os» (<em>sentaos, levantaos</em>), con la única excepción de <em>idos</em>. En cambio, las otras tres personas —<em>usted, nosotros</em> y <em>ustedes</em>— toman exactamente sus formas del presente de subjuntivo: <em>hable, hablemos, hablen</em>; <em>coma, comamos, coman</em>. Además, recordad una regla clave de escritura: en el imperativo afirmativo, los pronombres reflexivos y de objeto se deben <span class="vocab-in-text" data-key="pegar">pegar</span> al final del verbo formando una sola palabra, como en <em>dime, escribidlo</em> o <em>siéntese</em>.
+      </p>
+
+      <h3>El imperativo negativo y la posición de los pronombres</h3>
+      <p>
+        Aquí llega la mejor noticia de la clase: el imperativo negativo es completamente uniforme. Para prohibir o desaconsejar algo, las cinco personas utilizan sin excepción el presente de subjuntivo precedido de «no»: <em>no hables, no hable, no hablemos, no habléis, no hablen</em>. Incluso los ocho verbos irregulares de <em>tú</em> siguen fielmente el subjuntivo (<em>no vengas, no digas, no salgas, no hagas</em>). A diferencia del afirmativo, los pronombres nunca van unidos al final, sino delante del verbo, justo después de «no»: <em>no me digas, no lo escribáis, no se preocupe</em>.
+      </p>
+
+      <h3>Usos cotidianos más allá de dar órdenes</h3>
+      <p>
+        Un error frecuente es pensar que el imperativo solo sirve para dar órdenes estrictas. En realidad, en español lo usamos constantemente para ofrecer consejos amables (<em>descansa un poco</em>), seguir recetas (<em>añade una pizca de sal</em>), dar indicaciones en la calle (<em>gira a la derecha en el próximo <span class="vocab-in-text" data-key="cruce">cruce</span></em>) o lanzar un <span class="vocab-in-text" data-key="aviso">aviso</span> rápido (<em>ten cuidado al bajar las escaleras</em>). También resulta natural para invitar a alguien (<em>pasa y siéntate</em>) o pedir un pequeño <span class="vocab-in-text" data-key="encargo">encargo</span> (<em>tráeme el cuaderno cuando puedas</em>). La elección entre el <span class="vocab-in-text" data-key="tuteo">tuteo</span> y el trato de «usted» marca el grado de <span class="vocab-in-text" data-key="cercanía">cercanía</span> o respeto, y una entonación cálida junto con «por favor» transforma cualquier mandato en una petición educada.
+      </p>
+
+      <h3>Trucos prácticos para recordarlo y conjugarlo</h3>
+      <p>
+        Para dominar el imperativo sin memorizar tablas interminables, os propongo tres estrategias. Primero, apoyaos siempre en el presente de subjuntivo: conocerlo os permitirá <span class="vocab-in-text" data-key="ahorrar">ahorrar</span> más de la mitad del esfuerzo, ya que cubre las cinco formas negativas y tres de las cinco afirmativas. Segundo, para <em>vosotros</em> afirmativo pensad únicamente en cambiar la «-r» final del infinitivo por «-d», sin temer irregularidades. Tercero, para los ocho irregulares de <em>tú</em>, repetid en voz alta la secuencia rítmica «<em>ven, di, sal, haz, ten, ve, pon, sé</em>» como un <span class="vocab-in-text" data-key="apoyo">apoyo</span> sonoro fácil de recordar. Practicad hoy mismo creando instrucciones breves de vuestra rutina diaria y veréis qué rápido gana fluidez vuestro español.
+      </p>
+      </article>
+    </div>
+
+    <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
+    <h2 class="section-title" id="seccion-3">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quick-quiz-container" id="quick-quiz-container">
@@ -2968,110 +3044,9 @@
       </div>
     </div>
 
-    <!-- SECTION 1: IMAGES -->
-    <h2 class="section-title" id="seccion-1">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio">
-        <span class="section-num">1</span> Imágenes
-      </a>
-      <span class="section-action-hint">clic para ampliar</span>
-    </h2>
-
-    <section class="images-section" id="images-section">
-      <div class="image-labels-pool" id="image-labels-pool">
-        <button type="button" class="image-label-chip" data-image-id="afirmativo-y-negativo" draggable="true">afirmativo-y-negativo</button>
-        <button type="button" class="image-label-chip" data-image-id="de-los-verbos-regulares" draggable="true">de-los-verbos-regulares</button>
-        <button type="button" class="image-label-chip" data-image-id="trabajar-aprender-abrir" draggable="true">trabajar-aprender-abrir</button>
-      </div>
-      <div class="images-grid">
-        <div class="image-thumb-wrap" data-image-id="afirmativo-y-negativo" data-image-title="afirmativo-y-negativo" onclick="handleImageCardClick(this, 'images/es-imperativo-afirmativo-y-negativo.png', 'afirmativo-y-negativo', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-imperativo-afirmativo-y-negativo.png', 'afirmativo-y-negativo', '[]')">
-          <img src="images/es-imperativo-afirmativo-y-negativo.png" alt="afirmativo-y-negativo" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">afirmativo-y-negativo</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="de-los-verbos-regulares" data-image-title="de-los-verbos-regulares" onclick="handleImageCardClick(this, 'images/es-imperativo-de-los-verbos-regulares.png', 'de-los-verbos-regulares', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-imperativo-de-los-verbos-regulares.png', 'de-los-verbos-regulares', '[]')">
-          <img src="images/es-imperativo-de-los-verbos-regulares.png" alt="de-los-verbos-regulares" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">de-los-verbos-regulares</div>
-        </div>
-        <div class="image-thumb-wrap" data-image-id="trabajar-aprender-abrir" data-image-title="trabajar-aprender-abrir" onclick="handleImageCardClick(this, 'images/es-imperativo-trabajar-aprender-abrir.jpg', 'trabajar-aprender-abrir', '[&quot;¿Son correctas las conjugaciones para «vos»?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-imperativo-trabajar-aprender-abrir.jpg', 'trabajar-aprender-abrir', '[&quot;¿Son correctas las conjugaciones para «vos»?&quot;]')">
-          <img src="images/es-imperativo-trabajar-aprender-abrir.jpg" alt="trabajar-aprender-abrir" class="image-thumb" loading="lazy">
-          <div class="image-thumb-title">trabajar-aprender-abrir</div>
-          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
-        </div>
-      </div>
-    </section>
-
-<!-- Section 1: Vocabulary Drag & Drop -->
-    <h2 class="section-title" id="seccion-2">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">2</span> Vocabulario</a>
-      <span class="section-action-hint">arrastrar y soltar</span>
-    </h2>
-    <section class="vocab-container" id="vocab-container">
-      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
-        <!-- Waiting words populated dynamically -->
-      </div>
-
-      <div class="vocab-targets" id="vocab-targets">
-        <!-- Target definitions populated dynamically -->
-      </div>
-
-      <!-- Detail area for popping open a completed word dictionary entry -->
-      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
-
-      <!-- Completed words pills container (no title, just pills with green checks) -->
-      <div class="vocab-completed-section">
-        <div class="vocab-completed-pool" id="vocab-completed-pool">
-          <!-- Completed words pills appear here -->
-        </div>
-      </div>
-    </section>
-
-<!-- Section 2: Reading Text -->
-    <h2 class="section-title" id="seccion-3">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Lectura</a>
-      <span class="section-action-hint">leer en voz alta</span>
-    </h2>
-    <div class="lectura-section-body">
-      <div class="lectura-audio-player" id="lectura-audio-player" role="region" aria-label="Reproductor de audio de la lectura">
-        <audio id="lectura-audio" preload="metadata" src="audio/lectura-imperativo.mp3"></audio>
-        <button type="button" class="lectura-audio-btn" id="lectura-play-btn" aria-label="Reproducir lectura" title="Reproducir lectura">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="4,2 14,8 4,14"></polygon></svg>
-        </button>
-        <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
-        <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
-        <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
-      </div>
-      <article class="reading-content">
-      <p>
-        Buenos días a todos. En la clase de hoy vamos a estudiar el modo imperativo en español, una herramienta imprescindible para desenvolverse en la vida cotidiana. Muchos estudiantes sienten inseguridad porque sus formas cambian según la persona y según si la frase es afirmativa o negativa. Sin embargo, nuestro objetivo hoy es <span class="vocab-in-text" data-key="despejar">despejar</span> todas esas dudas y demostrar que el sistema tiene mucha más lógica y <span class="vocab-in-text" data-key="sencillez">sencillez</span> de lo que parece a primera vista.
-      </p>
-
-      <h3>Cómo formar el imperativo afirmativo en todas las personas</h3>
-      <p>
-        Como el imperativo sirve para dirigirnos directamente a alguien, solo se conjuga en cinco personas: <em>tú, usted, nosotros, vosotros</em> y <em>ustedes</em>. En la forma afirmativa de <em>tú</em>, la regla general es muy directa: coincide con la tercera persona del singular del presente de indicativo (<em>habla, come, escribe</em>). Solo existen ocho verbos irregulares breves que conviene aprender bien: <em>ven</em> (venir), <em>di</em> (decir), <em>sal</em> (salir), <em>haz</em> (hacer), <em>ten</em> (tener), <em>ve</em> (ir), <em>pon</em> (poner) y <em>sé</em> (ser).
-      </p>
-      <p>
-        Para <em>vosotros</em>, la forma plural informal habitual en España, la regla no tiene ninguna excepción: basta con sustituir la «-r» final del infinitivo por una «-d» (<em>hablad, comed, escribid, venid, haced</em>). Si el verbo es reflexivo, se elimina esa «-d» antes de añadir «-os» (<em>sentaos, levantaos</em>), con la única excepción de <em>idos</em>. En cambio, las otras tres personas —<em>usted, nosotros</em> y <em>ustedes</em>— toman exactamente sus formas del presente de subjuntivo: <em>hable, hablemos, hablen</em>; <em>coma, comamos, coman</em>. Además, recordad una regla clave de escritura: en el imperativo afirmativo, los pronombres reflexivos y de objeto se deben <span class="vocab-in-text" data-key="pegar">pegar</span> al final del verbo formando una sola palabra, como en <em>dime, escribidlo</em> o <em>siéntese</em>.
-      </p>
-
-      <h3>El imperativo negativo y la posición de los pronombres</h3>
-      <p>
-        Aquí llega la mejor noticia de la clase: el imperativo negativo es completamente uniforme. Para prohibir o desaconsejar algo, las cinco personas utilizan sin excepción el presente de subjuntivo precedido de «no»: <em>no hables, no hable, no hablemos, no habléis, no hablen</em>. Incluso los ocho verbos irregulares de <em>tú</em> siguen fielmente el subjuntivo (<em>no vengas, no digas, no salgas, no hagas</em>). A diferencia del afirmativo, los pronombres nunca van unidos al final, sino delante del verbo, justo después de «no»: <em>no me digas, no lo escribáis, no se preocupe</em>.
-      </p>
-
-      <h3>Usos cotidianos más allá de dar órdenes</h3>
-      <p>
-        Un error frecuente es pensar que el imperativo solo sirve para dar órdenes estrictas. En realidad, en español lo usamos constantemente para ofrecer consejos amables (<em>descansa un poco</em>), seguir recetas (<em>añade una pizca de sal</em>), dar indicaciones en la calle (<em>gira a la derecha en el próximo <span class="vocab-in-text" data-key="cruce">cruce</span></em>) o lanzar un <span class="vocab-in-text" data-key="aviso">aviso</span> rápido (<em>ten cuidado al bajar las escaleras</em>). También resulta natural para invitar a alguien (<em>pasa y siéntate</em>) o pedir un pequeño <span class="vocab-in-text" data-key="encargo">encargo</span> (<em>tráeme el cuaderno cuando puedas</em>). La elección entre el <span class="vocab-in-text" data-key="tuteo">tuteo</span> y el trato de «usted» marca el grado de <span class="vocab-in-text" data-key="cercanía">cercanía</span> o respeto, y una entonación cálida junto con «por favor» transforma cualquier mandato en una petición educada.
-      </p>
-
-      <h3>Trucos prácticos para recordarlo y conjugarlo</h3>
-      <p>
-        Para dominar el imperativo sin memorizar tablas interminables, os propongo tres estrategias. Primero, apoyaos siempre en el presente de subjuntivo: conocerlo os permitirá <span class="vocab-in-text" data-key="ahorrar">ahorrar</span> más de la mitad del esfuerzo, ya que cubre las cinco formas negativas y tres de las cinco afirmativas. Segundo, para <em>vosotros</em> afirmativo pensad únicamente en cambiar la «-r» final del infinitivo por «-d», sin temer irregularidades. Tercero, para los ocho irregulares de <em>tú</em>, repetid en voz alta la secuencia rítmica «<em>ven, di, sal, haz, ten, ve, pon, sé</em>» como un <span class="vocab-in-text" data-key="apoyo">apoyo</span> sonoro fácil de recordar. Practicad hoy mismo creando instrucciones breves de vuestra rutina diaria y veréis qué rápido gana fluidez vuestro español.
-      </p>
-      </article>
-    </div>
-
     <!-- Section 3: Interactive Comprehension Questions -->
-    <h2 class="section-title" id="seccion-5">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Comprensión profunda</a>
+    <h2 class="section-title" id="seccion-4">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">4</span> Comprensión profunda</a>
       <span class="section-action-hint">opción múltiple</span>
     </h2>
     <div class="quiz-container" id="quiz-container">
@@ -3268,9 +3243,34 @@
 
     </div>
 
+    <!-- Section 1: Vocabulary Drag & Drop -->
+    <h2 class="section-title" id="seccion-5">
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">5</span> Vocabulario</a>
+      <span class="section-action-hint">arrastrar y soltar</span>
+    </h2>
+    <section class="vocab-container" id="vocab-container">
+      <div class="vocab-pool" id="vocab-pool" ondragover="allowDrop(event)">
+        <!-- Waiting words populated dynamically -->
+      </div>
+
+      <div class="vocab-targets" id="vocab-targets">
+        <!-- Target definitions populated dynamically -->
+      </div>
+
+      <!-- Detail area for popping open a completed word dictionary entry -->
+      <div class="vocab-completed-detail-area" id="vocab-completed-detail"></div>
+
+      <!-- Completed words pills container (no title, just pills with green checks) -->
+      <div class="vocab-completed-section">
+        <div class="vocab-completed-pool" id="vocab-completed-pool">
+          <!-- Completed words pills appear here -->
+        </div>
+      </div>
+    </section>
+
     <!-- Section 4: Open Questions Section -->
     <h2 class="section-title" id="seccion-6">
-      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> abiertas</span></span></a>
+      <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">6</span> <span>Preguntas<span class="hide-mobile"> de debate</span></span></a>
       <span class="section-action-hint">responder y debatir</span>
     </h2>
     <section class="discussion-container">
