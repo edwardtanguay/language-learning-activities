@@ -2518,7 +2518,7 @@ function updateCatalogHtmlForIcons(activities) {
       }
       const safeTitle = activity.title.replace(/"/g, '&quot;');
       const iconPath = `topics/${activity.folderName}/${activity.iconFile}`;
-      const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${iconPath}', '${safeTitle}');" title="Ampliar imagen" aria-label="Ampliar imagen">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
+      const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${iconPath}', '${safeTitle}');" title="Enlarge image" aria-label="Enlarge image">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
       const iconWrap = `<div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${safeTitle}" class="activity-card-icon" loading="lazy">\n          ${zoomBtn}\n        </div>`;
 
       innerContent = `\n        ${iconWrap}\n        <div class="activity-card-body">\n          ${cleanBody}\n        </div>\n      `;
