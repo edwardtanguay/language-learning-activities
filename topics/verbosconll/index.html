@@ -2226,28 +2226,13 @@
     .lectura-audio-speed:hover {
       background-color: var(--highlight);
     }
-      /* Mobile Full-Width Section Jump Navigation */
+    /* Mobile Full-Width Section Jump Navigation */
     @media (max-width: 680px) {
       .jump-nav {
         width: 100%;
         flex-wrap: nowrap;
         gap: 6px;
         margin: 14px auto 18px auto;
-      }
-      .jump-nav .jump-num,
-      .jump-nav .jump-bookmark-btn {
-        flex: 1 1 0;
-        width: auto;
-        min-width: 0;
-        height: 44px;
-        border-radius: 6px;
-      }
-      .jump-nav .jump-num {
-        font-size: 17px;
-      }
-      .jump-nav .jump-bookmark-btn svg {
-        width: 18px;
-        height: 18px;
       }
       .sticky-jump-nav {
         top: 0;
@@ -2267,21 +2252,61 @@
       .sticky-jump-nav.visible {
         transform: translate3d(0, 0, 0);
       }
+      .jump-nav .jump-num,
+      .jump-nav .jump-bookmark-btn,
       .sticky-jump-nav .jump-num,
       .sticky-jump-nav .jump-bookmark-btn {
+        position: relative;
+        isolation: isolate;
         flex: 1 1 0;
         width: auto;
         min-width: 0;
         height: 44px;
         border-radius: 6px;
-        border-width: 0;
+        background-color: #f3efe6;
+        border: 1px solid #e2dccd;
       }
+      .jump-nav .jump-num::before,
+      .jump-nav .jump-bookmark-btn::before,
+      .sticky-jump-nav .jump-num::before,
+      .sticky-jump-nav .jump-bookmark-btn::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #e6e0d2;
+        z-index: -1;
+        transition: background-color 0.15s;
+      }
+      .jump-nav .jump-num:hover,
+      .jump-nav .jump-bookmark-btn:hover,
+      .sticky-jump-nav .jump-num:hover,
+      .sticky-jump-nav .jump-bookmark-btn:hover {
+        background-color: #ece6da;
+        transform: none;
+        box-shadow: none;
+      }
+      .jump-nav .jump-num.active,
+      .sticky-jump-nav .jump-num.active {
+        background-color: #eae4d7;
+        border-color: #c8beaa;
+      }
+      .jump-nav .jump-num.active::before,
+      .sticky-jump-nav .jump-num.active::before {
+        background-color: #c8beaa;
+      }
+      .jump-nav .jump-num,
       .sticky-jump-nav .jump-num {
-        font-size: 17px;
+        font-size: 16px;
       }
+      .jump-nav .jump-bookmark-btn svg,
       .sticky-jump-nav .jump-bookmark-btn svg {
-        width: 18px;
-        height: 18px;
+        width: 15px;
+        height: 15px;
       }
       .section-title {
         scroll-margin-top: 66px;
