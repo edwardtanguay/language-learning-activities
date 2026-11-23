@@ -1601,11 +1601,15 @@
         }
       });
 
+      const onlyOneLevel = availableLevels.size === 1;
+      const soleLevel = onlyOneLevel ? Array.from(availableLevels)[0] : null;
+
       // Disable level chips that have no activities for the current language
+      // (and disable "All" when only a single level exists for this language)
       const levelInputs = document.querySelectorAll('input[name="level-filter"]');
       levelInputs.forEach(inp => {
         const val = inp.value.toLowerCase();
-        const isDisabled = val !== 'all' && !availableLevels.has(val);
+        const isDisabled = val === 'all' ? onlyOneLevel : !availableLevels.has(val);
         inp.disabled = isDisabled;
         const chip = inp.closest('.radio-chip');
         if (chip) {
@@ -1613,12 +1617,13 @@
         }
       });
 
-      // Avoid dead-end combinations: if selected level isn't available for this language, auto-switch
-      if (level !== 'all' && !availableLevels.has(level)) {
-        const fallbackLevel = availableLevels.size === 1
-          ? Array.from(availableLevels)[0]
-          : 'all';
-        level = setRadioSelection('level-filter', fallbackLevel);
+      // Avoid dead-end or redundant selections:
+      // - if only one level exists for this language, auto-select it
+      // - otherwise if selected level isn't available, fall back to "all"
+      if (onlyOneLevel && level !== soleLevel) {
+        level = setRadioSelection('level-filter', soleLevel);
+      } else if (level !== 'all' && !availableLevels.has(level)) {
+        level = setRadioSelection('level-filter', 'all');
       }
 
       const levelGroup = document.getElementById('level-radio-group');
