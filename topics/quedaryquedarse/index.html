@@ -2296,9 +2296,11 @@
       height: 12px;
       display: block;
     }
-    .lectura-audio-speed:hover,
-    .lectura-audio-seek:hover {
-      background-color: var(--highlight);
+    @media (hover: hover) and (pointer: fine) {
+      .lectura-audio-speed:hover,
+      .lectura-audio-seek:hover {
+        background-color: var(--highlight);
+      }
     }
     /* Mobile Full-Width Section Jump Navigation */
     @media (max-width: 680px) {
@@ -2413,6 +2415,17 @@
       }
       .lectura-audio-seek {
         padding: 4px 5px;
+        touch-action: manipulation;
+        outline: none;
+      }
+      .lectura-audio-seek:hover,
+      .lectura-audio-seek:active,
+      .lectura-audio-seek:focus {
+        background-color: var(--paper-sheet);
+        border-color: var(--ink-rule);
+        color: var(--ink-main);
+        outline: none;
+        box-shadow: none;
       }
     }
     /* Activity Permalink & Desktop Lightbox Zoom Controls */
