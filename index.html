@@ -288,6 +288,10 @@
       white-space: nowrap;
     }
 
+    .lang-label-short {
+      display: none;
+    }
+
     .lang-count-badge {
       position: absolute;
       right: -6px;
@@ -814,7 +818,13 @@
       .radio-chip.badge-chip .radio-chip-label {
         font-size: 14px;
         line-height: 1;
-        padding: 4px 6px 2px 6px;
+        padding: 4px 8px 2px 8px;
+      }
+      .lang-label-full {
+        display: none;
+      }
+      .lang-label-short {
+        display: inline;
       }
       .filter-search-group {
         width: 100%;
@@ -1405,7 +1415,17 @@
 
       const span = document.createElement('span');
       span.className = 'radio-chip-label';
-      span.textContent = LANGUAGE_NATIVE_LABELS[code] || code.toUpperCase();
+
+      const fullLabel = document.createElement('span');
+      fullLabel.className = 'lang-label-full';
+      fullLabel.textContent = LANGUAGE_NATIVE_LABELS[code] || code.toUpperCase();
+
+      const shortLabel = document.createElement('span');
+      shortLabel.className = 'lang-label-short';
+      shortLabel.textContent = code.toUpperCase();
+
+      span.appendChild(fullLabel);
+      span.appendChild(shortLabel);
 
       const countBadge = document.createElement('span');
       countBadge.className = 'lang-count-badge is-zero';
