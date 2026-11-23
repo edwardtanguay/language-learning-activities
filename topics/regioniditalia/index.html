@@ -219,8 +219,6 @@
 
 
 
-
-
     .jump-bookmark-btn {
       width: 32px;
       height: 32px;
@@ -2302,10 +2300,19 @@
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna su">
         <span class="section-num">1</span> Immagini
       </a>
+      <span class="section-action-hint">clicca per ingrandire</span>
     </h2>
 
     <section class="images-section" id="images-section">
-      <p class="images-empty-note" style="font-style: italic; color: var(--ink-muted); margin: 4px 0 24px 0;">Non ci sono ancora immagini.</p>
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="mappa-regioni-italia" draggable="true">mappa-regioni-italia</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="mappa-regioni-italia" data-image-title="mappa-regioni-italia" onclick="handleImageCardClick(this, 'images/it-regioniditalia-mappa-regioni-italia.png', 'mappa-regioni-italia', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-regioniditalia-mappa-regioni-italia.png', 'mappa-regioni-italia', '[]')">
+          <img src="images/it-regioniditalia-mappa-regioni-italia.png" alt="mappa-regioni-italia" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">mappa-regioni-italia</div>
+        </div>
+      </div>
     </section>
 
 <!-- Section 2: Reading Text -->
@@ -2403,6 +2410,7 @@
       </p>
       </article>
     </div>
+
 
     <!-- Section 3: Quick Comprehension (20 Rapid-Fire Fact Questions) -->
     <h2 class="section-title" id="seccion-3">
@@ -5472,7 +5480,6 @@
       const headerJumpNav = document.querySelector('.jump-nav');
       const stickyNav = document.getElementById('sticky-jump-nav');
       if (!headerJumpNav || !stickyNav) return;
-
 
 
       const handleBookmarkJump = () => {
