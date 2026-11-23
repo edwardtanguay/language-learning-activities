@@ -266,17 +266,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-ui);
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 1.25;
-      padding: 5px 11px;
+      font-family: var(--font-typewriter);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      line-height: 1.15;
+      padding: 5px 10px 4px 10px;
       border: 1px solid #c2c8d2;
-      border-radius: 6px;
+      border-radius: 4px;
       background-color: #f7f8fa;
       background-image: linear-gradient(180deg, #ffffff 0%, #eff2f6 100%);
       color: #3f4550;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+      -webkit-font-smoothing: antialiased;
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
         inset 0 -1px 0 rgba(150, 160, 175, 0.2),
@@ -301,7 +303,6 @@
       background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 100%);
       border-color: var(--chip-active-border);
       color: var(--chip-active-color);
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.85),
         inset 0 -1px 0 rgba(25, 32, 44, 0.08),
@@ -823,8 +824,8 @@
         gap: 6px;
       }
       .radio-chip-label {
-        font-size: 13px;
-        padding: 5px 10px;
+        font-size: 14px;
+        padding: 5px 9px 4px 9px;
       }
       .activity-count-desktop {
         display: none !important;
@@ -1482,8 +1483,11 @@
           .sort((a, b) => b[1] - a[1]);
 
         sortedLangs.forEach(([code]) => {
-          const label = LANGUAGE_LABELS[code] || code.toUpperCase();
-          langGroup.appendChild(createRadioChip('lang-filter', code, label, false, `lang-${code}`));
+          const fullName = LANGUAGE_LABELS[code] || code.toUpperCase();
+          const chip = createRadioChip('lang-filter', code, code.toUpperCase(), false, `lang-${code}`);
+          chip.title = fullName;
+          chip.setAttribute('aria-label', fullName);
+          langGroup.appendChild(chip);
         });
       }
 
