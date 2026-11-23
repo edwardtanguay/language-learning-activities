@@ -178,6 +178,7 @@
     .radio-chip.lang-el { --chip-active-bg: var(--lang-el); }
     .radio-chip.lang-is { --chip-active-bg: var(--lang-is); }
     .radio-chip.lang-da { --chip-active-bg: var(--lang-da); }
+    .radio-chip.level-chip { --chip-active-bg: var(--current-lang-color, var(--ink-muted)); }
 
     .radio-chip input[type="radio"] {
       position: absolute;
@@ -1176,7 +1177,7 @@
 
     function syncFilterPersistence(lang, level) {
       try {
-        localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify({ lang, level }));
+        sessionStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify({ lang, level }));
       } catch (e) {}
 
       try {
@@ -1197,6 +1198,10 @@
       let lang = 'all';
       let level = 'all';
 
+      try {
+        localStorage.removeItem(FILTER_STORAGE_KEY);
+      } catch (e) {}
+
       const params = new URLSearchParams(window.location.search);
       const hasUrlParams = params.has('lang') || params.has('level');
 
@@ -1205,7 +1210,7 @@
         level = params.get('level') || 'all';
       } else {
         try {
-          const saved = JSON.parse(localStorage.getItem(FILTER_STORAGE_KEY) || 'null');
+          const saved = JSON.parse(sessionStorage.getItem(FILTER_STORAGE_KEY) || 'null');
           if (saved && typeof saved === 'object') {
             lang = saved.lang || 'all';
             level = saved.level || 'all';
@@ -1229,6 +1234,12 @@
       if (checked) {
         input.checked = true;
         input.setAttribute('checked', 'checked');
+      }
+      if (name === 'lang-filter' && value === 'all') {
+        input.addEventListener('click', () => {
+          setRadioSelection('level-filter', 'all');
+          filterActivities();
+        });
       }
       input.addEventListener('change', filterActivities);
 
@@ -1275,7 +1286,7 @@
       const levelGroup = document.getElementById('level-radio-group');
       if (levelGroup) {
         levelGroup.innerHTML = '';
-        levelGroup.appendChild(createRadioChip('level-filter', 'all', 'All', true));
+        levelGroup.appendChild(createRadioChip('level-filter', 'all', 'All', true, 'level-chip'));
 
         const sortedLevels = Array.from(levelsSet).sort((a, b) => {
           const idxA = CEFR_ORDER.indexOf(a);
@@ -1287,7 +1298,7 @@
         });
 
         sortedLevels.forEach(lvl => {
-          levelGroup.appendChild(createRadioChip('level-filter', lvl, lvl, false));
+          levelGroup.appendChild(createRadioChip('level-filter', lvl, lvl, false, 'level-chip'));
         });
       }
 
@@ -1466,6 +1477,13 @@
       const checkedLevel = document.querySelector('input[name="level-filter"]:checked');
       const lang = checkedLang ? checkedLang.value.toLowerCase() : 'all';
       const level = checkedLevel ? checkedLevel.value.toLowerCase() : 'all';
+      const levelGroup = document.getElementById('level-radio-group');
+      if (levelGroup) {
+        const langColor = lang === 'all'
+          ? 'var(--ink-muted)'
+          : (lang === 'pl' ? '#555555' : `var(--lang-${lang}, var(--ink-muted))`);
+        levelGroup.style.setProperty('--current-lang-color', langColor);
+      }
       syncFilterPersistence(lang, level);
       const searchInput = document.getElementById('search-input');
       const rawSearch = searchInput.value;
