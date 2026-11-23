@@ -1828,22 +1828,6 @@
         margin-bottom: 14px;
         text-align: center;
       }
-      .jump-nav {
-        gap: 8px;
-        margin: 14px auto 18px auto;
-      }
-      .jump-nav .jump-num,
-      .jump-nav .jump-bookmark-btn {
-        width: 28px;
-        height: 28px;
-      }
-      .jump-nav .jump-num {
-        font-size: 15px;
-      }
-      .jump-nav .jump-bookmark-btn svg {
-        width: 14px;
-        height: 14px;
-      }
       .instructions-heading {
         text-align: center;
       }
@@ -2242,7 +2226,71 @@
     .lectura-audio-speed:hover {
       background-color: var(--highlight);
     }
-  </style>
+      /* Mobile Full-Width Section Jump Navigation */
+    @media (max-width: 680px) {
+      .jump-nav {
+        width: 100%;
+        flex-wrap: nowrap;
+        gap: 6px;
+        margin: 14px auto 18px auto;
+      }
+      .jump-nav .jump-num,
+      .jump-nav .jump-bookmark-btn {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+        height: 44px;
+        border-radius: 6px;
+      }
+      .jump-nav .jump-num {
+        font-size: 17px;
+      }
+      .jump-nav .jump-bookmark-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .sticky-jump-nav {
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        transform: translate3d(0, -110%, 0);
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid var(--ink-border);
+        padding: 6px 8px;
+        gap: 6px;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0 3px 12px rgba(45, 40, 35, 0.12);
+      }
+      .sticky-jump-nav.visible {
+        transform: translate3d(0, 0, 0);
+      }
+      .sticky-jump-nav .jump-num,
+      .sticky-jump-nav .jump-bookmark-btn {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+        height: 44px;
+        border-radius: 6px;
+        border-width: 0;
+      }
+      .sticky-jump-nav .jump-num {
+        font-size: 17px;
+      }
+      .sticky-jump-nav .jump-bookmark-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .section-title {
+        scroll-margin-top: 66px;
+      }
+      .lectura-audio-player.is-active-sticky {
+        top: 62px;
+      }
+    }
+</style>
 </head>
 <body id="top">
 
@@ -5519,7 +5567,8 @@
           return;
         }
 
-        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
+        const stickyOffset = window.innerWidth <= 680 ? 66 : 62;
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - stickyOffset;
 
 
         snappyScrollTo(Math.max(0, targetTop), 280);
