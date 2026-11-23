@@ -169,34 +169,19 @@
       touch-action: manipulation;
     }
 
-    .radio-chip.lang-en,
-    .radio-chip.lang-de,
-    .radio-chip.lang-fr,
-    .radio-chip.lang-es,
-    .radio-chip.lang-it,
-    .radio-chip.lang-nl,
-    .radio-chip.lang-pl,
-    .radio-chip.lang-ru,
-    .radio-chip.lang-el,
-    .radio-chip.lang-is,
-    .radio-chip.lang-da {
-      --chip-active-border: var(--chip-active-bg);
-      --chip-active-color: #fffdf9;
-    }
-
-    .radio-chip.lang-en { --chip-active-bg: var(--lang-en); }
-    .radio-chip.lang-de { --chip-active-bg: var(--lang-de); }
-    .radio-chip.lang-fr { --chip-active-bg: var(--lang-fr); }
-    .radio-chip.lang-es { --chip-active-bg: var(--lang-es); }
-    .radio-chip.lang-it { --chip-active-bg: var(--lang-it); }
-    .radio-chip.lang-nl { --chip-active-bg: var(--lang-nl); }
-    .radio-chip.lang-pl { --chip-active-bg: #555555; }
-    .radio-chip.lang-ru { --chip-active-bg: var(--lang-ru); }
-    .radio-chip.lang-el { --chip-active-bg: var(--lang-el); }
-    .radio-chip.lang-is { --chip-active-bg: var(--lang-is); }
-    .radio-chip.lang-da { --chip-active-bg: var(--lang-da); }
+    .radio-chip.lang-en { --chip-active-bg: #ede0fa; --chip-active-border: #cca4f4; --chip-active-color: var(--lang-en); }
+    .radio-chip.lang-de { --chip-active-bg: #ebe1d3; --chip-active-border: #c8b093; --chip-active-color: var(--lang-de); }
+    .radio-chip.lang-fr { --chip-active-bg: #dfe0ee; --chip-active-border: #a8a8cd; --chip-active-color: var(--lang-fr); }
+    .radio-chip.lang-es { --chip-active-bg: #f5dce6; --chip-active-border: #e29cb8; --chip-active-color: var(--lang-es); }
+    .radio-chip.lang-it { --chip-active-bg: #dbe6db; --chip-active-border: #9eb59e; --chip-active-color: var(--lang-it); }
+    .radio-chip.lang-nl { --chip-active-bg: #f9ead4; --chip-active-border: #edc391; --chip-active-color: var(--lang-nl); }
+    .radio-chip.lang-pl { --chip-active-bg: #e6e6e6; --chip-active-border: #c5c5c5; --chip-active-color: #555555; }
+    .radio-chip.lang-ru { --chip-active-bg: #e1e1e3; --chip-active-border: #aeafb2; --chip-active-color: var(--lang-ru); }
+    .radio-chip.lang-el { --chip-active-bg: #daeeec; --chip-active-border: #99d2cc; --chip-active-color: var(--lang-el); }
+    .radio-chip.lang-is { --chip-active-bg: #d8f3f8; --chip-active-border: #96dfec; --chip-active-color: var(--lang-is); }
+    .radio-chip.lang-da { --chip-active-bg: #ffdce9; --chip-active-border: #fd9cce; --chip-active-color: var(--lang-da); }
     .radio-chip.level-chip {
-      --chip-active-bg: var(--current-lang-color, #e6e0d2);
+      --chip-active-bg: var(--current-lang-bg, #e6e0d2);
       --chip-active-border: var(--current-lang-border, #c8beaa);
       --chip-active-color: var(--current-lang-text, var(--ink-main));
     }
@@ -1501,14 +1486,28 @@
       const levelGroup = document.getElementById('level-radio-group');
       if (levelGroup) {
         if (lang === 'all') {
-          levelGroup.style.setProperty('--current-lang-color', '#e6e0d2');
+          levelGroup.style.setProperty('--current-lang-bg', '#e6e0d2');
           levelGroup.style.setProperty('--current-lang-border', '#c8beaa');
           levelGroup.style.setProperty('--current-lang-text', 'var(--ink-main)');
         } else {
-          const langColor = lang === 'pl' ? '#555555' : `var(--lang-${lang}, #e6e0d2)`;
-          levelGroup.style.setProperty('--current-lang-color', langColor);
-          levelGroup.style.setProperty('--current-lang-border', langColor);
-          levelGroup.style.setProperty('--current-lang-text', '#fffdf9');
+          const langStyles = {
+            en: { bg: '#ede0fa', border: '#cca4f4' },
+            de: { bg: '#ebe1d3', border: '#c8b093' },
+            fr: { bg: '#dfe0ee', border: '#a8a8cd' },
+            es: { bg: '#f5dce6', border: '#e29cb8' },
+            it: { bg: '#dbe6db', border: '#9eb59e' },
+            nl: { bg: '#f9ead4', border: '#edc391' },
+            pl: { bg: '#e6e6e6', border: '#c5c5c5' },
+            ru: { bg: '#e1e1e3', border: '#aeafb2' },
+            el: { bg: '#daeeec', border: '#99d2cc' },
+            is: { bg: '#d8f3f8', border: '#96dfec' },
+            da: { bg: '#ffdce9', border: '#fd9cce' }
+          };
+          const style = langStyles[lang] || { bg: '#e6e0d2', border: '#c8beaa' };
+          const textColor = lang === 'pl' ? '#555555' : `var(--lang-${lang}, var(--ink-main))`;
+          levelGroup.style.setProperty('--current-lang-bg', style.bg);
+          levelGroup.style.setProperty('--current-lang-border', style.border);
+          levelGroup.style.setProperty('--current-lang-text', textColor);
         }
       }
       syncFilterPersistence(lang, level);
