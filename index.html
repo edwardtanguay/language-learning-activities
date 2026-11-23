@@ -1156,6 +1156,67 @@
     };
 
     const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    const FILTER_STORAGE_KEY = 'catalog_filters';
+
+    function setRadioSelection(name, value) {
+      const target = String(value || 'all').trim().toLowerCase();
+      const inputs = Array.from(document.querySelectorAll(`input[name="${name}"]`));
+      let matched = inputs.find(inp => inp.value.toLowerCase() === target);
+      if (!matched) {
+        matched = inputs.find(inp => inp.value.toLowerCase() === 'all') || inputs[0];
+      }
+      inputs.forEach(inp => {
+        const isChecked = inp === matched;
+        inp.checked = isChecked;
+        if (isChecked) inp.setAttribute('checked', 'checked');
+        else inp.removeAttribute('checked');
+      });
+      return matched ? matched.value.toLowerCase() : 'all';
+    }
+
+    function syncFilterPersistence(lang, level) {
+      try {
+        localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify({ lang, level }));
+      } catch (e) {}
+
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (lang && lang !== 'all') params.set('lang', lang);
+        else params.delete('lang');
+
+        if (level && level !== 'all') params.set('level', level);
+        else params.delete('level');
+
+        const query = params.toString();
+        const newUrl = window.location.pathname + (query ? '?' + query : '') + window.location.hash;
+        window.history.replaceState(null, '', newUrl);
+      } catch (e) {}
+    }
+
+    function restoreSavedFilters() {
+      let lang = 'all';
+      let level = 'all';
+
+      const params = new URLSearchParams(window.location.search);
+      const hasUrlParams = params.has('lang') || params.has('level');
+
+      if (hasUrlParams) {
+        lang = params.get('lang') || 'all';
+        level = params.get('level') || 'all';
+      } else {
+        try {
+          const saved = JSON.parse(localStorage.getItem(FILTER_STORAGE_KEY) || 'null');
+          if (saved && typeof saved === 'object') {
+            lang = saved.lang || 'all';
+            level = saved.level || 'all';
+          }
+        } catch (e) {}
+      }
+
+      setRadioSelection('lang-filter', lang);
+      setRadioSelection('level-filter', level);
+      filterActivities();
+    }
 
     function createRadioChip(name, value, labelText, checked, extraClass) {
       const label = document.createElement('label');
@@ -1262,6 +1323,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       buildFilterRadios();
+      restoreSavedFilters();
       getPageStyles();
       // Prefetch on pointerdown/touchstart for instant mobile switching
       document.querySelectorAll('.activity-card').forEach(card => {
@@ -1404,6 +1466,7 @@
       const checkedLevel = document.querySelector('input[name="level-filter"]:checked');
       const lang = checkedLang ? checkedLang.value.toLowerCase() : 'all';
       const level = checkedLevel ? checkedLevel.value.toLowerCase() : 'all';
+      syncFilterPersistence(lang, level);
       const searchInput = document.getElementById('search-input');
       const rawSearch = searchInput.value;
       const search = rawSearch.toLowerCase().trim();
