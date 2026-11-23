@@ -5365,6 +5365,34 @@ let draggedImageId = null;
       headerJumpNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
       stickyNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
 
+      document.addEventListener('keydown', (e) => {
+        if (window.innerWidth <= 680) return;
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
+
+        const activeEl = document.activeElement;
+        if (activeEl) {
+          const tag = activeEl.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || activeEl.isContentEditable) return;
+        }
+
+        const lightbox = document.getElementById('image-lightbox');
+        if (lightbox && lightbox.classList.contains('active')) return;
+        if (document.getElementById('active-hint-modal') || document.querySelector('.vocab-modal-overlay')) return;
+
+        const jumpLinks = Array.from(headerJumpNav.querySelectorAll('.jump-num'));
+        if (jumpLinks.length === 0) return;
+
+        let currentIndex = jumpLinks.findIndex(a => a.classList.contains('active'));
+        if (currentIndex === -1) currentIndex = 0;
+
+        const nextIndex = e.key === 'ArrowRight' ? currentIndex + 1 : currentIndex - 1;
+        if (nextIndex < 0 || nextIndex >= jumpLinks.length) return;
+
+        e.preventDefault();
+        jumpLinks[nextIndex].click();
+      });
+
       const updateStickyNavState = () => {
         // Sticky button menu appears ONLY when stationary menu is no longer visible on screen
         const headerRect = headerJumpNav.getBoundingClientRect();

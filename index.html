@@ -228,19 +228,11 @@
       flex-wrap: wrap;
     }
 
-    .filter-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #2b313a;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
-      white-space: nowrap;
-    }
-
     .radio-group {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px 14px;
     }
 
     .radio-chip {
@@ -249,10 +241,18 @@
       --chip-active-color: #262624;
       position: relative;
       display: inline-flex;
+      padding: 0;
+      margin: 0;
+      border: none;
+      background: transparent;
       cursor: pointer;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
+    }
+
+    .radio-chip:focus {
+      outline: none;
     }
 
     .radio-chip.lang-en { --chip-active-bg: #f5ecfd; --chip-active-border: var(--lang-en); --chip-active-color: var(--lang-en); }
@@ -266,45 +266,11 @@
     .radio-chip.lang-el { --chip-active-bg: #e8f5f4; --chip-active-border: var(--lang-el); --chip-active-color: var(--lang-el); }
     .radio-chip.lang-is { --chip-active-bg: #e7f8fb; --chip-active-border: var(--lang-is); --chip-active-color: var(--lang-is); }
     .radio-chip.lang-da { --chip-active-bg: #ffe9f4; --chip-active-border: var(--lang-da); --chip-active-color: var(--lang-da); }
-    .radio-chip.level-chip {
-      --chip-active-bg: var(--current-lang-bg, #d8d8d6);
-      --chip-active-border: var(--current-lang-border, #6e6e6b);
-      --chip-active-color: var(--current-lang-text, #262624);
-    }
 
-    .radio-chip input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-      pointer-events: none;
-    }
-
-    /* Non-language buttons (All, and levels when Language = All): rounded neutral UI chips */
     .radio-chip-label {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-ui);
-      font-size: 13px;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: 0;
-      line-height: 1.15;
-      padding: 4px 11px;
-      border: 1px solid #c5c5c2;
-      border-radius: 999px;
-      background-color: #ffffff;
-      color: #52524f;
-      -webkit-font-smoothing: antialiased;
-      box-shadow: 0 1px 2px rgba(25, 25, 24, 0.08);
-      transition: background-color 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s, transform 0.08s;
-      white-space: nowrap;
-    }
-
-    /* Language-specific buttons (ES, IT, FR, and levels when a specific language is selected): square stamp badges */
-    .radio-chip.badge-chip .radio-chip-label,
-    #level-radio-group.has-lang-selected .radio-chip.level-specific .radio-chip-label {
       font-family: var(--font-typewriter);
       font-size: 14px;
       font-weight: 700;
@@ -312,7 +278,14 @@
       letter-spacing: 0.8px;
       line-height: 1;
       padding: 5px 7px 2px 7px;
+      border: 1px solid var(--chip-active-border);
       border-radius: 0;
+      background-color: var(--chip-active-bg);
+      color: var(--chip-active-color);
+      -webkit-font-smoothing: antialiased;
+      box-shadow: 0 1px 2px rgba(25, 25, 24, 0.08);
+      transition: background-color 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s, opacity 0.14s, transform 0.08s;
+      white-space: nowrap;
     }
 
     .lang-count-badge {
@@ -336,7 +309,7 @@
       box-shadow: none;
       pointer-events: none;
       z-index: 2;
-      transition: opacity 0.14s ease, transform 0.14s ease;
+      transition: opacity 0.14s ease, transform 0.14s ease, background-color 0.14s ease;
     }
 
     .lang-count-badge.is-zero {
@@ -344,25 +317,7 @@
       transform: scale(0.65);
     }
 
-    .radio-chip.badge-chip .radio-chip-label {
-      border-color: var(--chip-active-border);
-      color: var(--chip-active-color);
-    }
-
-    .radio-chip.badge-chip.has-count .radio-chip-label {
-      background-color: var(--chip-active-bg);
-      border-color: var(--chip-active-border);
-      color: var(--chip-active-color);
-    }
-
-    .radio-chip:hover .radio-chip-label {
-      background-color: #ffffff;
-      border-color: #9e9e9a;
-      color: #222220;
-    }
-
-    .radio-chip.badge-chip:hover .radio-chip-label,
-    .radio-chip.badge-chip.has-count:hover .radio-chip-label {
+    .radio-chip.badge-chip:hover .radio-chip-label {
       background-color: var(--chip-active-bg);
       border-color: var(--chip-active-border);
       color: var(--chip-active-color);
@@ -372,38 +327,39 @@
       transform: translateY(0.5px);
     }
 
-    .radio-chip input[type="radio"]:checked + .radio-chip-label {
+    /* When one language is selected, dim and remove tint from unselected language chips and their count badges */
+    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected {
+      opacity: 0.55;
+      transition: opacity 0.14s ease;
+    }
+
+    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected .radio-chip-label {
+      background-color: #ffffff;
+      box-shadow: none;
+    }
+
+    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected .lang-count-badge {
+      background-color: #ffffff;
+    }
+
+    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected:hover {
+      opacity: 0.85;
+    }
+
+    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected:hover .radio-chip-label {
+      background-color: #ffffff;
+    }
+
+    .radio-chip.is-selected .radio-chip-label {
       background-color: var(--chip-active-bg);
       border-color: var(--chip-active-border);
       color: var(--chip-active-color);
       box-shadow: 0 3px 8px rgba(15, 20, 28, 0.38), 0 1px 2px rgba(15, 20, 28, 0.25);
     }
 
-    .radio-chip input[type="radio"]:focus-visible + .radio-chip-label {
+    .radio-chip:focus-visible .radio-chip-label {
       outline: 2px solid var(--stamp-blue);
       outline-offset: 2px;
-    }
-
-    .radio-chip.is-disabled {
-      cursor: not-allowed;
-    }
-
-    .radio-chip input[type="radio"]:disabled + .radio-chip-label {
-      background: rgba(255, 255, 255, 0.35);
-      border-color: rgba(180, 188, 200, 0.55);
-      color: rgba(85, 92, 105, 0.42);
-      text-shadow: none;
-      box-shadow: none;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    .radio-chip.is-disabled:hover .radio-chip-label,
-    .radio-chip.is-disabled:active .radio-chip-label {
-      background: rgba(255, 255, 255, 0.35);
-      border-color: rgba(180, 188, 200, 0.55);
-      color: rgba(85, 92, 105, 0.42);
-      transform: none;
     }
 
     .search-input {
@@ -864,23 +820,12 @@
       .filter-radios-row .filter-group:first-child {
         padding-right: 34px;
       }
-      .filter-label {
-        font-size: 13.5px;
-        min-width: 68px;
-        flex-shrink: 0;
-      }
       .radio-group {
         flex: 1;
         min-width: 0;
-        gap: 8px;
+        gap: 10px 12px;
       }
-      .radio-chip-label {
-        font-size: 13px;
-        line-height: 1.15;
-        padding: 4px 10px;
-      }
-      .radio-chip.badge-chip .radio-chip-label,
-      #level-radio-group.has-lang-selected .radio-chip.level-specific .radio-chip-label {
+      .radio-chip.badge-chip .radio-chip-label {
         font-size: 14px;
         line-height: 1;
         padding: 4px 6px 2px 6px;
@@ -987,14 +932,8 @@
       </button>
 
       <div class="filter-radios-row">
-        <div class="filter-group" role="radiogroup" aria-labelledby="lang-filter-label">
-          <span class="filter-label" id="lang-filter-label">Language:</span>
+        <div class="filter-group" role="group" aria-label="Language">
           <div class="radio-group" id="lang-radio-group"></div>
-        </div>
-
-        <div class="filter-group" role="radiogroup" aria-labelledby="level-filter-label">
-          <span class="filter-label" id="level-filter-label">Level:</span>
-          <div class="radio-group" id="level-radio-group"></div>
         </div>
       </div>
 
@@ -1355,37 +1294,41 @@
       da: 'Danish'
     };
 
-    const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-    const FILTER_STORAGE_KEY = 'catalog_filters';
+    const LANGUAGE_NATIVE_LABELS = {
+      en: 'English',
+      de: 'Deutsch',
+      fr: 'Français',
+      es: 'Español',
+      it: 'Italiano',
+      nl: 'Nederlands',
+      pl: 'Polski',
+      ru: 'Русский',
+      el: 'Ελληνικά',
+      is: 'Íslenska',
+      da: 'Dansk'
+    };
 
-    function setRadioSelection(name, value) {
+    const FILTER_STORAGE_KEY = 'catalog_filters';
+    let selectedLangFilter = 'all';
+
+    function setLanguageSelection(value) {
       const target = String(value || 'all').trim().toLowerCase();
-      const inputs = Array.from(document.querySelectorAll(`input[name="${name}"]`));
-      let matched = inputs.find(inp => inp.value.toLowerCase() === target);
-      if (!matched) {
-        matched = inputs.find(inp => inp.value.toLowerCase() === 'all') || inputs[0];
-      }
-      inputs.forEach(inp => {
-        const isChecked = inp === matched;
-        inp.checked = isChecked;
-        if (isChecked) inp.setAttribute('checked', 'checked');
-        else inp.removeAttribute('checked');
-      });
-      return matched ? matched.value.toLowerCase() : 'all';
+      const buttons = Array.from(document.querySelectorAll('#lang-radio-group .radio-chip[data-lang]'));
+      const matched = target !== 'all' ? buttons.find(btn => btn.getAttribute('data-lang') === target) : null;
+      selectedLangFilter = matched ? target : 'all';
+      return selectedLangFilter;
     }
 
-    function syncFilterPersistence(lang, level) {
+    function syncFilterPersistence(lang) {
       try {
-        sessionStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify({ lang, level }));
+        sessionStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify({ lang }));
       } catch (e) {}
 
       try {
         const params = new URLSearchParams(window.location.search);
         if (lang && lang !== 'all') params.set('lang', lang);
         else params.delete('lang');
-
-        if (level && level !== 'all') params.set('level', level);
-        else params.delete('level');
+        params.delete('level');
 
         const query = params.toString();
         const newUrl = window.location.pathname + (query ? '?' + query : '') + window.location.hash;
@@ -1395,66 +1338,58 @@
 
     function restoreSavedFilters() {
       let lang = 'all';
-      let level = 'all';
 
       try {
         localStorage.removeItem(FILTER_STORAGE_KEY);
       } catch (e) {}
 
       const params = new URLSearchParams(window.location.search);
-      const hasUrlParams = params.has('lang') || params.has('level');
-
-      if (hasUrlParams) {
+      if (params.has('lang')) {
         lang = params.get('lang') || 'all';
-        level = params.get('level') || 'all';
       } else {
         try {
           const saved = JSON.parse(sessionStorage.getItem(FILTER_STORAGE_KEY) || 'null');
           if (saved && typeof saved === 'object') {
             lang = saved.lang || 'all';
-            level = saved.level || 'all';
           }
         } catch (e) {}
       }
 
-      setRadioSelection('lang-filter', lang);
-      setRadioSelection('level-filter', level);
+      setLanguageSelection(lang);
       filterActivities();
     }
 
-    function createRadioChip(name, value, labelText, checked, extraClass) {
-      const label = document.createElement('label');
-      label.className = extraClass ? `radio-chip ${extraClass}` : 'radio-chip';
+    function createLanguageChip(code, fullName) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `radio-chip badge-chip lang-${code}`;
+      btn.setAttribute('data-lang', code);
+      btn.setAttribute('aria-pressed', 'false');
+      btn.title = fullName;
+      btn.setAttribute('aria-label', fullName);
 
-      const input = document.createElement('input');
-      input.type = 'radio';
-      input.name = name;
-      input.value = value;
-      if (checked) {
-        input.checked = true;
-        input.setAttribute('checked', 'checked');
-      }
-      if (name === 'lang-filter' && value === 'all') {
-        input.addEventListener('click', () => {
-          setRadioSelection('level-filter', 'all');
-          filterActivities();
-        });
-      }
-      input.addEventListener('change', filterActivities);
+      btn.addEventListener('click', () => {
+        selectedLangFilter = (selectedLangFilter === code) ? 'all' : code;
+        filterActivities();
+      });
 
       const span = document.createElement('span');
       span.className = 'radio-chip-label';
-      span.textContent = labelText;
+      span.textContent = LANGUAGE_NATIVE_LABELS[code] || code.toUpperCase();
 
-      label.appendChild(input);
-      label.appendChild(span);
-      return label;
+      const countBadge = document.createElement('span');
+      countBadge.className = 'lang-count-badge is-zero';
+      countBadge.setAttribute('data-lang-count', code);
+      countBadge.setAttribute('aria-hidden', 'true');
+
+      btn.appendChild(span);
+      btn.appendChild(countBadge);
+      return btn;
     }
 
     function buildFilterRadios() {
       const cards = Array.from(document.querySelectorAll('.activity-card'));
       const langCounts = new Map();
-      const levelsSet = new Set();
 
       cards.forEach(card => {
         const rawLang = (card.getAttribute('data-lang') || '').trim().toLowerCase();
@@ -1462,50 +1397,18 @@
         if (langCode) {
           langCounts.set(langCode, (langCounts.get(langCode) || 0) + 1);
         }
-        const rawLevel = (card.getAttribute('data-level') || '').trim().toUpperCase();
-        if (rawLevel) {
-          levelsSet.add(rawLevel);
-        }
       });
 
       const langGroup = document.getElementById('lang-radio-group');
       if (langGroup) {
         langGroup.innerHTML = '';
-        langGroup.appendChild(createRadioChip('lang-filter', 'all', 'All', true));
 
         const sortedLangs = Array.from(langCounts.entries())
           .sort((a, b) => b[1] - a[1]);
 
         sortedLangs.forEach(([code]) => {
           const fullName = LANGUAGE_LABELS[code] || code.toUpperCase();
-          const chip = createRadioChip('lang-filter', code, code.toUpperCase(), false, `badge-chip lang-${code}`);
-          chip.title = fullName;
-          chip.setAttribute('aria-label', fullName);
-          const countBadge = document.createElement('span');
-          countBadge.className = 'lang-count-badge is-zero';
-          countBadge.setAttribute('data-lang-count', code);
-          countBadge.setAttribute('aria-hidden', 'true');
-          chip.appendChild(countBadge);
-          langGroup.appendChild(chip);
-        });
-      }
-
-      const levelGroup = document.getElementById('level-radio-group');
-      if (levelGroup) {
-        levelGroup.innerHTML = '';
-        levelGroup.appendChild(createRadioChip('level-filter', 'all', 'All', true, 'level-chip'));
-
-        const sortedLevels = Array.from(levelsSet).sort((a, b) => {
-          const idxA = CEFR_ORDER.indexOf(a);
-          const idxB = CEFR_ORDER.indexOf(b);
-          if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-          if (idxA !== -1) return -1;
-          if (idxB !== -1) return 1;
-          return a.localeCompare(b);
-        });
-
-        sortedLevels.forEach(lvl => {
-          levelGroup.appendChild(createRadioChip('level-filter', lvl, lvl, false, 'level-chip level-specific'));
+          langGroup.appendChild(createLanguageChip(code, fullName));
         });
       }
 
@@ -1683,18 +1586,9 @@
       permalinkTimers = [];
     }
 
-    function getFilterDescriptor(lang, level) {
-      const hasLang = lang && lang !== 'all';
-      const hasLevel = level && level !== 'all';
-      if (hasLang && hasLevel) {
-        const langName = LANGUAGE_LABELS[lang] || lang.toUpperCase();
-        return `${langName} ${level.toUpperCase()}`;
-      }
-      if (hasLang) {
+    function getFilterDescriptor(lang) {
+      if (lang && lang !== 'all') {
         return LANGUAGE_LABELS[lang] || lang.toUpperCase();
-      }
-      if (hasLevel) {
-        return level.toUpperCase();
       }
       return 'all activities';
     }
@@ -1802,95 +1696,28 @@
     }
 
     function filterActivities() {
-      const checkedLang = document.querySelector('input[name="lang-filter"]:checked');
-      const checkedLevel = document.querySelector('input[name="level-filter"]:checked');
-      let lang = checkedLang ? checkedLang.value.toLowerCase() : 'all';
-      let level = checkedLevel ? checkedLevel.value.toLowerCase() : 'all';
-
+      const lang = selectedLangFilter || 'all';
       const cards = document.querySelectorAll('.activity-card');
 
-      // If language is "All" and a specific level only belongs to one language, auto-select that language
-      if (lang === 'all' && level !== 'all') {
-        const availableLangsForLevel = new Set();
-        cards.forEach(card => {
-          const cardLevel = (card.getAttribute('data-level') || '').toLowerCase().trim();
-          const cardLangCode = (card.getAttribute('data-lang') || '').trim().toLowerCase().split(/\s+/)[0];
-          if (cardLevel === level && cardLangCode) {
-            availableLangsForLevel.add(cardLangCode);
-          }
+      const langGroup = document.getElementById('lang-radio-group');
+      if (langGroup) {
+        const hasSpecificLang = lang !== 'all';
+        langGroup.classList.toggle('has-lang-selected', hasSpecificLang);
+        langGroup.querySelectorAll('.radio-chip[data-lang]').forEach(btn => {
+          const code = btn.getAttribute('data-lang');
+          const isSelected = hasSpecificLang && code === lang;
+          const isUnselected = hasSpecificLang && code !== lang;
+          btn.classList.toggle('is-selected', isSelected);
+          btn.classList.toggle('is-unselected', isUnselected);
+          btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
         });
-        if (availableLangsForLevel.size === 1) {
-          lang = setRadioSelection('lang-filter', Array.from(availableLangsForLevel)[0]);
-        }
       }
 
-      // Determine which levels exist for the currently selected language
-      const availableLevels = new Set();
-      cards.forEach(card => {
-        const cardLangTokens = (card.getAttribute('data-lang') || '').toLowerCase().split(/\s+/);
-        const cardLevel = (card.getAttribute('data-level') || '').toLowerCase().trim();
-        if (cardLevel && (lang === 'all' || cardLangTokens.includes(lang))) {
-          availableLevels.add(cardLevel);
-        }
-      });
-
-      const onlyOneLevel = availableLevels.size === 1;
-      const soleLevel = onlyOneLevel ? Array.from(availableLevels)[0] : null;
-
-      // Disable level chips that have no activities for the current language
-      // (and disable "All" when only a single level exists for this language)
-      const levelInputs = document.querySelectorAll('input[name="level-filter"]');
-      levelInputs.forEach(inp => {
-        const val = inp.value.toLowerCase();
-        const isDisabled = val === 'all' ? onlyOneLevel : !availableLevels.has(val);
-        inp.disabled = isDisabled;
-        const chip = inp.closest('.radio-chip');
-        if (chip) {
-          chip.classList.toggle('is-disabled', isDisabled);
-        }
-      });
-
-      // Avoid dead-end or redundant selections:
-      // - if only one level exists for this language, auto-select it
-      // - otherwise if selected level isn't available, fall back to "all"
-      if (onlyOneLevel && level !== soleLevel) {
-        level = setRadioSelection('level-filter', soleLevel);
-      } else if (level !== 'all' && !availableLevels.has(level)) {
-        level = setRadioSelection('level-filter', 'all');
-      }
-
-      const levelGroup = document.getElementById('level-radio-group');
-      if (levelGroup) {
-        levelGroup.classList.toggle('has-lang-selected', lang !== 'all');
-        if (lang === 'all') {
-          levelGroup.style.setProperty('--current-lang-bg', '#d8d8d6');
-          levelGroup.style.setProperty('--current-lang-border', '#6e6e6b');
-          levelGroup.style.setProperty('--current-lang-text', '#262624');
-        } else {
-          const langStyles = {
-            en: { bg: '#f5ecfd', border: 'var(--lang-en)' },
-            de: { bg: '#f3ede3', border: 'var(--lang-de)' },
-            fr: { bg: '#dce6ff', border: 'var(--lang-fr)' },
-            es: { bg: '#faeaf0', border: 'var(--lang-es)' },
-            it: { bg: '#e7f2e7', border: 'var(--lang-it)' },
-            nl: { bg: '#fcf3e4', border: 'var(--lang-nl)' },
-            pl: { bg: '#eeeeee', border: 'var(--lang-pl)' },
-            ru: { bg: '#ededee', border: 'var(--lang-ru)' },
-            el: { bg: '#e8f5f4', border: 'var(--lang-el)' },
-            is: { bg: '#e7f8fb', border: 'var(--lang-is)' },
-            da: { bg: '#ffe9f4', border: 'var(--lang-da)' }
-          };
-          const style = langStyles[lang] || { bg: '#d8d8d6', border: '#6e6e6b' };
-          const textColor = lang === 'pl' ? '#555555' : `var(--lang-${lang}, var(--ink-main))`;
-          levelGroup.style.setProperty('--current-lang-bg', style.bg);
-          levelGroup.style.setProperty('--current-lang-border', style.border);
-          levelGroup.style.setProperty('--current-lang-text', textColor);
-        }
-      }
-      syncFilterPersistence(lang, level);
-      currentFilterDescriptor = getFilterDescriptor(lang, level);
+      syncFilterPersistence(lang);
+      currentFilterDescriptor = getFilterDescriptor(lang);
       clearPermalinkTimers();
       renderPermalinkIdle();
+
       const searchInput = document.getElementById('search-input');
       const rawSearch = searchInput.value;
       const search = rawSearch.toLowerCase().trim();
@@ -1901,25 +1728,24 @@
       }
 
       let visibleCount = 0;
-      const visibleLangCounts = new Map();
+      const searchLangCounts = new Map();
 
       cards.forEach(card => {
         const cardLangTokens = (card.getAttribute('data-lang') || '').toLowerCase().split(/\s+/);
         const cardLangCode = cardLangTokens[0] || '';
-        const cardLevel = (card.getAttribute('data-level') || '').toLowerCase().trim();
         const cardTopic = (card.getAttribute('data-topic') || '').toLowerCase();
         const cardText = card.textContent.toLowerCase();
 
         const matchesLang = (lang === 'all' || cardLangTokens.includes(lang));
-        const matchesLevel = (level === 'all' || cardLevel === level);
         const matchesSearch = (!search || cardTopic.includes(search) || cardText.includes(search));
 
-        if (matchesLang && matchesLevel && matchesSearch) {
+        if (matchesSearch && cardLangCode) {
+          searchLangCounts.set(cardLangCode, (searchLangCounts.get(cardLangCode) || 0) + 1);
+        }
+
+        if (matchesLang && matchesSearch) {
           card.style.display = '';
           visibleCount++;
-          if (cardLangCode) {
-            visibleLangCounts.set(cardLangCode, (visibleLangCounts.get(cardLangCode) || 0) + 1);
-          }
         } else {
           card.style.display = 'none';
         }
@@ -1927,7 +1753,7 @@
 
       document.querySelectorAll('.lang-count-badge[data-lang-count]').forEach(badge => {
         const code = badge.getAttribute('data-lang-count');
-        const count = visibleLangCounts.get(code) || 0;
+        const count = searchLangCounts.get(code) || 0;
         const chip = badge.closest('.radio-chip');
         if (count > 0) {
           badge.textContent = String(count);
