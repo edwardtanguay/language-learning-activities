@@ -2418,11 +2418,6 @@
 
 <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
-    <div class="lightbox-zoom-controls" id="lightbox-zoom-controls" onclick="event.stopPropagation()">
-      <button type="button" class="lightbox-zoom-btn" id="lb-zoom-out" onclick="stepLightboxZoom(-0.5)" title="Alejar" aria-label="Alejar">−</button>
-      <button type="button" class="lightbox-zoom-btn lightbox-zoom-level" id="lb-zoom-reset" onclick="resetLightboxZoom()" title="Restablecer zoom" aria-label="Restablecer zoom">100%</button>
-      <button type="button" class="lightbox-zoom-btn" id="lb-zoom-in" onclick="stepLightboxZoom(0.5)" title="Acercar" aria-label="Acercar">+</button>
-    </div>
     <div class="image-lightbox-stage" id="image-lightbox-stage">
       <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
         <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
@@ -2451,6 +2446,9 @@
       <div class="header-top">
         <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
           <img src="icon-historiaweb.jpg" alt="La historia del desarrollo web: 1996-2026" class="topic-header-icon">
+          <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('icon-historiaweb.jpg', 'La historia del desarrollo web: 1996-2026');" title="Ampliar imagen" aria-label="Ampliar imagen">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>
+          </button>
         </div>
         <div class="handout-title-group">
           <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">La historia del desarrollo web: 1996-2026</h1>
@@ -2461,12 +2459,12 @@
 
       <!-- Section Jump Navigation (paridad 1:1 con el menú flotante) -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num">1</a>
-        <a href="#seccion-2" class="jump-num">2</a>
-        <a href="#seccion-3" class="jump-num">3</a>
-        <a href="#seccion-4" class="jump-num">4</a>
-        <a href="#seccion-5" class="jump-num">5</a>
-        <a href="#seccion-6" class="jump-num">6</a>
+        <a href="#seccion-1" class="jump-num" title="Ir a Sección 1: Imágenes">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lectura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensión rápida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensión">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulario">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Preguntas">6</a>
       </nav>
     </header>
 
@@ -2625,6 +2623,8 @@
     </div>
 
     <!-- SECTION 3: COMPRENSIÓN -->
+
+
 
     <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
     <h2 class="section-title" id="seccion-3">
@@ -3430,6 +3430,8 @@
     </section>
 
     <!-- SECTION 4: PREGUNTAS ABIERTAS -->
+
+
 
     <!-- SECTION 1: VOCABULARIO -->
     <h2 class="section-title" id="seccion-5">
@@ -5415,6 +5417,8 @@
 
     
 
+
+    
 
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)

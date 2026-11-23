@@ -2418,11 +2418,6 @@
 
 <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
-    <div class="lightbox-zoom-controls" id="lightbox-zoom-controls" onclick="event.stopPropagation()">
-      <button type="button" class="lightbox-zoom-btn" id="lb-zoom-out" onclick="stepLightboxZoom(-0.5)" title="Dézoomer" aria-label="Dézoomer">−</button>
-      <button type="button" class="lightbox-zoom-btn lightbox-zoom-level" id="lb-zoom-reset" onclick="resetLightboxZoom()" title="Réinitialiser le zoom" aria-label="Réinitialiser le zoom">100%</button>
-      <button type="button" class="lightbox-zoom-btn" id="lb-zoom-in" onclick="stepLightboxZoom(0.5)" title="Zoomer" aria-label="Zoomer">+</button>
-    </div>
     <div class="image-lightbox-stage" id="image-lightbox-stage">
       <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
         <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
@@ -2451,6 +2446,9 @@
       <div class="header-top">
         <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
           <img src="icon-notresalut.jpg" alt="Comprendre «&nbsp;Notre Salut&nbsp;» d'Emmanuel Marre" class="topic-header-icon">
+          <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('icon-notresalut.jpg', 'Comprendre «&nbsp;Notre Salut&nbsp;» d'Emmanuel Marre');" title="Ampliar imagen" aria-label="Ampliar imagen">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>
+          </button>
         </div>
         <div class="handout-title-group">
           <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">Comprendre «&nbsp;Notre Salut&nbsp;» d'Emmanuel Marre</h1>
@@ -2461,12 +2459,12 @@
 
       <!-- Section Jump Navigation (parité 1:1 avec le menu flottant) -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num">1</a>
-        <a href="#seccion-2" class="jump-num">2</a>
-        <a href="#seccion-3" class="jump-num">3</a>
-        <a href="#seccion-4" class="jump-num">4</a>
-        <a href="#seccion-5" class="jump-num">5</a>
-        <a href="#seccion-6" class="jump-num">6</a>
+        <a href="#seccion-1" class="jump-num" title="Aller à la section 1 : Images">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lecture">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Compréhension rapide">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Compréhension">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabulaire">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Questions">6</a>
       </nav>
     </header>
 
@@ -2552,6 +2550,8 @@
     </div>
 
     <!-- SECTION 4: COMPRÉHENSION -->
+
+
 
     <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
     <h2 class="section-title" id="seccion-3">
@@ -3355,6 +3355,8 @@
       </article>
 
     </section>
+
+
 
 
     <!-- SECTION 2: VOCABULAIRE -->
@@ -5324,6 +5326,8 @@
 
     
 
+
+    
 
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)

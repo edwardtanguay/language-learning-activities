@@ -1885,6 +1885,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         (activity.recordedTitles && activity.recordedTitles[file]) ||
         formatImageTitle(rawSlug);
       const safeAlt = recordedTitle.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      const safeAltJs = recordedTitle.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
       if (!seenSlugs.has(rawSlug)) {
         seenSlugs.add(rawSlug);
@@ -1892,7 +1893,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
       }
 
       const qList = (imageQuestionsMap && imageQuestionsMap[file]) || [];
-      const safeQuestionsJson = JSON.stringify(qList).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      const safeQuestionsJson = JSON.stringify(qList).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
       let qBadgesHtml = '';
       if (qList.length > 0) {
@@ -1902,10 +1903,10 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
       }
 
       if (activity.folderName === 'porypara' || activity.folderName === 'subjuntivo') {
-        return `        <div class="image-thumb-wrap is-solved" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="openImageLightbox('images/${file}', '${safeAlt}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
+        return `        <div class="image-thumb-wrap is-solved" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="openImageLightbox('images/${file}', '${safeAltJs}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
       }
 
-      return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAlt}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
+      return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAltJs}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAltJs}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
     })
     .join('\n');
 

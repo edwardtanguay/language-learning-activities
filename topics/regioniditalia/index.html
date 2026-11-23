@@ -2488,11 +2488,6 @@
 
 <!-- Fullscreen Image Lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox" onclick="handleLightboxClick(event)">
-    <div class="lightbox-zoom-controls" id="lightbox-zoom-controls" onclick="event.stopPropagation()">
-      <button type="button" class="lightbox-zoom-btn" id="lb-zoom-out" onclick="stepLightboxZoom(-0.5)" title="Riduci" aria-label="Riduci">−</button>
-      <button type="button" class="lightbox-zoom-btn lightbox-zoom-level" id="lb-zoom-reset" onclick="resetLightboxZoom()" title="Ripristina zoom" aria-label="Ripristina zoom">100%</button>
-      <button type="button" class="lightbox-zoom-btn" id="lb-zoom-in" onclick="stepLightboxZoom(0.5)" title="Ingrandisci" aria-label="Ingrandisci">+</button>
-    </div>
     <div class="image-lightbox-stage" id="image-lightbox-stage">
       <div class="image-lightbox-img-wrap" id="image-lightbox-img-wrap">
         <img src="" alt="" class="image-lightbox-img" id="image-lightbox-img">
@@ -2521,6 +2516,9 @@
       <div class="header-top">
         <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
           <img src="icon-regioniditalia.jpg" alt="Le venti regioni d'Italia: Storia, dialetti e carattere" class="topic-header-icon">
+          <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('icon-regioniditalia.jpg', 'Le venti regioni d'Italia: Storia, dialetti e carattere');" title="Ampliar imagen" aria-label="Ampliar imagen">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>
+          </button>
         </div>
         <div class="handout-title-group">
           <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">Le venti regioni d'Italia: Storia, dialetti e carattere</h1>
@@ -2531,12 +2529,12 @@
 
       <!-- Section Jump Navigation -->
       <nav class="jump-nav" aria-label="Navegación de secciones">
-        <a href="#seccion-1" class="jump-num">1</a>
-        <a href="#seccion-2" class="jump-num">2</a>
-        <a href="#seccion-3" class="jump-num">3</a>
-        <a href="#seccion-4" class="jump-num">4</a>
-        <a href="#seccion-5" class="jump-num">5</a>
-        <a href="#seccion-6" class="jump-num">6</a>
+        <a href="#seccion-1" class="jump-num" title="Vai alla sezione 1: Immagini">1</a>
+        <a href="#seccion-2" class="jump-num" title="Ir a Sección 2: Lettura">2</a>
+        <a href="#seccion-3" class="jump-num" title="Ir a Sección 3: Comprensione rapida">3</a>
+        <a href="#seccion-4" class="jump-num" title="Ir a Sección 4: Comprensione">4</a>
+        <a href="#seccion-5" class="jump-num" title="Ir a Sección 5: Vocabolario">5</a>
+        <a href="#seccion-6" class="jump-num" title="Ir a Sección 6: Domande">6</a>
       </nav>
     </header>
 
@@ -2556,6 +2554,7 @@
         <button type="button" class="image-label-chip" data-image-id="mappa-nord-ovest" draggable="true">mappa-nord-ovest</button>
         <button type="button" class="image-label-chip" data-image-id="mappa-regioni-italia" draggable="true">mappa-regioni-italia</button>
         <button type="button" class="image-label-chip" data-image-id="mappa-sud" draggable="true">mappa-sud</button>
+        <button type="button" class="image-label-chip" data-image-id="mappatopografica" draggable="true">mappa topografica</button>
       </div>
       <div class="images-grid">
         <div class="image-thumb-wrap" data-image-id="mappa-centro" data-image-title="mappa-centro" onclick="handleImageCardClick(this, 'images/it-regioniditalia-mappa-centro.png', 'mappa-centro', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-regioniditalia-mappa-centro.png', 'mappa-centro', '[]')">
@@ -2570,9 +2569,10 @@
           <img src="images/it-regioniditalia-mappa-nord-est.png" alt="mappa-nord-est" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">mappa-nord-est</div>
         </div>
-        <div class="image-thumb-wrap" data-image-id="mappa-nord-ovest" data-image-title="mappa-nord-ovest" onclick="handleImageCardClick(this, 'images/it-regioniditalia-mappa-nord-ovest.png', 'mappa-nord-ovest', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-regioniditalia-mappa-nord-ovest.png', 'mappa-nord-ovest', '[]')">
+        <div class="image-thumb-wrap" data-image-id="mappa-nord-ovest" data-image-title="mappa-nord-ovest" onclick="handleImageCardClick(this, 'images/it-regioniditalia-mappa-nord-ovest.png', 'mappa-nord-ovest', '[&quot;È vero che a Milano si parla l\'italiano standard?&quot;]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-regioniditalia-mappa-nord-ovest.png', 'mappa-nord-ovest', '[&quot;È vero che a Milano si parla l\'italiano standard?&quot;]')">
           <img src="images/it-regioniditalia-mappa-nord-ovest.png" alt="mappa-nord-ovest" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">mappa-nord-ovest</div>
+          <div class="image-thumb-questions"><span class="image-thumb-q-badge"><svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(20, 18, 16, 0.88)" stroke="#ffffff" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5c-4.418 0-8 3.134-8 7 0 1.434.493 2.767 1.338 3.877L2 16.5l3.917-.98A8.841 8.841 0 0010 16.5c4.418 0 8-3.134 8-7s-3.582-7-8-7z"/></svg></span></div>
         </div>
         <div class="image-thumb-wrap" data-image-id="mappa-regioni-italia" data-image-title="mappa-regioni-italia" onclick="handleImageCardClick(this, 'images/it-regioniditalia-mappa-regioni-italia.png', 'mappa-regioni-italia', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-regioniditalia-mappa-regioni-italia.png', 'mappa-regioni-italia', '[]')">
           <img src="images/it-regioniditalia-mappa-regioni-italia.png" alt="mappa-regioni-italia" class="image-thumb" loading="lazy">
@@ -2581,6 +2581,10 @@
         <div class="image-thumb-wrap" data-image-id="mappa-sud" data-image-title="mappa-sud" onclick="handleImageCardClick(this, 'images/it-regioniditalia-mappa-sud.png', 'mappa-sud', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-regioniditalia-mappa-sud.png', 'mappa-sud', '[]')">
           <img src="images/it-regioniditalia-mappa-sud.png" alt="mappa-sud" class="image-thumb" loading="lazy">
           <div class="image-thumb-title">mappa-sud</div>
+        </div>
+        <div class="image-thumb-wrap" data-image-id="mappatopografica" data-image-title="mappa topografica" onclick="handleImageCardClick(this, 'images/it-regioniditalia-mappatopografica.jpg', 'mappa topografica', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-regioniditalia-mappatopografica.jpg', 'mappa topografica', '[]')">
+          <img src="images/it-regioniditalia-mappatopografica.jpg" alt="mappa topografica" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">mappa topografica</div>
         </div>
       </div>
     </section>
@@ -2684,6 +2688,8 @@
       </p>
       </article>
     </div>
+
+
 
 
     <!-- Section 3: Quick Comprehension (20 Rapid-Fire Fact Questions) -->
@@ -3492,6 +3498,8 @@
       </div>
 
     </div>
+
+
 
     <!-- Section 1: Vocabulary Drag & Drop -->
     <h2 class="section-title" id="seccion-5">
@@ -5030,6 +5038,8 @@
 
     
 
+
+    
 
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
