@@ -337,6 +337,24 @@
       stroke-width: 2.4;
     }
 
+    /* Activity Count Indicator */
+    .activity-count-desktop {
+      text-align: center;
+      font-family: var(--font-typewriter);
+      font-size: 13px;
+      line-height: 1.2;
+      color: var(--ink-muted);
+      margin: -10px 0 16px 0;
+    }
+
+    .activity-count-desktop.is-empty {
+      display: none;
+    }
+
+    .activity-count-mobile {
+      display: none;
+    }
+
     /* Activity Cards */
     .activities-list {
       display: flex;
@@ -706,6 +724,23 @@
         font-size: 13px;
         padding: 5px 10px;
       }
+      .activity-count-desktop {
+        display: none !important;
+      }
+      .activity-count-mobile {
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-typewriter);
+        font-size: 13px;
+        line-height: 1;
+        color: #2b313a;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+        margin-left: 4px;
+        white-space: nowrap;
+      }
+      .activity-count-mobile.is-empty {
+        display: none !important;
+      }
       .filter-search-group {
         width: 100%;
       }
@@ -831,6 +866,8 @@
         </div>
       </div>
     </div>
+
+    <div class="activity-count-desktop" id="activity-count-desktop" aria-live="polite"></div>
 
     <!-- Activities Catalog List -->
     <section class="activities-list" id="activities-list">
@@ -1368,6 +1405,12 @@
         sortedLevels.forEach(lvl => {
           levelGroup.appendChild(createRadioChip('level-filter', lvl, lvl, false, 'level-chip'));
         });
+
+        const mobileCount = document.createElement('span');
+        mobileCount.className = 'activity-count-mobile';
+        mobileCount.id = 'activity-count-mobile';
+        mobileCount.setAttribute('aria-live', 'polite');
+        levelGroup.appendChild(mobileCount);
       }
 
       document.addEventListener('keydown', (e) => {
@@ -1636,6 +1679,20 @@
       });
 
       document.getElementById('no-results').style.display = (visibleCount === 0) ? 'block' : 'none';
+
+      const countText = visibleCount === 1 ? '1 activity' : `${visibleCount} activities`;
+      const desktopCountEl = document.getElementById('activity-count-desktop');
+      const mobileCountEl = document.getElementById('activity-count-mobile');
+      [desktopCountEl, mobileCountEl].forEach(el => {
+        if (!el) return;
+        if (visibleCount === 0) {
+          el.textContent = '';
+          el.classList.add('is-empty');
+        } else {
+          el.textContent = countText;
+          el.classList.remove('is-empty');
+        }
+      });
     }
 
     function openImageLightbox(src, alt) {
