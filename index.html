@@ -258,6 +258,28 @@
       outline-offset: 2px;
     }
 
+    .radio-chip.is-disabled {
+      cursor: not-allowed;
+    }
+
+    .radio-chip input[type="radio"]:disabled + .radio-chip-label {
+      background: rgba(255, 255, 255, 0.35);
+      border-color: rgba(180, 188, 200, 0.55);
+      color: rgba(85, 92, 105, 0.42);
+      text-shadow: none;
+      box-shadow: none;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .radio-chip.is-disabled:hover .radio-chip-label,
+    .radio-chip.is-disabled:active .radio-chip-label {
+      background: rgba(255, 255, 255, 0.35);
+      border-color: rgba(180, 188, 200, 0.55);
+      color: rgba(85, 92, 105, 0.42);
+      transform: none;
+    }
+
     .search-input {
       font-family: var(--font-ui);
       font-size: 13.5px;
@@ -1522,7 +1544,40 @@
       const checkedLang = document.querySelector('input[name="lang-filter"]:checked');
       const checkedLevel = document.querySelector('input[name="level-filter"]:checked');
       const lang = checkedLang ? checkedLang.value.toLowerCase() : 'all';
-      const level = checkedLevel ? checkedLevel.value.toLowerCase() : 'all';
+      let level = checkedLevel ? checkedLevel.value.toLowerCase() : 'all';
+
+      const cards = document.querySelectorAll('.activity-card');
+
+      // Determine which levels exist for the currently selected language
+      const availableLevels = new Set();
+      cards.forEach(card => {
+        const cardLangTokens = (card.getAttribute('data-lang') || '').toLowerCase().split(/\s+/);
+        const cardLevel = (card.getAttribute('data-level') || '').toLowerCase().trim();
+        if (cardLevel && (lang === 'all' || cardLangTokens.includes(lang))) {
+          availableLevels.add(cardLevel);
+        }
+      });
+
+      // Disable level chips that have no activities for the current language
+      const levelInputs = document.querySelectorAll('input[name="level-filter"]');
+      levelInputs.forEach(inp => {
+        const val = inp.value.toLowerCase();
+        const isDisabled = val !== 'all' && !availableLevels.has(val);
+        inp.disabled = isDisabled;
+        const chip = inp.closest('.radio-chip');
+        if (chip) {
+          chip.classList.toggle('is-disabled', isDisabled);
+        }
+      });
+
+      // Avoid dead-end combinations: if selected level isn't available for this language, auto-switch
+      if (level !== 'all' && !availableLevels.has(level)) {
+        const fallbackLevel = availableLevels.size === 1
+          ? Array.from(availableLevels)[0]
+          : 'all';
+        level = setRadioSelection('level-filter', fallbackLevel);
+      }
+
       const levelGroup = document.getElementById('level-radio-group');
       if (levelGroup) {
         if (lang === 'all') {
@@ -1560,7 +1615,6 @@
         clearBtn.style.display = rawSearch.length > 0 ? 'inline-flex' : 'none';
       }
 
-      const cards = document.querySelectorAll('.activity-card');
       let visibleCount = 0;
 
       cards.forEach(card => {
