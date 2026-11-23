@@ -860,8 +860,15 @@
     <!-- Activities Catalog List -->
     <section class="activities-list" id="activities-list">
       <!-- Topic: Le venti regioni d'Italia -->
-      <article class="activity-card" data-lang="it italian italiano" data-level="B1" data-topic="regioni italia geografia storia dialetti cultura nord centro sud isole milano roma firenze napoli venezia palermo torino bologna stereotipi carattere" onclick="openCard('topics/regioniditalia/index.html', event)">
-        <div class="activity-card-header">
+      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="regioni italia geografia storia dialetti cultura nord centro sud isole milano roma firenze napoli venezia palermo torino bologna stereotipi carattere" onclick="openCard('topics/regioniditalia/index.html', event)">
+        <div class="activity-card-icon-wrap">
+          <img src="topics/regioniditalia/icon-regioniditalia.jpg" alt="Le venti regioni d'Italia: Storia, dialetti e carattere" class="activity-card-icon" loading="lazy">
+          <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/regioniditalia/icon-regioniditalia.jpg', 'Le venti regioni d'Italia: Storia, dialetti e carattere');" title="Ampliar imagen" aria-label="Ampliar imagen">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>
+          </button>
+        </div>
+        <div class="activity-card-body">
+          <div class="activity-card-header">
             <h2 class="activity-title">
               <a href="topics/regioniditalia/index.html">Le venti regioni d'Italia: Storia, dialetti e carattere</a>
             </h2>
@@ -873,6 +880,7 @@
           <p class="activity-desc">
             Un viaggio da nord a sud attraverso tutte le venti regioni italiane per scoprirne le città principali, la storia, le sfumature linguistiche e il carattere delle persone.
           </p>
+        </div>
       </article>
 
       <!-- Topic: El imperativo en español -->
