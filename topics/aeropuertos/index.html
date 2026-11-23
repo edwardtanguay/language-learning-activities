@@ -2194,8 +2194,9 @@
       display: block;
     }
     .lectura-audio-range {
-      flex: 1;
-      min-width: 80px;
+      flex: 1 1 0;
+      min-width: 0;
+      margin: 0;
       height: 4px;
       -webkit-appearance: none;
       appearance: none;
@@ -2354,8 +2355,30 @@
       .section-title {
         scroll-margin-top: 66px;
       }
+      .lectura-audio-player {
+        gap: 6px;
+        padding: 8px 10px;
+      }
       .lectura-audio-player.is-active-sticky {
         top: 62px;
+      }
+      .lectura-audio-btn {
+        width: 28px;
+        height: 28px;
+      }
+      .lectura-audio-time {
+        font-size: 11px;
+        letter-spacing: -0.3px;
+      }
+      .lectura-audio-speed {
+        font-size: 11px;
+        padding: 4px 6px 3px 6px;
+      }
+      .lectura-audio-seek-group {
+        gap: 3px;
+      }
+      .lectura-audio-seek {
+        padding: 4px 5px;
       }
     }
     /* Activity Permalink & Desktop Lightbox Zoom Controls */
