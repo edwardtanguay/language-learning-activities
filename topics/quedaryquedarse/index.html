@@ -189,7 +189,6 @@
     }
 
     .jump-nav .jump-num,
-    .jump-nav .jump-top-btn,
     .jump-nav .jump-bookmark-btn {
       width: 32px;
       height: 32px;
@@ -211,23 +210,7 @@
       cursor: pointer;
     }
 
-    .jump-nav .jump-top-btn {
-      background-color: var(--highlight);
-      width: 0;
-      opacity: 0;
-      pointer-events: none;
-      overflow: hidden;
-      border: none;
-      margin-right: -12px;
-    }
 
-    .jump-nav .jump-top-btn.show {
-      width: 32px;
-      opacity: 1;
-      pointer-events: auto;
-      border: 1px solid var(--ink-rule);
-      margin-right: 0;
-    }
 
 
     .jump-nav .jump-bookmark-btn {
@@ -257,7 +240,6 @@
     }
 
     .jump-nav .jump-num:hover,
-    .jump-nav .jump-top-btn:hover,
     .jump-nav .jump-bookmark-btn:hover {
       background-color: #d8d0bf;
       color: var(--ink-main);
@@ -265,7 +247,6 @@
     }
 
     .jump-nav .jump-num:active,
-    .jump-nav .jump-top-btn:active,
     .jump-nav .jump-bookmark-btn:active {
       transform: scale(0.95);
     }
@@ -276,12 +257,6 @@
       border-color: #9c927f;
     }
 
-    .jump-nav .jump-top-btn svg {
-      width: 15px;
-      height: 15px;
-      display: block;
-      pointer-events: none;
-    }
 
     /* Sticky Floating Section Jump Navigation Bar */
     .sticky-jump-nav {
@@ -313,7 +288,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    .sticky-jump-nav .jump-top-btn,
     .sticky-jump-nav .jump-bookmark-btn {
       width: 27px;
       height: 27px;
@@ -332,12 +306,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .sticky-jump-nav .jump-top-btn svg {
-      width: 14px;
-      height: 14px;
-      display: block;
-      pointer-events: none;
-    }
 
 
     .sticky-jump-nav .jump-bookmark-btn {
@@ -366,13 +334,11 @@
       pointer-events: none;
     }
 
-    .sticky-jump-nav .jump-top-btn:hover,
     .sticky-jump-nav .jump-bookmark-btn:hover {
       background-color: #e6dfcb;
       transform: scale(1.08);
     }
 
-    .sticky-jump-nav .jump-top-btn:active,
     .sticky-jump-nav .jump-bookmark-btn:active {
       transform: scale(0.94);
     }
@@ -1587,23 +1553,14 @@
         margin: 14px auto 18px auto;
       }
       .jump-nav .jump-num,
-      .jump-nav .jump-top-btn.show,
       .jump-nav .jump-bookmark-btn {
         width: 28px;
         height: 28px;
       }
-      .jump-nav .jump-top-btn {
-        height: 28px;
-        margin-right: -8px;
-      }
-      .jump-nav .jump-top-btn.show {
-        margin-right: 0;
-      }
       .jump-nav .jump-num {
         font-size: 15px;
       }
-      .jump-nav .jump-bookmark-btn svg,
-      .jump-nav .jump-top-btn svg {
+      .jump-nav .jump-bookmark-btn svg {
         width: 14px;
         height: 14px;
       }
@@ -5411,19 +5368,6 @@
       const stickyNav = document.getElementById('sticky-jump-nav');
       if (!headerJumpNav || !stickyNav) return;
 
-      const createTopBtn = () => {
-        const topBtn = document.createElement('button');
-        topBtn.type = 'button';
-        topBtn.className = 'jump-top-btn';
-        topBtn.title = 'Ir al inicio';
-        topBtn.setAttribute('aria-label', 'Ir al inicio');
-        topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="7"></line><polyline points="6 13 12 7 18 13"></polyline><line x1="4" y1="3" x2="20" y2="3"></line></svg>';
-        topBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          snappyScrollTo(0, 280);
-        });
-        return topBtn;
-      };
 
 
       const handleBookmarkJump = () => {
@@ -5465,17 +5409,12 @@
         }
       });
 
-      // Populate stationary nav extra buttons if not already present
-      if (!headerJumpNav.querySelector('.jump-top-btn')) {
-        headerJumpNav.insertBefore(createTopBtn(), headerLinks[0] || null);
-      }
       if (!headerJumpNav.querySelector('.jump-bookmark-btn')) {
         headerJumpNav.appendChild(createBookmarkBtn());
       }
 
       // Populate sticky nav with 1:1 button parity
       stickyNav.innerHTML = '';
-      stickyNav.appendChild(createTopBtn());
 
       headerLinks.forEach(link => {
         const clone = link.cloneNode(true);
@@ -5491,6 +5430,11 @@
         if (!targetEl) return;
         e.preventDefault();
 
+        if (targetId === sectionIds[0]) {
+          snappyScrollTo(0, 280);
+          return;
+        }
+
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 62;
 
 
@@ -5505,10 +5449,6 @@
         const shouldShow = headerRect.bottom <= 0;
         stickyNav.classList.toggle('visible', shouldShow);
 
-        const headerTopBtn = headerJumpNav.querySelector('.jump-top-btn');
-        if (headerTopBtn) {
-          headerTopBtn.classList.toggle('show', window.scrollY > 30);
-        }
 
         let currentSectionId = sectionIds[0] || '';
         const threshold = 130;
