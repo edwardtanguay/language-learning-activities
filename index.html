@@ -317,19 +317,13 @@
       transform: scale(0.65);
     }
 
-    .radio-chip.badge-chip:hover .radio-chip-label {
-      background-color: var(--chip-active-bg);
-      border-color: var(--chip-active-border);
-      color: var(--chip-active-color);
-    }
-
     .radio-chip:active .radio-chip-label {
       transform: translateY(0.5px);
     }
 
     /* When one language is selected, dim and remove tint from unselected language chips and their count badges */
     #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected {
-      opacity: 0.55;
+      opacity: 0.38;
       transition: opacity 0.14s ease;
     }
 
@@ -339,14 +333,6 @@
     }
 
     #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected .lang-count-badge {
-      background-color: #ffffff;
-    }
-
-    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected:hover {
-      opacity: 0.85;
-    }
-
-    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected:hover .radio-chip-label {
       background-color: #ffffff;
     }
 
@@ -406,10 +392,6 @@
       align-items: center;
       justify-content: center;
       border-radius: 2px;
-    }
-
-    .search-clear-btn:hover {
-      color: var(--ink-main);
     }
 
     .search-clear-btn svg {
@@ -940,7 +922,7 @@
       <div class="filter-group filter-search-group">
         <div class="search-input-wrap">
           <input type="text" id="search-input" class="search-input" placeholder="Search topics..." oninput="filterActivities()">
-          <button type="button" class="search-clear-btn" id="search-clear-btn" onclick="clearSearch()" aria-label="Clear search" title="Clear search">
+          <button type="button" class="search-clear-btn" id="search-clear-btn" onclick="clearSearch()" aria-label="Clear search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
         </div>
@@ -1365,7 +1347,6 @@
       btn.className = `radio-chip badge-chip lang-${code}`;
       btn.setAttribute('data-lang', code);
       btn.setAttribute('aria-pressed', 'false');
-      btn.title = fullName;
       btn.setAttribute('aria-label', fullName);
 
       btn.addEventListener('click', () => {

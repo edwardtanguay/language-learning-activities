@@ -6136,6 +6136,27 @@
           audio.play().catch(() => {});
         });
       }
+
+      document.addEventListener('keydown', (e) => {
+        if (!e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+
+        const activeEl = document.activeElement;
+        if (activeEl) {
+          const tag = activeEl.tagName;
+          if (tag === 'TEXTAREA' || tag === 'SELECT' || activeEl.isContentEditable || (tag === 'INPUT' && activeEl.id !== 'lectura-audio-range')) return;
+        }
+
+        const lightbox = document.getElementById('image-lightbox');
+        if (lightbox && lightbox.classList.contains('active')) return;
+        if (document.getElementById('active-hint-modal') || document.querySelector('.vocab-modal-overlay')) return;
+
+        const targetBtn = e.key === 'ArrowLeft' ? rewindBtn : forwardBtn;
+        if (!targetBtn) return;
+
+        e.preventDefault();
+        targetBtn.click();
+      });
     })();
       // =========================================================
     // ACTIVITY PERMALINK & DESKTOP LIGHTBOX ZOOM

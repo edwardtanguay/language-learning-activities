@@ -1,5 +1,6 @@
 ## regioniditalia
 
+ovest:È vero che a Milano si parla l'italiano standard?
 
 ## imperativo
 
