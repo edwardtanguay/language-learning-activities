@@ -29,7 +29,7 @@
       /* Standardized Language Palette */
       --lang-en: #9333ea;
       --lang-de: #7e4402;
-      --lang-fr: #333388;
+      --lang-fr: #1e40af;
       --lang-es: #be185d;
       --lang-it: #194d19;
       --lang-nl: #d97706;
@@ -226,9 +226,9 @@
     }
 
     .radio-chip {
-      --chip-active-bg: #cfd6e0;
-      --chip-active-border: #3b424d;
-      --chip-active-color: #181c22;
+      --chip-active-bg: #d8d8d6;
+      --chip-active-border: #6e6e6b;
+      --chip-active-color: #262624;
       position: relative;
       display: inline-flex;
       cursor: pointer;
@@ -239,7 +239,7 @@
 
     .radio-chip.lang-en { --chip-active-bg: #f5ecfd; --chip-active-border: var(--lang-en); --chip-active-color: var(--lang-en); }
     .radio-chip.lang-de { --chip-active-bg: #f3ede3; --chip-active-border: var(--lang-de); --chip-active-color: var(--lang-de); }
-    .radio-chip.lang-fr { --chip-active-bg: #ececf7; --chip-active-border: var(--lang-fr); --chip-active-color: var(--lang-fr); }
+    .radio-chip.lang-fr { --chip-active-bg: #dce6ff; --chip-active-border: var(--lang-fr); --chip-active-color: var(--lang-fr); }
     .radio-chip.lang-es { --chip-active-bg: #faeaf0; --chip-active-border: var(--lang-es); --chip-active-color: var(--lang-es); }
     .radio-chip.lang-it { --chip-active-bg: #e7f2e7; --chip-active-border: var(--lang-it); --chip-active-color: var(--lang-it); }
     .radio-chip.lang-nl { --chip-active-bg: #fcf3e4; --chip-active-border: var(--lang-nl); --chip-active-color: var(--lang-nl); }
@@ -249,9 +249,9 @@
     .radio-chip.lang-is { --chip-active-bg: #e7f8fb; --chip-active-border: var(--lang-is); --chip-active-color: var(--lang-is); }
     .radio-chip.lang-da { --chip-active-bg: #ffe9f4; --chip-active-border: var(--lang-da); --chip-active-color: var(--lang-da); }
     .radio-chip.level-chip {
-      --chip-active-bg: var(--current-lang-bg, #cfd6e0);
-      --chip-active-border: var(--current-lang-border, #3b424d);
-      --chip-active-color: var(--current-lang-text, #181c22);
+      --chip-active-bg: var(--current-lang-bg, #d8d8d6);
+      --chip-active-border: var(--current-lang-border, #6e6e6b);
+      --chip-active-color: var(--current-lang-text, #262624);
     }
 
     .radio-chip input[type="radio"] {
@@ -262,10 +262,31 @@
       pointer-events: none;
     }
 
+    /* Non-language buttons (All, and levels when Language = All): rounded neutral UI chips */
     .radio-chip-label {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      line-height: 1.15;
+      padding: 4px 11px;
+      border: 1px solid #c5c5c2;
+      border-radius: 999px;
+      background-color: #ffffff;
+      color: #52524f;
+      -webkit-font-smoothing: antialiased;
+      box-shadow: 0 1px 2px rgba(25, 25, 24, 0.08);
+      transition: background-color 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s, transform 0.08s;
+      white-space: nowrap;
+    }
+
+    /* Language-specific buttons (ES, IT, FR, and levels when a specific language is selected): square stamp badges */
+    .radio-chip.badge-chip .radio-chip-label,
+    #level-radio-group.has-lang-selected .radio-chip.level-specific .radio-chip-label {
       font-family: var(--font-typewriter);
       font-size: 14px;
       font-weight: 700;
@@ -273,20 +294,13 @@
       letter-spacing: 0.8px;
       line-height: 1;
       padding: 5px 7px 2px 7px;
-      border: 1px solid #c2c8d2;
       border-radius: 0;
-      background-color: #ffffff;
-      color: #4a505c;
-      -webkit-font-smoothing: antialiased;
-      box-shadow: 0 1px 2px rgba(25, 32, 44, 0.08);
-      transition: background-color 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s, transform 0.08s;
-      white-space: nowrap;
     }
 
     .radio-chip:hover .radio-chip-label {
       background-color: #ffffff;
-      border-color: #9ba3b0;
-      color: #1e232a;
+      border-color: #9e9e9a;
+      color: #222220;
     }
 
     .radio-chip:active .radio-chip-label {
@@ -485,7 +499,7 @@
 
     .badge-lang.lang-en { border-color: var(--lang-en); color: var(--lang-en); background-color: rgba(147, 51, 234, 0.08); }
     .badge-lang.lang-de { border-color: var(--lang-de); color: var(--lang-de); background-color: rgba(126, 68, 2, 0.08); }
-    .badge-lang.lang-fr { border-color: var(--lang-fr); color: var(--lang-fr); background-color: rgba(51, 51, 136, 0.08); }
+    .badge-lang.lang-fr { border-color: var(--lang-fr); color: var(--lang-fr); background-color: rgba(30, 64, 175, 0.09); }
     .badge-lang.lang-es { border-color: var(--lang-es); color: var(--lang-es); background-color: rgba(190, 24, 93, 0.08); }
     .badge-lang.lang-it { border-color: var(--lang-it); color: var(--lang-it); background-color: rgba(25, 77, 25, 0.08); }
     .badge-lang.lang-nl { border-color: var(--lang-nl); color: var(--lang-nl); background-color: rgba(217, 119, 6, 0.08); }
@@ -814,6 +828,12 @@
         gap: 6px;
       }
       .radio-chip-label {
+        font-size: 13px;
+        line-height: 1.15;
+        padding: 4px 10px;
+      }
+      .radio-chip.badge-chip .radio-chip-label,
+      #level-radio-group.has-lang-selected .radio-chip.level-specific .radio-chip-label {
         font-size: 14px;
         line-height: 1;
         padding: 4px 6px 2px 6px;
@@ -1475,7 +1495,7 @@
 
         sortedLangs.forEach(([code]) => {
           const fullName = LANGUAGE_LABELS[code] || code.toUpperCase();
-          const chip = createRadioChip('lang-filter', code, code.toUpperCase(), false, `lang-${code}`);
+          const chip = createRadioChip('lang-filter', code, code.toUpperCase(), false, `badge-chip lang-${code}`);
           chip.title = fullName;
           chip.setAttribute('aria-label', fullName);
           langGroup.appendChild(chip);
@@ -1497,7 +1517,7 @@
         });
 
         sortedLevels.forEach(lvl => {
-          levelGroup.appendChild(createRadioChip('level-filter', lvl, lvl, false, 'level-chip'));
+          levelGroup.appendChild(createRadioChip('level-filter', lvl, lvl, false, 'level-chip level-specific'));
         });
 
         const mobileCount = document.createElement('span');
@@ -1859,15 +1879,16 @@
 
       const levelGroup = document.getElementById('level-radio-group');
       if (levelGroup) {
+        levelGroup.classList.toggle('has-lang-selected', lang !== 'all');
         if (lang === 'all') {
-          levelGroup.style.setProperty('--current-lang-bg', '#cfd6e0');
-          levelGroup.style.setProperty('--current-lang-border', '#3b424d');
-          levelGroup.style.setProperty('--current-lang-text', '#181c22');
+          levelGroup.style.setProperty('--current-lang-bg', '#d8d8d6');
+          levelGroup.style.setProperty('--current-lang-border', '#6e6e6b');
+          levelGroup.style.setProperty('--current-lang-text', '#262624');
         } else {
           const langStyles = {
             en: { bg: '#f5ecfd', border: 'var(--lang-en)' },
             de: { bg: '#f3ede3', border: 'var(--lang-de)' },
-            fr: { bg: '#ececf7', border: 'var(--lang-fr)' },
+            fr: { bg: '#dce6ff', border: 'var(--lang-fr)' },
             es: { bg: '#faeaf0', border: 'var(--lang-es)' },
             it: { bg: '#e7f2e7', border: 'var(--lang-it)' },
             nl: { bg: '#fcf3e4', border: 'var(--lang-nl)' },
@@ -1877,7 +1898,7 @@
             is: { bg: '#e7f8fb', border: 'var(--lang-is)' },
             da: { bg: '#ffe9f4', border: 'var(--lang-da)' }
           };
-          const style = langStyles[lang] || { bg: '#cfd6e0', border: '#3b424d' };
+          const style = langStyles[lang] || { bg: '#d8d8d6', border: '#6e6e6b' };
           const textColor = lang === 'pl' ? '#555555' : `var(--lang-${lang}, var(--ink-main))`;
           levelGroup.style.setProperty('--current-lang-bg', style.bg);
           levelGroup.style.setProperty('--current-lang-border', style.border);
