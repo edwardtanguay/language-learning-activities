@@ -183,23 +183,27 @@
       line-height: 1.25;
       padding: 4px 10px;
       border: 1px solid var(--ink-rule);
-      border-radius: 2px;
-      background-color: var(--paper-sheet);
+      border-radius: 6px;
+      background-color: rgba(255, 253, 249, 0.72);
       color: var(--ink-main);
-      transition: background-color 0.14s, color 0.14s, border-color 0.14s;
+      transition: background-color 0.14s, color 0.14s, border-color 0.14s, filter 0.14s;
       white-space: nowrap;
     }
 
     .radio-chip:hover .radio-chip-label {
-      border-color: var(--ink-muted);
-      background-color: #fff;
+      background-color: #ffffff;
     }
 
     .radio-chip input[type="radio"]:checked + .radio-chip-label {
-      background-color: var(--ink-main);
-      border-color: var(--ink-main);
+      background-color: var(--stamp-blue);
+      border-color: var(--stamp-blue);
       color: #fffdf9;
       font-weight: 600;
+    }
+
+    .radio-chip:hover input[type="radio"]:checked + .radio-chip-label {
+      background-color: var(--stamp-blue);
+      filter: brightness(1.15);
     }
 
     .radio-chip input[type="radio"]:focus-visible + .radio-chip-label {
@@ -212,7 +216,7 @@
       font-size: 14px;
       padding: 5px 8px;
       border: 1px solid var(--ink-rule);
-      border-radius: 2px;
+      border-radius: 6px;
       background-color: #fff;
       color: var(--ink-main);
     }
