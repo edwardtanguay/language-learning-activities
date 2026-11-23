@@ -1807,10 +1807,25 @@
     function filterActivities() {
       const checkedLang = document.querySelector('input[name="lang-filter"]:checked');
       const checkedLevel = document.querySelector('input[name="level-filter"]:checked');
-      const lang = checkedLang ? checkedLang.value.toLowerCase() : 'all';
+      let lang = checkedLang ? checkedLang.value.toLowerCase() : 'all';
       let level = checkedLevel ? checkedLevel.value.toLowerCase() : 'all';
 
       const cards = document.querySelectorAll('.activity-card');
+
+      // If language is "All" and a specific level only belongs to one language, auto-select that language
+      if (lang === 'all' && level !== 'all') {
+        const availableLangsForLevel = new Set();
+        cards.forEach(card => {
+          const cardLevel = (card.getAttribute('data-level') || '').toLowerCase().trim();
+          const cardLangCode = (card.getAttribute('data-lang') || '').trim().toLowerCase().split(/\s+/)[0];
+          if (cardLevel === level && cardLangCode) {
+            availableLangsForLevel.add(cardLangCode);
+          }
+        });
+        if (availableLangsForLevel.size === 1) {
+          lang = setRadioSelection('lang-filter', Array.from(availableLangsForLevel)[0]);
+        }
+      }
 
       // Determine which levels exist for the currently selected language
       const availableLevels = new Set();
