@@ -158,6 +158,7 @@
     }
 
     .radio-chip {
+      --chip-active-bg: var(--ink-muted);
       position: relative;
       display: inline-flex;
       cursor: pointer;
@@ -165,6 +166,18 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
+
+    .radio-chip.lang-en { --chip-active-bg: var(--lang-en); }
+    .radio-chip.lang-de { --chip-active-bg: var(--lang-de); }
+    .radio-chip.lang-fr { --chip-active-bg: var(--lang-fr); }
+    .radio-chip.lang-es { --chip-active-bg: var(--lang-es); }
+    .radio-chip.lang-it { --chip-active-bg: var(--lang-it); }
+    .radio-chip.lang-nl { --chip-active-bg: var(--lang-nl); }
+    .radio-chip.lang-pl { --chip-active-bg: #555555; }
+    .radio-chip.lang-ru { --chip-active-bg: var(--lang-ru); }
+    .radio-chip.lang-el { --chip-active-bg: var(--lang-el); }
+    .radio-chip.lang-is { --chip-active-bg: var(--lang-is); }
+    .radio-chip.lang-da { --chip-active-bg: var(--lang-da); }
 
     .radio-chip input[type="radio"] {
       position: absolute;
@@ -184,26 +197,16 @@
       padding: 4px 10px;
       border: 1px solid var(--ink-rule);
       border-radius: 6px;
-      background-color: rgba(255, 253, 249, 0.72);
+      background-color: var(--paper-sheet);
       color: var(--ink-main);
-      transition: background-color 0.14s, color 0.14s, border-color 0.14s, filter 0.14s;
+      transition: background-color 0.14s, color 0.14s, border-color 0.14s;
       white-space: nowrap;
     }
 
-    .radio-chip:hover .radio-chip-label {
-      background-color: #ffffff;
-    }
-
     .radio-chip input[type="radio"]:checked + .radio-chip-label {
-      background-color: var(--stamp-blue);
-      border-color: var(--stamp-blue);
+      background-color: var(--chip-active-bg);
+      border-color: var(--chip-active-bg);
       color: #fffdf9;
-      font-weight: 600;
-    }
-
-    .radio-chip:hover input[type="radio"]:checked + .radio-chip-label {
-      background-color: var(--stamp-blue);
-      filter: brightness(1.15);
     }
 
     .radio-chip input[type="radio"]:focus-visible + .radio-chip-label {
@@ -1154,9 +1157,9 @@
 
     const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
-    function createRadioChip(name, value, labelText, checked) {
+    function createRadioChip(name, value, labelText, checked, extraClass) {
       const label = document.createElement('label');
-      label.className = 'radio-chip';
+      label.className = extraClass ? `radio-chip ${extraClass}` : 'radio-chip';
 
       const input = document.createElement('input');
       input.type = 'radio';
@@ -1204,7 +1207,7 @@
 
         sortedLangs.forEach(([code]) => {
           const label = LANGUAGE_LABELS[code] || code.toUpperCase();
-          langGroup.appendChild(createRadioChip('lang-filter', code, label, false));
+          langGroup.appendChild(createRadioChip('lang-filter', code, label, false, `lang-${code}`));
         });
       }
 
