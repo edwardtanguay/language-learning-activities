@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Subtle desk dot pattern matching the site background -->
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="1.2" fill="#d5cebf"/>
+    </pattern>
+    <filter id="cardShadow" x="-12%" y="-12%" width="124%" height="128%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#2d2823" flood-opacity="0.11"/>
+    </filter>
+    <filter id="bubbleShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#2d2823" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- Warm paper desk background -->
+  <rect width="512" height="512" fill="#f9f6ef"/>
+  <rect width="512" height="512" fill="url(#dots)"/>
+
+  <!-- Subtle connecting arc between the two online learners -->
+  <path d="M 150 132 Q 256 64 362 132" fill="none" stroke="#c8beaa" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round"/>
+
+  <!-- Left Online Learner (Video Call Tile - Spanish Magenta Accent) -->
+  <g filter="url(#bubbleShadow)">
+    <rect x="44" y="64" width="126" height="114" rx="14" fill="#fffdf9" stroke="#be185d" stroke-width="3.5"/>
+    <!-- Subtle video-call top bar dots -->
+    <circle cx="62" cy="80" r="3.5" fill="#be185d" opacity="0.75"/>
+    <circle cx="74" cy="80" r="3.5" fill="#e29cb8"/>
+    <!-- Minimalist person silhouette -->
+    <circle cx="107" cy="112" r="18" fill="#faeaf0" stroke="#be185d" stroke-width="3.2"/>
+    <path d="M 73 166 C 75 142, 88 134, 107 134 C 126 134, 139 142, 141 166" fill="#faeaf0" stroke="#be185d" stroke-width="3.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Right Online Learner (Video Call Tile - French Blue Accent) -->
+  <g filter="url(#bubbleShadow)">
+    <rect x="342" y="64" width="126" height="114" rx="14" fill="#fffdf9" stroke="#1e40af" stroke-width="3.5"/>
+    <!-- Subtle video-call top bar dots -->
+    <circle cx="360" cy="80" r="3.5" fill="#1e40af" opacity="0.75"/>
+    <circle cx="372" cy="80" r="3.5" fill="#8b94d6"/>
+    <!-- Minimalist person silhouette -->
+    <circle cx="405" cy="112" r="18" fill="#dce6ff" stroke="#1e40af" stroke-width="3.2"/>
+    <path d="M 371 166 C 373 142, 386 134, 405 134 C 424 134, 437 142, 439 166" fill="#dce6ff" stroke="#1e40af" stroke-width="3.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Speech Bubble from Left Learner -->
+  <g filter="url(#bubbleShadow)">
+    <path d="M 188 94 h 68 a 12 12 0 0 1 12 12 v 24 a 12 12 0 0 1 -12 12 h -48 l -18 14 v -14 h -2 a 12 12 0 0 1 -12 -12 v -24 a 12 12 0 0 1 12 -12 z" fill="#faeaf0" stroke="#be185d" stroke-width="3"/>
+    <line x1="200" y1="112" x2="248" y2="112" stroke="#be185d" stroke-width="4" stroke-linecap="round"/>
+    <line x1="200" y1="125" x2="234" y2="125" stroke="#be185d" stroke-width="4" stroke-linecap="round" opacity="0.65"/>
+  </g>
+
+  <!-- Speech Bubble from Right Learner -->
+  <g filter="url(#bubbleShadow)">
+    <path d="M 256 146 h 68 a 12 12 0 0 1 12 12 v 24 a 12 12 0 0 1 -12 12 h -2 v 14 l -18 -14 h -48 a 12 12 0 0 1 -12 -12 v -24 a 12 12 0 0 1 12 -12 z" fill="#dce6ff" stroke="#1e40af" stroke-width="3"/>
+    <line x1="268" y1="164" x2="316" y2="164" stroke="#1e40af" stroke-width="4" stroke-linecap="round"/>
+    <line x1="268" y1="177" x2="300" y2="177" stroke="#1e40af" stroke-width="4" stroke-linecap="round" opacity="0.65"/>
+  </g>
+
+  <!-- Central Handout / Reading Text & Quiz Sheet -->
+  <g filter="url(#cardShadow)">
+    <rect x="96" y="218" width="320" height="248" rx="8" fill="#fffdf9" stroke="#22201e" stroke-width="3.5"/>
+
+    <!-- Section Header Circle + Title Bar (echoing activity handouts) -->
+    <circle cx="136" cy="256" r="15" fill="#e6e0d2"/>
+    <rect x="164" y="249" width="128" height="14" rx="4" fill="#22201e"/>
+    <!-- Stamp badge top-right of sheet -->
+    <rect x="336" y="244" width="54" height="22" fill="#e7f2e7" stroke="#194d19" stroke-width="2.2"/>
+    <line x1="346" y1="255" x2="380" y2="255" stroke="#194d19" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Divider rule -->
+    <line x1="120" y1="284" x2="392" y2="284" stroke="#d5cebf" stroke-width="2.5"/>
+
+    <!-- Reading passage lines (with a subtle vocabulary highlight) -->
+    <rect x="120" y="302" width="270" height="9" rx="4.5" fill="#5e5953" opacity="0.72"/>
+    <rect x="206" y="299" width="66" height="15" rx="3" fill="#f2e9cb"/>
+    <rect x="212" y="302" width="54" height="9" rx="4.5" fill="#22201e" opacity="0.82"/>
+    <rect x="120" y="322" width="244" height="9" rx="4.5" fill="#5e5953" opacity="0.58"/>
+    <rect x="120" y="342" width="196" height="9" rx="4.5" fill="#5e5953" opacity="0.48"/>
+
+    <!-- Interactive Quiz Section (2 multiple-choice rows, one checked correct in Italian green) -->
+    <!-- Option 1: Correct selected -->
+    <rect x="120" y="370" width="272" height="34" rx="6" fill="#eef7ee" stroke="#194d19" stroke-width="2.5"/>
+    <circle cx="141" cy="387" r="10" fill="#194d19"/>
+    <polyline points="136,387 139.5,390.5 146.5,383.5" fill="none" stroke="#fffdf9" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="162" y="382" width="142" height="10" rx="5" fill="#194d19" opacity="0.82"/>
+
+    <!-- Option 2: Unselected -->
+    <rect x="120" y="414" width="272" height="34" rx="6" fill="#fffdf9" stroke="#d5cebf" stroke-width="2.2"/>
+    <circle cx="141" cy="431" r="9.5" fill="#fffdf9" stroke="#b8ae99" stroke-width="2.2"/>
+    <rect x="162" y="426" width="114" height="10" rx="5" fill="#8c867c" opacity="0.65"/>
+  </g>
+</svg>

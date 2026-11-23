@@ -4,7 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Language Learning Activities | Worksheets for self-study, tandem meetups, and online classes</title>
-  <meta name="description" content="Practical language learning worksheets and activities for self-study, tandem meetups, and online classes.">
+  <meta name="description" content="Practical language learning worksheets and interactive activities with reading texts, vocabulary exercises, quizzes, and discussion prompts for self-study, tandem meetups, and online classes.">
+  <link rel="canonical" href="https://language-learning-activities.vercel.app/">
+  <link rel="icon" type="image/svg+xml" href="images/og-main.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Language Learning Activities">
+  <meta property="og:title" content="Language Learning Activities">
+  <meta property="og:description" content="Practical language learning worksheets and interactive activities with reading texts, vocabulary exercises, quizzes, and discussion prompts for self-study, tandem meetups, and online classes.">
+  <meta property="og:url" content="https://language-learning-activities.vercel.app/">
+  <meta property="og:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
+  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="Language Learning Activities — reading texts, quizzes, and online tandem conversations">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Language Learning Activities">
+  <meta name="twitter:description" content="Practical language learning worksheets and interactive activities with reading texts, vocabulary exercises, quizzes, and discussion prompts for self-study, tandem meetups, and online classes.">
+  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -222,7 +240,7 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
 
     .radio-chip {
@@ -295,6 +313,35 @@
       line-height: 1;
       padding: 5px 7px 2px 7px;
       border-radius: 0;
+    }
+
+    .lang-count-badge {
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      min-width: 14px;
+      height: 14px;
+      padding: 1px 2.5px 0 2.5px;
+      border-radius: 999px;
+      background-color: var(--chip-active-bg, #ffffff);
+      border: 1px solid var(--chip-active-border, #52524f);
+      color: var(--chip-active-color, #262624);
+      font-family: var(--font-typewriter);
+      font-size: 9.5px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.14s ease, transform 0.14s ease;
+    }
+
+    .lang-count-badge.is-zero {
+      opacity: 0;
+      transform: scale(0.65);
     }
 
     .radio-chip:hover .radio-chip-label {
@@ -396,24 +443,6 @@
       height: 14px;
       stroke: currentColor;
       stroke-width: 2.4;
-    }
-
-    /* Activity Count Indicator */
-    .activity-count-desktop {
-      text-align: center;
-      font-family: var(--font-typewriter);
-      font-size: 13px;
-      line-height: 1.2;
-      color: var(--ink-muted);
-      margin: -10px 0 16px 0;
-    }
-
-    .activity-count-desktop.is-empty {
-      display: none;
-    }
-
-    .activity-count-mobile {
-      display: none;
     }
 
     /* Activity Cards */
@@ -825,7 +854,7 @@
       .radio-group {
         flex: 1;
         min-width: 0;
-        gap: 6px;
+        gap: 8px;
       }
       .radio-chip-label {
         font-size: 13px;
@@ -837,23 +866,6 @@
         font-size: 14px;
         line-height: 1;
         padding: 4px 6px 2px 6px;
-      }
-      .activity-count-desktop {
-        display: none !important;
-      }
-      .activity-count-mobile {
-        display: inline-flex;
-        align-items: center;
-        font-family: var(--font-typewriter);
-        font-size: 13px;
-        line-height: 1;
-        color: #2b313a;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
-        margin-left: 4px;
-        white-space: nowrap;
-      }
-      .activity-count-mobile.is-empty {
-        display: none !important;
       }
       .filter-search-group {
         width: 100%;
@@ -977,8 +989,6 @@
         </div>
       </div>
     </div>
-
-    <div class="activity-count-desktop" id="activity-count-desktop" aria-live="polite"></div>
 
     <!-- Activities Catalog List -->
     <section class="activities-list" id="activities-list">
@@ -1498,6 +1508,11 @@
           const chip = createRadioChip('lang-filter', code, code.toUpperCase(), false, `badge-chip lang-${code}`);
           chip.title = fullName;
           chip.setAttribute('aria-label', fullName);
+          const countBadge = document.createElement('span');
+          countBadge.className = 'lang-count-badge is-zero';
+          countBadge.setAttribute('data-lang-count', code);
+          countBadge.setAttribute('aria-hidden', 'true');
+          chip.appendChild(countBadge);
           langGroup.appendChild(chip);
         });
       }
@@ -1519,12 +1534,6 @@
         sortedLevels.forEach(lvl => {
           levelGroup.appendChild(createRadioChip('level-filter', lvl, lvl, false, 'level-chip level-specific'));
         });
-
-        const mobileCount = document.createElement('span');
-        mobileCount.className = 'activity-count-mobile';
-        mobileCount.id = 'activity-count-mobile';
-        mobileCount.setAttribute('aria-live', 'polite');
-        levelGroup.appendChild(mobileCount);
       }
 
       document.addEventListener('keydown', (e) => {
@@ -1919,9 +1928,11 @@
       }
 
       let visibleCount = 0;
+      const visibleLangCounts = new Map();
 
       cards.forEach(card => {
         const cardLangTokens = (card.getAttribute('data-lang') || '').toLowerCase().split(/\s+/);
+        const cardLangCode = cardLangTokens[0] || '';
         const cardLevel = (card.getAttribute('data-level') || '').toLowerCase().trim();
         const cardTopic = (card.getAttribute('data-topic') || '').toLowerCase();
         const cardText = card.textContent.toLowerCase();
@@ -1933,26 +1944,26 @@
         if (matchesLang && matchesLevel && matchesSearch) {
           card.style.display = '';
           visibleCount++;
+          if (cardLangCode) {
+            visibleLangCounts.set(cardLangCode, (visibleLangCounts.get(cardLangCode) || 0) + 1);
+          }
         } else {
           card.style.display = 'none';
         }
       });
 
-      document.getElementById('no-results').style.display = (visibleCount === 0) ? 'block' : 'none';
-
-      const countText = visibleCount === 1 ? '1 activity' : `${visibleCount} activities`;
-      const desktopCountEl = document.getElementById('activity-count-desktop');
-      const mobileCountEl = document.getElementById('activity-count-mobile');
-      [desktopCountEl, mobileCountEl].forEach(el => {
-        if (!el) return;
-        if (visibleCount === 0) {
-          el.textContent = '';
-          el.classList.add('is-empty');
+      document.querySelectorAll('.lang-count-badge[data-lang-count]').forEach(badge => {
+        const code = badge.getAttribute('data-lang-count');
+        const count = visibleLangCounts.get(code) || 0;
+        if (count > 0) {
+          badge.textContent = String(count);
+          badge.classList.remove('is-zero');
         } else {
-          el.textContent = countText;
-          el.classList.remove('is-empty');
+          badge.classList.add('is-zero');
         }
       });
+
+      document.getElementById('no-results').style.display = (visibleCount === 0) ? 'block' : 'none';
     }
 
     function openImageLightbox(src, alt) {
