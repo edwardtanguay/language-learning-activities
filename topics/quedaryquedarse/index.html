@@ -193,8 +193,8 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background-color: #e6e0d2;
-      color: var(--ink-main);
+      background-color: #f3efe6;
+      color: var(--ink-muted);
       font-weight: 700;
       font-size: 17px;
       display: inline-flex;
@@ -240,7 +240,7 @@
 
     .jump-nav .jump-num:hover,
     .jump-nav .jump-bookmark-btn:hover {
-      background-color: #d8d0bf;
+      background-color: #ebe5d8;
       color: var(--ink-main);
       transform: scale(1.06);
     }
@@ -251,7 +251,7 @@
     }
 
     .jump-nav .jump-num.active {
-      background-color: #c8beaa;
+      background-color: #e6e0d2;
       color: var(--ink-main);
       border-color: #9c927f;
     }
@@ -345,8 +345,8 @@
       width: 27px;
       height: 27px;
       border-radius: 50%;
-      background-color: #e6e0d2;
-      color: var(--ink-main);
+      background-color: #f3efe6;
+      color: var(--ink-muted);
       font-weight: 700;
       font-size: 14px;
       display: inline-flex;
@@ -362,7 +362,7 @@
     }
 
     .sticky-jump-nav .jump-num:hover {
-      background-color: #d8d0bf;
+      background-color: #ebe5d8;
       color: var(--ink-main);
       transform: scale(1.08);
     }
@@ -372,7 +372,7 @@
     }
 
     .sticky-jump-nav .jump-num.active {
-      background-color: #c8beaa;
+      background-color: #e6e0d2;
       color: var(--ink-main);
       border-color: #9c927f;
     }
@@ -2314,7 +2314,7 @@
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        background-color: #e6e0d2;
+        background-color: #f3efe6;
         z-index: -1;
       }
       .jump-nav .jump-num:hover,
@@ -5494,6 +5494,29 @@
       });
       stickyNav.appendChild(createBookmarkBtn());
 
+            let lockedJumpTargetId = null;
+      let unlockJumpTimer = null;
+
+      const setActiveJumpNav = (sectionId) => {
+        headerJumpNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${sectionId}`);
+        });
+        stickyNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${sectionId}`);
+        });
+      };
+
+      const clearJumpLock = () => {
+        lockedJumpTargetId = null;
+        if (unlockJumpTimer) {
+          clearTimeout(unlockJumpTimer);
+          unlockJumpTimer = null;
+        }
+      };
+
+      window.addEventListener('wheel', clearJumpLock, { passive: true });
+      window.addEventListener('touchstart', clearJumpLock, { passive: true });
+
       const handleJumpClick = function(e) {
         const href = this.getAttribute('href') || '';
         if (!href.startsWith('#')) return;
@@ -5501,6 +5524,15 @@
         const targetEl = document.getElementById(targetId);
         if (!targetEl) return;
         e.preventDefault();
+
+        // Move the menu marker first, then scroll for a snappier response
+        clearJumpLock();
+        lockedJumpTargetId = targetId;
+        setActiveJumpNav(targetId);
+        unlockJumpTimer = setTimeout(() => {
+          lockedJumpTargetId = null;
+          unlockJumpTimer = null;
+        }, 360);
 
         if (targetId === sectionIds[0]) {
           snappyScrollTo(0, 280);
@@ -5510,7 +5542,6 @@
         const stickyOffset = window.innerWidth <= 680 ? 66 : 62;
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - stickyOffset;
 
-
         snappyScrollTo(Math.max(0, targetTop), 280);
       };
 
@@ -5518,10 +5549,16 @@
       stickyNav.querySelectorAll('.jump-num').forEach(a => a.addEventListener('click', handleJumpClick));
 
       const updateStickyNavState = () => {
+        // Sticky button menu appears ONLY when stationary menu is no longer visible on screen
         const headerRect = headerJumpNav.getBoundingClientRect();
         const shouldShow = headerRect.bottom <= 0;
         stickyNav.classList.toggle('visible', shouldShow);
 
+        if (lockedJumpTargetId) {
+          setActiveJumpNav(lockedJumpTargetId);
+          updateStickyBookmarkState();
+          return;
+        }
 
         let currentSectionId = sectionIds[0] || '';
         const threshold = 130;
@@ -5538,12 +5575,8 @@
           currentSectionId = sectionIds[sectionIds.length - 1];
         }
 
-        headerJumpNav.querySelectorAll('.jump-num').forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
-        });
-        stickyNav.querySelectorAll('.jump-num').forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
-        });
+        // Active section highlight on BOTH stationary and sticky menus
+        setActiveJumpNav(currentSectionId);
 
         updateStickyBookmarkState();
       };

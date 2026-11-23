@@ -189,8 +189,8 @@
     }
 
     .jump-num {
-      background: #e6e0d2;
-      color: var(--ink-main);
+      background: #f3efe6;
+      color: var(--ink-muted);
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -202,17 +202,18 @@
       font-weight: 700;
       line-height: 1;
       text-decoration: none;
-      transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
     }
 
     .jump-num:hover {
-      background-color: #dacfb8;
+      background-color: #ebe5d8;
+      color: var(--ink-main);
       transform: translateY(-1px);
       box-shadow: 0 2px 6px rgba(45, 40, 35, 0.15);
     }
 
     .jump-num.active {
-      background-color: #c8beaa;
+      background-color: #e6e0d2;
       color: var(--ink-main);
     }
 
@@ -2278,7 +2279,7 @@
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        background-color: #e6e0d2;
+        background-color: #f3efe6;
         z-index: -1;
       }
       .jump-nav .jump-num:hover,
@@ -5580,6 +5581,29 @@
       });
       stickyNav.appendChild(createBookmarkBtn());
 
+            let lockedJumpTargetId = null;
+      let unlockJumpTimer = null;
+
+      const setActiveJumpNav = (sectionId) => {
+        headerJumpNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${sectionId}`);
+        });
+        stickyNav.querySelectorAll('.jump-num').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${sectionId}`);
+        });
+      };
+
+      const clearJumpLock = () => {
+        lockedJumpTargetId = null;
+        if (unlockJumpTimer) {
+          clearTimeout(unlockJumpTimer);
+          unlockJumpTimer = null;
+        }
+      };
+
+      window.addEventListener('wheel', clearJumpLock, { passive: true });
+      window.addEventListener('touchstart', clearJumpLock, { passive: true });
+
       const handleJumpClick = function(e) {
         const href = this.getAttribute('href') || '';
         if (!href.startsWith('#')) return;
@@ -5588,6 +5612,15 @@
         if (!targetEl) return;
         e.preventDefault();
 
+        // Move the menu marker first, then scroll for a snappier response
+        clearJumpLock();
+        lockedJumpTargetId = targetId;
+        setActiveJumpNav(targetId);
+        unlockJumpTimer = setTimeout(() => {
+          lockedJumpTargetId = null;
+          unlockJumpTimer = null;
+        }, 360);
+
         if (targetId === sectionIds[0]) {
           snappyScrollTo(0, 280);
           return;
@@ -5595,7 +5628,6 @@
 
         const stickyOffset = window.innerWidth <= 680 ? 66 : 62;
         const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - stickyOffset;
-
 
         snappyScrollTo(Math.max(0, targetTop), 280);
       };
@@ -5609,6 +5641,11 @@
         const shouldShow = headerRect.bottom <= 0;
         stickyNav.classList.toggle('visible', shouldShow);
 
+        if (lockedJumpTargetId) {
+          setActiveJumpNav(lockedJumpTargetId);
+          updateStickyBookmarkState();
+          return;
+        }
 
         let currentSectionId = sectionIds[0] || '';
         const threshold = 130;
@@ -5626,12 +5663,7 @@
         }
 
         // Active section highlight on BOTH stationary and sticky menus
-        headerJumpNav.querySelectorAll('.jump-num').forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
-        });
-        stickyNav.querySelectorAll('.jump-num').forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === `#${currentSectionId}`);
-        });
+        setActiveJumpNav(currentSectionId);
 
         updateStickyBookmarkState();
       };
