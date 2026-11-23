@@ -2229,7 +2229,8 @@
       flex-shrink: 0;
       letter-spacing: -0.2px;
     }
-    .lectura-audio-speed {
+    .lectura-audio-speed,
+    .lectura-audio-rewind {
       font-family: var(--font-typewriter);
       font-size: 11.5px;
       line-height: 1;
@@ -2241,8 +2242,10 @@
       cursor: pointer;
       flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
+          white-space: nowrap;
     }
-    .lectura-audio-speed:hover {
+    .lectura-audio-speed:hover,
+    .lectura-audio-rewind:hover {
       background-color: var(--highlight);
     }
     /* Mobile Full-Width Section Jump Navigation */
@@ -2624,6 +2627,7 @@
       <input type="range" class="lectura-audio-range" id="lectura-audio-range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del audio" />
       <span class="lectura-audio-time" id="lectura-audio-time">0:00 / 0:00</span>
       <button type="button" class="lectura-audio-speed" id="lectura-speed-btn" aria-label="Velocidad de reproducción" title="Velocidad de reproducción">1×</button>
+      <button type="button" class="lectura-audio-rewind" id="lectura-rewind-btn" aria-label="Retroceder 5 segundos" title="Retroceder 5 segundos">-5s</button>
     </div>
       <article class="reading-content">
       <p>
@@ -6258,6 +6262,15 @@
         audio.playbackRate = rate;
         speedBtn.textContent = rate + '×';
       });
+
+      const rewindBtn = document.getElementById('lectura-rewind-btn');
+      if (rewindBtn) {
+        rewindBtn.addEventListener('click', () => {
+          audio.currentTime = Math.max(0, audio.currentTime - 5);
+          updateTimeDisplay();
+          audio.play().catch(() => {});
+        });
+      }
     })();
       // =========================================================
     // ACTIVITY PERMALINK & DESKTOP LIGHTBOX ZOOM
