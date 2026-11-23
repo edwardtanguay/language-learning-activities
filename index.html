@@ -215,20 +215,41 @@
       font-weight: 500;
       line-height: 1.25;
       padding: 5px 11px;
-      border: 1px solid #d4d8df;
+      border: 1px solid #c2c8d2;
       border-radius: 6px;
-      background-color: #ffffff;
-      color: #4f5560;
-      box-shadow: 0 1px 1px rgba(20, 24, 31, 0.04);
-      transition: background-color 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s;
+      background-color: #f7f8fa;
+      background-image: linear-gradient(180deg, #ffffff 0%, #eff2f6 100%);
+      color: #3f4550;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(150, 160, 175, 0.2),
+        0 1px 2px rgba(25, 32, 44, 0.14),
+        0 2px 4px rgba(25, 32, 44, 0.06);
+      transition: background 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s, transform 0.08s;
       white-space: nowrap;
+    }
+
+    .radio-chip:hover .radio-chip-label {
+      background-image: linear-gradient(180deg, #ffffff 0%, #f5f7fa 100%);
+      border-color: #aeb6c2;
+      color: #1e232a;
+    }
+
+    .radio-chip:active .radio-chip-label {
+      transform: translateY(0.5px);
     }
 
     .radio-chip input[type="radio"]:checked + .radio-chip-label {
       background-color: var(--chip-active-bg);
+      background-image: linear-gradient(180deg, rgba(15, 20, 30, 0.05) 0%, rgba(255, 255, 255, 0.18) 100%);
       border-color: var(--chip-active-border);
       color: var(--chip-active-color);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+      box-shadow:
+        inset 0 1px 2px rgba(20, 26, 36, 0.16),
+        inset 0 0 1px rgba(20, 26, 36, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.75);
     }
 
     .radio-chip input[type="radio"]:focus-visible + .radio-chip-label {
@@ -240,11 +261,13 @@
       font-family: var(--font-ui);
       font-size: 13.5px;
       padding: 5px 8px;
-      border: 1px solid #d4d8df;
+      border: 1px solid #c2c8d2;
       border-radius: 6px;
       background-color: #ffffff;
       color: var(--ink-main);
-      box-shadow: inset 0 1px 2px rgba(20, 24, 31, 0.04);
+      box-shadow:
+        inset 0 1px 2px rgba(20, 26, 36, 0.12),
+        0 1px 0 rgba(255, 255, 255, 0.8);
     }
 
     .search-input:focus {
