@@ -10,6 +10,29 @@
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     } catch (e) {}
+    window.__markImgLoaded = function(img, isCached) {
+      if (!img) return;
+      var wrap = img.parentElement;
+      if (!wrap || wrap.classList.contains('is-loaded')) return;
+      wrap.classList.remove('is-error');
+      if (isCached) {
+        wrap.classList.add('is-cached', 'is-loaded');
+      } else {
+        var reveal = function() { wrap.classList.add('is-loaded'); };
+        if (typeof img.decode === 'function') {
+          img.decode().then(reveal, reveal);
+        } else {
+          reveal();
+        }
+      }
+    };
+    window.__markImgError = function(img) {
+      if (!img) return;
+      var wrap = img.parentElement;
+      if (wrap && !wrap.classList.contains('is-loaded')) {
+        wrap.classList.add('is-error');
+      }
+    };
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1492,6 +1515,11 @@
 
     
     /* Topic Header Icon & Clickable Navigation */
+    @keyframes img-skeleton-sheen {
+      0% { background-position: 120% 0; }
+      100% { background-position: -20% 0; }
+    }
+
     .header-top {
       display: flex;
       justify-content: space-between;
@@ -1520,6 +1548,61 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    .topic-header-icon-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 0;
+      background-color: #ece6d9;
+      background-image: linear-gradient(
+        110deg,
+        rgba(255, 253, 249, 0) 28%,
+        rgba(255, 253, 249, 0.62) 48%,
+        rgba(255, 253, 249, 0) 68%
+      );
+      background-size: 240% 100%;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(34, 32, 30, 0.055), inset 0 1px 3px rgba(34, 32, 30, 0.04);
+      animation: img-skeleton-sheen 2.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transition: opacity 0.36s ease-out;
+    }
+
+    html[data-theme="dark"] .topic-header-icon-wrap::before,
+    :host([data-theme="dark"]) .topic-header-icon-wrap::before {
+      background-color: #2e2b27;
+      background-image: linear-gradient(
+        110deg,
+        rgba(234, 228, 217, 0) 28%,
+        rgba(234, 228, 217, 0.085) 48%,
+        rgba(234, 228, 217, 0) 68%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.055), inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .topic-header-icon-wrap.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    .topic-header-icon-wrap.is-cached::before {
+      transition: none !important;
+    }
+
+    .topic-header-icon-wrap.is-error::before {
+      opacity: 1;
+      animation: none !important;
+      background-image: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .topic-header-icon-wrap::before {
+        animation: none !important;
+        background-image: none !important;
+      }
+    }
+
     .topic-header-icon-wrap:hover {
       transform: translateY(-1px);
       box-shadow: 0 4px 10px rgba(45, 40, 35, 0.12);
@@ -1530,10 +1613,28 @@
     }
 
     .topic-header-icon {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .topic-header-icon-wrap.is-loaded .topic-header-icon {
+      opacity: 1;
+    }
+
+    .topic-header-icon-wrap.is-cached .topic-header-icon {
+      transition: none !important;
+      opacity: 1;
+    }
+
+    .topic-header-icon-wrap.is-error .topic-header-icon {
+      opacity: 0 !important;
+      visibility: hidden;
     }
 
     .profile-zoom-btn {
@@ -1552,10 +1653,20 @@
       padding: 0;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s ease, background 0.15s ease;
       z-index: 2;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap:not(.is-loaded) .profile-zoom-btn,
+    .topic-header-icon-wrap.is-error .profile-zoom-btn {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .topic-header-icon-wrap.is-cached .profile-zoom-btn {
+      transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
     }
 
     .profile-zoom-btn:hover {
@@ -1577,16 +1688,17 @@
       .profile-zoom-btn {
         opacity: 0;
         pointer-events: none;
+        transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
       }
-      .topic-header-icon-wrap:hover .profile-zoom-btn,
-      .activity-card-icon-wrap:hover .profile-zoom-btn {
+      .topic-header-icon-wrap.is-loaded:hover .profile-zoom-btn,
+      .activity-card-icon-wrap.is-loaded:hover .profile-zoom-btn {
         opacity: 1;
         pointer-events: auto;
       }
     }
 
     @media (hover: none) {
-      .profile-zoom-btn {
+      .topic-header-icon-wrap.is-loaded .profile-zoom-btn {
         opacity: 0.85;
         pointer-events: auto;
       }
@@ -1661,6 +1773,11 @@
     /* =========================================================
        IMAGES & FULLSCREEN LIGHTBOX
        ========================================================= */
+    @keyframes img-skeleton-sheen {
+      0% { background-position: 120% 0; }
+      100% { background-position: -20% 0; }
+    }
+
     .images-section {
       margin-top: 18px;
       margin-bottom: 24px;
@@ -1750,8 +1867,57 @@
       cursor: zoom-in;
       transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
       display: inline-flex;
+      max-width: 100%;
       position: relative;
       overflow: hidden;
+    }
+
+    .image-thumb-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 1px;
+      pointer-events: none;
+      z-index: 0;
+      background-color: #ece6d9;
+      background-image: linear-gradient(
+        110deg,
+        rgba(255, 253, 249, 0) 28%,
+        rgba(255, 253, 249, 0.62) 48%,
+        rgba(255, 253, 249, 0) 68%
+      );
+      background-size: 240% 100%;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(34, 32, 30, 0.055), inset 0 1px 3px rgba(34, 32, 30, 0.04);
+      animation: img-skeleton-sheen 2.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transition: opacity 0.36s ease-out;
+    }
+
+    html[data-theme="dark"] .image-thumb-wrap::before,
+    :host([data-theme="dark"]) .image-thumb-wrap::before {
+      background-color: #2e2b27;
+      background-image: linear-gradient(
+        110deg,
+        rgba(234, 228, 217, 0) 28%,
+        rgba(234, 228, 217, 0.085) 48%,
+        rgba(234, 228, 217, 0) 68%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.055), inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-thumb-wrap.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    .image-thumb-wrap.is-cached::before {
+      transition: none !important;
+    }
+
+    .image-thumb-wrap.is-error::before {
+      opacity: 1;
+      animation: none !important;
+      background-image: none !important;
     }
 
     .image-thumb-wrap:hover {
@@ -1768,12 +1934,30 @@
 
     .image-thumb {
       height: 150px;
-      width: auto;
+      width: calc(150px * var(--img-ratio, 1.3333));
       max-width: 100%;
       object-fit: cover;
       display: block;
       border-radius: 1px;
       pointer-events: none;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-thumb-wrap.is-loaded .image-thumb {
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-cached .image-thumb {
+      transition: none !important;
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-error .image-thumb {
+      opacity: 0 !important;
+      visibility: hidden;
     }
 
     .image-thumb-title {
@@ -1781,6 +1965,7 @@
       bottom: 4px;
       left: 4px;
       right: 4px;
+      z-index: 2;
       background: rgba(244, 239, 228, 0.92);
       border-top: 1px solid rgba(138, 128, 112, 0.3);
       color: var(--ink-main);
@@ -1796,6 +1981,16 @@
       text-overflow: ellipsis;
       box-sizing: border-box;
       backdrop-filter: blur(2px);
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-thumb-wrap.is-loaded .image-thumb-title {
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-cached .image-thumb-title {
+      transition: none !important;
     }
 
     .image-thumb-wrap:not(.is-solved) .image-thumb-title {
@@ -1816,6 +2011,16 @@
       gap: 4px;
       pointer-events: none;
       z-index: 2;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-thumb-wrap.is-loaded .image-thumb-questions {
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-cached .image-thumb-questions {
+      transition: none !important;
     }
 
     .image-thumb-q-badge {
@@ -1878,7 +2083,45 @@
       max-height: 86vh;
     }
 
+    .image-lightbox-img-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 0;
+      background-color: #2b2825;
+      background-image: linear-gradient(
+        110deg,
+        rgba(234, 228, 217, 0) 28%,
+        rgba(234, 228, 217, 0.09) 48%,
+        rgba(234, 228, 217, 0) 68%
+      );
+      background-size: 240% 100%;
+      background-repeat: no-repeat;
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 253, 249, 0.08);
+      animation: img-skeleton-sheen 2.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transition: opacity 0.36s ease-out;
+    }
+
+    .image-lightbox-img-wrap.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    .image-lightbox-img-wrap.is-cached::before {
+      transition: none !important;
+    }
+
+    .image-lightbox-img-wrap.is-error::before {
+      opacity: 1;
+      animation: none !important;
+      background-image: none !important;
+    }
+
     .image-lightbox-img {
+      position: relative;
+      z-index: 1;
       max-width: 94vw;
       max-height: 86vh;
       width: auto;
@@ -1892,6 +2135,22 @@
       -webkit-user-drag: none;
       display: block;
       cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-lightbox-img-wrap.is-loaded .image-lightbox-img {
+      opacity: 1;
+    }
+
+    .image-lightbox-img-wrap.is-cached .image-lightbox-img {
+      transition: none !important;
+      opacity: 1;
+    }
+
+    .image-lightbox-img-wrap.is-error .image-lightbox-img {
+      opacity: 0 !important;
+      visibility: hidden;
     }
 
     /* Lightbox Questions List Overlay in lower-left */
@@ -1905,6 +2164,15 @@
       max-width: calc(100% - 24px);
       z-index: 5;
       pointer-events: auto;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-lightbox-img-wrap.is-loaded .image-lightbox-questions {
+      opacity: 1;
+    }
+
+    .image-lightbox-img-wrap.is-cached .image-lightbox-questions {
       transition: opacity 0.2s ease;
     }
 
@@ -2020,6 +2288,26 @@
       display: none;
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .image-thumb-wrap::before,
+      .image-lightbox-img-wrap::before {
+        animation: none !important;
+        background-image: none !important;
+      }
+    }
+
+    @media print {
+      .image-thumb-wrap::before,
+      .topic-header-icon-wrap::before {
+        display: none !important;
+      }
+      .image-thumb,
+      .topic-header-icon {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+    }
+
     @media (max-width: 680px) {
       .desktop-only-inline {
         display: none !important;
@@ -2032,6 +2320,13 @@
       }
       .image-thumb-wrap .image-thumb-title {
         display: block !important;
+      }
+      .images-grid .image-thumb {
+        height: 130px;
+        width: calc(130px * var(--img-ratio, 1.3333));
+      }
+      .image-lightbox-img-wrap {
+        max-width: 98vw;
       }
     }
 
@@ -2983,7 +3278,7 @@
     <header class="worksheet-header">
       <div class="header-top">
         <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
-          <img src="icon-seryestar.jpg" alt="Ser y estar: Guía práctica y contrastes esenciales" class="topic-header-icon">
+          <img src="icon-seryestar.jpg" alt="Ser y estar: Guía práctica y contrastes esenciales" width="406" height="406" class="topic-header-icon" fetchpriority="high" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('icon-seryestar.jpg', 'Ser y estar: Guía práctica y contrastes esenciales');" title="Ampliar imagen" aria-label="Ampliar imagen">
             <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>
           </button>
@@ -3025,14 +3320,15 @@
       </div>
       <div class="images-grid">
         <div class="image-thumb-wrap" data-image-id="cheatsheet" data-image-title="Cheat Sheet" onclick="handleImageCardClick(this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-cheatsheet.jpg', 'Cheat Sheet', '[]')">
-          <img src="images/es-seryestar-cheatsheet.jpg" alt="Cheat Sheet" class="image-thumb" loading="lazy">
+          <img src="images/es-seryestar-cheatsheet.jpg" alt="Cheat Sheet" width="479" height="420" style="--img-ratio: 1.1405;" class="image-thumb" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <div class="image-thumb-title">Cheat Sheet</div>
         </div>
         <div class="image-thumb-wrap" data-image-id="doctorplace" data-image-title="Doctor Place" onclick="handleImageCardClick(this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/es-seryestar-doctorplace.jpg', 'Doctor Place', '[]')">
-          <img src="images/es-seryestar-doctorplace.jpg" alt="Doctor Place" class="image-thumb" loading="lazy">
+          <img src="images/es-seryestar-doctorplace.jpg" alt="Doctor Place" width="499" height="664" style="--img-ratio: 0.7515;" class="image-thumb" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <div class="image-thumb-title">Doctor Place</div>
         </div>
       </div>
+      <script>(function(){document.querySelectorAll('.topic-header-icon,.image-thumb').forEach(function(i){if(i.complete){if(i.naturalWidth>0)window.__markImgLoaded&&window.__markImgLoaded(i,true);else if(i.getAttribute('src'))window.__markImgError&&window.__markImgError(i);}});})();</script>
     </section>
 
 <!-- SECTION 2: READING PASSAGE -->
@@ -3079,6 +3375,9 @@
       </p>
     </article>
     </div>
+
+
+
 
 
 
@@ -3895,6 +4194,9 @@
         </ul>
       </div>
     </section>
+
+
+
 
 
 
@@ -5872,6 +6174,9 @@ function loadSavedState() {
 
     
 
+    
+
+
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
     // =========================================================
@@ -5890,7 +6195,24 @@ function loadSavedState() {
     let lbLastMouseY = 0;
     let lbGestureMoved = false;
     let lbIgnoreNextClick = false;
+    let lbLoadToken = 0;
     const LB_MAX_SCALE = 50;
+
+    function syncWorksheetImages(preferCached) {
+      document.querySelectorAll('.topic-header-icon, .image-thumb').forEach(img => {
+        const wrap = img.parentElement;
+        if (!wrap || wrap.classList.contains('is-loaded') || wrap.classList.contains('is-error')) return;
+        if (img.complete) {
+          if (img.naturalWidth > 0) {
+            if (window.__markImgLoaded) window.__markImgLoaded(img, Boolean(preferCached));
+            else wrap.classList.add('is-loaded');
+          } else if (img.getAttribute('src')) {
+            if (window.__markImgError) window.__markImgError(img);
+            else wrap.classList.add('is-error');
+          }
+        }
+      });
+    }
 
     function applyLightboxTransform() {
       const overlay = document.getElementById('image-lightbox');
@@ -5906,11 +6228,55 @@ function loadSavedState() {
     function openImageLightbox(src, alt, questionsJson, isSparkle) {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const imgWrap = document.getElementById('image-lightbox-img-wrap');
       const caption = document.getElementById('image-lightbox-caption');
       const questionsContainer = document.getElementById('image-lightbox-questions');
       if (!overlay || !img) return;
-      img.src = src;
+
+      const token = ++lbLoadToken;
+      if (imgWrap) {
+        imgWrap.classList.remove('is-loaded', 'is-cached', 'is-error');
+        imgWrap.style.width = '';
+        imgWrap.style.height = '';
+        const sourceImg = Array.from(document.images).find(el => el !== img && el.getAttribute('src') === src);
+        const rawW = sourceImg ? (sourceImg.naturalWidth || parseFloat(sourceImg.getAttribute('width')) || 0) : 0;
+        const rawH = sourceImg ? (sourceImg.naturalHeight || parseFloat(sourceImg.getAttribute('height')) || 0) : 0;
+        const w = rawW > 0 ? rawW : 600;
+        const h = rawH > 0 ? rawH : 450;
+        const maxW = window.innerWidth * (window.innerWidth <= 680 ? 0.98 : 0.94);
+        const maxH = window.innerHeight * 0.86;
+        const fit = Math.min(1, maxW / w, maxH / h);
+        imgWrap.style.width = Math.max(80, Math.round(w * fit)) + 'px';
+        imgWrap.style.height = Math.max(80, Math.round(h * fit)) + 'px';
+      }
+
+      img.onload = () => {
+        if (token !== lbLoadToken || !imgWrap || imgWrap.classList.contains('is-loaded')) return;
+        const finish = () => {
+          if (token !== lbLoadToken) return;
+          imgWrap.style.width = '';
+          imgWrap.style.height = '';
+          imgWrap.classList.add('is-loaded');
+        };
+        if (typeof img.decode === 'function') {
+          img.decode().then(finish, finish);
+        } else {
+          finish();
+        }
+      };
+      img.onerror = () => {
+        if (token !== lbLoadToken || !imgWrap) return;
+        imgWrap.classList.add('is-error');
+      };
+
       img.alt = alt || '';
+      img.src = src;
+      if (imgWrap && img.complete && img.naturalWidth > 0) {
+        imgWrap.style.width = '';
+        imgWrap.style.height = '';
+        imgWrap.classList.add('is-cached', 'is-loaded');
+      }
+
       if (caption) {
         caption.textContent = alt || '';
         caption.classList.remove('sparkle');
@@ -5964,9 +6330,11 @@ function loadSavedState() {
     function closeImageLightbox() {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const imgWrap = document.getElementById('image-lightbox-img-wrap');
       const caption = document.getElementById('image-lightbox-caption');
       const questionsContainer = document.getElementById('image-lightbox-questions');
       if (!overlay) return;
+      ++lbLoadToken;
       if (window.getSelection) {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
@@ -5975,8 +6343,15 @@ function loadSavedState() {
       }
       overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
-        img.src = '';
+        img.onload = null;
+        img.onerror = null;
+        img.removeAttribute('src');
         img.style.transform = '';
+      }
+      if (imgWrap) {
+        imgWrap.classList.remove('is-loaded', 'is-cached', 'is-error');
+        imgWrap.style.width = '';
+        imgWrap.style.height = '';
       }
       if (caption) {
         caption.textContent = '';
@@ -6428,7 +6803,11 @@ function loadSavedState() {
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      syncWorksheetImages(false);
       initImageLabelsGame();
+    });
+    window.addEventListener('pageshow', () => {
+      syncWorksheetImages(true);
     });
 
     function dismissActiveVocabModal() {

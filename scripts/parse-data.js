@@ -298,6 +298,98 @@ function cleanImageSlug(rawName) {
   return normalize(rawName).replace(/[_\s()]+/g, '');
 }
 
+function getImageDimensions(filePath) {
+  try {
+    const buf = fs.readFileSync(filePath);
+    if (!buf || buf.length < 10) return { width: 200, height: 150 };
+
+    // PNG
+    if (buf.length >= 24 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4E && buf[3] === 0x47) {
+      const width = buf.readUInt32BE(16);
+      const height = buf.readUInt32BE(20);
+      if (width > 0 && height > 0) return { width, height };
+    }
+
+    // GIF
+    if (buf[0] === 0x47 && buf[1] === 0x49 && buf[2] === 0x46) {
+      const width = buf.readUInt16LE(6);
+      const height = buf.readUInt16LE(8);
+      if (width > 0 && height > 0) return { width, height };
+    }
+
+    // JPEG (with EXIF orientation support)
+    if (buf[0] === 0xFF && buf[1] === 0xD8) {
+      let offset = 2;
+      let exifOrientation = 1;
+
+      while (offset + 3 < buf.length) {
+        if (buf[offset] !== 0xFF) {
+          offset++;
+          continue;
+        }
+        while (offset < buf.length && buf[offset] === 0xFF) {
+          offset++;
+        }
+        if (offset >= buf.length) break;
+        const marker = buf[offset++];
+
+        if (marker === 0xD8 || marker === 0x01 || (marker >= 0xD0 && marker <= 0xD7)) {
+          continue;
+        }
+        if (marker === 0xD9 || marker === 0xDA) {
+          break;
+        }
+        if (offset + 1 >= buf.length) break;
+        const segLen = buf.readUInt16BE(offset);
+        if (segLen < 2 || offset + segLen > buf.length) break;
+
+        // APP1 EXIF orientation check
+        if (marker === 0xE1 && segLen >= 16 &&
+            buf[offset + 2] === 0x45 && buf[offset + 3] === 0x78 &&
+            buf[offset + 4] === 0x69 && buf[offset + 5] === 0x66 &&
+            buf[offset + 6] === 0x00 && buf[offset + 7] === 0x00) {
+          const tiff = offset + 8;
+          const little = buf[tiff] === 0x49 && buf[tiff + 1] === 0x49;
+          const readU16 = pos => little ? buf.readUInt16LE(pos) : buf.readUInt16BE(pos);
+          const readU32 = pos => little ? buf.readUInt32LE(pos) : buf.readUInt32BE(pos);
+          if (tiff + 8 <= offset + segLen) {
+            const ifdOffset = readU32(tiff + 4);
+            const dirStart = tiff + ifdOffset;
+            if (dirStart + 2 <= offset + segLen) {
+              const entries = readU16(dirStart);
+              for (let i = 0; i < entries; i++) {
+                const entryPos = dirStart + 2 + i * 12;
+                if (entryPos + 12 > offset + segLen) break;
+                if (readU16(entryPos) === 0x0112) {
+                  exifOrientation = readU16(entryPos + 8);
+                  break;
+                }
+              }
+            }
+          }
+        }
+
+        // SOF markers
+        if (marker >= 0xC0 && marker <= 0xCF && marker !== 0xC4 && marker !== 0xC8 && marker !== 0xCC) {
+          if (offset + 6 < buf.length) {
+            let height = buf.readUInt16BE(offset + 3);
+            let width = buf.readUInt16BE(offset + 5);
+            if (exifOrientation >= 5 && exifOrientation <= 8) {
+              const tmp = width;
+              width = height;
+              height = tmp;
+            }
+            if (width > 0 && height > 0) return { width, height };
+          }
+        }
+
+        offset += segLen;
+      }
+    }
+  } catch (e) {}
+  return { width: 200, height: 150 };
+}
+
 function ensureNoHyphenTopicDirs() {
   if (!fs.existsSync(TOPICS_DIR)) return;
   const entries = fs.readdirSync(TOPICS_DIR, { withFileTypes: true });
@@ -387,7 +479,7 @@ function loadActivities() {
     }
 
     const recordedTitles = {};
-    const existingImgAltMatches = html.matchAll(/<img\s+src="images\/([^"]+)"\s+alt="([^"]+)"/g);
+    const existingImgAltMatches = html.matchAll(/<img\b[^>]*\bsrc="images\/([^"]+)"[^>]*\balt="([^"]+)"/g);
     for (const m of existingImgAltMatches) {
       const imgFile = m[1];
       const existingAlt = m[2]
@@ -639,6 +731,11 @@ const PROFILE_ZOOM_BTN_SVG = `<svg viewBox="0 0 20 20" width="12" height="12" fi
 
 const TOPIC_HEADER_ICON_CSS = `
     /* Topic Header Icon & Clickable Navigation */
+    @keyframes img-skeleton-sheen {
+      0% { background-position: 120% 0; }
+      100% { background-position: -20% 0; }
+    }
+
     .header-top {
       display: flex;
       justify-content: space-between;
@@ -667,6 +764,61 @@ const TOPIC_HEADER_ICON_CSS = `
       -webkit-tap-highlight-color: transparent;
     }
 
+    .topic-header-icon-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 0;
+      background-color: #ece6d9;
+      background-image: linear-gradient(
+        110deg,
+        rgba(255, 253, 249, 0) 28%,
+        rgba(255, 253, 249, 0.62) 48%,
+        rgba(255, 253, 249, 0) 68%
+      );
+      background-size: 240% 100%;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(34, 32, 30, 0.055), inset 0 1px 3px rgba(34, 32, 30, 0.04);
+      animation: img-skeleton-sheen 2.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transition: opacity 0.36s ease-out;
+    }
+
+    html[data-theme="dark"] .topic-header-icon-wrap::before,
+    :host([data-theme="dark"]) .topic-header-icon-wrap::before {
+      background-color: #2e2b27;
+      background-image: linear-gradient(
+        110deg,
+        rgba(234, 228, 217, 0) 28%,
+        rgba(234, 228, 217, 0.085) 48%,
+        rgba(234, 228, 217, 0) 68%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.055), inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .topic-header-icon-wrap.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    .topic-header-icon-wrap.is-cached::before {
+      transition: none !important;
+    }
+
+    .topic-header-icon-wrap.is-error::before {
+      opacity: 1;
+      animation: none !important;
+      background-image: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .topic-header-icon-wrap::before {
+        animation: none !important;
+        background-image: none !important;
+      }
+    }
+
     .topic-header-icon-wrap:hover {
       transform: translateY(-1px);
       box-shadow: 0 4px 10px rgba(45, 40, 35, 0.12);
@@ -677,10 +829,28 @@ const TOPIC_HEADER_ICON_CSS = `
     }
 
     .topic-header-icon {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .topic-header-icon-wrap.is-loaded .topic-header-icon {
+      opacity: 1;
+    }
+
+    .topic-header-icon-wrap.is-cached .topic-header-icon {
+      transition: none !important;
+      opacity: 1;
+    }
+
+    .topic-header-icon-wrap.is-error .topic-header-icon {
+      opacity: 0 !important;
+      visibility: hidden;
     }
 
     .profile-zoom-btn {
@@ -699,10 +869,20 @@ const TOPIC_HEADER_ICON_CSS = `
       padding: 0;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s ease, background 0.15s ease;
       z-index: 2;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap:not(.is-loaded) .profile-zoom-btn,
+    .topic-header-icon-wrap.is-error .profile-zoom-btn {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .topic-header-icon-wrap.is-cached .profile-zoom-btn {
+      transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
     }
 
     .profile-zoom-btn:hover {
@@ -724,16 +904,17 @@ const TOPIC_HEADER_ICON_CSS = `
       .profile-zoom-btn {
         opacity: 0;
         pointer-events: none;
+        transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
       }
-      .topic-header-icon-wrap:hover .profile-zoom-btn,
-      .activity-card-icon-wrap:hover .profile-zoom-btn {
+      .topic-header-icon-wrap.is-loaded:hover .profile-zoom-btn,
+      .activity-card-icon-wrap.is-loaded:hover .profile-zoom-btn {
         opacity: 1;
         pointer-events: auto;
       }
     }
 
     @media (hover: none) {
-      .profile-zoom-btn {
+      .topic-header-icon-wrap.is-loaded .profile-zoom-btn {
         opacity: 0.85;
         pointer-events: auto;
       }
@@ -810,6 +991,11 @@ const SECTION_IMAGES_CSS = `
     /* =========================================================
        IMAGES & FULLSCREEN LIGHTBOX
        ========================================================= */
+    @keyframes img-skeleton-sheen {
+      0% { background-position: 120% 0; }
+      100% { background-position: -20% 0; }
+    }
+
     .images-section {
       margin-top: 18px;
       margin-bottom: 24px;
@@ -899,8 +1085,57 @@ const SECTION_IMAGES_CSS = `
       cursor: zoom-in;
       transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
       display: inline-flex;
+      max-width: 100%;
       position: relative;
       overflow: hidden;
+    }
+
+    .image-thumb-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 1px;
+      pointer-events: none;
+      z-index: 0;
+      background-color: #ece6d9;
+      background-image: linear-gradient(
+        110deg,
+        rgba(255, 253, 249, 0) 28%,
+        rgba(255, 253, 249, 0.62) 48%,
+        rgba(255, 253, 249, 0) 68%
+      );
+      background-size: 240% 100%;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(34, 32, 30, 0.055), inset 0 1px 3px rgba(34, 32, 30, 0.04);
+      animation: img-skeleton-sheen 2.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transition: opacity 0.36s ease-out;
+    }
+
+    html[data-theme="dark"] .image-thumb-wrap::before,
+    :host([data-theme="dark"]) .image-thumb-wrap::before {
+      background-color: #2e2b27;
+      background-image: linear-gradient(
+        110deg,
+        rgba(234, 228, 217, 0) 28%,
+        rgba(234, 228, 217, 0.085) 48%,
+        rgba(234, 228, 217, 0) 68%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.055), inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-thumb-wrap.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    .image-thumb-wrap.is-cached::before {
+      transition: none !important;
+    }
+
+    .image-thumb-wrap.is-error::before {
+      opacity: 1;
+      animation: none !important;
+      background-image: none !important;
     }
 
     .image-thumb-wrap:hover {
@@ -917,12 +1152,30 @@ const SECTION_IMAGES_CSS = `
 
     .image-thumb {
       height: 150px;
-      width: auto;
+      width: calc(150px * var(--img-ratio, 1.3333));
       max-width: 100%;
       object-fit: cover;
       display: block;
       border-radius: 1px;
       pointer-events: none;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-thumb-wrap.is-loaded .image-thumb {
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-cached .image-thumb {
+      transition: none !important;
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-error .image-thumb {
+      opacity: 0 !important;
+      visibility: hidden;
     }
 
     .image-thumb-title {
@@ -930,6 +1183,7 @@ const SECTION_IMAGES_CSS = `
       bottom: 4px;
       left: 4px;
       right: 4px;
+      z-index: 2;
       background: rgba(244, 239, 228, 0.92);
       border-top: 1px solid rgba(138, 128, 112, 0.3);
       color: var(--ink-main);
@@ -945,6 +1199,16 @@ const SECTION_IMAGES_CSS = `
       text-overflow: ellipsis;
       box-sizing: border-box;
       backdrop-filter: blur(2px);
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-thumb-wrap.is-loaded .image-thumb-title {
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-cached .image-thumb-title {
+      transition: none !important;
     }
 
     .image-thumb-wrap:not(.is-solved) .image-thumb-title {
@@ -965,6 +1229,16 @@ const SECTION_IMAGES_CSS = `
       gap: 4px;
       pointer-events: none;
       z-index: 2;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-thumb-wrap.is-loaded .image-thumb-questions {
+      opacity: 1;
+    }
+
+    .image-thumb-wrap.is-cached .image-thumb-questions {
+      transition: none !important;
     }
 
     .image-thumb-q-badge {
@@ -1027,7 +1301,45 @@ const SECTION_IMAGES_CSS = `
       max-height: 86vh;
     }
 
+    .image-lightbox-img-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 0;
+      background-color: #2b2825;
+      background-image: linear-gradient(
+        110deg,
+        rgba(234, 228, 217, 0) 28%,
+        rgba(234, 228, 217, 0.09) 48%,
+        rgba(234, 228, 217, 0) 68%
+      );
+      background-size: 240% 100%;
+      background-repeat: no-repeat;
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 253, 249, 0.08);
+      animation: img-skeleton-sheen 2.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transition: opacity 0.36s ease-out;
+    }
+
+    .image-lightbox-img-wrap.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    .image-lightbox-img-wrap.is-cached::before {
+      transition: none !important;
+    }
+
+    .image-lightbox-img-wrap.is-error::before {
+      opacity: 1;
+      animation: none !important;
+      background-image: none !important;
+    }
+
     .image-lightbox-img {
+      position: relative;
+      z-index: 1;
       max-width: 94vw;
       max-height: 86vh;
       width: auto;
@@ -1041,6 +1353,22 @@ const SECTION_IMAGES_CSS = `
       -webkit-user-drag: none;
       display: block;
       cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-lightbox-img-wrap.is-loaded .image-lightbox-img {
+      opacity: 1;
+    }
+
+    .image-lightbox-img-wrap.is-cached .image-lightbox-img {
+      transition: none !important;
+      opacity: 1;
+    }
+
+    .image-lightbox-img-wrap.is-error .image-lightbox-img {
+      opacity: 0 !important;
+      visibility: hidden;
     }
 
     /* Lightbox Questions List Overlay in lower-left */
@@ -1054,6 +1382,15 @@ const SECTION_IMAGES_CSS = `
       max-width: calc(100% - 24px);
       z-index: 5;
       pointer-events: auto;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .image-lightbox-img-wrap.is-loaded .image-lightbox-questions {
+      opacity: 1;
+    }
+
+    .image-lightbox-img-wrap.is-cached .image-lightbox-questions {
       transition: opacity 0.2s ease;
     }
 
@@ -1169,6 +1506,26 @@ const SECTION_IMAGES_CSS = `
       display: none;
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .image-thumb-wrap::before,
+      .image-lightbox-img-wrap::before {
+        animation: none !important;
+        background-image: none !important;
+      }
+    }
+
+    @media print {
+      .image-thumb-wrap::before,
+      .topic-header-icon-wrap::before {
+        display: none !important;
+      }
+      .image-thumb,
+      .topic-header-icon {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+    }
+
     @media (max-width: 680px) {
       .desktop-only-inline {
         display: none !important;
@@ -1181,6 +1538,13 @@ const SECTION_IMAGES_CSS = `
       }
       .image-thumb-wrap .image-thumb-title {
         display: block !important;
+      }
+      .images-grid .image-thumb {
+        height: 130px;
+        width: calc(130px * var(--img-ratio, 1.3333));
+      }
+      .image-lightbox-img-wrap {
+        max-width: 98vw;
       }
     }
 `;
@@ -1216,7 +1580,24 @@ const SECTION_LIGHTBOX_JS = `
     let lbLastMouseY = 0;
     let lbGestureMoved = false;
     let lbIgnoreNextClick = false;
+    let lbLoadToken = 0;
     const LB_MAX_SCALE = 50;
+
+    function syncWorksheetImages(preferCached) {
+      document.querySelectorAll('.topic-header-icon, .image-thumb').forEach(img => {
+        const wrap = img.parentElement;
+        if (!wrap || wrap.classList.contains('is-loaded') || wrap.classList.contains('is-error')) return;
+        if (img.complete) {
+          if (img.naturalWidth > 0) {
+            if (window.__markImgLoaded) window.__markImgLoaded(img, Boolean(preferCached));
+            else wrap.classList.add('is-loaded');
+          } else if (img.getAttribute('src')) {
+            if (window.__markImgError) window.__markImgError(img);
+            else wrap.classList.add('is-error');
+          }
+        }
+      });
+    }
 
     function applyLightboxTransform() {
       const overlay = document.getElementById('image-lightbox');
@@ -1232,11 +1613,55 @@ const SECTION_LIGHTBOX_JS = `
     function openImageLightbox(src, alt, questionsJson, isSparkle) {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const imgWrap = document.getElementById('image-lightbox-img-wrap');
       const caption = document.getElementById('image-lightbox-caption');
       const questionsContainer = document.getElementById('image-lightbox-questions');
       if (!overlay || !img) return;
-      img.src = src;
+
+      const token = ++lbLoadToken;
+      if (imgWrap) {
+        imgWrap.classList.remove('is-loaded', 'is-cached', 'is-error');
+        imgWrap.style.width = '';
+        imgWrap.style.height = '';
+        const sourceImg = Array.from(document.images).find(el => el !== img && el.getAttribute('src') === src);
+        const rawW = sourceImg ? (sourceImg.naturalWidth || parseFloat(sourceImg.getAttribute('width')) || 0) : 0;
+        const rawH = sourceImg ? (sourceImg.naturalHeight || parseFloat(sourceImg.getAttribute('height')) || 0) : 0;
+        const w = rawW > 0 ? rawW : 600;
+        const h = rawH > 0 ? rawH : 450;
+        const maxW = window.innerWidth * (window.innerWidth <= 680 ? 0.98 : 0.94);
+        const maxH = window.innerHeight * 0.86;
+        const fit = Math.min(1, maxW / w, maxH / h);
+        imgWrap.style.width = Math.max(80, Math.round(w * fit)) + 'px';
+        imgWrap.style.height = Math.max(80, Math.round(h * fit)) + 'px';
+      }
+
+      img.onload = () => {
+        if (token !== lbLoadToken || !imgWrap || imgWrap.classList.contains('is-loaded')) return;
+        const finish = () => {
+          if (token !== lbLoadToken) return;
+          imgWrap.style.width = '';
+          imgWrap.style.height = '';
+          imgWrap.classList.add('is-loaded');
+        };
+        if (typeof img.decode === 'function') {
+          img.decode().then(finish, finish);
+        } else {
+          finish();
+        }
+      };
+      img.onerror = () => {
+        if (token !== lbLoadToken || !imgWrap) return;
+        imgWrap.classList.add('is-error');
+      };
+
       img.alt = alt || '';
+      img.src = src;
+      if (imgWrap && img.complete && img.naturalWidth > 0) {
+        imgWrap.style.width = '';
+        imgWrap.style.height = '';
+        imgWrap.classList.add('is-cached', 'is-loaded');
+      }
+
       if (caption) {
         caption.textContent = alt || '';
         caption.classList.remove('sparkle');
@@ -1290,9 +1715,11 @@ const SECTION_LIGHTBOX_JS = `
     function closeImageLightbox() {
       const overlay = document.getElementById('image-lightbox');
       const img = document.getElementById('image-lightbox-img');
+      const imgWrap = document.getElementById('image-lightbox-img-wrap');
       const caption = document.getElementById('image-lightbox-caption');
       const questionsContainer = document.getElementById('image-lightbox-questions');
       if (!overlay) return;
+      ++lbLoadToken;
       if (window.getSelection) {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0 && caption && caption.contains(sel.anchorNode)) {
@@ -1301,8 +1728,15 @@ const SECTION_LIGHTBOX_JS = `
       }
       overlay.classList.remove('active', 'is-zoomed', 'is-panning');
       if (img) {
-        img.src = '';
+        img.onload = null;
+        img.onerror = null;
+        img.removeAttribute('src');
         img.style.transform = '';
+      }
+      if (imgWrap) {
+        imgWrap.classList.remove('is-loaded', 'is-cached', 'is-error');
+        imgWrap.style.width = '';
+        imgWrap.style.height = '';
       }
       if (caption) {
         caption.textContent = '';
@@ -1754,7 +2188,11 @@ const SECTION_LIGHTBOX_JS = `
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      syncWorksheetImages(false);
       initImageLabelsGame();
+    });
+    window.addEventListener('pageshow', () => {
+      syncWorksheetImages(true);
     });
 `;
 
@@ -1858,6 +2296,7 @@ const SECTION_DISCUSS_HEADING_I18N = {
 
 function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, sectionNum) {
   const i18n = SECTION_IMAGES_I18N[activity.lang] || SECTION_IMAGES_I18N.es;
+  const inlineImgSyncScript = `\n      <script>(function(){document.querySelectorAll('.topic-header-icon,.image-thumb').forEach(function(i){if(i.complete){if(i.naturalWidth>0)window.__markImgLoaded&&window.__markImgLoaded(i,true);else if(i.getAttribute('src'))window.__markImgError&&window.__markImgError(i);}});})();</script>`;
 
   if (!imageFiles || imageFiles.length === 0) {
     const emptyText = NO_IMAGES_YET_I18N[activity.lang] || NO_IMAGES_YET_I18N.es;
@@ -1869,7 +2308,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
     </h2>
 
     <section class="images-section" id="images-section">
-      <p class="images-empty-note" style="font-style: italic; color: var(--ink-muted); margin: 4px 0 24px 0;">${emptyText}</p>
+      <p class="images-empty-note" style="font-style: italic; color: var(--ink-muted); margin: 4px 0 24px 0;">${emptyText}</p>${inlineImgSyncScript}
     </section>`;
   }
   const labelChips = [];
@@ -1892,6 +2331,10 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
         labelChips.push({ slug: rawSlug, title: safeAlt });
       }
 
+      const dims = getImageDimensions(path.join(activity.folderPath, 'images', file));
+      const ratio = (dims.width / dims.height).toFixed(4);
+      const imgAttrs = `src="images/${file}" alt="${safeAlt}" width="${dims.width}" height="${dims.height}" style="--img-ratio: ${ratio};" class="image-thumb" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)"`;
+
       const qList = (imageQuestionsMap && imageQuestionsMap[file]) || [];
       const safeQuestionsJson = JSON.stringify(qList).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
@@ -1903,10 +2346,10 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
       }
 
       if (activity.folderName === 'porypara' || activity.folderName === 'subjuntivo') {
-        return `        <div class="image-thumb-wrap is-solved" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="openImageLightbox('images/${file}', '${safeAltJs}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
+        return `        <div class="image-thumb-wrap is-solved" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="openImageLightbox('images/${file}', '${safeAltJs}')">\n          <img ${imgAttrs}>\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
       }
 
-      return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAltJs}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAltJs}', '${safeQuestionsJson}')">\n          <img src="images/${file}" alt="${safeAlt}" class="image-thumb" loading="lazy">\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
+      return `        <div class="image-thumb-wrap" data-image-id="${rawSlug}" data-image-title="${safeAlt}" onclick="handleImageCardClick(this, 'images/${file}', '${safeAltJs}', '${safeQuestionsJson}')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/${file}', '${safeAltJs}', '${safeQuestionsJson}')">\n          <img ${imgAttrs}>\n          <div class="image-thumb-title">${safeAlt}</div>${qBadgesHtml}\n        </div>`;
     })
     .join('\n');
 
@@ -1922,7 +2365,7 @@ function buildSectionImagesHtml(activity, imageFiles, imageQuestionsMap, section
     <section class="images-section" id="images-section">
       <div class="images-grid">
 ${thumbsHtml}
-      </div>
+      </div>${inlineImgSyncScript}
     </section>`;
   }
 
@@ -1944,14 +2387,14 @@ ${chipsHtml}
       </div>
       <div class="images-grid">
 ${thumbsHtml}
-      </div>
+      </div>${inlineImgSyncScript}
     </section>`;
 }
 
 function ensureLightboxAssets(html) {
   let out = html;
 
-  // 1. Ensure <head> script contains the early redirect script and dark theme initialization
+  // 1. Ensure <head> script contains the early redirect script, dark theme initialization, and image skeleton/fade helpers
   const redirectScript = `<script>
     if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
       window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
@@ -1961,6 +2404,29 @@ function ensureLightboxAssets(html) {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     } catch (e) {}
+    window.__markImgLoaded = function(img, isCached) {
+      if (!img) return;
+      var wrap = img.parentElement;
+      if (!wrap || wrap.classList.contains('is-loaded')) return;
+      wrap.classList.remove('is-error');
+      if (isCached) {
+        wrap.classList.add('is-cached', 'is-loaded');
+      } else {
+        var reveal = function() { wrap.classList.add('is-loaded'); };
+        if (typeof img.decode === 'function') {
+          img.decode().then(reveal, reveal);
+        } else {
+          reveal();
+        }
+      }
+    };
+    window.__markImgError = function(img) {
+      if (!img) return;
+      var wrap = img.parentElement;
+      if (wrap && !wrap.classList.contains('is-loaded')) {
+        wrap.classList.add('is-error');
+      }
+    };
   </script>`;
   out = out.replace(/<head>\s*<script>[\s\S]*?<\/script>/i, `<head>\n  ${redirectScript}`);
 
@@ -2004,7 +2470,7 @@ function ensureLightboxAssets(html) {
 
   // 4. Clean out any previous/duplicate copies of SECTION_LIGHTBOX_JS and drag & drop game
   out = out.replace(/[ \t]*\/\/ Fullscreen Lightbox logic\s*function openImageLightbox\(src,\s*caption\)\s*\{[\s\S]*?function closeImageLightbox\(e\)\s*\{[\s\S]*?\n    \}\s*/g, '');
-  const anyLightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?(?:initImageLabelsGame\(\);\s*\}\);|setupLightboxTouchZoom\(\);\s*\}\)\(\);?)/gi;
+  const anyLightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?(?:initImageLabelsGame\(\);\s*\}\);(?:\s*window\.addEventListener\('pageshow',\s*\(\)\s*=>\s*\{\s*syncWorksheetImages\(true\);\s*\}\);)?|setupLightboxTouchZoom\(\);\s*\}\)\(\);?)/gi;
   out = out.replace(anyLightboxJsRegex, '');
 
   const anyDragDropJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*IMAGE LABELS DRAG & DROP GAME[\s\S]*?pool\.style\.display\s*=\s*\(validChips\.length\s*>\s*0\s*&&\s*remainingChips\.length\s*===\s*0\)\s*\?\s*'none'\s*:\s*'flex';\s*\}(?:\s*document\.addEventListener\('DOMContentLoaded',\s*\(\)\s*=>\s*\{\s*initImageLabelsGame\(\);\s*\}\);?)?/gi;
@@ -2141,8 +2607,10 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
       );
     }
     const safeTitle = activity.title.replace(/"/g, '&quot;');
-    const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${activity.iconFile}', '${safeTitle}');" title="Ampliar imagen" aria-label="Ampliar imagen">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
-    const iconTag = `<div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">\n          <img src="${activity.iconFile}" alt="${safeTitle}" class="topic-header-icon">\n          ${zoomBtn}\n        </div>`;
+    const safeTitleJs = activity.title.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    const iconDims = getImageDimensions(path.join(activity.folderPath, activity.iconFile));
+    const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${activity.iconFile}', '${safeTitleJs}');" title="Ampliar imagen" aria-label="Ampliar imagen">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
+    const iconTag = `<div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">\n          <img src="${activity.iconFile}" alt="${safeTitle}" width="${iconDims.width}" height="${iconDims.height}" class="topic-header-icon" fetchpriority="high" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">\n          ${zoomBtn}\n        </div>`;
     // Clean out existing icon
     html = html.replace(/\s*<div class="topic-header-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '');
     // Insert icon on far left right after <div class="header-top">
@@ -2164,9 +2632,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   if (hasQuestions && !html.includes('.teacher-questions-card')) {
     html = html.replace('</style>', `${SECTION_QUESTIONS_CSS}  </style>`);
   }
-  if (hasImages || activity.iconFile) {
-    html = ensureLightboxAssets(html);
-  }
+  html = ensureLightboxAssets(html);
 
   // 3. Strip any existing Questions and Images sections so core sections can be cleanly placed
   html = html.replace(/[ \t]*<!--[ \t]*(?:SECTION|Section)[ \t]*\d+:[ \t]*(?:IMAGES|QUESTIONS FOR TEACHER|Questions)[^\r\n]*-->\s*/gi, '');
@@ -2499,6 +2965,7 @@ function updateCatalogHtmlForIcons(activities) {
   const originalHtml = fs.readFileSync(rootIndexPath, 'utf8');
   let html = originalHtml;
 
+  let cardIdx = 0;
   for (const activity of activities) {
     const cardRegex = new RegExp(
       `(<article class="activity-card(?:\\s+has-icon)?"[^>]*onclick="openCard\\('topics\\/${activity.folderName}\\/index\\.html'[^>]*>)([\\s\\S]*?)(<\\/article>)`,
@@ -2506,6 +2973,7 @@ function updateCatalogHtmlForIcons(activities) {
     );
     const cardMatch = html.match(cardRegex);
     if (!cardMatch) continue;
+    cardIdx++;
 
     let openingTag = cardMatch[1];
     let innerContent = cardMatch[2];
@@ -2523,9 +2991,12 @@ function updateCatalogHtmlForIcons(activities) {
         openingTag = openingTag.replace('class="activity-card', 'class="activity-card has-icon');
       }
       const safeTitle = activity.title.replace(/"/g, '&quot;');
+      const safeTitleJs = activity.title.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
       const iconPath = `topics/${activity.folderName}/${activity.iconFile}`;
-      const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${iconPath}', '${safeTitle}');" title="Enlarge image" aria-label="Enlarge image">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
-      const iconWrap = `<div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${safeTitle}" class="activity-card-icon" loading="lazy">\n          ${zoomBtn}\n        </div>`;
+      const iconDims = getImageDimensions(path.join(activity.folderPath, activity.iconFile));
+      const loadingAttr = cardIdx <= 6 ? 'decoding="async"' : 'loading="lazy" decoding="async"';
+      const zoomBtn = `<button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('${iconPath}', '${safeTitleJs}');" title="Enlarge image" aria-label="Enlarge image">\n            ${PROFILE_ZOOM_BTN_SVG}\n          </button>`;
+      const iconWrap = `<div class="activity-card-icon-wrap">\n          <img src="${iconPath}" alt="${safeTitle}" width="${iconDims.width}" height="${iconDims.height}" class="activity-card-icon" ${loadingAttr} onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">\n          ${zoomBtn}\n        </div>`;
 
       innerContent = `\n        ${iconWrap}\n        <div class="activity-card-body">\n          ${cleanBody}\n        </div>\n      `;
     } else {
