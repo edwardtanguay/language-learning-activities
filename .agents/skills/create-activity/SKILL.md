@@ -33,6 +33,7 @@ Whenever this skill runs, **always start with a `/grill-me` style interactive in
   - No relative imports of local external CSS or JS files (so the file can be emailed or shared directly and opened offline).
   - Web fonts from Google Fonts or standard system fonts are permitted.
   - Activity images processed via `npm run pd` live in `topics/<foldername>/images/` and are referenced with local relative paths (`images/<lang>-<foldername>-<imagename>.<ext>`) so they work both locally and online.
+- **No Unsolicited Images**: When creating an activity, do **not** generate any images (neither Section 1 graphics/diagrams nor topic profile icons) unless the user explicitly asks for a specific image. By default, leave Section 1 (`Imágenes` / `Immagini` / `Images`) with the localized empty-state note (`Todavía no hay imágenes.`, `Non ci sono ancora immagini.`, `Pas encore d'images.`, `No images yet.`) so the user can drop images into `import-images/` and run `npm run pd` later.
 - **Trailing Slash & Relative Asset Resolution**:
   - Because activity images (`images/<file>`) and navigation (`../../index.html`) use relative paths, visiting an activity URL without a trailing slash (e.g. `https://.../topics/regionsofecuador`) causes browsers to resolve relative assets against `/topics/` instead of `/topics/regionsofecuador/`, causing broken 404 images and links.
   - To ensure robust operation across live hosts and local preview servers:
