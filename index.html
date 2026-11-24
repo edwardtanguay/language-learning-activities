@@ -380,6 +380,16 @@
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
+      transition: opacity 0.14s ease, transform 0.12s ease;
+    }
+
+    .radio-chip:not(.is-selected) {
+      opacity: 0.72;
+    }
+
+    .radio-chip.is-selected {
+      opacity: 1;
+      z-index: 3;
     }
 
     .radio-chip:focus {
@@ -423,29 +433,32 @@
       padding: 5px 7px 2px 7px;
       border: 1px solid var(--chip-color);
       border-radius: 0;
-      background-color: #ffffff;
+      background-color: #f8f9fb;
       color: var(--chip-color);
       -webkit-font-smoothing: antialiased;
-      box-shadow: 0 1px 2px rgba(25, 25, 24, 0.10);
-      transition: background-color 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s, transform 0.1s;
+      box-shadow: none;
+      transition: background-color 0.14s, color 0.14s, border-color 0.14s, box-shadow 0.14s, transform 0.12s;
       white-space: nowrap;
     }
 
     html[data-theme="dark"] .radio-chip-label,
     :host([data-theme="dark"]) .radio-chip-label {
-      background-color: #22201e;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      background-color: #222327;
+      box-shadow: none;
     }
 
     @media (hover: hover) {
+      .radio-chip:not(.is-selected):hover {
+        opacity: 1;
+      }
       .radio-chip:not(.is-selected):hover .radio-chip-label {
         background-color: var(--chip-hover-bg);
         transform: translateY(-1px);
-        box-shadow: 0 3px 7px rgba(25, 25, 24, 0.14);
+        box-shadow: 0 2px 6px rgba(25, 25, 24, 0.14);
       }
       html[data-theme="dark"] .radio-chip:not(.is-selected):hover .radio-chip-label,
       :host([data-theme="dark"]) .radio-chip:not(.is-selected):hover .radio-chip-label {
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 2px 7px rgba(0, 0, 0, 0.42);
       }
     }
 
@@ -461,7 +474,7 @@
       height: 14px;
       padding: 1px 2.5px 0 2.5px;
       border-radius: 999px;
-      background-color: #ffffff;
+      background-color: #f8f9fb;
       border: 1px solid var(--chip-color, #52524f);
       color: var(--chip-color, #262624);
       font-family: var(--font-typewriter);
@@ -471,16 +484,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+      box-shadow: none;
       pointer-events: none;
       z-index: 2;
-      transition: opacity 0.14s ease, transform 0.14s ease, background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+      transition: opacity 0.14s ease, transform 0.12s ease, background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
     }
 
     html[data-theme="dark"] .lang-count-badge,
     :host([data-theme="dark"]) .lang-count-badge {
-      background-color: #1c1b19;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+      background-color: #1e1f22;
+      box-shadow: none;
     }
 
     .lang-count-badge.is-zero {
@@ -488,32 +501,50 @@
       transform: scale(0.65);
     }
 
-    .radio-chip:active .radio-chip-label {
+    .radio-chip:not(.is-selected):active .radio-chip-label {
       transform: translateY(0.5px);
     }
 
-    /* Unselected chips remain 100% opaque and crisp so they look available, never disabled */
-    #lang-radio-group.has-lang-selected .radio-chip.badge-chip.is-unselected {
-      opacity: 1;
+    .radio-chip.is-selected:active .radio-chip-label {
+      transform: translateY(-0.5px);
     }
 
+    /* Unselected chips stay slightly dimmed (~0.72) and flat so selected chips stand out unmistakably */
     .radio-chip.is-selected .radio-chip-label {
       background-color: var(--chip-fill-bg);
       border-color: var(--chip-fill-bg);
       color: var(--chip-fill-fg);
-      box-shadow: 0 3px 8px rgba(15, 20, 28, 0.34), 0 1px 2px rgba(15, 20, 28, 0.22);
+      transform: translateY(-1.5px);
+      box-shadow:
+        0 6px 14px rgba(15, 20, 28, 0.42),
+        0 2px 5px rgba(15, 20, 28, 0.30),
+        0 4px 12px color-mix(in srgb, var(--chip-fill-bg) 42%, transparent),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24);
     }
 
     html[data-theme="dark"] .radio-chip.is-selected .radio-chip-label,
     :host([data-theme="dark"]) .radio-chip.is-selected .radio-chip-label {
       border-color: var(--chip-color);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.35);
+      box-shadow:
+        0 7px 16px rgba(0, 0, 0, 0.82),
+        0 2px 6px rgba(0, 0, 0, 0.62),
+        0 3px 14px color-mix(in srgb, var(--chip-color) 46%, transparent),
+        inset 0 1px 0 rgba(255, 255, 255, 0.26);
+    }
+
+    .radio-chip.is-selected .lang-count-badge:not(.is-zero) {
+      transform: translateY(-1.5px);
+    }
+
+    .radio-chip.is-selected:active .lang-count-badge:not(.is-zero) {
+      transform: translateY(-0.5px);
     }
 
     .radio-chip.is-selected .lang-count-badge {
       background-color: #ffffff;
       border-color: var(--chip-fill-bg);
       color: var(--chip-fill-bg);
+      box-shadow: 0 3px 7px rgba(15, 20, 28, 0.34);
     }
 
     html[data-theme="dark"] .radio-chip.is-selected .lang-count-badge,
@@ -521,6 +552,7 @@
       background-color: #1c1b19;
       border-color: var(--chip-color);
       color: var(--chip-color);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.72);
     }
 
     .radio-chip:focus-visible .radio-chip-label {
@@ -1289,7 +1321,7 @@
     <!-- Activities Catalog List -->
     <section class="activities-list" id="activities-list">
       <!-- Topic: Cinque dubbi di italiano sotto i portici di Bologna -->
-      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="bologna universita alma mater portici unesco due torri archiginnasio sala borsa via zamboni ma pero sapere conoscere perche siccome da per ci ne discorso indiretto grammatica dubbi studente tedesco" onclick="openCard('topics/dubbiabologna/index.html', event)">
+      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="bologna emilia romagna mappa universita alma mater portici unesco due torri archiginnasio sala borsa via zamboni ma pero sapere conoscere perche siccome da per ci ne discorso indiretto grammatica dubbi studente tedesco" onclick="openCard('topics/dubbiabologna/index.html', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/dubbiabologna/icon-dubbiabologna.jpg" alt="Cinque dubbi di italiano sotto i portici di Bologna" class="activity-card-icon" loading="lazy">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/dubbiabologna/icon-dubbiabologna.jpg', 'Cinque dubbi di italiano sotto i portici di Bologna');" title="Enlarge image" aria-label="Enlarge image">
