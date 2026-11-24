@@ -2642,10 +2642,19 @@
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna su">
         <span class="section-num">1</span> Immagini
       </a>
+      <span class="section-action-hint">clicca per ingrandire</span>
     </h2>
 
     <section class="images-section" id="images-section">
-      <p class="images-empty-note" style="font-style: italic; color: var(--ink-muted); margin: 4px 0 24px 0;">Non ci sono ancora immagini.</p>
+      <div class="image-labels-pool" id="image-labels-pool">
+        <button type="button" class="image-label-chip" data-image-id="verbiare" draggable="true">Coniugazione dei verbi in -are (parlare)</button>
+      </div>
+      <div class="images-grid">
+        <div class="image-thumb-wrap" data-image-id="verbiare" data-image-title="Coniugazione dei verbi in -are (parlare)" onclick="handleImageCardClick(this, 'images/it-verbiitaliani-verbiare.png', 'Coniugazione dei verbi in -are (parlare)', '[]')" ondragover="handleImageCardDragOver(event, this)" ondragleave="handleImageCardDragLeave(event, this)" ondrop="handleImageCardDrop(event, this, 'images/it-verbiitaliani-verbiare.png', 'Coniugazione dei verbi in -are (parlare)', '[]')">
+          <img src="images/it-verbiitaliani-verbiare.png" alt="Coniugazione dei verbi in -are (parlare)" class="image-thumb" loading="lazy">
+          <div class="image-thumb-title">Coniugazione dei verbi in -are (parlare)</div>
+        </div>
+      </div>
     </section>
 
 <!-- SECTION 2: READING -->
