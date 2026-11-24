@@ -23,10 +23,16 @@ Each activity lives in `topics/<foldername>/index.html`:
     if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
       window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
     }
+    try {
+      if (localStorage.getItem('site_theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch (e) {}
   </script>
   ```
   This guarantees directory URLs without a trailing slash immediately normalize to `/topics/<foldername>/` before relative assets are parsed, both on live web hosts and local preview servers, while preserving local `file:///` browsing.
 - **Local State & Reset**: Interactive features (e.g., quiz answers, vocabulary completion state) must use `localStorage` for persistence, and MUST include a visible reset button that prompts for confirmation before clearing `localStorage` and reloading the page scrolled to the top.
+- **Site-Wide Dark / Light Mode Toggle (`site_theme`)**: Every page (`index.html` and all `topics/<foldername>/index.html` pages) displays a clean single moon/sun icon button (`.theme-toggle-btn`) in the far upper-right corner of the page (`position: absolute`, scrolling naturally with the page top without covering content or sticky bars). Light mode is the default; clicking switches between light and dark mode (`html[data-theme="dark"]`), persists the choice in `localStorage` under `site_theme` (untouched by worksheet answer resets), and applies it in `<head>` before paint (and across mobile Shadow DOM whoosh transitions) with localized `title`/`aria-label` text on activity pages. Dark mode uses a warm charcoal and soft cream ink palette (`#161514` desk, `#211f1d` sheet, `#eae4d9` ink, brightened legible `--lang-color` stamps, and dark-adapted green/red feedback states).
 - **Catalog Registration**: When an activity is created, register its title, target language, proficiency level, and link in the root `index.html` catalog.
 - **Target Language Exclusivity**: All content and interface elements on an activity page (including headings, instructions, buttons, wrong-drop hints, and navigation links) must be exclusively in the target language.
 - **No Instruction Boxes**: Activity pages do not include a top roll-out `INSTRUCCIONES` callout box (`.instructions-box`) or per-section instruction boxes (`.section-instructions-box`).
@@ -213,13 +219,12 @@ Use the following standardized languages, 2-letter ISO codes, and hex colors eve
   - Entire card is clickable (`cursor: pointer;`) to open the activity, with hover showing an intense soft shadow (`0 10px 28px rgba(45, 40, 35, 0.12)`) without border outline changes.
   - Title link has `pointer-events: none;` and no hover effects (no underline or color change) so the user intuitively feels the entire card panel is clickable.
   - Activity title uses tight line height (`line-height: 1.05;`) on both desktop and mobile so multi-line titles hold together cohesively as a single unit.
-  - **Topic Profile Icons (`.activity-card.has-icon`)**: All topic profile pictures on the main catalog are the exact same fixed square size (`98px × 98px` on desktop via `grid-template-columns: 98px 1fr; align-items: flex-start;`, and `70px × 70px` on mobile), top-aligned with the title row so longer titles or descriptions naturally expand the card downward while preserving the full bottom padding on every card.
+  - **Topic Profile Icons (`.activity-card.has-icon`)**: All topic profile pictures on the main catalog are the exact same fixed square size (`98px × 98px` on desktop via `grid-template-columns: 98px 1fr; align-items: flex-start;`, and `70px × 70px` on mobile), top-aligned with the title row so longer titles or descriptions naturally expand the card downward while preserving the full bottom padding on every card. Hovering (or viewing on touch devices) reveals the `.profile-zoom-btn` magnifying glass in the lower-right of the icon, which opens the fullscreen `#image-lightbox` modal (`openImageLightbox`) at natural image resolution with caption badge, zoom controls, wheel/double-click/pinch zoom, and click/`Esc` dismissal matching activity pages 1:1.
   - The "Abrir actividad →" button is omitted from the card.
 - **Catalog Header (`index.html`)**: On mobile, the main header title ("Language Learning Activities") and subtitle ("Hojas pedagógicas para autoestudio, tándems y profesores") are centered. The subtitle uses `text-wrap: balance; max-width: 270px; margin-left: auto; margin-right: auto;` and non-breaking spaces (`tándems&nbsp;y&nbsp;profesores`) so it breaks evenly near the middle and never leaves a single word alone on the second line.
-- **Catalog Dropdown Filter & Search (`index.html`)**:
-  - Uses custom-styled dropdown menus (`.custom-dropdown`, `.custom-dropdown-trigger`, `.custom-dropdown-menu`, `.custom-dropdown-option`) instead of native `<select>` elements so mobile browsers never open ugly native OS picker wheels. Styled in the 1970s paper-and-ink aesthetic (`#fffdf9` paper sheet, `#d5cebf` border, `"Lora", Georgia, serif` font, `#f2e9cb` warm parchment highlight on the active option, and a rotating chevron). The language dropdown includes all 11 standardized languages in the canonical order.
+- **Catalog Filter Panel & Search (`index.html`)**:
+  - Language filter chips (`.radio-chip`) keep **100% opacity** when unselected on a solid opaque surface (`#ffffff` in light mode, `#22201e` in dark mode) with crisp language-colored borders/text, count badges, and hover lift so unselected chips clearly look available rather than disabled. Selecting a language fills that chip solid in its language color with crisp white text (`.radio-chip.is-selected`).
   - Search box clear ("X") button: When there is text inside `#search-input`, display an "X" button (`.search-clear-btn`) on the far right inside the search box that clears the input, re-filters the catalog, and focuses the input.
-  - Mobile view (`max-width: 680px`): "Idioma:" and "Nivel:" labels are removed, the two custom dropdowns sit centered side-by-side on a single line filling 100% width (50%/50%) with a slightly smaller font (`font-size: 12.5px; padding: 6px 8px;`) so full labels like "Todos los idiomas" fit completely on mobile screens, and the search bar extends across 100% full width.
 - **Activity Pages (`topics/<slug>/index.html`)**: The header stamp badge (`.stamp-badge`) and language metadata tags use the designated language color (e.g., `#be185d` for Spanish) to resemble an authentic colored ink stamp, while preserving the calm mimeograph ink aesthetic for the rest of the worksheet.
 
 ## Pedagogical Guidelines

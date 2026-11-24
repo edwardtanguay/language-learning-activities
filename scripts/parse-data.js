@@ -1951,11 +1951,16 @@ ${thumbsHtml}
 function ensureLightboxAssets(html) {
   let out = html;
 
-  // 1. Ensure <head> script ONLY contains the early redirect script
+  // 1. Ensure <head> script contains the early redirect script and dark theme initialization
   const redirectScript = `<script>
     if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
       window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
     }
+    try {
+      if (localStorage.getItem('site_theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch (e) {}
   </script>`;
   out = out.replace(/<head>\s*<script>[\s\S]*?<\/script>/i, `<head>\n  ${redirectScript}`);
 
@@ -2002,7 +2007,7 @@ function ensureLightboxAssets(html) {
   const anyLightboxJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*(?:SECTION \d+:\s*)?IMAGE LIGHTBOX[\s\S]*?(?:initImageLabelsGame\(\);\s*\}\);|setupLightboxTouchZoom\(\);\s*\}\)\(\);?)/gi;
   out = out.replace(anyLightboxJsRegex, '');
 
-  const anyDragDropJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*IMAGE LABELS DRAG & DROP GAME[\s\S]*?initImageLabelsGame\(\);\s*\}\);?/gi;
+  const anyDragDropJsRegex = /\/\/\s*=========================================================\s*\r?\n\s*\/\/\s*IMAGE LABELS DRAG & DROP GAME[\s\S]*?pool\.style\.display\s*=\s*\(validChips\.length\s*>\s*0\s*&&\s*remainingChips\.length\s*===\s*0\)\s*\?\s*'none'\s*:\s*'flex';\s*\}(?:\s*document\.addEventListener\('DOMContentLoaded',\s*\(\)\s*=>\s*\{\s*initImageLabelsGame\(\);\s*\}\);?)?/gi;
   out = out.replace(anyDragDropJsRegex, '');
 
   // Strip duplicate declarations of solvedImageIds or lbScale

@@ -44,6 +44,11 @@ Whenever this skill runs, **always start with a `/grill-me` style interactive in
          if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
            window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
          }
+         try {
+           if (localStorage.getItem('site_theme') === 'dark') {
+             document.documentElement.setAttribute('data-theme', 'dark');
+           }
+         } catch (e) {}
        </script>
        ```
        This immediately normalizes directory URLs without trailing slashes to `/topics/<foldername>/` before relative assets are parsed, while safely ignoring local `file:///` viewing.
@@ -59,6 +64,7 @@ Follow the project design philosophy defined in `AGENTS.md`:
   - Paper background: warm off-white / parchment (e.g., `#fbf8f1` or `#f7f4ea`).
   - Text & rules: deep ink charcoal / soft black (e.g., `#1f1e1d` or `#2a2825`).
   - Borders & accents: typewriter rules, mimeograph blue/sepia tones (e.g., `#2c4a6f` for mimeograph ink or `#5c4d3c` for warm ink).
+  - **Site-Wide Dark / Light Mode Toggle (`site_theme`)**: Include the upper-right `.theme-toggle-btn` moon/sun button (`position: absolute`, scrolling with the page top, localized `title`/`aria-label` in the target language), `html[data-theme="dark"]` warm charcoal & soft cream ink overrides (`--paper-bg: #161514`, `--paper-sheet: #211f1d`, `--ink-main: #eae4d9`, brightened `--lang-color`, and dark-adapted quiz/vocab feedback states), and `toggleSiteTheme()` persisting `site_theme` in `localStorage`.
 - **Standardized Language Color System**:
   Every activity defines `--lang-color` in `:root` matching its target language:
   - English (`en`): `#9333ea`

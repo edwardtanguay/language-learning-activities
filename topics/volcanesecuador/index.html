@@ -5,6 +5,11 @@
     if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
       window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
     }
+    try {
+      if (localStorage.getItem('site_theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch (e) {}
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2164,7 +2169,415 @@
         text-align: center;
       }
     }
-</style>
+
+    /* =========================================================
+       SITE-WIDE DARK MODE & THEME TOGGLE
+       ========================================================= */
+    html[data-theme="dark"],
+    :host([data-theme="dark"]) {
+      color-scheme: dark;
+      --paper-bg: #161514;
+      --paper-sheet: #211f1d;
+      --ink-main: #eae4d9;
+      --ink-muted: #a69f94;
+      --ink-border: #3a3632;
+      --ink-rule: #383430;
+      --stamp-blue: #7aa7e0;
+      --lang-color: #f45b9a;
+      --correct-green: #5cd67d;
+      --correct-bg: #182b1e;
+      --wrong-red: #f27474;
+      --wrong-bg: #321b1d;
+      --highlight: #363022;
+    }
+
+    body {
+      position: relative;
+    }
+
+    @media (min-width: 681px) {
+      .utility-bar {
+        position: static;
+      }
+    }
+
+    .theme-toggle-btn {
+      position: absolute;
+      top: 31px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      line-height: 0;
+      z-index: 850;
+      transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .theme-toggle-btn:hover {
+      background-color: rgba(34, 32, 30, 0.08);
+      color: var(--ink-main);
+    }
+
+    html[data-theme="dark"] .theme-toggle-btn:hover,
+    :host([data-theme="dark"]) .theme-toggle-btn:hover {
+      background-color: rgba(255, 253, 249, 0.1);
+      color: var(--ink-main);
+    }
+
+    .theme-toggle-btn:active {
+      transform: scale(0.92);
+    }
+
+    .theme-toggle-btn:focus-visible {
+      outline: 2px solid var(--stamp-blue);
+      outline-offset: 2px;
+    }
+
+    .theme-toggle-btn svg {
+      width: 19px;
+      height: 19px;
+      display: block;
+      pointer-events: none;
+    }
+
+    .theme-toggle-btn .icon-sun {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle-btn .icon-moon,
+    :host([data-theme="dark"]) .theme-toggle-btn .icon-moon {
+      display: none;
+    }
+
+    html[data-theme="dark"] .theme-toggle-btn .icon-sun,
+    :host([data-theme="dark"]) .theme-toggle-btn .icon-sun {
+      display: block;
+    }
+
+    @media (min-width: 681px) and (max-width: 980px) {
+      .utility-bar {
+        padding-right: 44px;
+      }
+    }
+
+    html[data-theme="dark"] .handout-sheet,
+    :host([data-theme="dark"]) .handout-sheet {
+      background-color: var(--paper-sheet);
+      border-color: var(--ink-border);
+      box-shadow: 0 14px 42px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    html[data-theme="dark"] .jump-num,
+    :host([data-theme="dark"]) .jump-num {
+      background: #2b2825;
+      color: var(--ink-muted);
+    }
+
+    html[data-theme="dark"] .jump-num:hover,
+    :host([data-theme="dark"]) .jump-num:hover {
+      background-color: #35312d;
+      color: var(--ink-main);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    html[data-theme="dark"] .jump-num.active,
+    :host([data-theme="dark"]) .jump-num.active {
+      background-color: #3e3933;
+      color: var(--ink-main);
+    }
+
+    html[data-theme="dark"] .jump-bookmark-btn,
+    :host([data-theme="dark"]) .jump-bookmark-btn {
+      background-color: #3e3933;
+    }
+
+    html[data-theme="dark"] .jump-bookmark-btn:hover,
+    :host([data-theme="dark"]) .jump-bookmark-btn:hover {
+      background-color: #4a433c;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    html[data-theme="dark"] .sticky-jump-nav,
+    :host([data-theme="dark"]) .sticky-jump-nav {
+      background: rgba(33, 31, 29, 0.96);
+      border-color: var(--ink-border);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    }
+
+    html[data-theme="dark"] .section-title .section-num,
+    :host([data-theme="dark"]) .section-title .section-num {
+      background: #3e3933;
+      color: var(--ink-main);
+    }
+
+    html[data-theme="dark"] .vocab-in-text,
+    :host([data-theme="dark"]) .vocab-in-text {
+      background-color: rgba(186, 152, 74, 0.24);
+    }
+
+    html[data-theme="dark"] .vocab-targets.vocab-dragging-active .vocab-target-card.drag-over:not(.state-wrong):not(.state-correct),
+    html[data-theme="dark"] .vocab-target-card.drag-over,
+    :host([data-theme="dark"]) .vocab-target-card.drag-over {
+      background-color: #2d2925 !important;
+    }
+
+    html[data-theme="dark"] .vocab-target-card.state-wrong,
+    :host([data-theme="dark"]) .vocab-target-card.state-wrong {
+      background: #331c1e !important;
+      border-color: #7d363a !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.48);
+    }
+
+    html[data-theme="dark"] .vocab-target-card.state-correct,
+    html[data-theme="dark"] .vocab-dict-card,
+    :host([data-theme="dark"]) .vocab-target-card.state-correct,
+    :host([data-theme="dark"]) .vocab-dict-card {
+      background: #192d1f !important;
+      border-color: #2f683b !important;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.48);
+    }
+
+    html[data-theme="dark"] .vocab-dim-overlay {
+      background: rgba(10, 9, 8, 0.65);
+    }
+
+    html[data-theme="dark"] .vocab-hint-modal {
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    html[data-theme="dark"] .quick-opt-item:hover,
+    :host([data-theme="dark"]) .quick-opt-item:hover {
+      background-color: #2b2825;
+    }
+
+    html[data-theme="dark"] .quick-opt-item.is-correct,
+    :host([data-theme="dark"]) .quick-opt-item.is-correct {
+      background-color: #192d1f;
+      border-color: #2f683b;
+      color: #c7f4d2;
+    }
+
+    html[data-theme="dark"] .quick-opt-item.is-correct .quick-opt-letter,
+    html[data-theme="dark"] .quick-opt-item.is-correct .quick-opt-icon,
+    :host([data-theme="dark"]) .quick-opt-item.is-correct .quick-opt-letter,
+    :host([data-theme="dark"]) .quick-opt-item.is-correct .quick-opt-icon {
+      color: #5cd67d;
+    }
+
+    html[data-theme="dark"] .quick-opt-item.is-wrong,
+    :host([data-theme="dark"]) .quick-opt-item.is-wrong {
+      background-color: #331c1e;
+      border-color: #7d363a;
+      color: #fad1d1;
+    }
+
+    html[data-theme="dark"] .quick-opt-item.is-wrong .quick-opt-letter,
+    html[data-theme="dark"] .quick-opt-item.is-wrong .quick-opt-icon,
+    :host([data-theme="dark"]) .quick-opt-item.is-wrong .quick-opt-letter,
+    :host([data-theme="dark"]) .quick-opt-item.is-wrong .quick-opt-icon {
+      color: #f27474;
+    }
+
+    html[data-theme="dark"] .quick-feedback-box.is-correct,
+    :host([data-theme="dark"]) .quick-feedback-box.is-correct {
+      background-color: #192d1f;
+      border-color: #2f683b;
+      color: #c7f4d2;
+    }
+
+    html[data-theme="dark"] .quick-feedback-box.is-wrong,
+    :host([data-theme="dark"]) .quick-feedback-box.is-wrong {
+      background-color: #331c1e;
+      border-color: #7d363a;
+      color: #fad1d1;
+    }
+
+    html[data-theme="dark"] .question-card,
+    html[data-theme="dark"] .question-card.answered.correct,
+    html[data-theme="dark"] .question-card.answered.incorrect,
+    :host([data-theme="dark"]) .question-card,
+    :host([data-theme="dark"]) .question-card.answered.correct,
+    :host([data-theme="dark"]) .question-card.answered.incorrect {
+      background-color: #1b1918;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+    }
+
+    html[data-theme="dark"] .feedback-box.correct-text,
+    :host([data-theme="dark"]) .feedback-box.correct-text {
+      background-color: #192d1f;
+      border-color: #2f683b;
+    }
+
+    html[data-theme="dark"] .feedback-box.wrong-text,
+    :host([data-theme="dark"]) .feedback-box.wrong-text {
+      background-color: #331c1e;
+      border-color: #7d363a;
+    }
+
+    html[data-theme="dark"] .image-labels-pool,
+    :host([data-theme="dark"]) .image-labels-pool {
+      background: rgba(45, 41, 37, 0.6);
+      border-color: var(--ink-rule);
+    }
+
+    html[data-theme="dark"] .image-thumb-wrap.image-drop-hover,
+    :host([data-theme="dark"]) .image-thumb-wrap.image-drop-hover {
+      background-color: #2e2a26 !important;
+    }
+
+    html[data-theme="dark"] .image-thumb-title,
+    :host([data-theme="dark"]) .image-thumb-title {
+      background: rgba(34, 31, 28, 0.92);
+      border-top-color: rgba(255, 255, 255, 0.16);
+      color: var(--ink-main);
+    }
+
+    html[data-theme="dark"] .image-lightbox-caption {
+      background: rgba(36, 34, 31, 0.94);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: var(--ink-main);
+    }
+
+    html[data-theme="dark"] .image-lightbox-caption.sparkle {
+      color: #22201e;
+    }
+
+    html[data-theme="dark"] .lectura-audio-player,
+    :host([data-theme="dark"]) .lectura-audio-player {
+      background-color: rgba(26, 24, 22, 0.96);
+      border-color: var(--ink-rule);
+    }
+
+    html[data-theme="dark"] .lectura-audio-player.is-active-sticky.is-stuck {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    }
+
+    html[data-theme="dark"] .lectura-audio-btn.is-playing,
+    :host([data-theme="dark"]) .lectura-audio-btn.is-playing {
+      background-color: var(--ink-muted);
+      border-color: var(--ink-main);
+      color: #161514;
+    }
+
+    html[data-theme="dark"] .reset-cancel-btn:hover,
+    :host([data-theme="dark"]) .reset-cancel-btn:hover {
+      background-color: #2b2825;
+      color: var(--ink-main);
+    }
+
+    html[data-theme="dark"] .activity-permalink-btn.is-copied,
+    :host([data-theme="dark"]) .activity-permalink-btn.is-copied {
+      color: var(--correct-green);
+    }
+
+    @media (max-width: 680px) {
+      .utility-bar {
+        position: relative;
+        justify-content: center;
+      }
+      .activity-permalink-btn,
+      .theme-toggle-btn {
+        position: absolute;
+        top: calc(50% + 5px);
+        margin-top: -15px;
+        transform: none;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        line-height: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .activity-permalink-content {
+        line-height: 0;
+      }
+      .activity-permalink-btn {
+        right: 34px;
+      }
+      .theme-toggle-btn {
+        right: 0;
+      }
+      .theme-toggle-btn:active {
+        transform: scale(0.92);
+      }
+      .theme-toggle-btn svg {
+        width: 17px;
+        height: 17px;
+      }
+      .activity-permalink-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+      html[data-theme="dark"] .jump-nav .jump-num,
+      html[data-theme="dark"] .jump-nav .jump-bookmark-btn,
+      html[data-theme="dark"] .sticky-jump-nav .jump-num,
+      html[data-theme="dark"] .sticky-jump-nav .jump-bookmark-btn,
+      :host([data-theme="dark"]) .jump-nav .jump-num,
+      :host([data-theme="dark"]) .jump-nav .jump-bookmark-btn {
+        background-color: #1c1a18;
+      }
+      html[data-theme="dark"] .jump-nav .jump-num::before,
+      html[data-theme="dark"] .jump-nav .jump-bookmark-btn::before,
+      html[data-theme="dark"] .sticky-jump-nav .jump-num::before,
+      html[data-theme="dark"] .sticky-jump-nav .jump-bookmark-btn::before,
+      :host([data-theme="dark"]) .jump-nav .jump-num::before,
+      :host([data-theme="dark"]) .jump-nav .jump-bookmark-btn::before {
+        background-color: #292623;
+      }
+      html[data-theme="dark"] .jump-nav .jump-num:hover,
+      html[data-theme="dark"] .jump-nav .jump-bookmark-btn:hover,
+      html[data-theme="dark"] .sticky-jump-nav .jump-num:hover,
+      html[data-theme="dark"] .sticky-jump-nav .jump-bookmark-btn:hover {
+        background-color: #23201e;
+      }
+      html[data-theme="dark"] .jump-nav .jump-num.active,
+      html[data-theme="dark"] .sticky-jump-nav .jump-num.active,
+      :host([data-theme="dark"]) .jump-nav .jump-num.active {
+        background-color: #272421;
+      }
+      html[data-theme="dark"] .jump-nav .jump-num.active::before,
+      html[data-theme="dark"] .sticky-jump-nav .jump-num.active::before,
+      :host([data-theme="dark"]) .jump-nav .jump-num.active::before {
+        background-color: #3e3933;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .utility-bar .back-link {
+        font-size: 13px;
+        gap: 5px;
+      }
+      .activity-permalink-btn,
+      .theme-toggle-btn {
+        width: 28px;
+        height: 28px;
+        margin-top: -14px;
+      }
+      .activity-permalink-btn {
+        right: 30px;
+      }
+      .theme-toggle-btn {
+        right: 0;
+      }
+    }
+
+    @media print {
+      .theme-toggle-btn {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -2186,13 +2599,17 @@
   </div>
 
   <!-- Top Utility Bar -->
-  <div class="utility-bar">
+<div class="utility-bar">
     <a href="../../index.html" class="back-link" onclick="return handleBackNavigation(event, '../../index.html')">
       <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       <span>Índice de Actividades</span>
     </a>
     <button type="button" class="activity-permalink-btn" id="activity-permalink-btn" onclick="copyActivityPermalink()" title="Copiar URL de esta actividad" aria-label="Copiar URL de esta actividad" aria-live="polite">
       <span class="activity-permalink-content" id="activity-permalink-content"><span class="activity-permalink-text">Copiar URL de esta actividad</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span>
+    </button>
+    <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleSiteTheme()" title="Cambiar a modo oscuro" aria-label="Cambiar a modo oscuro">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
     </button>
   </div>
 
@@ -2346,6 +2763,11 @@
           <span class="section-num">3</span> Lectura
         </a>
         </h2>
+
+
+
+
+
 
 
 
@@ -3239,6 +3661,11 @@
     
 
 
+    
+
+
+    
+
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
     // =========================================================
@@ -3955,260 +4382,7 @@
       });
     })();
 
-    // =========================================================
-    // IMAGE LABELS DRAG & DROP GAME (DESKTOP & MOBILE)
-    // =========================================================
-let draggedImageId = null;
-    let selectedImageLabelChip = null;
-
-    function handleImageLabelDragStart(e, chip) {
-      draggedImageId = chip.getAttribute('data-image-id');
-      try {
-        e.dataTransfer.setData('text/plain', draggedImageId);
-        e.dataTransfer.effectAllowed = 'move';
-      } catch (err) {}
-      chip.classList.add('is-dragging');
-      if (selectedImageLabelChip && selectedImageLabelChip !== chip) {
-        selectedImageLabelChip.classList.remove('is-selected');
-        selectedImageLabelChip = null;
-      }
-    }
-
-    function handleImageLabelDragEnd(e, chip) {
-      chip.classList.remove('is-dragging');
-      draggedImageId = null;
-      document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(card => card.classList.remove('image-drop-hover'));
-    }
-
-    function handleImageLabelClick(chip) {
-      if (selectedImageLabelChip === chip) {
-        chip.classList.remove('is-selected');
-        selectedImageLabelChip = null;
-      } else {
-        if (selectedImageLabelChip) selectedImageLabelChip.classList.remove('is-selected');
-        chip.classList.add('is-selected');
-        selectedImageLabelChip = chip;
-      }
-    }
-
-    function setupImageTouchDrag(chip) {
-      let touchMoved = false;
-      let ghost = null;
-      let startX = 0;
-      let startY = 0;
-
-      chip.addEventListener('touchstart', (e) => {
-        if (e.touches.length !== 1) return;
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        touchMoved = false;
-        draggedImageId = chip.getAttribute('data-image-id');
-      }, { passive: true });
-
-      chip.addEventListener('touchmove', (e) => {
-        if (e.touches.length !== 1 || !draggedImageId) return;
-        const touch = e.touches[0];
-        const dist = Math.hypot(touch.clientX - startX, touch.clientY - startY);
-        if (dist > 8) {
-          touchMoved = true;
-          if (!ghost) {
-            ghost = chip.cloneNode(true);
-            ghost.style.position = 'fixed';
-            ghost.style.zIndex = '9999';
-            ghost.style.pointerEvents = 'none';
-            ghost.style.opacity = '0.85';
-            ghost.style.transform = 'translate(-50%, -50%)';
-            document.body.appendChild(ghost);
-            chip.classList.add('is-dragging');
-          }
-          ghost.style.left = touch.clientX + 'px';
-          ghost.style.top = touch.clientY + 'px';
-
-          const elem = document.elementFromPoint(touch.clientX, touch.clientY);
-          const card = elem ? elem.closest('.image-thumb-wrap') : null;
-          document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => {
-            if (c !== card) c.classList.remove('image-drop-hover');
-          });
-          if (card && !card.classList.contains('is-solved')) {
-            card.classList.add('image-drop-hover');
-          }
-        }
-      }, { passive: true });
-
-      chip.addEventListener('touchend', (e) => {
-        if (ghost) {
-          ghost.remove();
-          ghost = null;
-        }
-        chip.classList.remove('is-dragging');
-        document.querySelectorAll('.image-thumb-wrap.image-drop-hover').forEach(c => c.classList.remove('image-drop-hover'));
-
-        if (touchMoved && draggedImageId) {
-          const changedTouch = e.changedTouches[0];
-          const elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
-          const card = elem ? elem.closest('.image-thumb-wrap') : null;
-          if (card && !card.classList.contains('is-solved')) {
-            const cardId = card.getAttribute('data-image-id');
-            if (cardId === draggedImageId) {
-              const img = card.querySelector('img');
-              const src = img ? img.getAttribute('src') : '';
-              const alt = card.getAttribute('data-image-title') || '';
-              solveImage(card, chip, src, alt);
-            }
-          }
-          draggedImageId = null;
-        }
-      });
-    }
-
-    function handleImageCardDragOver(e, card) {
-      if (card.classList.contains('is-solved')) return;
-      e.preventDefault();
-      try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-      card.classList.add('image-drop-hover');
-    }
-
-    function handleImageCardDragLeave(e, card) {
-      if (!card.contains(e.relatedTarget)) {
-        card.classList.remove('image-drop-hover');
-      }
-    }
-
-    function handleImageCardDrop(e, card, src, alt, questionsJson) {
-      e.preventDefault();
-      card.classList.remove('image-drop-hover');
-      if (card.classList.contains('is-solved')) return;
-      let droppedId = '';
-      try { droppedId = e.dataTransfer.getData('text/plain'); } catch (err) {}
-      if (!droppedId) droppedId = draggedImageId;
-      const cardId = card.getAttribute('data-image-id');
-      if (droppedId && droppedId === cardId) {
-        const pool = document.getElementById('image-labels-pool');
-        const chip = pool ? pool.querySelector(`.image-label-chip[data-image-id="${droppedId}"]`) : null;
-        solveImage(card, chip, src, alt, questionsJson);
-      }
-    }
-
-    function handleImageCardClick(card, src, alt, questionsJson) {
-      if (selectedImageLabelChip && !card.classList.contains('is-solved')) {
-        const selectedId = selectedImageLabelChip.getAttribute('data-image-id');
-        const cardId = card.getAttribute('data-image-id');
-        if (selectedId === cardId) {
-          solveImage(card, selectedImageLabelChip, src, alt, questionsJson);
-          return;
-        } else {
-          selectedImageLabelChip.classList.remove('is-selected');
-          selectedImageLabelChip = null;
-        }
-      }
-      openImageLightbox(src, alt, questionsJson);
-    }
-
-    function solveImage(card, chip, src, alt, questionsJson) {
-      if (!card) return;
-      const imageId = card.getAttribute('data-image-id');
-      card.classList.add('is-solved');
-      if (chip) {
-        chip.classList.remove('is-selected', 'is-dragging');
-        chip.classList.add('is-hidden');
-      }
-      if (selectedImageLabelChip === chip) {
-        selectedImageLabelChip = null;
-      }
-      if (imageId && !solvedImageIds.includes(imageId)) {
-        solvedImageIds.push(imageId);
-        if (typeof saveState === 'function') {
-          saveState();
-        }
-      }
-      const pool = document.getElementById('image-labels-pool');
-      if (pool) {
-        const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
-        if (remainingChips.length === 0) {
-          pool.style.display = 'none';
-        }
-      }
-      openImageLightbox(src, alt, questionsJson, true);
-    }
-
-    function initImageLabelsGame() {
-      const pool = document.getElementById('image-labels-pool');
-      const cards = document.querySelectorAll('.images-grid .image-thumb-wrap');
-      if (!pool || cards.length === 0) return;
-
-      // 1. Gather existing chips in pool and deduplicate
-      let chips = Array.from(pool.querySelectorAll('.image-label-chip'));
-      const seenIds = new Set();
-      const validChips = [];
-
-      chips.forEach(chip => {
-        const id = chip.getAttribute('data-image-id');
-        if (id && !seenIds.has(id)) {
-          seenIds.add(id);
-          validChips.push(chip);
-        } else {
-          chip.remove();
-        }
-      });
-
-      // 2. If pool was empty, generate from cards
-      if (validChips.length === 0) {
-        cards.forEach(card => {
-          const id = card.getAttribute('data-image-id');
-          const title = card.getAttribute('data-image-title');
-          if (id && title && !seenIds.has(id)) {
-            seenIds.add(id);
-            const chip = document.createElement('button');
-            chip.type = 'button';
-            chip.className = 'image-label-chip';
-            chip.setAttribute('data-image-id', id);
-            chip.setAttribute('draggable', 'true');
-            chip.textContent = title;
-            pool.appendChild(chip);
-            validChips.push(chip);
-          }
-        });
-      }
-
-      // 3. Fisher-Yates shuffle order in pool
-      for (let i = validChips.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = validChips[i];
-        validChips[i] = validChips[j];
-        validChips[j] = temp;
-      }
-      validChips.forEach(chip => pool.appendChild(chip));
-
-      // 4. Attach event listeners and sync solved state
-      validChips.forEach(chip => {
-        const id = chip.getAttribute('data-image-id');
-        const isSolved = solvedImageIds.includes(id);
-        chip.classList.toggle('is-hidden', isSolved);
-        chip.classList.remove('is-selected', 'is-dragging');
-
-        if (!chip.dataset.bound) {
-          chip.dataset.bound = 'true';
-          chip.addEventListener('dragstart', (e) => handleImageLabelDragStart(e, chip));
-          chip.addEventListener('dragend', (e) => handleImageLabelDragEnd(e, chip));
-          chip.addEventListener('click', () => handleImageLabelClick(chip));
-          setupImageTouchDrag(chip);
-        }
-      });
-
-      // 5. Update cards solved state and pool visibility
-      cards.forEach(card => {
-        const id = card.getAttribute('data-image-id');
-        if (id && solvedImageIds.includes(id)) {
-          card.classList.add('is-solved');
-        } else {
-          card.classList.remove('is-solved');
-        }
-      });
-
-      const remainingChips = pool.querySelectorAll('.image-label-chip:not(.is-hidden)');
-      pool.style.display = (validChips.length > 0 && remainingChips.length === 0) ? 'none' : 'flex';
-    }
+    
 
     function renderVocabulary(animState) {
       const prevChipRects = animState && animState.prevChipRects ? animState.prevChipRects : animState;
@@ -5255,6 +5429,7 @@ let draggedImageId = null;
           sessionStorage.setItem('nav-outgoing-html', html);
           sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
           sessionStorage.setItem('nav-outgoing-padding', '0 8px 12px 8px');
+          sessionStorage.setItem('nav-outgoing-theme', document.documentElement.getAttribute('data-theme') || 'light');
           return true;
         }
       } catch (e) {}
@@ -5281,13 +5456,15 @@ let draggedImageId = null;
           const outStyles = sessionStorage.getItem('nav-outgoing-styles') || '';
           const outHtml = sessionStorage.getItem('nav-outgoing-html') || '';
           const outScroll = parseFloat(sessionStorage.getItem('nav-outgoing-scroll') || '0');
-          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '12px 8px';
+          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '36px 8px 12px 8px';
+          const outTheme = sessionStorage.getItem('nav-outgoing-theme') || (document.documentElement.getAttribute('data-theme') || 'light');
 
           sessionStorage.removeItem('nav-direction');
           sessionStorage.removeItem('nav-outgoing-styles');
           sessionStorage.removeItem('nav-outgoing-html');
           sessionStorage.removeItem('nav-outgoing-scroll');
           sessionStorage.removeItem('nav-outgoing-padding');
+          sessionStorage.removeItem('nav-outgoing-theme');
 
           const sheet = document.querySelector('.handout-sheet');
           const util = document.querySelector('.utility-bar');
@@ -5308,6 +5485,7 @@ let draggedImageId = null;
 
           if (outHtml) {
             const overlayHost = document.createElement('div');
+            if (outTheme === 'dark') overlayHost.setAttribute('data-theme', 'dark');
             overlayHost.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:9999;';
             const shadow = overlayHost.attachShadow({ mode: 'open' });
             shadow.innerHTML = `
@@ -5663,6 +5841,34 @@ let draggedImageId = null;
         });
       });
     })();
+  
+    // =========================================================
+    // SITE-WIDE THEME TOGGLE (LIGHT / DARK + LOCALSTORAGE)
+    // =========================================================
+    function syncThemeToggleLabel() {
+      const btn = document.getElementById('theme-toggle-btn');
+      if (!btn) return;
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const label = isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+      btn.setAttribute('title', label);
+      btn.setAttribute('aria-label', label);
+    }
+
+    function toggleSiteTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      if (next === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+      try {
+        localStorage.setItem('site_theme', next);
+      } catch (e) {}
+      syncThemeToggleLabel();
+    }
+
+    syncThemeToggleLabel();
   </script>
 </body>
 </html>
