@@ -3728,6 +3728,62 @@
       "20": "«Ne» indica una quantità parziale («ne ho letti tre») o un argomento introdotto da «di»."
 };
 
+    let quickUserAnswers = {};
+
+    function selectQuickOption(qNum, letter) {
+      if (window.event && window.event.shiftKey) return;
+      const key = String(qNum);
+      if (quickUserAnswers[key] === letter) {
+        delete quickUserAnswers[key];
+        applyQuickFeedback(key, null);
+      } else {
+        quickUserAnswers[key] = letter;
+        applyQuickFeedback(key, letter);
+      }
+      saveState();
+    }
+
+    function applyQuickFeedback(qNum, selectedLetter) {
+      const card = document.querySelector(`.quick-q-card[data-qq="${qNum}"]`);
+      if (!card) return;
+      const correctLetter = card.getAttribute('data-correct');
+      const feedbackBox = document.getElementById(`quick-feedback-${qNum}`);
+      const buttons = card.querySelectorAll('.quick-opt-item');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('is-correct', 'is-wrong');
+        const icon = btn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      if (!selectedLetter) {
+        if (feedbackBox) {
+          feedbackBox.className = 'quick-feedback-box';
+          feedbackBox.innerHTML = '';
+        }
+        return;
+      }
+
+      const isCorrect = selectedLetter === correctLetter;
+      const activeBtn = card.querySelector(`.quick-opt-item[data-opt="${selectedLetter}"]`);
+      const checkSvg = '<polyline points="20 6 9 17 4 12"></polyline>';
+      const crossSvg = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+
+      if (activeBtn) {
+        activeBtn.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+        const icon = activeBtn.querySelector('.quick-opt-icon');
+        if (icon) icon.innerHTML = isCorrect ? checkSvg : crossSvg;
+      }
+
+      if (feedbackBox) {
+        const factText = quickExplanations[String(qNum)] || '';
+        feedbackBox.className = 'quick-feedback-box visible ' + (isCorrect ? 'is-correct' : 'is-wrong');
+        feedbackBox.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isCorrect ? checkSvg : crossSvg}</svg><span>${factText}</span>`;
+      }
+    }
+
+    let userAnswers = {};
+    let readingBookmarks = [];
     const STORAGE_KEY = 'activity_dubbiabologna';
 
     // =========================================================
