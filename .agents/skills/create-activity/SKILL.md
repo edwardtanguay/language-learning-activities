@@ -34,15 +34,24 @@ Whenever this skill runs, **always start with a `/grill-me` style interactive in
   - Web fonts from Google Fonts or standard system fonts are permitted.
   - Activity images processed via `npm run pd` live in `topics/<foldername>/images/` and are referenced with local relative paths (`images/<lang>-<foldername>-<imagename>.<ext>`) so they work both locally and online.
 - **No Unsolicited Images**: When creating an activity, do **not** generate any images (neither Section 1 graphics/diagrams nor topic profile icons) unless the user explicitly asks for a specific image. By default, leave Section 1 (`Imágenes` / `Immagini` / `Images`) with the localized empty-state note (`Todavía no hay imágenes.`, `Non ci sono ancora immagini.`, `Pas encore d'images.`, `No images yet.`) so the user can drop images into `import-images/` and run `npm run pd` later.
-- **Trailing Slash & Relative Asset Resolution**:
-  - Because activity images (`images/<file>`) and navigation (`../../index.html`) use relative paths, visiting an activity URL without a trailing slash (e.g. `https://.../topics/regionsofecuador`) causes browsers to resolve relative assets against `/topics/` instead of `/topics/regionsofecuador/`, causing broken 404 images and links.
-  - To ensure robust operation across live hosts and local preview servers:
-    1. Root `vercel.json` defines `{ "trailingSlash": true }`.
-    2. Every activity `<head>` must include an early inline redirect script:
+- **Slashless Permalinks, Relative Asset Resolution & Activity Icon SEO**:
+  - All live URLs, copied permalinks (`https://language-learning-activities.vercel.app`, `https://language-learning-activities.vercel.app?lang=it`, `https://language-learning-activities.vercel.app/topics/<foldername>`), `<link rel="canonical">`, and `<meta property="og:url">` must **not** end with a trailing slash.
+  - To keep relative activity assets (`icon-<foldername>.<ext>`, `images/<file>`, `audio/<file>`) working seamlessly on slashless URLs while preserving offline `file:///` viewing:
+    1. Root `vercel.json` defines `{ "trailingSlash": false }`.
+    2. Every activity `<head>` includes an early inline script that injects `<base href="/topics/<foldername>/">` on `http(s)` and strips any `/index.html` or trailing `/` via `history.replaceState`:
        ```html
        <script>
-         if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
-           window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+         if (window.location.protocol.startsWith('http')) {
+           var __p = window.location.pathname;
+           var __cleanP = __p.replace(/\/index\.html$/i, '').replace(/\/+$/, '') || '/';
+           var __base = document.createElement('base');
+           __base.href = __cleanP === '/' ? '/' : __cleanP + '/';
+           document.head.appendChild(__base);
+           if (__p !== __cleanP) {
+             try {
+               window.history.replaceState(null, '', __cleanP + window.location.search + window.location.hash);
+             } catch (e) {}
+           }
          }
          try {
            if (localStorage.getItem('site_theme') === 'dark') {
@@ -51,7 +60,7 @@ Whenever this skill runs, **always start with a `/grill-me` style interactive in
          } catch (e) {}
        </script>
        ```
-       This immediately normalizes directory URLs without trailing slashes to `/topics/<foldername>/` before relative assets are parsed, while safely ignoring local `file:///` viewing.
+    3. `npm run pd` (`scripts/parse-data.js`) automatically syncs each activity's `<link rel="icon">`, `og:image`, `og:image:secure_url`, `og:image:type`, `og:image:width`, `og:image:height`, and `twitter:image` (`twitter:card="summary"`) to `icon-<foldername>.<ext>?v=<hash>` (falling back to `og-main.jpg?v=<hash>` / `og-main.svg` until an icon is added).
 
 ---
 

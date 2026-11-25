@@ -2,8 +2,17 @@
 <html lang="it">
 <head>
   <script>
-    if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
-      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    if (window.location.protocol.startsWith('http')) {
+      var __p = window.location.pathname;
+      var __cleanP = __p.replace(/\/index\.html$/i, '').replace(/\/+$/, '') || '/';
+      var __base = document.createElement('base');
+      __base.href = __cleanP === '/' ? '/' : __cleanP + '/';
+      document.head.appendChild(__base);
+      if (__p !== __cleanP) {
+        try {
+          window.history.replaceState(null, '', __cleanP + window.location.search + window.location.hash);
+        } catch (e) {}
+      }
     }
     try {
       if (localStorage.getItem('site_theme') === 'dark') {
@@ -38,23 +47,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Una passeggiata ad Ancona: Le frasi per imparare parlando — Italiano B1</title>
   <meta name="description" content="Simon, appena arrivato da un liceo di Berlino, esplora Ancona con la compagna di classe Aurora usando le frasi chiave per chiarire i dubbi e imparare parole nuove.">
-  <link rel="canonical" href="https://language-learning-activities.vercel.app/topics/passeggiataancona/">
+  <link rel="canonical" href="https://language-learning-activities.vercel.app/topics/passeggiataancona">
+  <link rel="icon" type="image/jpeg" href="icon-passeggiataancona.jpg?v=009fcb8c">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Language Learning Activities">
   <meta property="og:title" content="Una passeggiata ad Ancona: Le frasi per imparare parlando — Italiano B1">
   <meta property="og:description" content="Simon, appena arrivato da un liceo di Berlino, esplora Ancona con la compagna di classe Aurora usando le frasi chiave per chiarire i dubbi e imparare parole nuove.">
-  <meta property="og:url" content="https://language-learning-activities.vercel.app/topics/passeggiataancona/">
-  <meta property="og:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
-  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
+  <meta property="og:url" content="https://language-learning-activities.vercel.app/topics/passeggiataancona">
+  <meta property="og:image" content="https://language-learning-activities.vercel.app/topics/passeggiataancona/icon-passeggiataancona.jpg?v=009fcb8c">
+  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/topics/passeggiataancona/icon-passeggiataancona.jpg?v=009fcb8c">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
+  <meta property="og:image:width" content="934">
+  <meta property="og:image:height" content="934">
   <meta property="og:image:alt" content="Una passeggiata ad Ancona: Le frasi per imparare parlando — Italiano B1">
   <meta property="og:locale" content="it_IT">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Una passeggiata ad Ancona: Le frasi per imparare parlando — Italiano B1">
   <meta name="twitter:description" content="Simon, appena arrivato da un liceo di Berlino, esplora Ancona con la compagna di classe Aurora usando le frasi chiave per chiarire i dubbi e imparare parole nuove.">
-  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
+  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/topics/passeggiataancona/icon-passeggiataancona.jpg?v=009fcb8c">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -3286,6 +3296,9 @@
 
     <!-- SECTION 4: DEEP COMPREHENSION -->
 
+
+
+
     <!-- SECTION 3: QUICK COMPREHENSION -->
     <h2 class="section-title" id="seccion-3">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Torna all'inizio"><span class="section-num">3</span> Comprensione rapida</a>
@@ -3705,6 +3718,9 @@
       </div>
 
     </section>
+
+
+
 
     <!-- SECTION 5: VOCABULARY -->
     <h2 class="section-title" id="seccion-5">
@@ -5204,9 +5220,15 @@
         const util = document.querySelector('.utility-bar');
         const sheet = document.querySelector('.handout-sheet');
         if (sheet) {
+          let html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          if (window.location.protocol.startsWith('http')) {
+            html = html.replace(/(<img\b[^>]*?\bsrc=["'])([^"']+)(["'])/gi, (m, pre, src, post) => {
+              try { return pre + new URL(src, document.baseURI).href + post; } catch (err) { return m; }
+            });
+          }
           sessionStorage.setItem('nav-direction', direction);
           sessionStorage.setItem('nav-outgoing-styles', styles);
-          sessionStorage.setItem('nav-outgoing-html', (util ? util.outerHTML : '') + sheet.outerHTML);
+          sessionStorage.setItem('nav-outgoing-html', html);
           sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
           sessionStorage.setItem('nav-outgoing-padding', '0 8px 12px 8px');
           sessionStorage.setItem('nav-outgoing-theme', document.documentElement.getAttribute('data-theme') || 'light');
@@ -5216,11 +5238,24 @@
       return false;
     }
 
+    function resolveBackTargetUrl(url) {
+      const raw = url || '../../index.html';
+      if (window.location.protocol.startsWith('http')) {
+        try {
+          const resolved = new URL(raw, document.baseURI);
+          const cleanPath = resolved.pathname.replace(/\/index\.html$/i, '').replace(/\/+$/, '') || '/';
+          return resolved.origin + cleanPath + resolved.search + resolved.hash;
+        } catch (err) {}
+      }
+      return raw;
+    }
+
     function handleBackNavigation(e, url) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
-      const targetUrl = url || '../../index.html';
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return true;
+      if (e) e.preventDefault();
+      const targetUrl = resolveBackTargetUrl(url);
       if (window.innerWidth <= 680) {
-        if (e) e.preventDefault();
         captureOutgoingActivity('backward');
         window.location.href = targetUrl;
         return false;
@@ -5273,9 +5308,10 @@
       initImageLabelsGame();
 
       document.querySelectorAll('.back-link').forEach(link => {
-        const url = link.getAttribute('href') || '../../index.html';
-        link.addEventListener('pointerdown', () => prefetchUrl(url), { passive: true });
-        link.addEventListener('touchstart', () => prefetchUrl(url), { passive: true });
+        const rawUrl = link.getAttribute('href') || '../../index.html';
+        const getTarget = () => (typeof resolveBackTargetUrl === 'function' ? resolveBackTargetUrl(rawUrl) : rawUrl);
+        link.addEventListener('pointerdown', () => prefetchUrl(getTarget()), { passive: true });
+        link.addEventListener('touchstart', () => prefetchUrl(getTarget()), { passive: true });
       });
 
       document.querySelectorAll('.vocab-in-text').forEach(span => {
@@ -5428,7 +5464,16 @@
     let actPermalinkTimers = [];
 
     function copyActivityPermalink() {
-      const cleanUrl = window.location.href.replace(/\/index\.html(?=[?#]|$)/i, '/');
+      const cleanUrl = (function(rawHref) {
+        try {
+          const u = new URL(rawHref);
+          if (u.protocol.startsWith('http')) {
+            const cp = u.pathname.replace(/\/index\.html$/i, '').replace(/\/+$/, '');
+            return u.origin + cp + u.search + u.hash;
+          }
+        } catch (e) {}
+        return rawHref.replace(/\/index\.html(?=[?#]|$)/i, '').replace(/\/+(?=[?#]|$)/, '');
+      })(window.location.href);
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(cleanUrl).catch(() => {});
       }
@@ -5472,6 +5517,8 @@
 
     syncThemeToggleLabel();
 
+  
+  
   // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
     // =========================================================

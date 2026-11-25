@@ -2,8 +2,17 @@
 <html lang="es">
 <head>
   <script>
-    if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
-      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    if (window.location.protocol.startsWith('http')) {
+      var __p = window.location.pathname;
+      var __cleanP = __p.replace(/\/index\.html$/i, '').replace(/\/+$/, '') || '/';
+      var __base = document.createElement('base');
+      __base.href = __cleanP === '/' ? '/' : __cleanP + '/';
+      document.head.appendChild(__base);
+      if (__p !== __cleanP) {
+        try {
+          window.history.replaceState(null, '', __cleanP + window.location.search + window.location.hash);
+        } catch (e) {}
+      }
     }
     try {
       if (localStorage.getItem('site_theme') === 'dark') {
@@ -38,14 +47,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cuándo y cómo usar el subjuntivo: Guía esencial | Actividad de Español B1</title>
   <meta name="description" content="Explicación clara y estructurada del profesor para dominar el modo subjuntivo en español B1: regla de oro, cambio de sujeto con «que», disparadores clave y contrastes con el indicativo.">
-  <link rel="canonical" href="https://language-learning-activities.vercel.app/topics/subjuntivo/">
+  <link rel="canonical" href="https://language-learning-activities.vercel.app/topics/subjuntivo">
+  <link rel="icon" type="image/jpeg" href="icon-subjuntivo.jpg?v=b86767bf">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Language Learning Activities">
   <meta property="og:title" content="Cuándo y cómo usar el subjuntivo: Guía esencial | Actividad de Español B1">
   <meta property="og:description" content="Explicación clara y estructurada del profesor para dominar el modo subjuntivo en español B1: regla de oro, cambio de sujeto con «que», disparadores clave y contrastes con el indicativo.">
-  <meta property="og:url" content="https://language-learning-activities.vercel.app/topics/subjuntivo/">
-  <meta property="og:image" content="https://language-learning-activities.vercel.app/topics/subjuntivo/icon-subjuntivo.jpg">
-  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/topics/subjuntivo/icon-subjuntivo.jpg">
+  <meta property="og:url" content="https://language-learning-activities.vercel.app/topics/subjuntivo">
+  <meta property="og:image" content="https://language-learning-activities.vercel.app/topics/subjuntivo/icon-subjuntivo.jpg?v=b86767bf">
+  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/topics/subjuntivo/icon-subjuntivo.jpg?v=b86767bf">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="512">
   <meta property="og:image:height" content="512">
@@ -54,7 +64,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Cuándo y cómo usar el subjuntivo: Guía esencial | Actividad de Español B1">
   <meta name="twitter:description" content="Explicación clara y estructurada del profesor para dominar el modo subjuntivo en español B1: regla de oro, cambio de sujeto con «que», disparadores clave y contrastes con el indicativo.">
-  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/topics/subjuntivo/icon-subjuntivo.jpg">
+  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/topics/subjuntivo/icon-subjuntivo.jpg?v=b86767bf">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -3380,6 +3390,9 @@
 
 
 
+
+
+
     <!-- Quick Comprehension (20 Rapid-Fire Fact Questions) -->
     <h2 class="section-title" id="seccion-3">
       <a href="#top" class="section-title-link" onclick="scrollToTop(event)" title="Volver al inicio"><span class="section-num">3</span> Comprensión rápida</a>
@@ -4378,6 +4391,9 @@
           </li>
         </ul>
       </div>
+
+
+
 
 
 
@@ -5958,6 +5974,9 @@
     
 
 
+    
+
+
     // =========================================================
     // IMAGE LIGHTBOX (DESKTOP & MOBILE PINCH-ZOOM)
     // =========================================================
@@ -6954,7 +6973,12 @@
         const util = document.querySelector('.utility-bar');
         const sheet = document.querySelector('.handout-sheet');
         if (sheet) {
-          const html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          let html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          if (window.location.protocol.startsWith('http')) {
+            html = html.replace(/(<img\b[^>]*?\bsrc=["'])([^"']+)(["'])/gi, (m, pre, src, post) => {
+              try { return pre + new URL(src, document.baseURI).href + post; } catch (err) { return m; }
+            });
+          }
           sessionStorage.setItem('nav-direction', direction);
           sessionStorage.setItem('nav-outgoing-styles', styles);
           sessionStorage.setItem('nav-outgoing-html', html);
@@ -6967,11 +6991,24 @@
       return false;
     }
 
+    function resolveBackTargetUrl(url) {
+      const raw = url || '../../index.html';
+      if (window.location.protocol.startsWith('http')) {
+        try {
+          const resolved = new URL(raw, document.baseURI);
+          const cleanPath = resolved.pathname.replace(/\/index\.html$/i, '').replace(/\/+$/, '') || '/';
+          return resolved.origin + cleanPath + resolved.search + resolved.hash;
+        } catch (err) {}
+      }
+      return raw;
+    }
+
     function handleBackNavigation(e, url) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
-      const targetUrl = url || '../../index.html';
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return true;
+      if (e) e.preventDefault();
+      const targetUrl = resolveBackTargetUrl(url);
       if (window.innerWidth <= 680) {
-        if (e) e.preventDefault();
         captureOutgoingActivity('backward');
         window.location.href = targetUrl;
         return false;
@@ -7174,9 +7211,10 @@
 
       // Prefetch back navigation on touch/pointer down for instant switching
       document.querySelectorAll('.back-link').forEach(link => {
-        const url = link.getAttribute('href') || '../../index.html';
-        link.addEventListener('pointerdown', () => prefetchUrl(url), { passive: true });
-        link.addEventListener('touchstart', () => prefetchUrl(url), { passive: true });
+        const rawUrl = link.getAttribute('href') || '../../index.html';
+        const getTarget = () => (typeof resolveBackTargetUrl === 'function' ? resolveBackTargetUrl(rawUrl) : rawUrl);
+        link.addEventListener('pointerdown', () => prefetchUrl(getTarget()), { passive: true });
+        link.addEventListener('touchstart', () => prefetchUrl(getTarget()), { passive: true });
       });
 
       // Click on vocabulary words in reading text opens hint modal
@@ -7358,7 +7396,16 @@
     let actPermalinkTimers = [];
 
     function copyActivityPermalink() {
-      const cleanUrl = window.location.href.replace(/\/index\.html(?=[?#]|$)/i, '/');
+      const cleanUrl = (function(rawHref) {
+        try {
+          const u = new URL(rawHref);
+          if (u.protocol.startsWith('http')) {
+            const cp = u.pathname.replace(/\/index\.html$/i, '').replace(/\/+$/, '');
+            return u.origin + cp + u.search + u.hash;
+          }
+        } catch (e) {}
+        return rawHref.replace(/\/index\.html(?=[?#]|$)/i, '').replace(/\/+(?=[?#]|$)/, '');
+      })(window.location.href);
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(cleanUrl).catch(() => {
           const ta = document.createElement('textarea');

@@ -3,6 +3,16 @@
 <head>
   <script>
     (function() {
+      if (window.location.protocol.startsWith('http')) {
+        var p = window.location.pathname;
+        var cleanP = p.replace(/\/index\.html$/i, '') || '/';
+        if (cleanP.length > 1) cleanP = cleanP.replace(/\/+$/, '') || '/';
+        if (p !== cleanP) {
+          try {
+            window.history.replaceState(null, '', cleanP + window.location.search + window.location.hash);
+          } catch (e) {}
+        }
+      }
       try {
         if (localStorage.getItem('site_theme') === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
@@ -37,15 +47,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Language Learning Activities | Worksheets for self-study, tandem meetups, and online language classes</title>
   <meta name="description" content="Worksheets for self-study, tandem meetups, and online language classes">
-  <link rel="canonical" href="https://language-learning-activities.vercel.app/">
+  <link rel="canonical" href="https://language-learning-activities.vercel.app">
   <link rel="icon" type="image/svg+xml" href="images/og-main.svg">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Language Learning Activities">
   <meta property="og:title" content="Language Learning Activities">
   <meta property="og:description" content="Worksheets for self-study, tandem meetups, and online language classes">
-  <meta property="og:url" content="https://language-learning-activities.vercel.app/">
-  <meta property="og:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
-  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
+  <meta property="og:url" content="https://language-learning-activities.vercel.app">
+  <meta property="og:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
+  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="512">
   <meta property="og:image:height" content="512">
@@ -54,7 +64,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Language Learning Activities">
   <meta name="twitter:description" content="Worksheets for self-study, tandem meetups, and online language classes">
-  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg">
+  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -410,6 +420,11 @@
       opacity: 0.72;
     }
 
+    html[data-theme="dark"] .radio-chip:not(.is-selected),
+    :host([data-theme="dark"]) .radio-chip:not(.is-selected) {
+      opacity: 0.54;
+    }
+
     .radio-chip.is-selected {
       opacity: 1;
       z-index: 3;
@@ -471,7 +486,9 @@
     }
 
     @media (hover: hover) {
-      .radio-chip:not(.is-selected):hover {
+      .radio-chip:not(.is-selected):hover,
+      html[data-theme="dark"] .radio-chip:not(.is-selected):hover,
+      :host([data-theme="dark"]) .radio-chip:not(.is-selected):hover {
         opacity: 1;
       }
       .radio-chip:not(.is-selected):hover .radio-chip-label {
@@ -547,12 +564,12 @@
 
     html[data-theme="dark"] .radio-chip.is-selected .radio-chip-label,
     :host([data-theme="dark"]) .radio-chip.is-selected .radio-chip-label {
-      border-color: var(--chip-color);
+      border-color: rgba(255, 253, 249, 0.75);
       box-shadow:
-        0 7px 16px rgba(0, 0, 0, 0.82),
-        0 2px 6px rgba(0, 0, 0, 0.62),
-        0 3px 14px color-mix(in srgb, var(--chip-color) 46%, transparent),
-        inset 0 1px 0 rgba(255, 255, 255, 0.26);
+        0 0 0 1px rgba(255, 253, 249, 0.28),
+        0 0 12px rgba(255, 253, 249, 0.40),
+        0 3px 10px rgba(255, 253, 249, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
     }
 
     .radio-chip.is-selected .lang-count-badge:not(.is-zero) {
@@ -573,9 +590,11 @@
     html[data-theme="dark"] .radio-chip.is-selected .lang-count-badge,
     :host([data-theme="dark"]) .radio-chip.is-selected .lang-count-badge {
       background-color: #1c1b19;
-      border-color: var(--chip-color);
-      color: var(--chip-color);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.72);
+      border-color: rgba(255, 253, 249, 0.70);
+      color: #fffdf9;
+      box-shadow:
+        0 0 8px rgba(255, 253, 249, 0.34),
+        0 2px 6px rgba(0, 0, 0, 0.65);
     }
 
     .radio-chip:focus-visible .radio-chip-label {
@@ -1488,7 +1507,7 @@
     <!-- Activities Catalog List -->
     <section class="activities-list" id="activities-list">
       <!-- Topic: Una passeggiata ad Ancona: Le frasi per imparare parlando -->
-      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="ancona marche mappa simon aurora berlino liceo rinaldini passetto grotte scogliera piazza cavour chiosco corso garibaldi forno edicola piazza del plebiscito piazza del papa porto antico mole vanvitelliana arco di traiano colle guasco duomo san ciriaco gomito tramonto frasi chiarire dubbi imparare conversazione" onclick="openCard('topics/passeggiataancona/index.html', event)">
+      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="ancona marche mappa simon aurora berlino liceo rinaldini passetto grotte scogliera piazza cavour chiosco corso garibaldi forno edicola piazza del plebiscito piazza del papa porto antico mole vanvitelliana arco di traiano colle guasco duomo san ciriaco gomito tramonto frasi chiarire dubbi imparare conversazione" onclick="openCard('topics/passeggiataancona', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/passeggiataancona/icon-passeggiataancona.jpg" alt="Una passeggiata ad Ancona: Le frasi per imparare parlando" width="934" height="934" class="activity-card-icon" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/passeggiataancona/icon-passeggiataancona.jpg', 'Una passeggiata ad Ancona: Le frasi per imparare parlando');" title="Enlarge image" aria-label="Enlarge image">
@@ -1498,7 +1517,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/passeggiataancona/index.html">Una passeggiata ad Ancona: Le frasi per imparare parlando</a>
+            <a href="topics/passeggiataancona">Una passeggiata ad Ancona: Le frasi per imparare parlando</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-it">Italiano B1</span>
@@ -1512,7 +1531,7 @@
       </article>
 
       <!-- Topic: Cinque dubbi di italiano sotto i portici di Bologna -->
-      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="bologna emilia romagna mappa universita alma mater portici unesco due torri archiginnasio sala borsa via zamboni ma pero sapere conoscere perche siccome da per ci ne discorso indiretto grammatica dubbi studente tedesco" onclick="openCard('topics/dubbiabologna/index.html', event)">
+      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="bologna emilia romagna mappa universita alma mater portici unesco due torri archiginnasio sala borsa via zamboni ma pero sapere conoscere perche siccome da per ci ne discorso indiretto grammatica dubbi studente tedesco" onclick="openCard('topics/dubbiabologna', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/dubbiabologna/icon-dubbiabologna.jpg" alt="Cinque dubbi di italiano sotto i portici di Bologna" width="488" height="488" class="activity-card-icon" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/dubbiabologna/icon-dubbiabologna.jpg', 'Cinque dubbi di italiano sotto i portici di Bologna');" title="Enlarge image" aria-label="Enlarge image">
@@ -1522,7 +1541,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/dubbiabologna/index.html">Cinque dubbi di italiano sotto i portici di Bologna</a>
+              <a href="topics/dubbiabologna">Cinque dubbi di italiano sotto i portici di Bologna</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-it">Italiano B1</span>
@@ -1536,7 +1555,7 @@
       </article>
 
       <!-- Topic: Una mattina a Lucca: Come coniugare i verbi italiani -->
-      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="verbi italiani coniugazione regolare are ere ire lucca toscana mura torre guinigi via fillungo piazza anfiteatro scuola lingua insegnante presente imperfetto passato prossimo passato remoto futuro semplice condizionale congiuntivo imperativo gerundio radice desinenza" onclick="openCard('topics/verbiitaliani/index.html', event)">
+      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="verbi italiani coniugazione regolare are ere ire lucca toscana mura torre guinigi via fillungo piazza anfiteatro scuola lingua insegnante presente imperfetto passato prossimo passato remoto futuro semplice condizionale congiuntivo imperativo gerundio radice desinenza" onclick="openCard('topics/verbiitaliani', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/verbiitaliani/icon-verbiitaliani.jpg" alt="Una mattina a Lucca: Come coniugare i verbi italiani" width="519" height="519" class="activity-card-icon" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/verbiitaliani/icon-verbiitaliani.jpg', 'Una mattina a Lucca: Come coniugare i verbi italiani');" title="Enlarge image" aria-label="Enlarge image">
@@ -1546,7 +1565,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/verbiitaliani/index.html">Una mattina a Lucca: Come coniugare i verbi italiani</a>
+              <a href="topics/verbiitaliani">Una mattina a Lucca: Come coniugare i verbi italiani</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-it">Italiano B1</span>
@@ -1560,7 +1579,7 @@
       </article>
 
       <!-- Topic: Le venti regioni d'Italia -->
-      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="regioni italia geografia storia dialetti cultura nord centro sud isole milano roma firenze napoli venezia palermo torino bologna stereotipi carattere" onclick="openCard('topics/regioniditalia/index.html', event)">
+      <article class="activity-card has-icon" data-lang="it italian italiano" data-level="B1" data-topic="regioni italia geografia storia dialetti cultura nord centro sud isole milano roma firenze napoli venezia palermo torino bologna stereotipi carattere" onclick="openCard('topics/regioniditalia', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/regioniditalia/icon-regioniditalia.jpg" alt="Le venti regioni d'Italia: Storia, dialetti e carattere" width="400" height="400" class="activity-card-icon" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/regioniditalia/icon-regioniditalia.jpg', 'Le venti regioni d\'Italia: Storia, dialetti e carattere');" title="Enlarge image" aria-label="Enlarge image">
@@ -1570,7 +1589,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/regioniditalia/index.html">Le venti regioni d'Italia: Storia, dialetti e carattere</a>
+              <a href="topics/regioniditalia">Le venti regioni d'Italia: Storia, dialetti e carattere</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-it">Italiano B1</span>
@@ -1584,7 +1603,7 @@
       </article>
 
       <!-- Topic: El imperativo en español -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="imperativo verbos conjugacion gramatica profesor universidad clase afirmativo negativo pronombres tu usted nosotros vosotros ustedes irregulares trucos consejos instrucciones" onclick="openCard('topics/imperativo/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="imperativo verbos conjugacion gramatica profesor universidad clase afirmativo negativo pronombres tu usted nosotros vosotros ustedes irregulares trucos consejos instrucciones" onclick="openCard('topics/imperativo', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/imperativo/icon-imperativo.jpg" alt="El imperativo en español: Formación, usos y trucos de conjugación" width="300" height="300" class="activity-card-icon" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/imperativo/icon-imperativo.jpg', 'El imperativo en español: Formación, usos y trucos de conjugación');" title="Enlarge image" aria-label="Enlarge image">
@@ -1594,7 +1613,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/imperativo/index.html">El imperativo en español: Formación, usos y trucos de conjugación</a>
+              <a href="topics/imperativo">El imperativo en español: Formación, usos y trucos de conjugación</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-es">Español B1</span>
@@ -1608,7 +1627,7 @@
       </article>
 
       <!-- Topic: Presente e imperfecto de subjuntivo -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="presente imperfecto subjuntivo gramatica profesor universidad clase correlacion tiempos condicionales si hipotetico cortesia quisiera pudiera como si conversacion" onclick="openCard('topics/presenteeimperfecto/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="presente imperfecto subjuntivo gramatica profesor universidad clase correlacion tiempos condicionales si hipotetico cortesia quisiera pudiera como si conversacion" onclick="openCard('topics/presenteeimperfecto', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/presenteeimperfecto/icon-presenteeimperfecto.jpg" alt="Presente e imperfecto de subjuntivo: Diferencias y usos cotidianos" width="300" height="300" class="activity-card-icon" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/presenteeimperfecto/icon-presenteeimperfecto.jpg', 'Presente e imperfecto de subjuntivo: Diferencias y usos cotidianos');" title="Enlarge image" aria-label="Enlarge image">
@@ -1618,7 +1637,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/presenteeimperfecto/index.html">Presente e imperfecto de subjuntivo: Diferencias y usos cotidianos</a>
+            <a href="topics/presenteeimperfecto">Presente e imperfecto de subjuntivo: Diferencias y usos cotidianos</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -1632,7 +1651,7 @@
       </article>
 
       <!-- Topic: Comprendre « Notre Salut » d'Emmanuel Marre -->
-      <article class="activity-card has-icon" data-lang="fr french francés" data-level="B2" data-topic="notre salut emmanuel marre cinema film vichy swann arlaud collaboration bureaucratie analyse universite professeur" onclick="openCard('topics/notresalut/index.html', event)">
+      <article class="activity-card has-icon" data-lang="fr french francés" data-level="B2" data-topic="notre salut emmanuel marre cinema film vichy swann arlaud collaboration bureaucratie analyse universite professeur" onclick="openCard('topics/notresalut', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/notresalut/icon-notresalut.jpg" alt="Comprendre «&nbsp;Notre Salut&nbsp;» d'Emmanuel Marre" width="247" height="247" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/notresalut/icon-notresalut.jpg', 'Comprendre «&nbsp;Notre Salut&nbsp;» d\'Emmanuel Marre');" title="Enlarge image" aria-label="Enlarge image">
@@ -1642,7 +1661,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/notresalut/index.html">Comprendre « Notre Salut » d'Emmanuel Marre</a>
+              <a href="topics/notresalut">Comprendre « Notre Salut » d'Emmanuel Marre</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-fr">Français B2</span>
@@ -1656,7 +1675,7 @@
       </article>
 
       <!-- Topic: Seis verbos con ll -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="verbos ll llegar llevar llamar llenar llorar llover clase profesor universidad vocabulario gramatica" onclick="openCard('topics/verbosconll/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="verbos ll llegar llevar llamar llenar llorar llover clase profesor universidad vocabulario gramatica" onclick="openCard('topics/verbosconll', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/verbosconll/icon-verbosconll.jpg" alt="Seis verbos con «ll»: llegar, llevar, llamar, llenar, llorar y llover" width="366" height="366" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/verbosconll/icon-verbosconll.jpg', 'Seis verbos con «ll»: llegar, llevar, llamar, llenar, llorar y llover');" title="Enlarge image" aria-label="Enlarge image">
@@ -1666,7 +1685,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/verbosconll/index.html">Seis verbos con «ll»: llegar, llevar, llamar, llenar, llorar y llover</a>
+            <a href="topics/verbosconll">Seis verbos con «ll»: llegar, llevar, llamar, llenar, llorar y llover</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -1680,7 +1699,7 @@
       </article>
 
       <!-- Topic: Ser y estar -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="ser estar verbos gramatica diferencias reglas profesor estudiante contrastes espana latinoamerica adjetivos ubicacion identidad estado" onclick="openCard('topics/seryestar/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="ser estar verbos gramatica diferencias reglas profesor estudiante contrastes espana latinoamerica adjetivos ubicacion identidad estado" onclick="openCard('topics/seryestar', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/seryestar/icon-seryestar.jpg" alt="Ser y estar: Guía práctica y contrastes esenciales" width="406" height="406" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/seryestar/icon-seryestar.jpg', 'Ser y estar: Guía práctica y contrastes esenciales');" title="Enlarge image" aria-label="Enlarge image">
@@ -1690,7 +1709,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/seryestar/index.html">Ser y estar: Guía práctica y contrastes esenciales</a>
+            <a href="topics/seryestar">Ser y estar: Guía práctica y contrastes esenciales</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -1703,7 +1722,7 @@
       </article>
 
       <!-- Topic: Cinco Aeropuertos de Sudamérica -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="aeropuertos martin bogota lima santiago buenos aires quito tech software vuelos conexiones aduana pasaporte equipaje" onclick="openCard('topics/aeropuertos/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="aeropuertos martin bogota lima santiago buenos aires quito tech software vuelos conexiones aduana pasaporte equipaje" onclick="openCard('topics/aeropuertos', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/aeropuertos/icon-aeropuertos.jpg" alt="Cinco Aeropuertos de Sudamérica: La Gira de Martín" width="401" height="401" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/aeropuertos/icon-aeropuertos.jpg', 'Cinco Aeropuertos de Sudamérica: La Gira de Martín');" title="Enlarge image" aria-label="Enlarge image">
@@ -1713,7 +1732,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/aeropuertos/index.html">Cinco Aeropuertos de Sudamérica: La Gira de Martín</a>
+              <a href="topics/aeropuertos">Cinco Aeropuertos de Sudamérica: La Gira de Martín</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-es">Español B1</span>
@@ -1726,7 +1745,7 @@
       </article>
 
       <!-- Topic: Quedar y quedarse -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="quedar quedarse verbos diferencias gramatica trucos ancla citas encuentros acordar tiempo ropa angloparlantes explicacion reglas matices" onclick="openCard('topics/quedaryquedarse/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="quedar quedarse verbos diferencias gramatica trucos ancla citas encuentros acordar tiempo ropa angloparlantes explicacion reglas matices" onclick="openCard('topics/quedaryquedarse', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/quedaryquedarse/icon-quedaryquedarse.jpg" alt="Quedar y quedarse: Guía esencial de uso y matices" width="512" height="512" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/quedaryquedarse/icon-quedaryquedarse.jpg', 'Quedar y quedarse: Guía esencial de uso y matices');" title="Enlarge image" aria-label="Enlarge image">
@@ -1736,7 +1755,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/quedaryquedarse/index.html">Quedar y quedarse: Guía esencial de uso y matices</a>
+            <a href="topics/quedaryquedarse">Quedar y quedarse: Guía esencial de uso y matices</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -1750,7 +1769,7 @@
       </article>
 
       <!-- Topic: La historia del desarrollo web -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="historia desarrollo web programacion programador tecnologia internet html css javascript php ajax jquery git github node react vue angular typescript ia inteligencia artificial computadoras" onclick="openCard('topics/historiaweb/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="historia desarrollo web programacion programador tecnologia internet html css javascript php ajax jquery git github node react vue angular typescript ia inteligencia artificial computadoras" onclick="openCard('topics/historiaweb', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/historiaweb/icon-historiaweb.jpg" alt="La historia del desarrollo web: 1996-2026" width="609" height="609" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/historiaweb/icon-historiaweb.jpg', 'La historia del desarrollo web: 1996-2026');" title="Enlarge image" aria-label="Enlarge image">
@@ -1760,7 +1779,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/historiaweb/index.html">La historia del desarrollo web: 1996-2026</a>
+              <a href="topics/historiaweb">La historia del desarrollo web: 1996-2026</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-es">Español B1</span>
@@ -1774,7 +1793,7 @@
       </article>
 
       <!-- Topic: Guía esencial del subjuntivo -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="subjuntivo modo subjuntivo gramatica guia profesor explicacion deseos dudas emociones reglas ejemplos contrastes" onclick="openCard('topics/subjuntivo/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="subjuntivo modo subjuntivo gramatica guia profesor explicacion deseos dudas emociones reglas ejemplos contrastes" onclick="openCard('topics/subjuntivo', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/subjuntivo/icon-subjuntivo.jpg" alt="Cuándo y cómo usar el subjuntivo: Guía esencial" width="512" height="512" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/subjuntivo/icon-subjuntivo.jpg', 'Cuándo y cómo usar el subjuntivo: Guía esencial');" title="Enlarge image" aria-label="Enlarge image">
@@ -1784,7 +1803,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/subjuntivo/index.html">Cuándo y cómo usar el subjuntivo: Guía esencial</a>
+              <a href="topics/subjuntivo">Cuándo y cómo usar el subjuntivo: Guía esencial</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-es">Español B1</span>
@@ -1798,7 +1817,7 @@
       </article>
 
       <!-- Topic 5: Un Café Entre Amigos en Ecuador -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="amigos ecuador zaruma ibarra puyo tigrillo tonga manabita ceviche chochos yamor rodeo montuvio bomba del chota cafeteria universidad" onclick="openCard('topics/amigosecuador/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="amigos ecuador zaruma ibarra puyo tigrillo tonga manabita ceviche chochos yamor rodeo montuvio bomba del chota cafeteria universidad" onclick="openCard('topics/amigosecuador', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/amigosecuador/icon-amigosecuador.jpg" alt="Un Café Entre Amigos: Sabores y Tradiciones de Ecuador" width="512" height="512" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/amigosecuador/icon-amigosecuador.jpg', 'Un Café Entre Amigos: Sabores y Tradiciones de Ecuador');" title="Enlarge image" aria-label="Enlarge image">
@@ -1808,7 +1827,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
             <h2 class="activity-title">
-              <a href="topics/amigosecuador/index.html">Un Café Entre Amigos: Sabores y Tradiciones de Ecuador</a>
+              <a href="topics/amigosecuador">Un Café Entre Amigos: Sabores y Tradiciones de Ecuador</a>
             </h2>
             <div class="activity-badges">
               <span class="badge-lang lang-es">Español B1</span>
@@ -1822,7 +1841,7 @@
       </article>
 
       <!-- Topic 4: Volcanes de Ecuador -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="volcanes ecuador andes cotopaxi chimborazo pichincha senderismo hiking montana jerga colombia jerga ecuador tungurahua quilotoa banos pastaza riobamba" onclick="openCard('topics/volcanesecuador/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="volcanes ecuador andes cotopaxi chimborazo pichincha senderismo hiking montana jerga colombia jerga ecuador tungurahua quilotoa banos pastaza riobamba" onclick="openCard('topics/volcanesecuador', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/volcanesecuador/icon-volcanesecuador.jpg" alt="Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina" width="780" height="780" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/volcanesecuador/icon-volcanesecuador.jpg', 'Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina');" title="Enlarge image" aria-label="Enlarge image">
@@ -1832,7 +1851,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/volcanesecuador/index.html">Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina</a>
+            <a href="topics/volcanesecuador">Volcanes de Ecuador: Rutas, Cumbres y Jerga Andina</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -1846,7 +1865,7 @@
       </article>
 
       <!-- Topic 3: Por y Para en Colombia -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="por y para gramatica cafe dudas reglas conversacion preposiciones" onclick="openCard('topics/porypara/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="por y para gramatica cafe dudas reglas conversacion preposiciones" onclick="openCard('topics/porypara', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/porypara/icon-porypara.jpg" alt="¿Por o para? El café de las dudas" width="743" height="743" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/porypara/icon-porypara.jpg', '¿Por o para? El café de las dudas');" title="Enlarge image" aria-label="Enlarge image">
@@ -1856,7 +1875,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/porypara/index.html">¿Por o para? El café de las dudas</a>
+            <a href="topics/porypara">¿Por o para? El café de las dudas</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -1870,7 +1889,7 @@
       </article>
 
       <!-- Topic 2: Colombia -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="colombia columbia eje cafetero cartagena medellin bogota cumbia vallenato" onclick="openCard('topics/colombia/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="colombia columbia eje cafetero cartagena medellin bogota cumbia vallenato" onclick="openCard('topics/colombia', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/colombia/icon-colombia.jpg" alt="Colombia: Tierra de Café, Ritmos y Contrastes" width="473" height="473" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/colombia/icon-colombia.jpg', 'Colombia: Tierra de Café, Ritmos y Contrastes');" title="Enlarge image" aria-label="Enlarge image">
@@ -1880,7 +1899,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/colombia/index.html">Colombia: Tierra de Café, Ritmos y Contrastes</a>
+            <a href="topics/colombia">Colombia: Tierra de Café, Ritmos y Contrastes</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -1894,7 +1913,7 @@
       </article>
 
       <!-- Topic 1: Regions of Ecuador -->
-      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos" onclick="openCard('topics/regionsofecuador/index.html', event)">
+      <article class="activity-card has-icon" data-lang="es spanish español" data-level="B1" data-topic="regions of ecuador cuatro regiones costa sierra oriente galapagos" onclick="openCard('topics/regionsofecuador', event)">
         <div class="activity-card-icon-wrap">
           <img src="topics/regionsofecuador/icon-regionsofecuador.jpg" alt="Las Cuatro Regiones de Ecuador" width="576" height="576" class="activity-card-icon" loading="lazy" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
           <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('topics/regionsofecuador/icon-regionsofecuador.jpg', 'Las Cuatro Regiones de Ecuador');" title="Enlarge image" aria-label="Enlarge image">
@@ -1904,7 +1923,7 @@
         <div class="activity-card-body">
           <div class="activity-card-header">
           <h2 class="activity-title">
-            <a href="topics/regionsofecuador/index.html">Las Cuatro Regiones de Ecuador</a>
+            <a href="topics/regionsofecuador">Las Cuatro Regiones de Ecuador</a>
           </h2>
           <div class="activity-badges">
             <span class="badge-lang lang-es">Español B1</span>
@@ -2097,12 +2116,24 @@
       return cachedPageStyles;
     }
 
+    function resolveCatalogTargetUrl(url) {
+      if (!url) return url;
+      if (window.location.protocol.startsWith('http')) {
+        return url.replace(/\/index\.html$/i, '').replace(/\/+$/, '');
+      }
+      if (!/\.html?(?:[?#]|$)/i.test(url)) {
+        return url.replace(/\/+$/, '') + '/index.html';
+      }
+      return url;
+    }
+
     function prefetchUrl(url) {
-      if (!url) return;
-      if (!document.querySelector(`link[rel="prefetch"][href="${url}"]`)) {
+      const resolved = resolveCatalogTargetUrl(url);
+      if (!resolved) return;
+      if (!document.querySelector(`link[rel="prefetch"][href="${resolved}"]`)) {
         const link = document.createElement('link');
         link.rel = 'prefetch';
-        link.href = url;
+        link.href = resolved;
         document.head.appendChild(link);
       }
     }
@@ -2153,9 +2184,15 @@
         const styles = getPageStyles();
         const sheet = document.querySelector('.handout-sheet');
         if (sheet) {
+          let outHtml = sheet.outerHTML;
+          if (window.location.protocol.startsWith('http')) {
+            outHtml = outHtml.replace(/(<img\b[^>]*?\bsrc=["'])([^"']+)(["'])/gi, (m, pre, src, post) => {
+              try { return pre + new URL(src, document.baseURI).href + post; } catch (err) { return m; }
+            });
+          }
           sessionStorage.setItem('nav-direction', direction);
           sessionStorage.setItem('nav-outgoing-styles', styles);
-          sessionStorage.setItem('nav-outgoing-html', sheet.outerHTML);
+          sessionStorage.setItem('nav-outgoing-html', outHtml);
           sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
           sessionStorage.setItem('nav-outgoing-padding', '36px 8px 12px 8px');
           sessionStorage.setItem('nav-outgoing-theme', document.documentElement.getAttribute('data-theme') || 'light');
@@ -2167,13 +2204,15 @@
 
     function openCard(url, event) {
       if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+      if (event && (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button === 1)) return;
       if (event && event.target && event.target.closest('a')) {
         event.preventDefault();
       }
+      const targetUrl = resolveCatalogTargetUrl(url);
       
       if (window.innerWidth <= 680) {
         if (captureOutgoingPage('forward')) {
-          window.location.href = url;
+          window.location.href = targetUrl;
           return;
         }
         const sheet = document.querySelector('.handout-sheet');
@@ -2181,12 +2220,12 @@
           sheet.classList.remove('page-slide-in-left');
           sheet.classList.add('page-slide-out-left');
           setTimeout(() => {
-            window.location.href = url;
+            window.location.href = targetUrl;
           }, 280);
           return;
         }
       }
-      window.location.href = url;
+      window.location.href = targetUrl;
     }
 
     // Simultaneously slide main menu in from the left as outgoing activity page slides out to the right
@@ -2322,8 +2361,19 @@
       document.body.removeChild(ta);
     }
 
+    function formatCleanPermalink(rawHref) {
+      try {
+        const u = new URL(rawHref);
+        if (u.protocol.startsWith('http')) {
+          const cleanPath = u.pathname.replace(/\/index\.html$/i, '').replace(/\/+$/, '');
+          return u.origin + cleanPath + u.search + u.hash;
+        }
+      } catch (e) {}
+      return rawHref.replace(/\/index\.html(?=[?#]|$)/i, '').replace(/\/+(?=[?#]|$)/, '');
+    }
+
     function copyFilterPermalink() {
-      const url = window.location.href.replace(/\/index\.html(?=[?#]|$)/i, '/');
+      const url = formatCleanPermalink(window.location.href);
       copyTextToClipboard(url);
 
       clearPermalinkTimers();

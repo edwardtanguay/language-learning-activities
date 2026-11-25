@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
+const SITE_ORIGIN = 'https://language-learning-activities.vercel.app';
 const ROOT_DIR = path.resolve(__dirname, '..');
 const TOPICS_DIR = path.join(ROOT_DIR, 'topics');
 const IMPORT_IMAGES_DIR = path.join(ROOT_DIR, 'import-images');
@@ -298,6 +300,15 @@ function cleanImageSlug(rawName) {
   return normalize(rawName).replace(/[_\s()]+/g, '');
 }
 
+function getFileShortHash(filePath) {
+  try {
+    const buf = fs.readFileSync(filePath);
+    return crypto.createHash('sha1').update(buf).digest('hex').slice(0, 8);
+  } catch (e) {
+    return '';
+  }
+}
+
 function getImageDimensions(filePath) {
   try {
     const buf = fs.readFileSync(filePath);
@@ -440,7 +451,7 @@ function getCatalogTopicOrder() {
   const rootIndexPath = path.join(ROOT_DIR, 'index.html');
   if (!fs.existsSync(rootIndexPath)) return [];
   const html = fs.readFileSync(rootIndexPath, 'utf8');
-  const matches = Array.from(html.matchAll(/topics\/([a-zA-Z0-9]+)\/index\.html/g), m => m[1].toLowerCase());
+  const matches = Array.from(html.matchAll(/topics\/([a-zA-Z0-9]+)(?:\/index\.html|\/)?(?=['"])/g), m => m[1].toLowerCase());
   return [...new Set(matches)];
 }
 
@@ -2394,10 +2405,19 @@ ${thumbsHtml}
 function ensureLightboxAssets(html) {
   let out = html;
 
-  // 1. Ensure <head> script contains the early redirect script, dark theme initialization, and image skeleton/fade helpers
+  // 1. Ensure <head> script sets <base> for slashless URLs, strips trailing slash/index.html, initializes dark theme, and defines image helpers
   const redirectScript = `<script>
-    if (window.location.protocol.startsWith('http') && !window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
-      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    if (window.location.protocol.startsWith('http')) {
+      var __p = window.location.pathname;
+      var __cleanP = __p.replace(/\\/index\\.html$/i, '').replace(/\\/+$/, '') || '/';
+      var __base = document.createElement('base');
+      __base.href = __cleanP === '/' ? '/' : __cleanP + '/';
+      document.head.appendChild(__base);
+      if (__p !== __cleanP) {
+        try {
+          window.history.replaceState(null, '', __cleanP + window.location.search + window.location.hash);
+        } catch (e) {}
+      }
     }
     try {
       if (localStorage.getItem('site_theme') === 'dark') {
@@ -2557,6 +2577,61 @@ function updateAllSectionHeadings(html, nums) {
 
     return headingHtml;
   });
+}
+
+function syncActivitySeoAndFavicon(html, activity) {
+  let out = html;
+  const canonicalUrl = `${SITE_ORIGIN}/topics/${activity.folderName}`;
+
+  let ogImageUrl;
+  let mimeType = 'image/jpeg';
+  let dims = { width: 512, height: 512 };
+  let faviconHref = '../../images/og-main.svg';
+  let faviconType = 'image/svg+xml';
+
+  if (activity.iconFile) {
+    const iconDiskPath = path.join(activity.folderPath, activity.iconFile);
+    dims = getImageDimensions(iconDiskPath);
+    const hash = getFileShortHash(iconDiskPath);
+    const ver = hash ? `?v=${hash}` : '';
+    const ext = path.extname(activity.iconFile).toLowerCase();
+    mimeType = ext === '.png' ? 'image/png' : ext === '.gif' ? 'image/gif' : 'image/jpeg';
+    ogImageUrl = `${SITE_ORIGIN}/topics/${activity.folderName}/${activity.iconFile}${ver}`;
+    faviconHref = `${activity.iconFile}${ver}`;
+    faviconType = mimeType;
+  } else {
+    const ogMainPath = path.join(ROOT_DIR, 'images', 'og-main.jpg');
+    if (fs.existsSync(ogMainPath)) {
+      dims = getImageDimensions(ogMainPath);
+      const hash = getFileShortHash(ogMainPath);
+      const ver = hash ? `?v=${hash}` : '';
+      ogImageUrl = `${SITE_ORIGIN}/images/og-main.jpg${ver}`;
+    } else {
+      ogImageUrl = `${SITE_ORIGIN}/images/og-main.jpg`;
+    }
+  }
+
+  out = out.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
+
+  if (/<link\s+rel=["']icon["'][^>]*>/i.test(out)) {
+    out = out.replace(/<link\s+rel=["']icon["'][^>]*>/i, `<link rel="icon" type="${faviconType}" href="${faviconHref}">`);
+  } else {
+    out = out.replace(
+      /(<link\s+rel=["']canonical["'][^>]*>)/i,
+      `$1\n  <link rel="icon" type="${faviconType}" href="${faviconHref}">`
+    );
+  }
+
+  out = out.replace(/<meta\s+property=["']og:url["'][^>]*>/i, `<meta property="og:url" content="${canonicalUrl}">`);
+  out = out.replace(/<meta\s+property=["']og:image["'][^>]*>/i, `<meta property="og:image" content="${ogImageUrl}">`);
+  out = out.replace(/<meta\s+property=["']og:image:secure_url["'][^>]*>/i, `<meta property="og:image:secure_url" content="${ogImageUrl}">`);
+  out = out.replace(/<meta\s+property=["']og:image:type["'][^>]*>/i, `<meta property="og:image:type" content="${mimeType}">`);
+  out = out.replace(/<meta\s+property=["']og:image:width["'][^>]*>/i, `<meta property="og:image:width" content="${dims.width}">`);
+  out = out.replace(/<meta\s+property=["']og:image:height["'][^>]*>/i, `<meta property="og:image:height" content="${dims.height}">`);
+  out = out.replace(/<meta\s+name=["']twitter:card["'][^>]*>/i, `<meta name="twitter:card" content="summary">`);
+  out = out.replace(/<meta\s+name=["']twitter:image["'][^>]*>/i, `<meta name="twitter:image" content="${ogImageUrl}">`);
+
+  return out;
 }
 
 function normalizePunctuationSpacesInHtml(html) {
@@ -2864,10 +2939,87 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
     `const lastHref = stickyLinks[stickyLinks.length - 1]?.getAttribute('href');\n        if (href === '#seccion-1' || (lastHref && href === lastHref))`
   );
 
-  // 9. Ensure handleBackNavigation navigates to main menu on desktop as well
+  // 9. Ensure captureOutgoingActivity resolves relative <img> URLs, handleBackNavigation uses clean slashless URLs on http(s), and copyActivityPermalink strips trailing slashes
   html = html.replace(
-    /function handleBackNavigation\(e,\s*url\)\s*\{[\s\S]*?\n    \}/,
-    `function handleBackNavigation(e, url) {\n      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;\n      const targetUrl = url || '../../index.html';\n      if (window.innerWidth <= 680) {\n        if (e) e.preventDefault();\n        captureOutgoingActivity('backward');\n        window.location.href = targetUrl;\n        return false;\n      }\n      window.location.href = targetUrl;\n      return false;\n    }`
+    /function captureOutgoingActivity\(direction\)\s*\{[\s\S]*?\r?\n    \}/,
+    `function captureOutgoingActivity(direction) {
+      try {
+        const styles = getPageStyles();
+        const util = document.querySelector('.utility-bar');
+        const sheet = document.querySelector('.handout-sheet');
+        if (sheet) {
+          let html = (util ? util.outerHTML : '') + sheet.outerHTML;
+          if (window.location.protocol.startsWith('http')) {
+            html = html.replace(/(<img\\b[^>]*?\\bsrc=["'])([^"']+)(["'])/gi, (m, pre, src, post) => {
+              try { return pre + new URL(src, document.baseURI).href + post; } catch (err) { return m; }
+            });
+          }
+          sessionStorage.setItem('nav-direction', direction);
+          sessionStorage.setItem('nav-outgoing-styles', styles);
+          sessionStorage.setItem('nav-outgoing-html', html);
+          sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
+          sessionStorage.setItem('nav-outgoing-padding', '0 8px 12px 8px');
+          sessionStorage.setItem('nav-outgoing-theme', document.documentElement.getAttribute('data-theme') || 'light');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }`
+  );
+
+  html = html.replace(/(?:function resolveBackTargetUrl\(url\)\s*\{[\s\S]*?\r?\n    \}\s*)+/g, '');
+  html = html.replace(
+    /function handleBackNavigation\(e,\s*url\)\s*\{[\s\S]*?\r?\n    \}/,
+    `function resolveBackTargetUrl(url) {
+      const raw = url || '../../index.html';
+      if (window.location.protocol.startsWith('http')) {
+        try {
+          const resolved = new URL(raw, document.baseURI);
+          const cleanPath = resolved.pathname.replace(/\\/index\\.html$/i, '').replace(/\\/+$/, '') || '/';
+          return resolved.origin + cleanPath + resolved.search + resolved.hash;
+        } catch (err) {}
+      }
+      return raw;
+    }
+
+    function handleBackNavigation(e, url) {
+      if (window.getSelection && window.getSelection().toString().trim().length > 0) return true;
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return true;
+      if (e) e.preventDefault();
+      const targetUrl = resolveBackTargetUrl(url);
+      if (window.innerWidth <= 680) {
+        captureOutgoingActivity('backward');
+        window.location.href = targetUrl;
+        return false;
+      }
+      window.location.href = targetUrl;
+      return false;
+    }`
+  );
+
+  html = html.replace(
+    /document\.querySelectorAll\('\.back-link'\)\.forEach\(link => \{[\s\S]*?\r?\n      \}\);/,
+    `document.querySelectorAll('.back-link').forEach(link => {
+        const rawUrl = link.getAttribute('href') || '../../index.html';
+        const getTarget = () => (typeof resolveBackTargetUrl === 'function' ? resolveBackTargetUrl(rawUrl) : rawUrl);
+        link.addEventListener('pointerdown', () => prefetchUrl(getTarget()), { passive: true });
+        link.addEventListener('touchstart', () => prefetchUrl(getTarget()), { passive: true });
+      });`
+  );
+
+  html = html.replace(
+    /function copyActivityPermalink\(\)\s*\{\s*const cleanUrl = [\s\S]*?(?=\s*if \(navigator\.clipboard)/,
+    `function copyActivityPermalink() {
+      const cleanUrl = (function(rawHref) {
+        try {
+          const u = new URL(rawHref);
+          if (u.protocol.startsWith('http')) {
+            const cp = u.pathname.replace(/\\/index\\.html$/i, '').replace(/\\/+$/, '');
+            return u.origin + cp + u.search + u.hash;
+          }
+        } catch (e) {}
+        return rawHref.replace(/\\/index\\.html(?=[?#]|$)/i, '').replace(/\\/+(?=[?#]|$)/, '');
+      })(window.location.href);`
   );
 
   // 10. Remove all top instructions boxes and per-section instruction boxes
@@ -2948,6 +3100,7 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
   }
   html = html.replace(/(?:[ \t]*if \(typeof initImageLabelsGame === 'function'\) initImageLabelsGame\(\);[\r\n]*){2,}/g, "      if (typeof initImageLabelsGame === 'function') initImageLabelsGame();\n");
 
+  html = syncActivitySeoAndFavicon(html, activity);
   html = normalizePunctuationSpacesInHtml(html);
 
   if (html !== originalHtml) {
@@ -2965,10 +3118,26 @@ function updateCatalogHtmlForIcons(activities) {
   const originalHtml = fs.readFileSync(rootIndexPath, 'utf8');
   let html = originalHtml;
 
+  // Sync root index.html canonical, og:url, and versioned og-main.jpg
+  html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${SITE_ORIGIN}">`);
+  html = html.replace(/<meta\s+property=["']og:url["'][^>]*>/i, `<meta property="og:url" content="${SITE_ORIGIN}">`);
+  const ogMainPath = path.join(ROOT_DIR, 'images', 'og-main.jpg');
+  if (fs.existsSync(ogMainPath)) {
+    const dims = getImageDimensions(ogMainPath);
+    const hash = getFileShortHash(ogMainPath);
+    const ver = hash ? `?v=${hash}` : '';
+    const ogMainUrl = `${SITE_ORIGIN}/images/og-main.jpg${ver}`;
+    html = html.replace(/<meta\s+property=["']og:image["'][^>]*>/i, `<meta property="og:image" content="${ogMainUrl}">`);
+    html = html.replace(/<meta\s+property=["']og:image:secure_url["'][^>]*>/i, `<meta property="og:image:secure_url" content="${ogMainUrl}">`);
+    html = html.replace(/<meta\s+property=["']og:image:width["'][^>]*>/i, `<meta property="og:image:width" content="${dims.width}">`);
+    html = html.replace(/<meta\s+property=["']og:image:height["'][^>]*>/i, `<meta property="og:image:height" content="${dims.height}">`);
+    html = html.replace(/<meta\s+name=["']twitter:image["'][^>]*>/i, `<meta name="twitter:image" content="${ogMainUrl}">`);
+  }
+
   let cardIdx = 0;
   for (const activity of activities) {
     const cardRegex = new RegExp(
-      `(<article class="activity-card(?:\\s+has-icon)?"[^>]*onclick="openCard\\('topics\\/${activity.folderName}\\/index\\.html'[^>]*>)([\\s\\S]*?)(<\\/article>)`,
+      `(<article class="activity-card(?:\\s+has-icon)?"[^>]*onclick="openCard\\('topics\\/${activity.folderName}(?:\\/index\\.html|\\/)?'[^>]*>)([\\s\\S]*?)(<\\/article>)`,
       'i'
     );
     const cardMatch = html.match(cardRegex);
@@ -2979,12 +3148,22 @@ function updateCatalogHtmlForIcons(activities) {
     let innerContent = cardMatch[2];
 
     // Strip any existing .activity-card-icon-wrap
+    openingTag = openingTag.replace(
+      new RegExp(`openCard\\('topics\\/${activity.folderName}(?:\\/index\\.html|\\/)?'`, 'i'),
+      `openCard('topics/${activity.folderName}'`
+    );
+
     let cleanBody = innerContent.replace(/\s*<div class="activity-card-icon-wrap"[^>]*>[\s\S]*?<\/div>/g, '').trim();
 
     // If wrapped in <div class="activity-card-body"> ... </div>, unwrap it cleanly
     if (cleanBody.startsWith('<div class="activity-card-body">') && cleanBody.endsWith('</div>')) {
       cleanBody = cleanBody.slice('<div class="activity-card-body">'.length, -'</div>'.length).trim();
     }
+
+    cleanBody = cleanBody.replace(
+      new RegExp(`href="topics\\/${activity.folderName}(?:\\/index\\.html|\\/)?"`, 'gi'),
+      `href="topics/${activity.folderName}"`
+    );
 
     if (activity.iconFile) {
       if (!openingTag.includes('has-icon')) {
