@@ -2593,14 +2593,14 @@ function updateActivityHtml(activity, rawQuestions, imageFiles) {
 
   // 1. Topic Header Icon synchronization & Clickable Header Navigation
   if (activity.iconFile) {
-    if (!html.includes('.topic-header-icon-wrap')) {
-      const imgPos = html.search(/\/\* =========================================================\s*(?:SECTION \d+:\s*)?IMAGES & FULLSCREEN LIGHTBOX/);
-      if (imgPos !== -1) {
-        html = html.slice(0, imgPos) + TOPIC_HEADER_ICON_CSS + '\n    ' + html.slice(imgPos);
+    if (!/\.topic-header-icon-wrap\s*\{/.test(html)) {
+      const darkPos = html.search(/\/\* =========================================================\s*SITE-WIDE DARK MODE/);
+      if (darkPos !== -1) {
+        html = html.slice(0, darkPos) + TOPIC_HEADER_ICON_CSS.trim() + '\n\n    ' + html.slice(darkPos);
       } else {
         html = html.replace('</style>', `${TOPIC_HEADER_ICON_CSS}  </style>`);
       }
-    } else {
+    } else if (/\/\* Topic Header Icon/.test(html)) {
       html = html.replace(
         /\/\* Topic Header Icon[\s\S]*?(?=\s*<\/style>|\s*\/\* ===|\s*\/\* Simple Audio Player)/,
         TOPIC_HEADER_ICON_CSS.trim()
