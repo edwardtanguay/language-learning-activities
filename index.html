@@ -212,6 +212,12 @@
       display: block;
     }
 
+    @media (min-width: 681px) {
+      .handout-sheet {
+        position: static;
+      }
+    }
+
     @media (min-width: 681px) and (max-width: 1040px) {
       body {
         padding-top: 48px;
@@ -500,6 +506,13 @@
       :host([data-theme="dark"]) .radio-chip:not(.is-selected):hover .radio-chip-label {
         box-shadow: 0 2px 7px rgba(0, 0, 0, 0.42);
       }
+      .radio-chip.is-selected:hover .radio-chip-label {
+        transform: translateY(-2.5px);
+        filter: brightness(1.07);
+      }
+      .radio-chip.is-selected:hover .lang-count-badge:not(.is-zero) {
+        transform: translateY(-2.5px);
+      }
     }
 
     .lang-label-short {
@@ -549,7 +562,7 @@
       transform: translateY(-0.5px);
     }
 
-    /* Unselected chips stay slightly dimmed (~0.72) and flat so selected chips stand out unmistakably */
+    /* Active chips (all chips when filter is 'all', or the isolated language chip) render bright and lifted; unselected chips stay dimmed and flat */
     .radio-chip.is-selected .radio-chip-label {
       background-color: var(--chip-fill-bg);
       border-color: var(--chip-fill-bg);
@@ -1232,10 +1245,10 @@
     @media (max-width: 680px) {
       body {
         overflow-x: hidden;
-        padding: 36px 8px 12px 8px;
+        padding: 8px 8px 12px 8px;
       }
       .theme-toggle-btn {
-        top: 4px;
+        top: 17px;
         right: 8px;
         width: 30px;
         height: 30px;
@@ -1281,6 +1294,7 @@
         font-size: 21px;
         line-height: 1.2;
         text-align: center;
+        padding: 0 28px;
       }
       .catalog-subtitle {
         font-size: 15px;
@@ -1459,12 +1473,12 @@
 </head>
 <body>
 
-  <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleSiteTheme()" title="Switch to dark mode" aria-label="Switch to dark mode">
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-  </button>
-
   <main class="handout-sheet">
+
+    <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleSiteTheme()" title="Switch to dark mode" aria-label="Switch to dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
 
     <!-- Catalog Header -->
     <header class="catalog-header">
@@ -2218,7 +2232,7 @@
           sessionStorage.setItem('nav-outgoing-styles', styles);
           sessionStorage.setItem('nav-outgoing-html', outHtml);
           sessionStorage.setItem('nav-outgoing-scroll', String(window.scrollY || 0));
-          sessionStorage.setItem('nav-outgoing-padding', '36px 8px 12px 8px');
+          sessionStorage.setItem('nav-outgoing-padding', '8px 8px 12px 8px');
           sessionStorage.setItem('nav-outgoing-theme', document.documentElement.getAttribute('data-theme') || 'light');
           return true;
         }
@@ -2466,11 +2480,11 @@
         langGroup.classList.toggle('has-lang-selected', hasSpecificLang);
         langGroup.querySelectorAll('.radio-chip[data-lang]').forEach(btn => {
           const code = btn.getAttribute('data-lang');
-          const isSelected = hasSpecificLang && code === lang;
+          const isHighlighted = !hasSpecificLang || code === lang;
           const isUnselected = hasSpecificLang && code !== lang;
-          btn.classList.toggle('is-selected', isSelected);
+          btn.classList.toggle('is-selected', isHighlighted);
           btn.classList.toggle('is-unselected', isUnselected);
-          btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+          btn.setAttribute('aria-pressed', (hasSpecificLang && code === lang) ? 'true' : 'false');
         });
       }
 

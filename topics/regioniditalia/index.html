@@ -2858,7 +2858,8 @@
     }
 
     @media (min-width: 681px) {
-      .utility-bar {
+      .utility-bar,
+      .handout-sheet {
         position: static;
       }
     }
@@ -3147,8 +3148,7 @@
         position: relative;
         justify-content: center;
       }
-      .activity-permalink-btn,
-      .theme-toggle-btn {
+      .activity-permalink-btn {
         position: absolute;
         top: calc(50% + 5px);
         margin-top: -15px;
@@ -3165,10 +3165,26 @@
         line-height: 0;
       }
       .activity-permalink-btn {
-        right: 34px;
+        right: 0;
       }
       .theme-toggle-btn {
-        right: 0;
+        position: absolute;
+        top: 17px;
+        right: 8px;
+        transform: none;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        line-height: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .handout-title-group {
+        padding: 0 28px;
+      }
+      .topic-header-icon-wrap + .handout-title-group {
+        padding: 0 28px 0 0;
       }
       .theme-toggle-btn:active {
         transform: scale(0.92);
@@ -3269,14 +3285,14 @@
     <button type="button" class="activity-permalink-btn" id="activity-permalink-btn" onclick="copyActivityPermalink()" title="Copia URL di questa attività" aria-label="Copia URL di questa attività" aria-live="polite">
       <span class="activity-permalink-content" id="activity-permalink-content"><span class="activity-permalink-text">Copia URL di questa attività</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span>
     </button>
-    <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleSiteTheme()" title="Passa alla modalità scura" aria-label="Passa alla modalità scura">
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-    </button>
   </div>
 
   <!-- Handout Sheet -->
   <main class="handout-sheet">
+    <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleSiteTheme()" title="Passa alla modalità scura" aria-label="Passa alla modalità scura">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
 
     <!-- Header -->
     <header class="worksheet-header">
@@ -6898,7 +6914,7 @@
           const outStyles = sessionStorage.getItem('nav-outgoing-styles') || '';
           const outHtml = sessionStorage.getItem('nav-outgoing-html') || '';
           const outScroll = parseFloat(sessionStorage.getItem('nav-outgoing-scroll') || '0');
-          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '36px 8px 12px 8px';
+          const outPadding = sessionStorage.getItem('nav-outgoing-padding') || '8px 8px 12px 8px';
           const outTheme = sessionStorage.getItem('nav-outgoing-theme') || (document.documentElement.getAttribute('data-theme') || 'light');
 
           sessionStorage.removeItem('nav-direction');
