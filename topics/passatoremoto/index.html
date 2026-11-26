@@ -48,23 +48,23 @@
   <title>Da Bergamo alle isole: Come e dove si usa il passato remoto — Italiano B1</title>
   <meta name="description" content="Durante una vacanza tra sentieri e ristoranti da Bergamo a Volterra, Matera, Ragusa e Alghero, marito e moglie — lei cresciuta al Nord, lui in Sicilia — scoprono dove e come vive davvero il passato remoto nell'italiano parlato.">
   <link rel="canonical" href="https://language-learning-activities.vercel.app/topics/passatoremoto">
-  <link rel="icon" type="image/svg+xml" href="../../images/og-main.svg">
+  <link rel="icon" type="image/jpeg" href="icon-passatoremoto.jpg?v=90146524">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Language Learning Activities">
   <meta property="og:title" content="Da Bergamo alle isole: Come e dove si usa il passato remoto — Italiano B1">
   <meta property="og:description" content="Durante una vacanza tra sentieri e ristoranti da Bergamo a Volterra, Matera, Ragusa e Alghero, marito e moglie — lei cresciuta al Nord, lui in Sicilia — scoprono dove e come vive davvero il passato remoto nell'italiano parlato.">
   <meta property="og:url" content="https://language-learning-activities.vercel.app/topics/passatoremoto">
-  <meta property="og:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
-  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
+  <meta property="og:image" content="https://language-learning-activities.vercel.app/topics/passatoremoto/icon-passatoremoto.jpg?v=90146524">
+  <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/topics/passatoremoto/icon-passatoremoto.jpg?v=90146524">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
+  <meta property="og:image:width" content="291">
+  <meta property="og:image:height" content="291">
   <meta property="og:image:alt" content="Da Bergamo alle isole: Come e dove si usa il passato remoto — Italiano B1">
   <meta property="og:locale" content="it_IT">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Da Bergamo alle isole: Come e dove si usa il passato remoto — Italiano B1">
   <meta name="twitter:description" content="Durante una vacanza tra sentieri e ristoranti da Bergamo a Volterra, Matera, Ragusa e Alghero, marito e moglie — lei cresciuta al Nord, lui in Sicilia — scoprono dove e come vive davvero il passato remoto nell'italiano parlato.">
-  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
+  <meta name="twitter:image" content="https://language-learning-activities.vercel.app/topics/passatoremoto/icon-passatoremoto.jpg?v=90146524">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -2487,6 +2487,262 @@
       }
     }
 
+    /* Topic Header Icon & Clickable Navigation */
+    @keyframes img-skeleton-sheen {
+      0% { background-position: 120% 0; }
+      100% { background-position: -20% 0; }
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      border-bottom: none;
+      flex-wrap: nowrap;
+      gap: 20px;
+    }
+
+    .topic-header-icon-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border: 1px solid var(--ink-rule);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--paper-sheet);
+      box-shadow: 0 1px 4px rgba(45, 40, 35, 0.06);
+      margin-right: 0;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 0;
+      background-color: #ece6d9;
+      background-image: linear-gradient(
+        110deg,
+        rgba(255, 253, 249, 0) 28%,
+        rgba(255, 253, 249, 0.62) 48%,
+        rgba(255, 253, 249, 0) 68%
+      );
+      background-size: 240% 100%;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(34, 32, 30, 0.055), inset 0 1px 3px rgba(34, 32, 30, 0.04);
+      animation: img-skeleton-sheen 2.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transition: opacity 0.36s ease-out;
+    }
+
+    html[data-theme="dark"] .topic-header-icon-wrap::before,
+    :host([data-theme="dark"]) .topic-header-icon-wrap::before {
+      background-color: #2e2b27;
+      background-image: linear-gradient(
+        110deg,
+        rgba(234, 228, 217, 0) 28%,
+        rgba(234, 228, 217, 0.085) 48%,
+        rgba(234, 228, 217, 0) 68%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.055), inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .topic-header-icon-wrap.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    .topic-header-icon-wrap.is-cached::before {
+      transition: none !important;
+    }
+
+    .topic-header-icon-wrap.is-error::before {
+      opacity: 1;
+      animation: none !important;
+      background-image: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .topic-header-icon-wrap::before {
+        animation: none !important;
+        background-image: none !important;
+      }
+    }
+
+    .topic-header-icon-wrap:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(45, 40, 35, 0.12);
+    }
+
+    .topic-header-icon-wrap:active {
+      transform: scale(0.97);
+    }
+
+    .topic-header-icon {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .topic-header-icon-wrap.is-loaded .topic-header-icon {
+      opacity: 1;
+    }
+
+    .topic-header-icon-wrap.is-cached .topic-header-icon {
+      transition: none !important;
+      opacity: 1;
+    }
+
+    .topic-header-icon-wrap.is-error .topic-header-icon {
+      opacity: 0 !important;
+      visibility: hidden;
+    }
+
+    .profile-zoom-btn {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(20, 18, 16, 0.76);
+      color: #fffdf9;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s ease, background 0.15s ease;
+      z-index: 2;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header-icon-wrap:not(.is-loaded) .profile-zoom-btn,
+    .topic-header-icon-wrap.is-error .profile-zoom-btn {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .topic-header-icon-wrap.is-cached .profile-zoom-btn {
+      transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
+    }
+
+    .profile-zoom-btn:hover {
+      background: rgba(20, 18, 16, 0.95);
+      transform: scale(1.12);
+      border-color: rgba(255, 255, 255, 0.65);
+    }
+
+    .profile-zoom-btn:active {
+      transform: scale(0.94);
+    }
+
+    .profile-zoom-btn svg {
+      display: block;
+      pointer-events: none;
+    }
+
+    @media (hover: hover) {
+      .profile-zoom-btn {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.18s ease, transform 0.15s ease, background 0.15s ease;
+      }
+      .topic-header-icon-wrap.is-loaded:hover .profile-zoom-btn,
+      .activity-card-icon-wrap.is-loaded:hover .profile-zoom-btn {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
+    @media (hover: none) {
+      .topic-header-icon-wrap.is-loaded .profile-zoom-btn {
+        opacity: 0.85;
+        pointer-events: auto;
+      }
+    }
+
+    .handout-title-group h1 {
+      font-size: 26px;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: none;
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--ink-main);
+      margin-bottom: 0;
+      cursor: pointer;
+      display: inline-block;
+      transition: opacity 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .handout-title-group h1:hover {
+      opacity: 0.82;
+    }
+
+    @media (max-width: 680px) {
+      .header-top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .topic-header-icon-wrap {
+        width: 56px;
+        height: 56px;
+        flex: 0 0 56px;
+        margin: 0;
+      }
+      .profile-zoom-btn {
+        width: 19px;
+        height: 19px;
+        right: 3px;
+        bottom: 3px;
+      }
+      .profile-zoom-btn svg {
+        width: 10px;
+        height: 10px;
+      }
+      .handout-title-group {
+        flex: 1 1 calc(100% - 68px);
+        width: calc(100% - 68px);
+        min-width: 0;
+        text-align: left;
+      }
+      .handout-title-group h1 {
+        font-size: 20px;
+        line-height: 1.15;
+        letter-spacing: -0.2px;
+        text-align: left;
+      }
+      .stamp-badge {
+        width: auto;
+        max-width: max-content;
+        margin: 6px auto 0 auto;
+        order: 3;
+        text-align: center;
+      }
+    }
+
     /* =========================================================
        SITE-WIDE DARK MODE & THEME TOGGLE
        ========================================================= */
@@ -2861,6 +3117,12 @@
     <!-- Header -->
     <header class="worksheet-header">
       <div class="header-top">
+        <div class="topic-header-icon-wrap" onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">
+          <img src="icon-passatoremoto.jpg" alt="Da Bergamo alle isole: Come e dove si usa il passato remoto" width="291" height="291" class="topic-header-icon" fetchpriority="high" decoding="async" onload="window.__markImgLoaded&&window.__markImgLoaded(this,false)" onerror="window.__markImgError&&window.__markImgError(this)">
+          <button type="button" class="profile-zoom-btn" onclick="event.stopPropagation(); openImageLightbox('icon-passatoremoto.jpg', 'Da Bergamo alle isole: Come e dove si usa il passato remoto');" title="Ampliar imagen" aria-label="Ampliar imagen">
+            <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="13" y1="13" x2="18" y2="18"></line><line x1="8.5" y1="6" x2="8.5" y2="11"></line><line x1="6" y1="8.5" x2="11" y2="8.5"></line></svg>
+          </button>
+        </div>
         <div class="handout-title-group">
           <h1 onclick="handleBackNavigation(event, '../../index.html')" title="Volver a Índice de Actividades">Da Bergamo alle isole: Come e dove si usa il passato remoto</h1>
         </div>
