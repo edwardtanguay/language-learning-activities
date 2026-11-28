@@ -45,14 +45,14 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Language Learning Activities | Worksheets for self-study, tandem meetups, and online language classes</title>
-  <meta name="description" content="Worksheets for self-study, tandem meetups, and online language classes">
+  <title>Language Learning Activities | Worksheets created with AI for self-study, tandem meetups, and online language classes</title>
+  <meta name="description" content="Worksheets created with AI for self-study, tandem meetups, and online language classes. Use what you find here, or clone the repo and make your own.">
   <link rel="canonical" href="https://language-learning-activities.vercel.app">
   <link rel="icon" type="image/svg+xml" href="images/og-main.svg">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Language Learning Activities">
   <meta property="og:title" content="Language Learning Activities">
-  <meta property="og:description" content="Worksheets for self-study, tandem meetups, and online language classes">
+  <meta property="og:description" content="Worksheets created with AI for self-study, tandem meetups, and online language classes. Use what you find here, or clone the repo and make your own.">
   <meta property="og:url" content="https://language-learning-activities.vercel.app">
   <meta property="og:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
   <meta property="og:image:secure_url" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
@@ -63,7 +63,7 @@
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Language Learning Activities">
-  <meta name="twitter:description" content="Worksheets for self-study, tandem meetups, and online language classes">
+  <meta name="twitter:description" content="Worksheets created with AI for self-study, tandem meetups, and online language classes. Use what you find here, or clone the repo and make your own.">
   <meta name="twitter:image" content="https://language-learning-activities.vercel.app/images/og-main.jpg?v=828d746f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -277,8 +277,18 @@
       color: var(--ink-muted);
       font-style: italic;
       font-family: var(--font-body);
-      line-height: 1.5;
-      text-wrap: balance;
+      line-height: 1.55;
+    }
+
+    .catalog-subtitle a {
+      color: var(--ink-main);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.15s ease;
+    }
+
+    .catalog-subtitle a:hover {
+      color: var(--stamp-blue);
     }
 
     /* Filter & Search Bar */
@@ -1298,12 +1308,13 @@
       }
       .catalog-subtitle {
         font-size: 15px;
-        line-height: 1.35;
+        line-height: 1.42;
         text-align: center;
         text-wrap: balance;
-        max-width: 270px;
-        margin-left: auto;
-        margin-right: auto;
+        max-width: 100%;
+      }
+      .subtitle-desktop-break {
+        display: none;
       }
       .permalink-bar-desktop {
         display: none !important;
@@ -1485,7 +1496,7 @@
       <div class="header-top">
         <div class="catalog-title-group">
           <h1>Language Learning Activities</h1>
-          <div class="catalog-subtitle">Worksheets for self-study, tandem meetups, and&nbsp;online&nbsp;language&nbsp;classes</div>
+          <div class="catalog-subtitle">Worksheets created with AI for self-study, tandem meetups, and online language classes.<br class="subtitle-desktop-break"> Use what you find here, or clone the <a href="https://github.com/edwardtanguay/language-learning-activities" target="_blank" rel="noopener noreferrer">repo</a> and make your own.</div>
         </div>
       </div>
     </header>
